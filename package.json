@@ -12,6 +12,7 @@
     "check": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
     "integration": "tsx scripts/integration.ts",
+    "record": "tsx scripts/record-session.ts",
     "bot-smoke": "tsx scripts/bot-actions-smoke.ts"
   },
   "dependencies": {

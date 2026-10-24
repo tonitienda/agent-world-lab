@@ -93,7 +93,8 @@ export class MinecraftAdapter implements WorldAdapter {
           const p = xyz(args);
           // Limit each navigation request; exploration should proceed in bounded steps.
           if (bot.entity.position.distanceTo(p) > 24) throw new Error("Destination beyond 24-block action limit");
-          await withTimeout(bot.pathfinder.goto(new GoalNear(p.x, p.y, p.z, 1)));
+          const radius = args.radius === 0 ? 0 : 1;
+          await withTimeout(bot.pathfinder.goto(new GoalNear(p.x, p.y, p.z, radius)));
           return { ok: true, message: "Arrived near destination" };
         }
         case "mine": {
