@@ -11,14 +11,16 @@
     "smoke": "tsx scripts/smoke.ts",
     "check": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
-    "integration": "tsx scripts/integration.ts"
+    "integration": "tsx scripts/integration.ts",
+    "capture-smoke": "tsx scripts/capture-smoke.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",
     "mineflayer": "^4.32.0",
     "mineflayer-pathfinder": "^2.4.5",
     "vec3": "^0.1.10",
-    "zod": "^3.25.0"
+    "zod": "^3.25.0",
+    "prismarine-viewer": "^1.33.0"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",
