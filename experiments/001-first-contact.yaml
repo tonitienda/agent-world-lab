@@ -1,0 +1,17 @@
+id: first-contact
+environment:
+  adapter: minecraft
+  world_seed: 4242
+agent:
+  id: explorer-1
+  instruction: >
+    You are in an unfamiliar world. Observe your surroundings and decide
+    what you want to investigate or make. Work using the tools you have.
+limits:
+  wall_clock_minutes: 30
+  max_actions: 100
+  max_model_cost_usd: 5
+telemetry:
+  save_actions: true
+  save_observations: true
+# Manifest is a proposed contract. The autonomous runner is not implemented.
