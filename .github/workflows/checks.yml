@@ -70,6 +70,7 @@ jobs:
       RECORD_WIDTH: '854'
       RECORD_HEIGHT: '480'
       LIBGL_ALWAYS_SOFTWARE: '1'
+      RECORD_DEBUG: '1'
       CAPTURE_OUTPUT_DIR: ${{ runner.temp }}/minecraft-captures
     steps:
       - uses: actions/checkout@v4
@@ -85,7 +86,9 @@ jobs:
       - name: Start isolated Minecraft world
         run: docker compose up -d --wait --wait-timeout 300 minecraft
       - name: Record bot movement
-        run: xvfb-run -a -s "-screen 0 1280x720x24" npm run capture-smoke
+        run: |
+          echo "DISPLAY=${DISPLAY:-unset}"; ffmpeg -version | head -n 2
+          xvfb-run -a -s "-screen 0 1280x720x24" npm run capture-smoke
       - name: Validate recorded MP4 with ffprobe
         run: |
           set -euo pipefail
