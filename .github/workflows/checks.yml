@@ -1,0 +1,30 @@
+name: Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package.json
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: TypeScript
+        run: npm run check
+      - name: Unit tests
+        run: npm test
+      - name: Validate Docker Compose
+        run: docker compose config -q
+
+# This workflow does not start Minecraft; integration smoke testing still
+# requires a server and explicit acceptance of the Minecraft EULA.
