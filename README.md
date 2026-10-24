@@ -61,3 +61,15 @@ Not implemented yet: unattended model orchestration, multiple bots, replay/video
 ## Licenses and content
 
 Minecraft software and artwork remain subject to Mojang/Microsoft terms. The repository does not distribute Minecraft binaries. The server image downloads the game files only after EULA acceptance. Check individual asset and music licenses before publishing videos.
+
+## Record a test for YouTube
+
+See [the recording guide](docs/recording.md). Start a replay-capable Java client locally before running:
+
+```sh
+npm run record -- npm run integration
+# Once the bot-actions smoke test is merged:
+npm run record -- npm run bot-smoke
+```
+
+This creates timestamped process event logs under `data/recordings/`. Video must be captured independently using a client replay mod or OBS; CI does not produce footage.
