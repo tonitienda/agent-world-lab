@@ -5,7 +5,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import { createWorld } from "../src/environments/index.js";
 
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-const folder = join("data", "captures", timestamp);
+const folder = join(process.env.CAPTURE_OUTPUT_DIR ?? join("data", "captures"), timestamp);
 mkdirSync(folder, { recursive: true });
 const output = join(folder, "bot.mp4");
 process.env.RECORD_MP4 = output;
