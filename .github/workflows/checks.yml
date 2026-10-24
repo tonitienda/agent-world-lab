@@ -31,6 +31,7 @@ jobs:
       EULA: 'TRUE'
       MC_VERSION: '1.21.4'
       MC_MEMORY: '2G'
+      MC_LEVEL_TYPE: 'minecraft:flat'
       MC_HOST: '127.0.0.1'
       MC_PORT: '25565'
       AGENT_ID: 'ci-explorer'
@@ -45,6 +46,8 @@ jobs:
         run: docker compose up -d --wait --wait-timeout 300 minecraft
       - name: Test real Mineflayer session and in-world actions
         run: npm run integration
+      - name: Test movement, mining and placing in the world
+        run: npm run bot-smoke
       - name: Show Minecraft logs on failure
         if: failure()
         run: docker compose logs --tail=250 minecraft

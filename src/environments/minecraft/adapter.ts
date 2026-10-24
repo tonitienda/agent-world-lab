@@ -9,6 +9,21 @@ import type { ActionResult, WorldAdapter } from "../../core/types.js";
 const { pathfinder, Movements, goals } = pathfinderModule;
 const { GoalNear } = goals;
 const MAX_COORD = 30_000_000;
+function intAt(v: unknown, label: string): number {
+  if (typeof v !== "number" || !Number.isInteger(v) || Math.abs(v) > MAX_COORD)
+    throw new Error(`Invalid ${label}: expected bounded integer`);
+  return v;
+}
+function xyz(args: Record<string, unknown>): Vec3 {
+  return new Vec3(intAt(args.x, "x"), intAt(args.y, "y"), intAt(args.z, "z"));
+}
+function withTimeout<T>(task: Promise<T>, ms = 30000): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error("Action timed out")), ms);
+    task.then(v => { clearTimeout(timer); resolve(v); }, e => { clearTimeout(timer); reject(e); });
+  });
+}
+
 const require = createRequire(import.meta.url);
 
 /** Experimental local recorder: fixed trailing/bird-eye camera provided by prismarine-viewer.
@@ -122,7 +137,8 @@ export class MinecraftAdapter implements WorldAdapter {
           const p = xyz(args);
           // Limit each navigation request; exploration should proceed in bounded steps.
           if (bot.entity.position.distanceTo(p) > 24) throw new Error("Destination beyond 24-block action limit");
-          await withTimeout(bot.pathfinder.goto(new GoalNear(p.x, p.y, p.z, 1)));
+          const radius = args.radius === 0 ? 0 : 1;
+          await withTimeout(bot.pathfinder.goto(new GoalNear(p.x, p.y, p.z, radius)));
           return { ok: true, message: "Arrived near destination" };
         }
         case "mine": {
