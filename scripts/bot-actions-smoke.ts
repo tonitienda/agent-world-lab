@@ -45,7 +45,7 @@ try {
 
   // Move near the drop to collect it and restore the block; if pickup fails,
   // fail rather than quietly skipping the placement capability.
-  assertOk(await world.act("move_to", { x: target.x, y: feetY, z: target.z }), "move to drop");
+  assertOk(await world.act("move_to", { x: target.x, y: feetY, z: target.z + 1 }), "move beside drop");
   let inventory: InventoryItem[] = [];
   for (let i = 0; i < 15; i++) {
     const response = await world.act("inventory", {});
@@ -58,7 +58,7 @@ try {
     `Mined drop was not collected: ${JSON.stringify(inventory)}`);
 
   // Step away to avoid placing into the bot's collision volume.
-  assertOk(await world.act("move_to", { x: target.x + 2, y: feetY, z: target.z }), "move from hole");
+  assertOk(await world.act("move_to", { x: target.x + 2, y: feetY, z: target.z + 1 }), "move from hole");
   assertOk(await world.act("place", { ...target, item: "dirt" }), "place");
   const restored = await world.observe() as Observation;
   assert.ok(restored.nearbyBlocks.some(b =>
