@@ -70,6 +70,7 @@ jobs:
       RECORD_WIDTH: '854'
       RECORD_HEIGHT: '480'
       LIBGL_ALWAYS_SOFTWARE: '1'
+      CAPTURE_OUTPUT_DIR: ${{ runner.temp }}/minecraft-captures
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -88,7 +89,7 @@ jobs:
       - name: Validate recorded MP4 with ffprobe
         run: |
           set -euo pipefail
-          video=$(find data/captures -name bot.mp4 -type f -print -quit)
+          video=$(find "$CAPTURE_OUTPUT_DIR" -name bot.mp4 -type f -print -quit)
           test -n "$video"
           ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,nb_frames -of json "$video"
           ffmpeg -v error -xerror -i "$video" -frames:v 1 -f null -
@@ -97,7 +98,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: minecraft-video-${{ github.run_id }}
-          path: data/captures/
+          path: ${{ runner.temp }}/minecraft-captures/
           if-no-files-found: warn
           retention-days: 14
           compression-level: 0
