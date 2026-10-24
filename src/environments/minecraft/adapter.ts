@@ -43,9 +43,9 @@ function enableCapture(bot: Bot): void {
   }
   // prismarine-viewer exposes a CommonJS module.
   const viewer = require("prismarine-viewer") as {
-    headless(bot: Bot, options: { output: string; frames: number; width: number; height: number; viewDistance: number }): void
+    headless(bot: Bot, options: { output: string; frames: number; width: number; height: number; viewDistance: number; logFFMPEG?: boolean }): void
   };
-  viewer.headless(bot, { output, frames, width, height, viewDistance: 6 });
+  viewer.headless(bot, { output, frames, width, height, viewDistance: 6, logFFMPEG: process.env.RECORD_DEBUG === "1" });
   console.error(`Headless capture started: ${output} (${frames} frames)`);
 }
 
