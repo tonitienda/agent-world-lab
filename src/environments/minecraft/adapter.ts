@@ -49,21 +49,6 @@ function enableCapture(bot: Bot): void {
   console.error(`Headless capture started: ${output} (${frames} frames)`);
 }
 
-function intAt(v: unknown, label: string): number {
-  if (typeof v !== "number" || !Number.isInteger(v) || Math.abs(v) > MAX_COORD)
-    throw new Error(`Invalid ${label}: expected bounded integer`);
-  return v;
-}
-function xyz(args: Record<string, unknown>): Vec3 {
-  return new Vec3(intAt(args.x, "x"), intAt(args.y, "y"), intAt(args.z, "z"));
-}
-function withTimeout<T>(task: Promise<T>, ms = 30000): Promise<T> {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error("Action timed out")), ms);
-    task.then(v => { clearTimeout(timer); resolve(v); }, e => { clearTimeout(timer); reject(e); });
-  });
-}
-
 export class MinecraftAdapter implements WorldAdapter {
   readonly id = "minecraft";
   readonly capabilities = ["observe", "inventory", "move_to", "mine", "place", "say"] as const;
