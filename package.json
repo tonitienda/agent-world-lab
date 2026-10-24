@@ -11,7 +11,8 @@
     "smoke": "tsx scripts/smoke.ts",
     "check": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
-    "integration": "tsx scripts/integration.ts"
+    "integration": "tsx scripts/integration.ts",
+    "record": "tsx scripts/record-session.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",
