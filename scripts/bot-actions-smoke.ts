@@ -43,9 +43,9 @@ try {
     "Mined block is still present");
   console.log("Mined block:", target);
 
-  // Move near the drop to collect it and restore the block; if pickup fails,
-  // fail rather than quietly skipping the placement capability.
-  assertOk(await world.act("move_to", { x: target.x, y: feetY, z: target.z + 1 }), "move beside drop");
+  // Move exactly into the mined hole to collect the drop; the default radius=1 can stop too far away.
+  // Fail instead of quietly skipping block placement.
+  assertOk(await world.act("move_to", { ...target, radius: 0 }), "move into drop");
   let inventory: InventoryItem[] = [];
   for (let i = 0; i < 15; i++) {
     const response = await world.act("inventory", {});
