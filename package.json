@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "mcp": "tsx src/mcp/main.ts",
     "smoke": "tsx scripts/smoke.ts",
     "check": "tsc --noEmit",
-    "test": "node --import tsx --test tests/*.test.ts"
+    "test": "node --import tsx --test tests/*.test.ts",
+    "integration": "tsx scripts/integration.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",

@@ -1,8 +1,9 @@
 import mineflayer, { type Bot } from "mineflayer";
-import { pathfinder, Movements, goals } from "mineflayer-pathfinder";
+import pathfinderModule from "mineflayer-pathfinder";
 import { Vec3 } from "vec3";
 import type { ActionResult, WorldAdapter } from "../../core/types.js";
 
+const { pathfinder, Movements, goals } = pathfinderModule;
 const { GoalNear } = goals;
 const MAX_COORD = 30_000_000;
 function intAt(v: unknown, label: string): number {

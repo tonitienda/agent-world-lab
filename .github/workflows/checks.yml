@@ -1,0 +1,53 @@
+name: Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: TypeScript
+        run: npm run check
+      - name: Unit tests
+        run: npm test
+      - name: Validate Docker Compose
+        run: docker compose config -q
+
+  minecraft-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      EULA: 'TRUE'
+      MC_VERSION: '1.21.4'
+      MC_MEMORY: '2G'
+      MC_HOST: '127.0.0.1'
+      MC_PORT: '25565'
+      AGENT_ID: 'ci-explorer'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Start isolated Minecraft Java server
+        run: docker compose up -d --wait --wait-timeout 300 minecraft
+      - name: Test real Mineflayer session and in-world actions
+        run: npm run integration
+      - name: Show Minecraft logs on failure
+        if: failure()
+        run: docker compose logs --tail=250 minecraft
+      - name: Stop Minecraft and remove ephemeral containers
+        if: always()
+        run: docker compose down --volumes
