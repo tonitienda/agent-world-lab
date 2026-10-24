@@ -54,3 +54,57 @@ jobs:
       - name: Stop Minecraft and remove ephemeral containers
         if: always()
         run: docker compose down --volumes
+
+  minecraft-video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      EULA: 'TRUE'
+      MC_VERSION: '1.21.4'
+      MC_MEMORY: '2G'
+      MC_LEVEL_TYPE: 'minecraft:flat'
+      MC_HOST: '127.0.0.1'
+      MC_PORT: '25565'
+      AGENT_ID: 'ci-camera-test'
+      RECORD_FRAMES: '240'
+      RECORD_WIDTH: '854'
+      RECORD_HEIGHT: '480'
+      LIBGL_ALWAYS_SOFTWARE: '1'
+      CAPTURE_OUTPUT_DIR: ${{ runner.temp }}/minecraft-captures
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install headless graphics and video tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb ffmpeg libgl1-mesa-dri libgbm1 libasound2t64
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Start isolated Minecraft world
+        run: docker compose up -d --wait --wait-timeout 300 minecraft
+      - name: Record bot movement
+        run: xvfb-run -a -s "-screen 0 1280x720x24" npm run capture-smoke
+      - name: Validate recorded MP4 with ffprobe
+        run: |
+          set -euo pipefail
+          video=$(find "$CAPTURE_OUTPUT_DIR" -name bot.mp4 -type f -print -quit)
+          test -n "$video"
+          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,nb_frames -of json "$video"
+          ffmpeg -v error -xerror -i "$video" -frames:v 1 -f null -
+      - name: Upload video and session events
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: minecraft-video-${{ github.run_id }}
+          path: ${{ runner.temp }}/minecraft-captures/
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 0
+      - name: Minecraft logs on failure
+        if: failure()
+        run: docker compose logs --tail=200 minecraft
+      - name: Stop disposable server
+        if: always()
+        run: docker compose down --volumes
