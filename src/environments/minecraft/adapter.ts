@@ -1,4 +1,7 @@
 import mineflayer, { type Bot } from "mineflayer";
+import { createRequire } from "node:module";
+import { mkdirSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 import pathfinderModule from "mineflayer-pathfinder";
 import { Vec3 } from "vec3";
 import type { ActionResult, WorldAdapter } from "../../core/types.js";
@@ -6,6 +9,31 @@ import type { ActionResult, WorldAdapter } from "../../core/types.js";
 const { pathfinder, Movements, goals } = pathfinderModule;
 const { GoalNear } = goals;
 const MAX_COORD = 30_000_000;
+const require = createRequire(import.meta.url);
+
+/** Experimental local recorder: fixed trailing/bird-eye camera provided by prismarine-viewer.
+ * When disabled there is no rendering overhead or extra native rendering dependency.
+ * Recording may need additional headless graphics libraries depending on host OS.
+ */
+function enableCapture(bot: Bot): void {
+  const file = process.env.RECORD_MP4;
+  if (!file) return;
+  const output = resolve(file);
+  mkdirSync(dirname(output), { recursive: true });
+  const frames = Number(process.env.RECORD_FRAMES ?? "600");
+  const width = Number(process.env.RECORD_WIDTH ?? "1280");
+  const height = Number(process.env.RECORD_HEIGHT ?? "720");
+  if (![frames, width, height].every(n => Number.isInteger(n) && n > 0)) {
+    throw new Error("Invalid RECORD_FRAMES/RECORD_WIDTH/RECORD_HEIGHT");
+  }
+  // prismarine-viewer exposes a CommonJS module.
+  const viewer = require("prismarine-viewer") as {
+    headless(bot: Bot, options: { output: string; frames: number; width: number; height: number; viewDistance: number }): void
+  };
+  viewer.headless(bot, { output, frames, width, height, viewDistance: 6 });
+  console.error(`Headless capture started: ${output} (${frames} frames)`);
+}
+
 function intAt(v: unknown, label: string): number {
   if (typeof v !== "number" || !Number.isInteger(v) || Math.abs(v) > MAX_COORD)
     throw new Error(`Invalid ${label}: expected bounded integer`);
@@ -44,6 +72,7 @@ export class MinecraftAdapter implements WorldAdapter {
         bot.once("end", () => reject(new Error("Disconnected before spawn")));
       }), 60000);
       bot.pathfinder.setMovements(new Movements(bot));
+      enableCapture(bot);
     } catch (e) {
       bot.end();
       this.bot = undefined;
