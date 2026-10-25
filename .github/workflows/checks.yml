@@ -83,6 +83,10 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Install isolated video renderer dependencies
+        env:
+          # Old ANGLE headers in gl refer to uintptr_t without including stdint.
+          # Force-include it for native C++ compilation; isolated to video job.
+          CXXFLAGS: '-include cstdint'
         run: npm install --prefix packages/minecraft-recorder --no-audit --no-fund
       - name: Start isolated Minecraft world
         run: docker compose up -d --wait --wait-timeout 300 minecraft
