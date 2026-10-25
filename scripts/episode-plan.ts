@@ -1,11 +1,13 @@
-import {readFileSync,writeFileSync,mkdirSync,copyFileSync} from 'node:fs';
+import {readFileSync,writeFileSync,mkdirSync,copyFileSync,existsSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
 
 const session=resolve(process.argv[2]??'');
-if(!process.argv[2]) throw Error('Usage: npm run episode:plan -- <session-directory>');
-const out=resolve('production/generated');
-const media=resolve('production/public/media');
+if(!process.argv[2]) throw Error('Usage: npm run episode:plan -- <session-directory> [episode-id]');
+const episode=process.argv[3]??'episode-001';
+if(!/^episode-[a-zA-Z0-9-]+$/.test(episode))throw Error('Expected episode name like episode-001');
+const out=resolve('production',episode);
+const media=resolve('production/public',episode,'video');
 mkdirSync(out,{recursive:true});mkdirSync(media,{recursive:true});
 const events=JSON.parse(readFileSync(join(session,'events.json'),'utf8')) as Array<{at?:string;kind?:string;action?:string;details?:any;payload?:any}>;
 const names=['agent-pov','observer'];
@@ -30,7 +32,10 @@ const probe=(name:string):number=>{
 const lengths=names.map(probe);
 const usable=Math.min(...lengths.map((len,i)=>len-offsets[i]));
 if(usable-clipFloor<3)throw Error('Recordings too short for episode');
-for(const name of names)copyFileSync(join(session,name+'.mp4'),join(media,name+'.mp4'));
+for(const name of names){
+ const destination=join(media,name+'.mp4');
+ if(!existsSync(destination))copyFileSync(join(session,name+'.mp4'),destination);
+}
 const segments:any[]=[{kind:'intro',duration:7,text:'An AI agent enters Minecraft. What will it try?'}];
 const comments:Array<{segmentIndex:number;text:string;at:number}>=[];
 const startTime=origin;
@@ -63,7 +68,7 @@ for(const e of selected.slice(0,20)){
 if(segments.length===1)segments.push({kind:'shot',duration:Math.min(usable-clipFloor,8),shot:{kind:'split',cameras:names,start:clipFloor,duration:Math.min(usable-clipFloor,8)}});
 segments.push({kind:'outro',duration:6,text:'What prompt or scenario should we try next? Leave a comment.'});
 const plan={version:1,title:'Emergent — Pilot episode',cameras:names.map(id=>({id,file:id+'.mp4',offsetSeconds:offsets[names.indexOf(id)]})),segments};
-writeFileSync(join(out,'edit-plan.json'),JSON.stringify(plan,null,2)+'\n');
+if(!existsSync(join(out,'edit-plan.json')))writeFileSync(join(out,'edit-plan.json'),JSON.stringify(plan,null,2)+'\n');
 // One text file: one spoken line per segment that calls for narration.
 // IDs match ElevenLabs batch output 001.mp3, 002.mp3, etc.
 const voiceLines=[
@@ -71,8 +76,8 @@ const voiceLines=[
  ...comments,
  {segmentIndex:segments.length-1,text:'What should we ask the next agent to try? Leave your prompts and scenarios in the comments.'}
 ];
-writeFileSync(join(out,'narration.txt'),voiceLines.map(line=>line.text).join('\n')+'\n');
-writeFileSync(join(out,'narration-manifest.json'),JSON.stringify(voiceLines.map((line,i)=>({
+if(!existsSync(join(out,'narration.txt')))writeFileSync(join(out,'narration.txt'),voiceLines.map(line=>line.text).join('\n')+'\n');
+if(!existsSync(join(out,'narration-manifest.json')))writeFileSync(join(out,'narration-manifest.json'),JSON.stringify(voiceLines.map((line,i)=>({
  line:i+1,segmentIndex:line.segmentIndex,text:line.text,audio:String(i+1).padStart(3,'0')+'.mp3'
 })),null,2)+'\n');
 console.log('Prepared',out,'using videos',lengths,'seconds; clips:',segments.length);
