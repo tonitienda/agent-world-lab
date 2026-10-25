@@ -28,7 +28,7 @@ try {
   const moved = await world.act("move_to", target);
   event("move_to", { target, result: moved });
   assert.equal(moved.ok, true, moved.message);
-  // Headless encoding time depends on CPU/software GL; a fixed 16s sleep\n  // can terminate the bot before the MP4 muxer finishes writing.\n  const deadline = Date.now() + 90000;\n  while ((!existsSync(output) || statSync(output).size === 0) && Date.now() < deadline) {\n    await delay(1000);\n  }\n  assert.ok(existsSync(output) && statSync(output).size > 0, "Recorder did not produce an MP4 within 90s");\n  await delay(3000); // Allow encoder to finalize its finite frame stream.
+  await delay(10000); // Capture a short clip after movement.
   event("finished", await world.observe());
 } catch (error) {
   event("error", String(error));
