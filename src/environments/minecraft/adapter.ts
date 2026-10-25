@@ -30,29 +30,26 @@ const require = createRequire(import.meta.url);
  * When disabled there is no rendering overhead or extra native rendering dependency.
  * Recording may need additional headless graphics libraries depending on host OS.
  */
-function enableCapture(bot: Bot): void {
+async function enableCapture(bot: Bot): Promise<(() => Promise<void>) | undefined> {
   const file = process.env.RECORD_MP4;
   if (!file) return;
   const output = resolve(file);
   mkdirSync(dirname(output), { recursive: true });
-  const frames = Number(process.env.RECORD_FRAMES ?? "600");
   const width = Number(process.env.RECORD_WIDTH ?? "1280");
   const height = Number(process.env.RECORD_HEIGHT ?? "720");
-  if (![frames, width, height].every(n => Number.isInteger(n) && n > 0)) {
-    throw new Error("Invalid RECORD_FRAMES/RECORD_WIDTH/RECORD_HEIGHT");
-  }
-  // prismarine-viewer exposes a CommonJS module.
+  if (![width, height].every(n => Number.isInteger(n) && n > 0))
+    throw new Error("Invalid recording dimensions");
   const recorder = require("../../../packages/minecraft-recorder/index.cjs") as {
-    start(bot: Bot, options: { output: string; frames: number; width: number; height: number; viewDistance: number; logFFMPEG?: boolean }): void
+    start(bot: Bot, options: { output: string; width: number; height: number }): Promise<() => Promise<void>>;
   };
-  recorder.start(bot, { output, frames, width, height, viewDistance: 6, logFFMPEG: process.env.RECORD_DEBUG === "1" });
-  console.error(`Headless capture started: ${output} (${frames} frames)`);
+  return await recorder.start(bot, { output, width, height });
 }
 
 export class MinecraftAdapter implements WorldAdapter {
   readonly id = "minecraft";
   readonly capabilities = ["observe", "inventory", "move_to", "mine", "place", "say"] as const;
   private bot?: Bot;
+  private stopCapture?: () => Promise<void>;
 
   async connect(): Promise<void> {
     if (this.bot) return;
@@ -72,7 +69,7 @@ export class MinecraftAdapter implements WorldAdapter {
         bot.once("end", () => reject(new Error("Disconnected before spawn")));
       }), 60000);
       bot.pathfinder.setMovements(new Movements(bot));
-      enableCapture(bot);
+      this.stopCapture = await enableCapture(bot);
     } catch (e) {
       bot.end();
       this.bot = undefined;
@@ -167,6 +164,9 @@ export class MinecraftAdapter implements WorldAdapter {
   }
 
   async close(): Promise<void> {
+    if (this.stopCapture) {
+      try { await this.stopCapture(); } finally { this.stopCapture = undefined; }
+    }
     this.bot?.pathfinder.setGoal(null);
     this.bot?.end();
     this.bot = undefined;
