@@ -24,6 +24,9 @@ try {
   const observation = await world.observe() as { position: { x: number; y: number; z: number } };
   event("spawn", observation);
   const start = observation.position;
+  if (process.env.GENERATOR_SETTINGS) {
+    assert.ok(start.y > 0, `Expected positive-Y capture test terrain, spawned at Y=${start.y}; verify generator-settings forwarding`);
+  }
   const target = { x: Math.floor(start.x) + 3, y: Math.floor(start.y), z: Math.floor(start.z) };
   const moved = await world.act("move_to", target);
   event("move_to", { target, result: moved });
