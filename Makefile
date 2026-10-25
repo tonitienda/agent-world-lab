@@ -92,7 +92,7 @@ prepare:
 	cd production && npm install
 
 preview:
-	cd production && npm run dev
+	cd production && EPISODE_ID="$(SESSION)" npm run dev
 
 # ------------------------------------------------------------
 # 5. Generate the final video
@@ -100,7 +100,7 @@ preview:
 
 generate:
 	@mkdir -p "$(dir $(OUTPUT))"
-	EPISODE_MUSIC="$(MUSIC)" \
+	EPISODE_ID="$(SESSION)" EPISODE_MUSIC="$(MUSIC)" \
 		npm run episode:render-simple -- "$(OUTPUT)"
 	@echo ""
 	@echo "Generated: $(OUTPUT)"
