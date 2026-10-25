@@ -6,7 +6,7 @@ const { dirname, join } = require("node:path");
 
 async function start(bot, options) {
   const port = Number(process.env.RECORD_VIEWER_PORT || 3007);
-  viewer(bot, { port, firstPerson: false, viewDistance: 6 });
+  viewer(bot, { port, firstPerson: true, viewDistance: 6 });
   const browser = await chromium.launch({
     headless: true,
     args: ["--enable-webgl", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--disable-dev-shm-usage"]
@@ -19,6 +19,8 @@ async function start(bot, options) {
       recordVideo: { dir: dirname(options.output), size: { width: options.width, height: options.height } }
     });
     const page = await context.newPage();
+    page.on("websocket", ws => { console.error("Viewer websocket:", ws.url()); ws.on("close", () => console.error("Viewer websocket closed")); });
+    page.on("requestfailed", req => console.error("Viewer request failed:", req.url(), req.failure()));
     page.on("console", m => { if (m.type() === "error") console.error("Viewer:", m.text()); });
     page.on("pageerror", err => console.error("Viewer page:", err));
     for (let attempt = 0; attempt < 20; attempt++) {
@@ -27,6 +29,9 @@ async function start(bot, options) {
     }
     await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
     console.error("Browser Minecraft viewer recording:", options.output);
+    await page.waitForTimeout(3000);
+    console.error("Viewer canvas:", await page.locator("canvas").first().evaluate(c => ({width:c.width, height:c.height})));
+    await page.screenshot({ path: join(dirname(options.output), "viewer-debug.png") });
     let stopped = false;
     return async () => {
       if (stopped) return;
