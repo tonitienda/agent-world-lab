@@ -67,3 +67,11 @@ In the Motion Canvas editor, review the visual chronology: intro, observer estab
 - Removed the forced downward bot view at initialization. A magenta object in the old POV image may be a rendering artifact or placeholder model; **its cause is not established**. Do not imply this PR definitively fixes it.
 - Metadata now includes per-view `captureOpenedAt` and `readyAt`. The editor uses approximate offsets. Playwright video encoding startup is not frame-accurate; avoid multi-agent synchronization claims.
 - The `report_intention` MCP tool records short public summaries. It does not access or store the model's hidden reasoning.
+
+## Inventory and item pickup verification
+
+- A successful `mine` action means the block was broken; it does **not** prove that a dropped item entered the inventory. Pickup happens only when the Minecraft character gets close enough to the dropped item.
+- The MCP session now emits `inventory_initial` immediately after connecting, enabling us to distinguish a nonempty *starting* inventory from items collected during the episode.
+- The recorder places a live inventory HUD in **both** perspectives, populated from Mineflayer's inventory state and highlighted when items or counts change. It is an overlay, not the native Minecraft inventory GUI.
+- The reset command archives all persisted server data and verifies that the fresh world's `playerdata` folder has no saved player files. For a clean run, first call `finish_session`, restart Minecraft using `world:reset`, then start a **new** Claude MCP session. Always use a fresh recording directory. A new world may still contain dropped items if agents spawn or act before the recording begins; inspect the starting inventory entry and screenshots.
+- If a newly reset run starts with egg ×1 or dirt ×1, inspect `inventory_initial` and the archived world path to determine why. Do not simply assume the reset failed.

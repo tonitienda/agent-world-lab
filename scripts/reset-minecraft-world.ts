@@ -1,4 +1,4 @@
-import {existsSync, mkdirSync, renameSync, readFileSync} from "node:fs";
+import {existsSync, mkdirSync, renameSync, readFileSync, readdirSync} from "node:fs";
 import {join, resolve} from "node:path";
 import {spawnSync} from "node:child_process";
 import {createConnection} from "node:net";
@@ -63,6 +63,10 @@ mkdirSync(world,{recursive:true});
 const env={...process.env,MC_LEVEL_TYPE:"minecraft:flat",GENERATOR_SETTINGS:settings};
 try {
   run(["compose","up","-d","--wait","minecraft"],env);
+  const playerData=join(world,"world","playerdata");
+  const savedPlayers=existsSync(playerData)?readdirSync(playerData):[];
+  if(savedPlayers.length)throw Error(`Fresh world unexpectedly contains ${savedPlayers.length} saved player files at ${playerData}; investigate before starting a new episode`);
+  console.log("Verified: no persisted player inventory files in new world.");
   console.log("Fresh Minecraft server ready. Original data:",archived?archive:"(none)");
 } catch(error) {
   console.error("New server failed to start. Archived data remains at:",archived?archive:"(none)");
