@@ -6,12 +6,6 @@
   "main": "index.cjs",
   "dependencies": {
     "prismarine-viewer": "^1.33.0",
-    "canvas": "^3.2.0",
-    "node-canvas-webgl": "0.2.6"
-  },
-  "overrides": {
-    "gl": {
-      "node-gyp": "^10.3.1"
-    }
+    "playwright": "^1.56.0"
   }
 }
