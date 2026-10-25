@@ -50,25 +50,12 @@ for(const e of selected.slice(0,6)){
  const interaction=/mine|place|result|error/i.test(e.kind);
  const layout=interaction?'pip':'full';
  segments.push({kind:'shot',duration,shot:{kind:layout,cameras:interaction?['agent-pov','observer']:['observer'],start:clipStart,duration,label:e.kind}});
- const coords=e.detail.args as {x?:number;y?:number;z?:number;summary?:string}|undefined;
- const result=e.detail.result as {ok?:boolean;message?:string}|undefined;
- let sentence:string|undefined;
- if(e.kind==='report_intention' && coords?.summary){
-   sentence='Claude states its goal: '+String(coords.summary).slice(0,220);
- }else if(e.kind==='mine'){
-   const block=result?.message?.match(/^Mined (.+)$/)?.[1];
-   if(result?.ok===true && block) sentence='Claude breaks '+block.replaceAll('_',' ')+'.';
-   else if(result?.ok===false) sentence='The attempt to mine a block fails: '+String(result.message??'unknown reason')+'.';
- }else if(e.kind==='place'){
-   sentence=result?.ok?'Claude places a block from its inventory.':'Claude tries to place a block, but the attempt fails.';
- }else if(e.kind==='move_to' && result?.ok===false){
-   sentence='Claude tries to reach a new position, but cannot get there.';
- }else if(/error/.test(e.kind)){
-   sentence='The experiment encounters an error: '+String(e.detail.error??'unknown error').slice(0,160)+'.';
+ // Let the agent speak in its own words, rather than inventing commentary.
+ // These are public, deliberately brief statements recorded by report_intention.
+ if(e.kind==='report_intention'){
+   const summary=String(e.detail.args?.summary??'').trim();
+   if(summary)comments.push({segmentIndex:segments.length-1,text:summary.slice(0,300),at:e.second});
  }
- // Ordinary movement does not merit narration by itself. Silence leaves
- // space to observe the agent rather than reading the tool transcript aloud.
- if(sentence) comments.push({segmentIndex:segments.length-1,text:sentence,at:e.second});
  last=clipStart+duration;
 }
 if(segments.length===1)segments.push({kind:'shot',duration:Math.min(usable-clipFloor,8),shot:{kind:'split',cameras:names,start:clipFloor,duration:Math.min(usable-clipFloor,8)}});
