@@ -57,7 +57,7 @@ jobs:
 
   minecraft-video:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 12
     env:
       EULA: 'TRUE'
       MC_VERSION: '1.21.4'
@@ -89,6 +89,7 @@ jobs:
       - name: Start isolated Minecraft world
         run: docker compose up -d --wait --wait-timeout 300 minecraft
       - name: Record bot movement
+        timeout-minutes: 3
         env:
           CAPTURE_OUTPUT_DIR: ${{ runner.temp }}/minecraft-captures
         run: |
