@@ -16,7 +16,8 @@
     "bot-smoke": "tsx scripts/bot-actions-smoke.ts",
     "capture-smoke": "tsx scripts/capture-smoke.ts",
     "episode:plan": "tsx scripts/episode-plan.ts",
-    "pilot-session": "tsx scripts/pilot-agent-session.ts"
+    "pilot-session": "tsx scripts/pilot-agent-session.ts",
+    "world:reset": "tsx scripts/reset-minecraft-world.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",
