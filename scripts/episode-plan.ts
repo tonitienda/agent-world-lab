@@ -69,9 +69,9 @@ const voiceLines=[
  ...comments,
  {segmentIndex:segments.length-1,text:'What should we ask the next agent to try? Leave your prompts and scenarios in the comments.'}
 ];
-writeFileSync(join(out,'narration.txt'),voiceLines.map(line=>line.text).join('\\n')+'\\n');
+writeFileSync(join(out,'narration.txt'),voiceLines.map(line=>line.text).join('\n')+'\n');
 writeFileSync(join(out,'narration-manifest.json'),JSON.stringify(voiceLines.map((line,i)=>({
  line:i+1,segmentIndex:line.segmentIndex,text:line.text,audio:String(i+1).padStart(3,'0')+'.mp3'
-})),null,2)+'\\n');
+})),null,2)+'\n');
 console.log('Prepared',out,'using videos',lengths,'seconds; clips:',segments.length);
 console.log('Narration: one line per clip in production/generated/narration.txt. Export audio as 001.mp3, 002.mp3, etc.');
