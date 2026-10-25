@@ -1,4 +1,4 @@
-import {existsSync, mkdirSync, renameSync, readdirSync} from "node:fs";
+import {existsSync, mkdirSync, renameSync, readFileSync} from "node:fs";
 import {join, resolve} from "node:path";
 import {spawnSync} from "node:child_process";
 import {createConnection} from "node:net";
@@ -44,7 +44,9 @@ async function isPortOpen(port:number):Promise<boolean> {
 for(const port of [3007,3008]){
   if(await isPortOpen(port))throw Error(`Recorder viewer port ${port} is active. Finalize the MCP session before resetting the world.`);
 }
-if(process.env.EULA!=="TRUE"){
+const envFile=join(root,".env");
+const fileAccepted=existsSync(envFile) && /^\\s*EULA\\s*=\\s*["\x27]?TRUE["\x27]?\\s*$/m.test(readFileSync(envFile,"utf8"));
+if(process.env.EULA!=="TRUE" && !fileAccepted){
   throw Error("Set EULA=TRUE only after accepting Minecraft EULA. No server or data changed.");
 }
 // A fresh world from an entirely new /data folder also changes any custom server settings.
