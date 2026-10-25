@@ -71,7 +71,6 @@ jobs:
       RECORD_HEIGHT: '480'
       LIBGL_ALWAYS_SOFTWARE: '1'
       RECORD_DEBUG: '1'
-      CAPTURE_OUTPUT_DIR: ${{ runner.temp }}/minecraft-captures
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -86,13 +85,15 @@ jobs:
       - name: Start isolated Minecraft world
         run: docker compose up -d --wait --wait-timeout 300 minecraft
       - name: Record bot movement
+        env:
+          CAPTURE_OUTPUT_DIR: ${{ runner.temp }}/minecraft-captures
         run: |
           echo "DISPLAY=${DISPLAY:-unset}"; ffmpeg -version | head -n 2
           xvfb-run -a -s "-screen 0 1280x720x24" npm run capture-smoke
       - name: Validate recorded MP4 with ffprobe
         run: |
           set -euo pipefail
-          video=$(find "$CAPTURE_OUTPUT_DIR" -name bot.mp4 -type f -print -quit)
+          video=$(find "$RUNNER_TEMP/minecraft-captures" -name bot.mp4 -type f -print -quit)
           test -n "$video"
           ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,nb_frames -of json "$video"
           ffmpeg -v error -xerror -i "$video" -frames:v 1 -f null -
