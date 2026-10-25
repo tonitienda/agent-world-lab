@@ -1,8 +1,5 @@
 import {defineConfig} from 'vite';
 import motionCanvas from '@motion-canvas/vite-plugin';
-import {readdirSync, existsSync} from 'node:fs';
-const projects=readdirSync('production',{withFileTypes:true})
-  .filter(dir=>dir.isDirectory() && /^episode-/.test(dir.name))
-  .map(dir=>`./${dir.name}/project.ts`)
-  .filter(path=>existsSync('production/'+path.slice(2)));
-export default defineConfig({plugins:[motionCanvas({project:projects})]});
+const episode=process.env.EPISODE_ID??'episode-001';
+if(!/^episode-[a-zA-Z0-9-]+$/.test(episode))throw Error('Invalid EPISODE_ID');
+export default defineConfig({plugins:[motionCanvas({project:[`./${episode}/project.ts`]})]});
