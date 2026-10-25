@@ -46,4 +46,8 @@ try {
     process.exitCode = 1;
   }
   console.log("Session folder:", folder);
+  // The embedded Prismarine Viewer HTTP/WebSocket server retains event-loop
+  // handles after recording finishes. This script is a one-shot CI smoke test,
+  // so terminate it explicitly only after capture, events, and errors are saved.
+  process.exit(process.exitCode ?? 0);
 }
