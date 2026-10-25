@@ -34,23 +34,30 @@ async function invoke(action: string, args: Record<string, unknown>, fn: () => P
   }
 }
 function action(name: string, args: Record<string, unknown> = {}) {
-  return invoke(name, args, () => world.act(name, args));
+  // Intent is a public first-person comment by the agent, not private reasoning.
+  // Record it BEFORE executing the action so the editing timeline can align it.
+  const {intent, ...worldArgs} = args;
+  if (typeof intent === "string") {
+    events?.add("report_intention", {args: {summary: intent, action: name}});
+  }
+  return invoke(name, worldArgs, () => world.act(name, worldArgs));
 }
+const intent = z.string().min(3).max(300).describe("One short first-person sentence about what you are trying to do and why, for public narration. Avoid generic action descriptions.");
 
 server.registerTool("world_info", {description: "Discover the active world and available actions"}, () =>
   invoke("world_info", {}, async () => ({world: world.id, actions: world.capabilities})));
 server.registerTool("observe", {description: "Observe the agent's immediate surroundings"}, () =>
   invoke("observe", {}, () => world.observe()));
 server.registerTool("inventory", {description: "Inspect carried items"}, () => action("inventory"));
-server.registerTool("move_to", {description: "Move to nearby coordinates (maximum 24 blocks per request)", inputSchema: {x: z.number().int(), y: z.number().int(), z: z.number().int()}}, args => {
+server.registerTool("move_to", {description: "Move to nearby coordinates (maximum 24 blocks per request)", inputSchema: {x: z.number().int(), y: z.number().int(), z: z.number().int(), intent}}, args => {
   requireCapability(world, "move_to");
   return action("move_to", args);
 });
-server.registerTool("mine", {description: "Dig a reachable block", inputSchema: {x: z.number().int(), y: z.number().int(), z: z.number().int()}}, args => {
+server.registerTool("mine", {description: "Dig a reachable block", inputSchema: {x: z.number().int(), y: z.number().int(), z: z.number().int(), intent}}, args => {
   requireCapability(world, "mine");
   return action("mine", args);
 });
-server.registerTool("place", {description: "Place an inventory block at an empty target", inputSchema: {x: z.number().int(), y: z.number().int(), z: z.number().int(), item: z.string()}}, args => {
+server.registerTool("place", {description: "Place an inventory block at an empty target", inputSchema: {x: z.number().int(), y: z.number().int(), z: z.number().int(), item: z.string(), intent}}, args => {
   requireCapability(world, "place");
   return action("place", args);
 });

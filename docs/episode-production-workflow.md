@@ -13,14 +13,14 @@ This checklist is the expected process for each **Emergent** video. The agent's 
 
 1. Configure the harness's **stdio** MCP server with `RECORD_MP4=/absolute/path/to/data/mcp-sessions/<episode>/agent-pov.mp4`, unique `AGENT_ID`, and working directory pointing to this repo. The MCP process starts the Minecraft bot and both cameras.
 2. Start/restart the CLI harness after configuring MCP. Use `world_info` and `observe` to confirm the agent is connected.
-3. Tell the agent to call **`report_intention` before significant choices or strategy changes**, with a concise account of its current goal. This is a declared intention, *not* hidden model reasoning.
+3. Every **`move_to`**, **`mine`**, and **`place`** call now requires an **`intent`** sentence. The MCP server records that sentence automatically as `report_intention` before executing the action. The agent may still call `report_intention` explicitly for bigger strategy changes. This is declared public commentary, *not* hidden model reasoning.
 4. Let the agent use the Minecraft tools autonomously. Avoid coaching or altering the world after the run starts.
 5. Agent calls **`finish_session`** at the end; wait for both MP4 conversions to complete. SIGINT/SIGTERM to the MCP process is the fallback; do not SIGKILL.
 6. Save the harness's prompt and a brief run report (model, CLI version, exceptions, human interventions, approximate tokens if reported).
 
 ### Re-run Episode 001 prompt
 
-> You are an autonomous agent inside Minecraft. Explore your immediate surroundings, try to find something interesting, and collect it if safe. You have at most eight Minecraft action decisions; observations and inventory checks are allowed. Interact exclusively through agent-world MCP tools; do not edit the repository or run external commands to affect Minecraft. Before your initial action and whenever your objective or strategy changes, call `report_intention` with one or two sentences describing what you are trying to do and why, based on what you have observed. These are public summaries for viewers, not private reasoning. When finished, call `finish_session` and summarize the experiment.
+> You are an autonomous agent inside Minecraft. Explore your immediate surroundings, try to find something interesting, and collect it if safe. You have at most eight Minecraft action decisions; observations and inventory checks are allowed. Interact exclusively through agent-world MCP tools; do not edit the repository or run external commands to affect Minecraft. Include a brief, natural first-person `intent` sentence in **every movement, mining, or placement action** describing what you're trying to accomplish and why. Don't simply read tool names aloud. You may call `report_intention` separately when changing overall strategy. These statements are public summaries for viewers, not private reasoning. When finished, call `finish_session` and summarize the experiment.
 
 This repeat deliberately keeps the objective comparable to the first run. The new agent run is not guaranteed to repeat the same decisions.
 
