@@ -7,7 +7,7 @@ This checklist is the expected process for each **Emergent** video. The agent's 
 1. Create an episode ID (e.g., `episode-001-rerun`) and write the exact objective/prompt in `prompt.md`.
 2. Choose the model and CLI harness (Claude Code, Codex CLI, etc.) and record their versions, permitted tools, any turn/time budget, and Minecraft world configuration.
 3. Create a **fresh recording directory**. Do not overwrite the first attempt. Preserve the original run as a baseline.
-4. Start the Minecraft server with a positive-Y world and confirm `docker compose ps` reports healthy. Check the world before resetting any persistent volume.
+4. For an **isolated rerun**, first stop the old MCP session with `finish_session` and ensure camera MP4s are finalized. From the repo root, run `npm run world:reset` to preview the operation, then `npm run world:reset -- --yes` to archive the existing Minecraft server data and launch a fresh positive-Y superflat world. Set `EULA=TRUE` in `.env` after accepting the Minecraft EULA. The command stops the server but refuses to reset while default recorder ports 3007/3008 are active. Prior worlds are archived under `data/world-archives/<timestamp>/` and recordings under `data/mcp-sessions/` are untouched. The reset replaces the entire Minecraft server data directory, including configuration; archived data is preserved. Verify `docker compose ps` afterward.
 
 ## B. Capture the experiment
 
