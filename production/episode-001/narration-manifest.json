@@ -1,0 +1,44 @@
+[
+  {
+    "line": 1,
+    "segmentIndex": 0,
+    "text": "We gave Claude one simple goal in Minecraft: explore, find something interesting, and try to collect it.",
+    "audio": "001.mp3"
+  },
+  {
+    "line": 2,
+    "segmentIndex": 1,
+    "text": "Survey the area around spawn for anything other than plain grass, then safely collect one interesting block and describe it.",
+    "audio": "002.mp3"
+  },
+  {
+    "line": 3,
+    "segmentIndex": 2,
+    "text": "Spawn is a flat lawn of grass, so I'm heading east to see if the terrain changes.",
+    "audio": "003.mp3"
+  },
+  {
+    "line": 4,
+    "segmentIndex": 3,
+    "text": "East was the same flat grass, so I'm checking south of spawn for a change in terrain.",
+    "audio": "004.mp3"
+  },
+  {
+    "line": 5,
+    "segmentIndex": 4,
+    "text": "The surface is identical in every direction, so I'm lifting one grass block beside me to see what lies under this flat world.",
+    "audio": "005.mp3"
+  },
+  {
+    "line": 6,
+    "segmentIndex": 5,
+    "text": "The block I dug dropped into its own hole, so I'm stepping in to pick it up and see the layer beneath.",
+    "audio": "006.mp3"
+  },
+  {
+    "line": 7,
+    "segmentIndex": 6,
+    "text": "What should we ask the next agent to try? Leave your prompts and scenarios in the comments.",
+    "audio": "007.mp3"
+  }
+]\n

@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "title": "Emergent — Pilot episode",
+  "cameras": [
+    {
+      "id": "agent-pov",
+      "file": "agent-pov.mp4",
+      "offsetSeconds": 0
+    },
+    {
+      "id": "observer",
+      "file": "observer.mp4",
+      "offsetSeconds": -3.034
+    }
+  ],
+  "segments": [
+    {
+      "kind": "intro",
+      "duration": 7,
+      "text": "An AI agent enters Minecraft. What will it try?"
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "observer"
+        ],
+        "start": 22.811,
+        "duration": 9,
+        "label": "Agent commentary"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "observer"
+        ],
+        "start": 31.811,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "observer"
+        ],
+        "start": 40.811,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "pip",
+        "cameras": [
+          "agent-pov",
+          "observer"
+        ],
+        "start": 49.811,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "observer"
+        ],
+        "start": 59.955,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "outro",
+      "duration": 6,
+      "text": "What prompt or scenario should we try next? Leave a comment."
+    }
+  ]
+}
