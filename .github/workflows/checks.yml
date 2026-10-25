@@ -79,7 +79,7 @@ jobs:
       - name: Install headless graphics and video tooling
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb ffmpeg libgl1-mesa-dri libgbm1 libasound2t64
+          sudo apt-get install -y xvfb ffmpeg libgl1-mesa-dri libgbm1 libasound2t64 libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev pkg-config
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Start isolated Minecraft world
