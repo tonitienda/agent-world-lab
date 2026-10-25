@@ -22,63 +22,59 @@ async function start(bot, options) {
   if (!ground) throw new Error("Recorder cannot see terrain below bot after 15s; refusing blank video");
   await bot.look(bot.entity.yaw, 0.75, true);
   console.error("Recorder terrain loaded:", ground.name, "at", ground.position.toString());
-  viewer(bot, { port, firstPerson: true, viewDistance: 6 });
+  const views = [
+    { name: "agent-pov", port, firstPerson: true },
+    { name: "observer", port: port + 1, firstPerson: false }
+  ];
+  for (const view of views) viewer(bot, { port: view.port, firstPerson: view.firstPerson, viewDistance: 6 });
   const browser = await chromium.launch({
     headless: true,
     args: ["--enable-webgl", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--disable-dev-shm-usage"]
   });
-  let context;
+  const captures = [];
   try {
     mkdirSync(dirname(options.output), { recursive: true });
-    context = await browser.newContext({
-      viewport: { width: options.width, height: options.height },
-      recordVideo: { dir: dirname(options.output), size: { width: options.width, height: options.height } }
-    });
-    const page = await context.newPage();
-    page.on("websocket", ws => {
-      console.error("Viewer websocket:", ws.url());
-      const traffic = {};
-      const logFrame = (kind, frame) => {
-        const data = frame.payload;
-        const key = String(data).slice(0, 32);
-        traffic[kind] = (traffic[kind] || 0) + 1;
-        if (traffic[kind] <= 4) console.error("Viewer socket", kind, "bytes=", data.length, "prefix=", key);
-      };
-      ws.on("framereceived", frame => logFrame("received", frame));
-      ws.on("framesent", frame => logFrame("sent", frame));
-      ws.on("close", () => console.error("Viewer websocket closed; traffic:", traffic));
-    });
-    page.on("requestfailed", req => console.error("Viewer request failed:", req.url(), req.failure()));
-    page.on("console", m => { if (m.type() === "error") console.error("Viewer:", m.text()); });
-    page.on("pageerror", err => console.error("Viewer page:", err));
-    for (let attempt = 0; attempt < 20; attempt++) {
-      try { await page.goto(`http://127.0.0.1:${port}`, { waitUntil: "domcontentloaded", timeout: 3000 }); break; }
-      catch (e) { if (attempt === 19) throw e; await new Promise(r => setTimeout(r, 300)); }
+    // Start both browser views before the experiment advances.
+    for (const view of views) {
+      const context = await browser.newContext({
+        viewport: { width: options.width, height: options.height },
+        recordVideo: { dir: dirname(options.output), size: { width: options.width, height: options.height } }
+      });
+      captures.push({ ...view, context });
+      const page = await context.newPage();
+      captures[captures.length - 1].page = page;
+      page.on("console", m => { if (m.type() === "error") console.error(view.name, m.text()); });
+      page.on("pageerror", err => console.error(view.name, "page:", err));
+      await page.goto(`http://127.0.0.1:${view.port}`, { waitUntil: "domcontentloaded", timeout: 15000 });
+      await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
+      await page.waitForTimeout(3000);
+      await page.screenshot({ path: join(dirname(options.output), `${view.name}-debug.png`) });
+      console.error("Camera ready:", view.name, "on", view.port);
     }
-    await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
-    console.error("Browser Minecraft viewer recording:", options.output);
-    await page.waitForTimeout(3000);
-    console.error("Viewer canvas:", await page.locator("canvas").first().evaluate(c => {
-      const gl = c.getContext("webgl2") || c.getContext("webgl");
-      return { width:c.width, height:c.height, webgl: Boolean(gl),
-        renderer: gl?.getParameter(gl.RENDERER), viewport: gl?.getParameter(gl.VIEWPORT) };
-    }));
-    await page.screenshot({ path: join(dirname(options.output), "viewer-debug.png") });
+    const startedAt = new Date().toISOString();
+    require("node:fs").writeFileSync(join(dirname(options.output), "metadata.json"),
+      JSON.stringify({ startedAt, cameras: views.map(v => ({ name: v.name, port: v.port, firstPerson: v.firstPerson })),
+        dimensions: { width: options.width, height: options.height } }, null, 2));
     let stopped = false;
     return async () => {
       if (stopped) return;
       stopped = true;
-      const video = page.video();
-      await context.close(); // Playwright flushes the WebM only after closing.
-      const webm = join(dirname(options.output), "capture.webm");
-      await video.saveAs(webm);
-      await browser.close();
-      const ff = spawnSync("ffmpeg", ["-y", "-v", "error", "-i", webm, "-c:v", "libx264",
-        "-pix_fmt", "yuv420p", "-movflags", "+faststart", options.output], { encoding: "utf8" });
-      if (ff.status !== 0) throw new Error("FFmpeg MP4 conversion failed: " + ff.stderr);
+      try {
+        for (const capture of captures) {
+          const video = capture.page.video();
+          await capture.context.close();
+          const webm = join(dirname(options.output), `${capture.name}.webm`);
+          await video.saveAs(webm);
+          const mp4 = join(dirname(options.output), `${capture.name}.mp4`);
+          const ff = spawnSync("ffmpeg", ["-y", "-v", "error", "-i", webm, "-c:v", "libx264",
+            "-pix_fmt", "yuv420p", "-movflags", "+faststart", mp4], { encoding: "utf8" });
+          if (ff.status !== 0) throw new Error(`FFmpeg ${capture.name} failed: ${ff.stderr}`);
+          console.error("Camera saved:", mp4);
+        }
+      } finally { await browser.close(); }
     };
   } catch (error) {
-    if (context) await context.close().catch(() => {});
+    for (const capture of captures) await capture.context.close().catch(() => {});
     await browser.close();
     throw error;
   }
