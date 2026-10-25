@@ -68,7 +68,7 @@ export class MinecraftAdapter implements WorldAdapter {
         bot.once("error", reject);
         bot.once("end", () => reject(new Error("Disconnected before spawn")));
       }), 60000);
-      bot.pathfinder.setMovements(new Movements(bot));
+      // Spawn can fire before terrain packets finish arriving. Both navigation\n      // and the viewer require loaded chunks around the player.\n      await withTimeout(bot.waitForChunksToLoad(), 30000);\n      bot.pathfinder.setMovements(new Movements(bot));
       this.stopCapture = await enableCapture(bot);
     } catch (e) {
       bot.end();
