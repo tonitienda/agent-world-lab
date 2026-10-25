@@ -1,0 +1,12 @@
+{
+  "name": "@agent-world-lab/minecraft-recorder",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Isolated experimental native Minecraft capture backend",
+  "main": "index.cjs",
+  "dependencies": {
+    "prismarine-viewer": "^1.33.0",
+    "canvas": "^3.2.0",
+    "node-canvas-webgl": "0.2.6"
+  }
+}
