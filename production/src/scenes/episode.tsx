@@ -1,20 +1,22 @@
 import {makeScene2D, Rect, Txt, Video} from '@motion-canvas/2d';
-import {createRef, waitFor, all} from '@motion-canvas/core';
-import plan from '../../generated/edit-plan.json';
+import {createRef, waitFor} from '@motion-canvas/core';
 
-type Camera = {id:string; file:string; offsetSeconds?:number};
+export type Camera = {id:string; file:string; offsetSeconds?:number};
 type Shot = {kind:'full'|'split'|'pip'; cameras:string[]; start:number; duration:number; label?:string};
-type Segment = {kind:'intro'|'shot'|'outro'; duration:number; text?:string; shot?:Shot};
+export type Segment = {kind:'intro'|'shot'|'outro'; duration:number; text?:string; shot?:Shot};
 const width=1920, height=1080;
-const cameras = new Map((plan.cameras as Camera[]).map(c => [c.id, c]));
+export type EpisodePlan = {cameras: Camera[]; segments: Segment[]};
+
+export function createEpisodeScene(plan: EpisodePlan, episode: string) {
+const cameras = new Map(plan.cameras.map(c => [c.id, c]));
 const cameraOffset = (camera:string) => cameras.get(camera)?.offsetSeconds??0;
 const videoSrc = (camera:string) => {
   const config=cameras.get(camera);
   if (!config) throw new Error('Unknown camera '+camera);
-  return '/media/'+config.file;
+  return '/'+episode+'/video/'+config.file;
 };
 
-export default makeScene2D(function* (view) {
+return makeScene2D(function* (view) {
   view.fill('#0c1520');
   for (const segment of plan.segments as Segment[]) {
     const group=createRef<Rect>();
@@ -52,3 +54,4 @@ export default makeScene2D(function* (view) {
     group().remove();
   }
 });
+}

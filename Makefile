@@ -73,16 +73,16 @@ extract:
 		(echo "Missing agent-pov.mp4" && exit 1)
 	@test -f "$(SESSION_DIR)/observer.mp4" || \
 		(echo "Missing observer.mp4" && exit 1)
-	npm run episode:plan -- "$(SESSION_DIR)"
+	npm run episode:plan -- "$(SESSION_DIR)" "$(SESSION)"
 	@echo ""
 	@echo "Generated:"
-	@echo "  production/generated/narration.txt"
-	@echo "  production/generated/narration-manifest.json"
-	@echo "  production/generated/edit-plan.json"
+	@echo "  production/$(SESSION)/narration.txt"
+	@echo "  production/$(SESSION)/narration-manifest.json"
+	@echo "  production/$(SESSION)/edit-plan.json"
 	@echo ""
 	@echo "Generate ElevenLabs clips from narration.txt."
 	@echo "Save as 001.mp3, 002.mp3, etc. in:"
-	@echo "  production/generated/narration-audio/"
+	@echo "  production/public/$(SESSION)/audio/"
 
 # ------------------------------------------------------------
 # 4. Prepare and preview Motion Canvas
@@ -92,7 +92,7 @@ prepare:
 	cd production && npm install
 
 preview:
-	cd production && npm run dev
+	cd production && EPISODE_ID="$(SESSION)" npm run dev
 
 # ------------------------------------------------------------
 # 5. Generate the final video
@@ -100,7 +100,7 @@ preview:
 
 generate:
 	@mkdir -p "$(dir $(OUTPUT))"
-	EPISODE_MUSIC="$(MUSIC)" \
+	EPISODE_ID="$(SESSION)" EPISODE_MUSIC="$(MUSIC)" \
 		npm run episode:render-simple -- "$(OUTPUT)"
 	@echo ""
 	@echo "Generated: $(OUTPUT)"

@@ -7,12 +7,14 @@ type Camera={id:string;file:string;offsetSeconds?:number};
 type Segment={kind:"intro"|"outro"|"shot";duration:number;text?:string;shot?:{kind:string;cameras:string[];start:number;label?:string}};
 type Plan={cameras:Camera[];segments:Segment[]};
 const production=resolve("production");
-const generated=join(production,"generated");
+const episode=process.env.EPISODE_ID??"episode-001";
+if(!/^episode-[a-zA-Z0-9-]+$/.test(episode))throw Error("Invalid EPISODE_ID");
+const generated=join(production,episode);
 const plan=JSON.parse(readFileSync(join(generated,"edit-plan.json"),"utf8")) as Plan;
-const media=join(production,"public","media");
+const media=join(production,"public",episode,"video");
 const output=resolve(process.argv[2]??join(production,"output","episode-001.mp4"));
 const musicPath=process.env.EPISODE_MUSIC ? resolve(process.env.EPISODE_MUSIC) : undefined;
-const narrationDir=join(generated,"narration-audio");
+const narrationDir=join(production,"public",episode,"audio");
 const narrationManifest=join(generated,"narration-manifest.json");
 const lines=existsSync(narrationManifest)?JSON.parse(readFileSync(narrationManifest,"utf8")) as Array<{line:number;segmentIndex:number;audio:string}>:[];
 const temp=mkdtempSync(join(tmpdir(),"emergent-render-"));
@@ -56,7 +58,9 @@ try{
   }
   segments.push(path);
   for(const narration of lines.filter(line=>line.segmentIndex===index)){
-   const voice=join(narrationDir,narration.audio);
+   const preferred=join(narrationDir,narration.audio);
+   const elevenLabs=join(narrationDir,`${narration.line}_Chapter_1.wav`);
+   const voice=existsSync(preferred)?preferred:elevenLabs;
    if(existsSync(voice)){
     const length=probe(voice);
     if(length>seg.duration-0.6)console.warn(`Narration ${narration.audio} is longer than segment ${index}; review overlap/timing`);
