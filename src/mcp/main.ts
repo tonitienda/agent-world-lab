@@ -42,7 +42,9 @@ function action(name: string, args: Record<string, unknown> = {}) {
   }
   return invoke(name, worldArgs, () => world.act(name, worldArgs));
 }
-const intent = z.string().min(3).max(300).describe("One short first-person sentence about what you are trying to do and why, for public narration. Avoid generic action descriptions.");
+const intent = z.string().min(3).max(300).describe(
+  "You are speaking directly to viewers as the Minecraft agent. Write one natural, concise FIRST-PERSON sentence (roughly 8–25 words), suitable to read aloud. Describe what you noticed and what you will try next, or why it matters. Use 'I', not imperatives ('Survey the area'), task lists, coordinates, API names or tool names. Never invent results or claim an action succeeded before executing it. Vary phrasing and avoid repetitive 'I'm going to...' introductions. This is public commentary, not private reasoning. Example: 'Nothing has changed to the east, so I'll check beyond the trees.'"
+);
 
 server.registerTool("world_info", {description: "Discover the active world and available actions"}, () =>
   invoke("world_info", {}, async () => ({world: world.id, actions: world.capabilities})));
@@ -61,7 +63,7 @@ server.registerTool("place", {description: "Place an inventory block at an empty
   requireCapability(world, "place");
   return action("place", args);
 });
-server.registerTool("report_intention", {description: "State your current goal or short plan for the episode documentary. This records your stated intention, not private reasoning.", inputSchema: {summary: z.string().min(1).max(300)}}, async ({summary}) => {
+server.registerTool("report_intention", {description: "Speak briefly to viewers in first person about your observed situation, current goal or next experiment. Natural spoken commentary, not commands or private reasoning.", inputSchema: {summary: z.string().min(1).max(300)}}, async ({summary}) => {
   return invoke("report_intention", {summary}, async () => ({ok: true, message: "Intention logged", summary}));
 });
 server.registerTool("say", {description: "Send a local Minecraft chat message", inputSchema: {message: z.string().min(1).max(200)}}, args => {
