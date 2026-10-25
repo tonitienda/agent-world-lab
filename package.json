@@ -14,7 +14,8 @@
     "integration": "tsx scripts/integration.ts",
     "record": "tsx scripts/record-session.ts",
     "bot-smoke": "tsx scripts/bot-actions-smoke.ts",
-    "capture-smoke": "tsx scripts/capture-smoke.ts"
+    "capture-smoke": "tsx scripts/capture-smoke.ts",
+    "episode:plan": "tsx scripts/episode-plan.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",
