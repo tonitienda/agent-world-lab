@@ -101,7 +101,7 @@ jobs:
       - name: Validate recorded MP4 with ffprobe
         run: |
           set -euo pipefail
-          folder=$(find "$RUNNER_TEMP/minecraft-captures" -name metadata.json -type f -printf '%h\\n' -quit)
+          folder=$(find "$RUNNER_TEMP/minecraft-captures" -name metadata.json -type f -printf '%h' -quit)
           test -n "$folder"
           for camera in agent-pov observer; do
             video="$folder/$camera.mp4"
