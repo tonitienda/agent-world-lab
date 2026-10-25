@@ -23,7 +23,8 @@
     "vec3": "^0.1.10",
     "zod": "^3.25.0",
     "prismarine-viewer": "^1.33.0",
-    "canvas": "^3.2.0"
+    "canvas": "^3.2.0",
+    "node-canvas-webgl": "^0.2.6"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",
