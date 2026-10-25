@@ -57,12 +57,15 @@ jobs:
 
   minecraft-video:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 12
     env:
       EULA: 'TRUE'
       MC_VERSION: '1.21.4'
       MC_MEMORY: '2G'
       MC_LEVEL_TYPE: 'minecraft:flat'
+      # Viewer regression experiment: default superflat ground is below Y=0.
+      # 1 bedrock + 70 stone + 2 dirt + 1 grass => ground surface Y=9.
+      GENERATOR_SETTINGS: '{"biome":"minecraft:plains","layers":[{"block":"minecraft:bedrock","height":1},{"block":"minecraft:stone","height":70},{"block":"minecraft:dirt","height":2},{"block":"minecraft:grass_block","height":1}]}'
       MC_HOST: '127.0.0.1'
       MC_PORT: '25565'
       AGENT_ID: 'ci-camera-test'
@@ -70,7 +73,7 @@ jobs:
       RECORD_WIDTH: '854'
       RECORD_HEIGHT: '480'
       LIBGL_ALWAYS_SOFTWARE: '1'
-      CAPTURE_OUTPUT_DIR: ${{ runner.temp }}/minecraft-captures
+      RECORD_DEBUG: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -79,20 +82,30 @@ jobs:
       - name: Install headless graphics and video tooling
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb ffmpeg libgl1-mesa-dri libgbm1 libasound2t64
+          sudo apt-get install -y xvfb ffmpeg libgl1-mesa-dri libgbm1 libasound2t64 libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev pkg-config libxi-dev libxext-dev libgl1-mesa-dev xserver-xorg-dev
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Install isolated browser recorder
+        run: |
+          npm install --prefix packages/minecraft-recorder --no-audit --no-fund
+          npx --prefix packages/minecraft-recorder playwright install --with-deps chromium
       - name: Start isolated Minecraft world
         run: docker compose up -d --wait --wait-timeout 300 minecraft
       - name: Record bot movement
-        run: xvfb-run -a -s "-screen 0 1280x720x24" npm run capture-smoke
+        timeout-minutes: 3
+        env:
+          CAPTURE_OUTPUT_DIR: ${{ runner.temp }}/minecraft-captures
+        run: |
+          echo "DISPLAY=${DISPLAY:-unset}"; ffmpeg -version | head -n 2
+          npm run capture-smoke
       - name: Validate recorded MP4 with ffprobe
         run: |
           set -euo pipefail
-          video=$(find "$CAPTURE_OUTPUT_DIR" -name bot.mp4 -type f -print -quit)
+          video=$(find "$RUNNER_TEMP/minecraft-captures" -name bot.mp4 -type f -print -quit)
           test -n "$video"
           ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,nb_frames -of json "$video"
           ffmpeg -v error -xerror -i "$video" -frames:v 1 -f null -
+          python3 scripts/check-video.py "$video"
       - name: Upload video and session events
         if: always()
         uses: actions/upload-artifact@v4

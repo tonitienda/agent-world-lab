@@ -24,11 +24,14 @@ try {
   const observation = await world.observe() as { position: { x: number; y: number; z: number } };
   event("spawn", observation);
   const start = observation.position;
+  if (process.env.GENERATOR_SETTINGS) {
+    assert.ok(start.y > 0, `Expected positive-Y capture test terrain, spawned at Y=${start.y}; verify generator-settings forwarding`);
+  }
   const target = { x: Math.floor(start.x) + 3, y: Math.floor(start.y), z: Math.floor(start.z) };
   const moved = await world.act("move_to", target);
   event("move_to", { target, result: moved });
   assert.equal(moved.ok, true, moved.message);
-  await delay(16000); // Give the finite-frame headless renderer time to flush.
+  await delay(10000); // Capture a short clip after movement.
   event("finished", await world.observe());
 } catch (error) {
   event("error", String(error));
@@ -46,4 +49,8 @@ try {
     process.exitCode = 1;
   }
   console.log("Session folder:", folder);
+  // The embedded Prismarine Viewer HTTP/WebSocket server retains event-loop
+  // handles after recording finishes. This script is a one-shot CI smoke test,
+  // so terminate it explicitly only after capture, events, and errors are saved.
+  process.exit(process.exitCode ?? 0);
 }
