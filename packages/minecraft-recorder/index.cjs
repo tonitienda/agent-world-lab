@@ -20,7 +20,7 @@ async function start(bot, options) {
     await new Promise(resolve => setTimeout(resolve, 500));
   }
   if (!ground) throw new Error("Recorder cannot see terrain below bot after 15s; refusing blank video");
-  await bot.look(bot.entity.yaw, 0.75, true);
+  // Do not force a downward look at startup: agent POV should follow its natural view.
   console.error("Recorder terrain loaded:", ground.name, "at", ground.position.toString());
   const views = [
     { name: "agent-pov", port, firstPerson: true },
@@ -32,6 +32,7 @@ async function start(bot, options) {
     args: ["--enable-webgl", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--disable-dev-shm-usage"]
   });
   const captures = [];
+  const cameraTimings = [];
   try {
     mkdirSync(dirname(options.output), { recursive: true });
     // Start both browser views before the experiment advances.
@@ -42,18 +43,19 @@ async function start(bot, options) {
       });
       captures.push({ ...view, context });
       const page = await context.newPage();
+      const captureOpenedAt = new Date().toISOString();
       captures[captures.length - 1].page = page;
       page.on("console", m => { if (m.type() === "error") console.error(view.name, m.text()); });
       page.on("pageerror", err => console.error(view.name, "page:", err));
       await page.goto(`http://127.0.0.1:${view.port}`, { waitUntil: "domcontentloaded", timeout: 15000 });
       await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
-      await page.waitForTimeout(3000);
+      // The third-person page uses OrbitControls. Zoom toward the bot using\n      // wheel input before recording the experiment; POV is unaffected.\n      if (!view.firstPerson) {\n        const canvas = page.locator("canvas").first();\n        await canvas.hover();\n        for (let n = 0; n < 5; n++) await page.mouse.wheel(0, -300);\n        await page.waitForTimeout(600);\n      }\n      await page.waitForTimeout(2400);
       await page.screenshot({ path: join(dirname(options.output), `${view.name}-debug.png`) });
-      console.error("Camera ready:", view.name, "on", view.port);
+      const readyAt = new Date().toISOString();\n      cameraTimings.push({name: view.name, captureOpenedAt, readyAt});\n      console.error("Camera ready:", view.name, "on", view.port);
     }
     const startedAt = new Date().toISOString();
     require("node:fs").writeFileSync(join(dirname(options.output), "metadata.json"),
-      JSON.stringify({ startedAt, cameras: views.map(v => ({ name: v.name, port: v.port, firstPerson: v.firstPerson })),
+      JSON.stringify({ startedAt, cameraTimings, synchronization: "approximate (video capture may start after page creation)", cameras: views.map(v => ({ name: v.name, port: v.port, firstPerson: v.firstPerson })),
         dimensions: { width: options.width, height: options.height } }, null, 2));
     let stopped = false;
     return async () => {
