@@ -1,4 +1,49 @@
-// Loaded only when RECORD_MP4 is set. Dependencies are installed locally in
-// this package so core tests and Minecraft actions never install native GL.
-const { headless } = require("prismarine-viewer");
-module.exports = { start(bot, options) { return headless(bot, options); } };
+const { mineflayer: viewer } = require("prismarine-viewer");
+const { chromium } = require("playwright");
+const { spawnSync } = require("node:child_process");
+const { mkdirSync } = require("node:fs");
+const { dirname, join } = require("node:path");
+
+async function start(bot, options) {
+  const port = Number(process.env.RECORD_VIEWER_PORT || 3007);
+  viewer(bot, { port, firstPerson: false, viewDistance: 6 });
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--enable-webgl", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--disable-dev-shm-usage"]
+  });
+  let context;
+  try {
+    mkdirSync(dirname(options.output), { recursive: true });
+    context = await browser.newContext({
+      viewport: { width: options.width, height: options.height },
+      recordVideo: { dir: dirname(options.output), size: { width: options.width, height: options.height } }
+    });
+    const page = await context.newPage();
+    page.on("console", m => { if (m.type() === "error") console.error("Viewer:", m.text()); });
+    page.on("pageerror", err => console.error("Viewer page:", err));
+    for (let attempt = 0; attempt < 20; attempt++) {
+      try { await page.goto(`http://127.0.0.1:${port}`, { waitUntil: "domcontentloaded", timeout: 3000 }); break; }
+      catch (e) { if (attempt === 19) throw e; await new Promise(r => setTimeout(r, 300)); }
+    }
+    await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
+    console.error("Browser Minecraft viewer recording:", options.output);
+    let stopped = false;
+    return async () => {
+      if (stopped) return;
+      stopped = true;
+      const video = page.video();
+      await context.close(); // Playwright flushes the WebM only after closing.
+      const webm = join(dirname(options.output), "capture.webm");
+      await video.saveAs(webm);
+      await browser.close();
+      const ff = spawnSync("ffmpeg", ["-y", "-v", "error", "-i", webm, "-c:v", "libx264",
+        "-pix_fmt", "yuv420p", "-movflags", "+faststart", options.output], { encoding: "utf8" });
+      if (ff.status !== 0) throw new Error("FFmpeg MP4 conversion failed: " + ff.stderr);
+    };
+  } catch (error) {
+    if (context) await context.close().catch(() => {});
+    await browser.close();
+    throw error;
+  }
+}
+module.exports = { start };
