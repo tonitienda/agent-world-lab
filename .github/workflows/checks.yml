@@ -75,19 +75,17 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - name: Install headless graphics and video tooling
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb ffmpeg libgl1-mesa-dri libgbm1 libasound2t64 libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev pkg-config libxi-dev libxext-dev libgl1-mesa-dev xserver-xorg-dev
       - name: Install dependencies
         run: npm install --no-audit --no-fund
-      - name: Install isolated video renderer dependencies
-        env:
-          # Old ANGLE headers in gl refer to uintptr_t without including stdint.
-          # Force-include it for native C++ compilation; isolated to video job.
-          CXXFLAGS: '-include cstdint'
-        run: npm install --prefix packages/minecraft-recorder --no-audit --no-fund
+      - name: Install isolated browser recorder
+        run: |
+          npm install --prefix packages/minecraft-recorder --no-audit --no-fund
+          npx --prefix packages/minecraft-recorder playwright install --with-deps chromium
       - name: Start isolated Minecraft world
         run: docker compose up -d --wait --wait-timeout 300 minecraft
       - name: Record bot movement
@@ -95,7 +93,7 @@ jobs:
           CAPTURE_OUTPUT_DIR: ${{ runner.temp }}/minecraft-captures
         run: |
           echo "DISPLAY=${DISPLAY:-unset}"; ffmpeg -version | head -n 2
-          xvfb-run -a -s "-screen 0 1280x720x24" npm run capture-smoke
+          npm run capture-smoke
       - name: Validate recorded MP4 with ffprobe
         run: |
           set -euo pipefail
