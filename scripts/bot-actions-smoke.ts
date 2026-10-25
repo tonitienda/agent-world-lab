@@ -57,7 +57,8 @@ try {
   assert.ok(inventory.some(i => i.name === "dirt" && i.count > 0),
     `Mined drop was not collected: ${JSON.stringify(inventory)}`);
 
-  // Step away to avoid placing into the bot's collision volume.
+  // First climb to an adjacent surface block; a distant diagonal route can stall.
+  assertOk(await world.act("move_to", { x: target.x, y: feetY, z: target.z + 1 }), "climb from hole");
   assertOk(await world.act("move_to", { x: target.x + 2, y: feetY, z: target.z + 1 }), "move from hole");
   assertOk(await world.act("place", { ...target, item: "dirt" }), "place");
   const restored = await world.observe() as Observation;
