@@ -7,7 +7,7 @@ import { createWorld } from "../src/environments/index.js";
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 const folder = join(process.env.CAPTURE_OUTPUT_DIR ?? join("data", "captures"), timestamp);
 mkdirSync(folder, { recursive: true });
-const output = join(folder, "bot.mp4");
+const output = join(folder, "agent-pov.mp4");
 process.env.RECORD_MP4 = output;
 process.env.RECORD_FRAMES = process.env.RECORD_FRAMES ?? "240";
 process.env.RECORD_WIDTH = process.env.RECORD_WIDTH ?? "854";
@@ -40,13 +40,12 @@ try {
 } finally {
   await world.close();
   writeFileSync(join(folder, "events.json"), JSON.stringify(events, null, 2) + "\n");
-  if (existsSync(output)) {
-    const bytes = statSync(output).size;
-    console.log(`Video artifact: ${output} (${bytes} bytes)`);
-    if (bytes === 0) process.exitCode = 1;
-  } else {
-    console.error("No video file produced. Check graphics/ffmpeg dependencies and prismarine-viewer logs.");
-    process.exitCode = 1;
+  for (const name of ["agent-pov", "observer"]) {
+    const file = join(folder, `${name}.mp4`);
+    if (!existsSync(file) || statSync(file).size === 0) {
+      console.error("Missing or empty camera recording:", file);
+      process.exitCode = 1;
+    } else console.log("Video artifact:", file, statSync(file).size, "bytes");
   }
   console.log("Session folder:", folder);
   // The embedded Prismarine Viewer HTTP/WebSocket server retains event-loop
