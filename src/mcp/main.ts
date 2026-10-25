@@ -54,6 +54,9 @@ server.registerTool("place", {description: "Place an inventory block at an empty
   requireCapability(world, "place");
   return action("place", args);
 });
+server.registerTool("report_intention", {description: "State your current goal or short plan for the episode documentary. This records your stated intention, not private reasoning.", inputSchema: {summary: z.string().min(1).max(300)}}, async ({summary}) => {
+  return invoke("report_intention", {summary}, async () => ({ok: true, message: "Intention logged", summary}));
+});
 server.registerTool("say", {description: "Send a local Minecraft chat message", inputSchema: {message: z.string().min(1).max(200)}}, args => {
   requireCapability(world, "say");
   return action("say", args);
