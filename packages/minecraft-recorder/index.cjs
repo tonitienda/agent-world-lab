@@ -49,9 +49,19 @@ async function start(bot, options) {
       page.on("pageerror", err => console.error(view.name, "page:", err));
       await page.goto(`http://127.0.0.1:${view.port}`, { waitUntil: "domcontentloaded", timeout: 15000 });
       await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
-      // The third-person page uses OrbitControls. Zoom toward the bot using\n      // wheel input before recording the experiment; POV is unaffected.\n      if (!view.firstPerson) {\n        const canvas = page.locator("canvas").first();\n        await canvas.hover();\n        for (let n = 0; n < 5; n++) await page.mouse.wheel(0, -300);\n        await page.waitForTimeout(600);\n      }\n      await page.waitForTimeout(2400);
+      // The third-person page uses OrbitControls. Zoom toward the bot using
+      // wheel input before recording the experiment; POV is unaffected.
+      if (!view.firstPerson) {
+        const canvas = page.locator("canvas").first();
+        await canvas.hover();
+        for (let n = 0; n < 5; n++) await page.mouse.wheel(0, -300);
+        await page.waitForTimeout(600);
+      }
+      await page.waitForTimeout(2400);
       await page.screenshot({ path: join(dirname(options.output), `${view.name}-debug.png`) });
-      const readyAt = new Date().toISOString();\n      cameraTimings.push({name: view.name, captureOpenedAt, readyAt});\n      console.error("Camera ready:", view.name, "on", view.port);
+      const readyAt = new Date().toISOString();
+      cameraTimings.push({name: view.name, captureOpenedAt, readyAt});
+      console.error("Camera ready:", view.name, "on", view.port);
     }
     const startedAt = new Date().toISOString();
     require("node:fs").writeFileSync(join(dirname(options.output), "metadata.json"),
