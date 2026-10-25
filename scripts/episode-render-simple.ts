@@ -12,9 +12,9 @@ const plan=JSON.parse(readFileSync(join(generated,"edit-plan.json"),"utf8")) as 
 const media=join(production,"public","media");
 const output=resolve(process.argv[2]??join(production,"output","episode-001.mp4"));
 const musicPath=process.env.EPISODE_MUSIC ? resolve(process.env.EPISODE_MUSIC) : undefined;
-const narrationDir=join(generated,"narration");
+const narrationDir=join(generated,"narration-audio");
 const narrationManifest=join(generated,"narration-manifest.json");
-const lines=existsSync(narrationManifest)?JSON.parse(readFileSync(narrationManifest,"utf8")) as Array<{id:string;audio:string}>:[];
+const lines=existsSync(narrationManifest)?JSON.parse(readFileSync(narrationManifest,"utf8")) as Array<{line:number;segmentIndex:number;audio:string}>:[];
 const temp=mkdtempSync(join(tmpdir(),"emergent-render-"));
 mkdirSync(resolve(output,".."),{recursive:true});
 function ffmpeg(args:string[]){
@@ -55,8 +55,7 @@ try{
    ffmpeg(["-f","lavfi","-i","color=c=0x10212b:s=1920x1080:r=30","-t",seconds(seg.duration),"-vf",`drawtext=textfile='${card.replaceAll("'","\\'")}':fontcolor=white:fontsize=54:line_spacing=18:x=(w-text_w)/2:y=(h-text_h)/2`,...common]);
   }
   segments.push(path);
-  const narration=lines[index];
-  if(narration){
+  for(const narration of lines.filter(line=>line.segmentIndex===index)){
    const voice=join(narrationDir,narration.audio);
    if(existsSync(voice)){
     const length=probe(voice);

@@ -43,14 +43,14 @@ npm install
 npm run dev
 ```
 
-This creates `production/generated/edit-plan.json`, copies camera assets into `production/public/media/`, and produces individual `.txt` narration files and `narration-manifest.json`.
+This creates `production/generated/edit-plan.json`, copies camera assets into `production/public/media/`, and produces one `narration.txt` (one sentence per line) and `narration-manifest.json`.
 
 In the Motion Canvas editor, review the visual chronology: intro, observer establishing shot, selected POV closeups or split/PiP for interactions, and the reusable outro. Check every transition against the actual events. Do **not** pretend there are multiple independent agents when two cameras are showing the same bot.
 
 ## E. Write and record narration
 
-1. Edit the generated `production/generated/narration/*.txt` drafts. Distinguish what the agent **said it intended** from what the observer **infers**.
-2. Generate **one voice file per sentence** in ElevenLabs, retaining stable filename IDs from `narration-manifest.json`. Listen for pronunciation and pacing.
+1. Review `production/generated/narration.txt`. The agent's first-person `report_intention` statements are the primary commentary; edit for clarity without adding claims the agent never made. Intro/outro remain neutral.
+2. Generate **one voice file per line** in ElevenLabs, numbered `001.mp3`, `002.mp3`, etc. Store them under `production/generated/narration-audio/` and check the mapping in `narration-manifest.json`. Listen for pronunciation and pacing.
 3. Keep a consistent licensed background music asset and reusable outro; lower music while narration plays.
 4. **Current limitation:** Automatic audio placement, ducking and final MP4 export are not implemented in this repository. Assemble the narration/music manually until a later verified production PR adds them. Do not treat Motion Canvas preview as the finished master.
 

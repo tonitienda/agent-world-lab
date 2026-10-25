@@ -18,18 +18,18 @@ npm run episode:plan -- data/mcp-sessions/episode-001-rerun
 
 Review `production/generated/edit-plan.json`. It is an **initial proposal**. Check camera offsets and event positions against the footage, then edit the shot start times and durations. A shorter edit is better than lingering on inactive footage. Keep the first run's original prompt and the exact model/harness name in the episode description.
 
-Edit the generated `production/generated/narration/*.txt` files. The planner generates generic commentary that must be revised against the actual events; it does not know the model's private reasoning. Use `report_intention` output to quote its stated goals where available.
+The planner generates **one file**, `production/generated/narration.txt`, with **one spoken sentence per line**. The intro/outro are neutral, while the commentary comes from the agent's explicit `report_intention` MCP calls. The system does not narrate boring tool calls such as “the agent moves to another position,” nor does it invent private reasoning. Review each line for clarity and whether it matches what appears onscreen.
 
-Generate **one MP3 per text file** with ElevenLabs, next to the text, using the filename specified in `narration-manifest.json`:
+Generate **one MP3 per line** in ElevenLabs, in the same order, naming them `001.mp3`, `002.mp3`, etc. Place them in `production/generated/narration-audio/`. The `narration-manifest.json` maps each line to the corresponding edit segment.
 
 ```text
-production/generated/narration/
-  001-intro.txt
-  001-intro.mp3
-  001-commentary.txt
-  001-commentary.mp3
-  999-outro.txt
-  999-outro.mp3
+production/generated/
+  narration.txt
+  narration-manifest.json
+  narration-audio/
+    001.mp3
+    002.mp3
+    003.mp3
 ```
 
 Run a first cut:

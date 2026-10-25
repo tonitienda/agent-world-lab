@@ -32,7 +32,7 @@ const usable=Math.min(...lengths.map((len,i)=>len-offsets[i]));
 if(usable-clipFloor<3)throw Error('Recordings too short for episode');
 for(const name of names)copyFileSync(join(session,name+'.mp4'),join(media,name+'.mp4'));
 const segments:any[]=[{kind:'intro',duration:7,text:'An AI agent enters Minecraft. What will it try?'}];
-const comments:Array<{id:string;text:string;at:number}>=[];
+const comments:Array<{segmentIndex:number;text:string;at:number}>=[];
 const startTime=origin;
 const timed=events.map((e,i)=>{
  const raw=e.kind??e.action??'event';
@@ -42,7 +42,7 @@ const timed=events.map((e,i)=>{
 }).filter(e=>Number.isFinite(e.second)&&e.second>=clipFloor&&e.second<usable);
 let selected=timed.filter(e=>/report_intention|decision|move_to$|mine$|place$|error|finished|spawn/i.test(e.kind));
 if(selected.length===0)selected=timed;
-let last=clipFloor,idx=1;
+let last=clipFloor;
 for(const e of selected.slice(0,6)){
  const clipStart=Math.max(last,Math.min(usable-2,e.second));
  const duration=Math.min(5,usable-clipStart);
@@ -50,20 +50,28 @@ for(const e of selected.slice(0,6)){
  const interaction=/mine|place|result|error/i.test(e.kind);
  const layout=interaction?'pip':'full';
  segments.push({kind:'shot',duration,shot:{kind:layout,cameras:interaction?['agent-pov','observer']:['observer'],start:clipStart,duration,label:e.kind}});
- const sentence=e.kind==='report_intention'?
- 'The agent reports: '+String(e.detail.args?.summary??'').slice(0,200):
- e.kind==='error'?'The agent encounters a problem.':/mine|place/.test(e.kind)?'The agent attempts to interact with the world.':/move/.test(e.kind)?'The agent moves to another position.':'The agent observes and chooses its next action.';
- comments.push({id:String(idx++).padStart(3,'0'),text:sentence,at:e.second});
+ // Let the agent speak in its own words, rather than inventing commentary.
+ // These are public, deliberately brief statements recorded by report_intention.
+ if(e.kind==='report_intention'){
+   const summary=String(e.detail.args?.summary??'').trim();
+   if(summary)comments.push({segmentIndex:segments.length-1,text:summary.slice(0,300),at:e.second});
+ }
  last=clipStart+duration;
 }
 if(segments.length===1)segments.push({kind:'shot',duration:Math.min(usable-clipFloor,8),shot:{kind:'split',cameras:names,start:clipFloor,duration:Math.min(usable-clipFloor,8)}});
 segments.push({kind:'outro',duration:6,text:'What prompt or scenario should we try next? Leave a comment.'});
 const plan={version:1,title:'Emergent — Pilot episode',cameras:names.map(id=>({id,file:id+'.mp4',offsetSeconds:offsets[names.indexOf(id)]})),segments};
 writeFileSync(join(out,'edit-plan.json'),JSON.stringify(plan,null,2)+'\n');
-const text=['001-intro.txt',...comments.map(c=>c.id+'-commentary.txt'),'999-outro.txt'];
-const narrative=['We gave an AI agent a simple goal in Minecraft. Let us see what happens.',...comments.map(c=>c.text),'What prompt or scenario should we try next? Leave a comment.'];
-const narration=join(out,'narration');mkdirSync(narration,{recursive:true});
-text.forEach((name,i)=>writeFileSync(join(narration,name),narrative[i]+'\n'));
-writeFileSync(join(out,'narration-manifest.json'),JSON.stringify(text.map((name,i)=>({id:name.replace('.txt',''),text:narrative[i],audio:name.replace('.txt','.mp3')})),null,2)+'\n');
+// One text file: one spoken line per segment that calls for narration.
+// IDs match ElevenLabs batch output 001.mp3, 002.mp3, etc.
+const voiceLines=[
+ {segmentIndex:0,text:'We gave Claude one simple goal in Minecraft: explore, find something interesting, and try to collect it.'},
+ ...comments,
+ {segmentIndex:segments.length-1,text:'What should we ask the next agent to try? Leave your prompts and scenarios in the comments.'}
+];
+writeFileSync(join(out,'narration.txt'),voiceLines.map(line=>line.text).join('\\n')+'\\n');
+writeFileSync(join(out,'narration-manifest.json'),JSON.stringify(voiceLines.map((line,i)=>({
+ line:i+1,segmentIndex:line.segmentIndex,text:line.text,audio:String(i+1).padStart(3,'0')+'.mp3'
+})),null,2)+'\\n');
 console.log('Prepared',out,'using videos',lengths,'seconds; clips:',segments.length);
-console.log('Narration sentences are editable drafts. Generate MP3s separately in ElevenLabs.');
+console.log('Narration: one line per clip in production/generated/narration.txt. Export audio as 001.mp3, 002.mp3, etc.');
