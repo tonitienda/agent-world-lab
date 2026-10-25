@@ -101,11 +101,15 @@ jobs:
       - name: Validate recorded MP4 with ffprobe
         run: |
           set -euo pipefail
-          video=$(find "$RUNNER_TEMP/minecraft-captures" -name bot.mp4 -type f -print -quit)
-          test -n "$video"
-          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,nb_frames -of json "$video"
-          ffmpeg -v error -xerror -i "$video" -frames:v 1 -f null -
-          python3 scripts/check-video.py "$video"
+          folder=$(find "$RUNNER_TEMP/minecraft-captures" -name metadata.json -type f -printf '%h\\n' -quit)
+          test -n "$folder"
+          for camera in agent-pov observer; do
+            video="$folder/$camera.mp4"
+            test -s "$video"
+            ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,nb_frames -of json "$video"
+            ffmpeg -v error -xerror -i "$video" -frames:v 1 -f null -
+            python3 scripts/check-video.py "$video"
+          done
       - name: Upload video and session events
         if: always()
         uses: actions/upload-artifact@v4
