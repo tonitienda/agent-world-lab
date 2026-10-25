@@ -35,7 +35,19 @@ async function start(bot, options) {
       recordVideo: { dir: dirname(options.output), size: { width: options.width, height: options.height } }
     });
     const page = await context.newPage();
-    page.on("websocket", ws => { console.error("Viewer websocket:", ws.url()); ws.on("close", () => console.error("Viewer websocket closed")); });
+    page.on("websocket", ws => {
+      console.error("Viewer websocket:", ws.url());
+      const traffic = {};
+      const logFrame = (kind, frame) => {
+        const data = frame.payload;
+        const key = String(data).slice(0, 32);
+        traffic[kind] = (traffic[kind] || 0) + 1;
+        if (traffic[kind] <= 4) console.error("Viewer socket", kind, "bytes=", data.length, "prefix=", key);
+      };
+      ws.on("framereceived", frame => logFrame("received", frame));
+      ws.on("framesent", frame => logFrame("sent", frame));
+      ws.on("close", () => console.error("Viewer websocket closed; traffic:", traffic));
+    });
     page.on("requestfailed", req => console.error("Viewer request failed:", req.url(), req.failure()));
     page.on("console", m => { if (m.type() === "error") console.error("Viewer:", m.text()); });
     page.on("pageerror", err => console.error("Viewer page:", err));
@@ -46,7 +58,11 @@ async function start(bot, options) {
     await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
     console.error("Browser Minecraft viewer recording:", options.output);
     await page.waitForTimeout(3000);
-    console.error("Viewer canvas:", await page.locator("canvas").first().evaluate(c => ({width:c.width, height:c.height})));
+    console.error("Viewer canvas:", await page.locator("canvas").first().evaluate(c => {
+      const gl = c.getContext("webgl2") || c.getContext("webgl");
+      return { width:c.width, height:c.height, webgl: Boolean(gl),
+        renderer: gl?.getParameter(gl.RENDERER), viewport: gl?.getParameter(gl.VIEWPORT) };
+    }));
     await page.screenshot({ path: join(dirname(options.output), "viewer-debug.png") });
     let stopped = false;
     return async () => {
