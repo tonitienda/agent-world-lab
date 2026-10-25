@@ -105,6 +105,10 @@ server.registerTool("finish_session", {description: "End this agent experiment a
 
 async function main() {
   await world.connect();
+  // Audit the starting state: mining a block does not guarantee its drop was collected.
+  // This makes a stale player inventory visible in the session record immediately.
+  const initialInventory = await world.act("inventory", {});
+  events?.add("inventory_initial", {result: initialInventory});
   events?.add("recording_ready", {output: destination});
   const transport = new StdioServerTransport();
   await server.connect(transport);
