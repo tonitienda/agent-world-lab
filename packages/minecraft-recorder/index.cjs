@@ -6,6 +6,12 @@ const { dirname, join } = require("node:path");
 
 async function start(bot, options) {
   const port = Number(process.env.RECORD_VIEWER_PORT || 3007);
+  // First-person on a flat world can show only horizon/sky when level.
+  // Tilt toward blocks beneath and ahead of the bot before rendering.
+  await bot.look(bot.entity.yaw, 0.75, true);
+  console.error("Recorder bot pose:", JSON.stringify({position: bot.entity.position, yaw: bot.entity.yaw, pitch: bot.entity.pitch}));
+  const below = bot.blockAt(bot.entity.position.offset(0, -1, 0));
+  console.error("Recorder ground:", below?.name ?? "not loaded");
   viewer(bot, { port, firstPerson: true, viewDistance: 6 });
   const browser = await chromium.launch({
     headless: true,
