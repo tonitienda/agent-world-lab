@@ -33,6 +33,7 @@ async function start(bot, options) {
   });
   const captures = [];
   const cameraTimings = [];
+  const inventoryTimers = [];
   try {
     mkdirSync(dirname(options.output), { recursive: true });
     // Start both browser views before the experiment advances.
@@ -49,6 +50,51 @@ async function start(bot, options) {
       page.on("pageerror", err => console.error(view.name, "page:", err));
       await page.goto(`http://127.0.0.1:${view.port}`, { waitUntil: "domcontentloaded", timeout: 15000 });
       await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
+      // Prismarine Viewer only renders the 3D world. Overlay the *actual*
+      // Mineflayer inventory on each video, updating while recording.
+      // The panel is browser UI, not a fake Minecraft inventory screen.
+      await page.evaluate(() => {
+        const hud = document.createElement("div");
+        hud.id = "emergent-inventory";
+        Object.assign(hud.style, {
+          position: "fixed", top: "18px", left: "18px", minWidth: "210px",
+          maxWidth: "400px", zIndex: "2147483647", color: "#fff",
+          background: "rgba(9, 18, 27, 0.84)", border: "1px solid #8cb8c3",
+          borderRadius: "10px", padding: "11px 15px", pointerEvents: "none",
+          fontFamily: "system-ui, sans-serif", fontSize: "19px",
+          boxShadow: "0 3px 16px rgba(0, 0, 0, .35)"
+        });
+        hud.innerHTML = '<div style="font-size:13px;letter-spacing:2px;color:#93cad5;margin-bottom:5px">INVENTORY</div><div id="emergent-items">Empty</div>';
+        document.body.appendChild(hud);
+      });
+      let previousInventory = "";
+      const updateHud = async () => {
+        if (page.isClosed()) return;
+        const items = bot.inventory.items().map(item => ({ name: item.name, count: item.count }));
+        const fingerprint = JSON.stringify(items);
+        if (fingerprint === previousInventory) return;
+        const changed = previousInventory !== "";
+        previousInventory = fingerprint;
+        await page.evaluate(({ items, changed }) => {
+          const hud = document.getElementById("emergent-inventory");
+          const target = document.getElementById("emergent-items");
+          if (!target || !hud) return;
+          target.replaceChildren();
+          if (!items.length) target.textContent = "Empty";
+          for (const item of items) {
+            const row = document.createElement("div");
+            row.textContent = item.name.replaceAll("_", " ") + " × " + item.count;
+            target.appendChild(row);
+          }
+          if (changed) {
+            hud.style.borderColor = "#ffe39b";
+            setTimeout(() => { hud.style.borderColor = "#8cb8c3"; }, 1000);
+          }
+        }, { items, changed }).catch(error => console.error("Inventory overlay failed:", String(error)));
+      };
+      await updateHud();
+      const timer = setInterval(() => { void updateHud(); }, 250);
+      inventoryTimers.push(timer);
       // The third-person page uses OrbitControls. Zoom toward the bot using
       // wheel input before recording the experiment; POV is unaffected.
       if (!view.firstPerson) {
@@ -72,6 +118,7 @@ async function start(bot, options) {
       if (stopped) return;
       stopped = true;
       try {
+        inventoryTimers.forEach(clearInterval);
         for (const capture of captures) {
           const video = capture.page.video();
           await capture.context.close();
@@ -86,6 +133,7 @@ async function start(bot, options) {
       } finally { await browser.close(); }
     };
   } catch (error) {
+    inventoryTimers.forEach(clearInterval);
     for (const capture of captures) await capture.context.close().catch(() => {});
     await browser.close();
     throw error;
