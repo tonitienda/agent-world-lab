@@ -6,12 +6,22 @@ const { dirname, join } = require("node:path");
 
 async function start(bot, options) {
   const port = Number(process.env.RECORD_VIEWER_PORT || 3007);
-  // First-person on a flat world can show only horizon/sky when level.
-  // Tilt toward blocks beneath and ahead of the bot before rendering.
+  // Verify that Mineflayer can access terrain, not merely that spawn fired.
+  // A WebSocket/canvas with no chunks produces an entirely blue recording.
+  const pos = bot.entity.position.floored();
+  let ground;
+  for (let attempt = 0; attempt < 30; attempt++) {
+    ground = bot.blockAt(pos.offset(0, -1, 0));
+    if (ground) break;
+    if (attempt % 5 === 0) console.error("Waiting for recorder terrain", {
+      attempt, position: pos.toString(), dimension: bot.game.dimension,
+      knownColumns: Object.keys(bot.world?.async?.columns || {}).length
+    });
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+  if (!ground) throw new Error("Recorder cannot see terrain below bot after 15s; refusing blank video");
   await bot.look(bot.entity.yaw, 0.75, true);
-  console.error("Recorder bot pose:", JSON.stringify({position: bot.entity.position, yaw: bot.entity.yaw, pitch: bot.entity.pitch}));
-  const below = bot.blockAt(bot.entity.position.offset(0, -1, 0));
-  console.error("Recorder ground:", below?.name ?? "not loaded");
+  console.error("Recorder terrain loaded:", ground.name, "at", ground.position.toString());
   viewer(bot, { port, firstPerson: true, viewDistance: 6 });
   const browser = await chromium.launch({
     headless: true,
