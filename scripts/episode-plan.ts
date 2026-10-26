@@ -57,9 +57,10 @@ for(const e of selected.slice(0,20)){
  const duration=Math.min(9,usable-clipStart);
  if(duration<1.5)continue;
  const interaction=/mine|place|result|error/i.test(e.kind) || /mine|place/.test(String(e.detail.args?.action??''));
- // Until the observer is verified to track the bot, use POV for actions.
- // An untracked observer shot can display empty terrain for most of a clip.
- segments.push({kind:'shot',duration,shot:{kind:'full',cameras:['agent-pov'],start:clipStart,duration,label:e.kind==='report_intention'?String(e.detail.args?.action??'Agent commentary'):e.kind}});
+ // Movement is best established in the tracking observer shot; close-up
+ // mining/placement uses POV, with a three-second lead-in before the action.
+ const camera=interaction?'agent-pov':'observer';
+ segments.push({kind:'shot',duration,shot:{kind:'full',cameras:[camera],start:clipStart,duration,label:e.kind==='report_intention'?String(e.detail.args?.action??'Agent commentary'):e.kind}});
  // Let the agent speak in its own words, rather than inventing commentary.
  // These are public, deliberately brief statements recorded by report_intention.
  if(e.kind==='report_intention'){
