@@ -135,6 +135,12 @@ async function start(bot, options) {
       try {
         inventoryTimers.forEach(clearInterval);
         for (const capture of captures) {
+          if (!capture.firstPerson) {
+            const telemetry = await capture.page.evaluate(() => window.__emergentObserverFollow ?? null).catch(() => null);
+            console.error("Observer camera follow updates:", telemetry?.updates ?? 0, "last target:", telemetry?.target ?? "none");
+            await capture.page.screenshot({path: join(dirname(options.output), "observer-final-debug.png")}).catch(() => {});
+            if (!telemetry?.updates) console.error("WARNING: Observer camera received no tracked position updates; inspect observer-final-debug.png");
+          }
           const video = capture.page.video();
           await capture.context.close();
           const webm = join(dirname(options.output), `${capture.name}.webm`);
