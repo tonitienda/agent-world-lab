@@ -37,13 +37,21 @@ This repeat deliberately keeps the objective comparable to the first run. The ne
 From the repo root:
 
 ```bash
-npm run episode:plan -- data/mcp-sessions/episode-001-rerun
+npm run episode:plan -- data/mcp-sessions/episode-001-rerun episode-001-rerun
 cd production
 npm install
 npm run dev
 ```
 
 This creates `production/generated/edit-plan.json`, copies camera assets into `production/public/media/`, and produces one `narration.txt` (one sentence per line) and `narration-manifest.json`.
+
+The planner reports event/intent counts, malformed or empty intent summaries, intentions outside the usable video window, and narration lines included. If `report_intention` events exist but none can be used, planning fails rather than silently falling back to tool actions. If previously generated edit/narration files exist, the planner warns and preserves all three; it refuses a partially generated set. To **regenerate all three files together** after a new recording, run:
+
+```bash
+npm run episode:plan -- data/mcp-sessions/episode-001 episode-001 --force
+```
+
+**Caution:** `--force` overwrites `edit-plan.json`, `narration.txt`, and `narration-manifest.json`, including manual edits. It does not replace camera MP4s that were already copied to production. Preserve manual edits or use a fresh episode ID when comparing takes.
 
 In the Motion Canvas editor, review the visual chronology: intro, observer establishing shot, selected POV closeups or split/PiP for interactions, and the reusable outro. Check every transition against the actual events. Do **not** pretend there are multiple independent agents when two cameras are showing the same bot.
 
