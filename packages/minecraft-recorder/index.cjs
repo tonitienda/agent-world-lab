@@ -3,6 +3,7 @@ const { chromium } = require("playwright");
 const { spawnSync } = require("node:child_process");
 const { mkdirSync } = require("node:fs");
 const { dirname, join } = require("node:path");
+const {addObserverFollow} = require("./observer-follow.cjs");
 
 async function start(bot, options) {
   const port = Number(process.env.RECORD_VIEWER_PORT || 3007);
@@ -48,8 +49,22 @@ async function start(bot, options) {
       captures[captures.length - 1].page = page;
       page.on("console", m => { if (m.type() === "error") console.error(view.name, m.text()); });
       page.on("pageerror", err => console.error(view.name, "page:", err));
+      if (!view.firstPerson) {
+        // Intercept only the observer viewer script; fail if the upstream hook changes.
+        let patched = false;
+        await page.route("**/index.js", async route => {
+          const original = await route.fetch();
+          const body = addObserverFollow(await original.text());
+          patched = true;
+          await route.fulfill({response: original, body});
+        });
+        captures[captures.length - 1].verifyObserverPatched = () => {
+          if (!patched) throw new Error("Observer viewer script never loaded; tracking not guaranteed");
+        };
+      }
       await page.goto(`http://127.0.0.1:${view.port}`, { waitUntil: "domcontentloaded", timeout: 15000 });
       await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
+      captures[captures.length - 1].verifyObserverPatched?.();
       // Prismarine Viewer only renders the 3D world. Overlay the *actual*
       // Mineflayer inventory on each video, updating while recording.
       // The panel is browser UI, not a fake Minecraft inventory screen.
@@ -120,6 +135,12 @@ async function start(bot, options) {
       try {
         inventoryTimers.forEach(clearInterval);
         for (const capture of captures) {
+          if (!capture.firstPerson) {
+            const telemetry = await capture.page.evaluate(() => window.__emergentObserverFollow ?? null).catch(() => null);
+            console.error("Observer camera follow updates:", telemetry?.updates ?? 0, "last target:", telemetry?.target ?? "none");
+            await capture.page.screenshot({path: join(dirname(options.output), "observer-final-debug.png")}).catch(() => {});
+            if (!telemetry?.updates) console.error("WARNING: Observer camera received no tracked position updates; inspect observer-final-debug.png");
+          }
           const video = capture.page.video();
           await capture.context.close();
           const webm = join(dirname(options.output), `${capture.name}.webm`);
