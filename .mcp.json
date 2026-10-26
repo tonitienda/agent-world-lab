@@ -1,13 +1,3 @@
 {
-  "mcpServers": {
-    "agent-world": {
-      "command": "npm",
-      "args": ["run", "mcp"],
-      "env": {
-        "WORLD_ADAPTER": "minecraft",
-        "AGENT_ID": "emergent-001",
-        "RECORD_MP4": "data/episode-001/agent-pov.mp4"
-      }
-    }
-  }
+  "mcpServers": {}
 }
