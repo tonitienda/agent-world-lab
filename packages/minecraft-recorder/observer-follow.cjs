@@ -4,6 +4,14 @@
 // Fail loudly if it ever changes: silently recording an empty field is worse.
 function addObserverFollow(source) {
   const anchor = '    if (addMesh) {';
+  // CI / published prismarine-viewer bundles are minified by webpack.
+  // Match the observed camera initialization exactly; keep the transform
+  // anchored to the position handler rather than injecting into arbitrary JS.
+  const minified = 'if(t.y>0&&s&&(h.target.set(t.x,t.y,t.z),u.camera.position.set(t.x,t.y+20,t.z+20),h.update(),s=!1),i){';
+  if (source.includes(minified)) {
+    const followed = 'if(t.y>0&&s&&(h.target.set(t.x,t.y,t.z),u.camera.position.set(t.x,t.y+20,t.z+20),h.update(),s=!1),h&&!s&&(u.camera.position.x+=t.x-h.target.x,u.camera.position.y+=t.y-h.target.y,u.camera.position.z+=t.z-h.target.z,h.target.set(t.x,t.y,t.z),h.update(),window.__emergentObserverFollow={updates:(window.__emergentObserverFollow?.updates||0)+1,target:{x:t.x,y:t.y,z:t.z}}),i){';
+    return source.replace(minified, followed);
+  }
   const occurrences = source.split(anchor).length - 1;
   if (occurrences !== 1 || !source.includes('firstPositionUpdate')) {
     const at=source.indexOf('addMesh');
