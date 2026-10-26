@@ -49,14 +49,17 @@ let selected=timed.filter(e=>e.kind==='report_intention' && typeof e.detail.args
 // Intent events are the voice track; do not allocate extra clips for the
 // subsequent tool results or silently drop commentary after the sixth action.
 if(selected.length===0)selected=timed.filter(e=>/move_to$|mine$|place$/i.test(e.kind));
+// Begin a shot before the action so viewers see the lead-in, not just its result.
+const preroll=3;
 let last=clipFloor;
 for(const e of selected.slice(0,20)){
- const clipStart=Math.max(last,Math.min(usable-2,e.second));
+ const clipStart=Math.max(last,clipFloor,Math.min(usable-2,e.second-preroll));
  const duration=Math.min(9,usable-clipStart);
  if(duration<1.5)continue;
  const interaction=/mine|place|result|error/i.test(e.kind) || /mine|place/.test(String(e.detail.args?.action??''));
- const layout=interaction?'pip':'full';
- segments.push({kind:'shot',duration,shot:{kind:layout,cameras:interaction?['agent-pov','observer']:['observer'],start:clipStart,duration,label:e.kind==='report_intention'?String(e.detail.args?.action??'Agent commentary'):e.kind}});
+ // Until the observer is verified to track the bot, use POV for actions.
+ // An untracked observer shot can display empty terrain for most of a clip.
+ segments.push({kind:'shot',duration,shot:{kind:'full',cameras:['agent-pov'],start:clipStart,duration,label:e.kind==='report_intention'?String(e.detail.args?.action??'Agent commentary'):e.kind}});
  // Let the agent speak in its own words, rather than inventing commentary.
  // These are public, deliberately brief statements recorded by report_intention.
  if(e.kind==='report_intention'){
