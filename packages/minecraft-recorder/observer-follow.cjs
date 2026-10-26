@@ -20,6 +20,7 @@ function addObserverFollow(source) {
         viewer.camera.position.y += dy
         viewer.camera.position.z += dz
         controls.update()
+        window.__emergentObserverFollow = {updates: (window.__emergentObserverFollow?.updates || 0) + 1, target: {x: pos.x, y: pos.y, z: pos.z}}
       }
     }
 ${anchor}`);
