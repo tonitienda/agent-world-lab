@@ -16,3 +16,11 @@ test('observer camera follows third-person bot updates without changing zoom',()
 test('unknown bundle fails loudly rather than silently filming terrain',()=>{
   assert.throws(()=>addObserverFollow('minified code'),/Unsupported Prismarine Viewer/);
 });
+
+test('observer follow patches minified viewer camera position updates',()=>{
+  const minified='if(t.y>0&&s&&(h.target.set(t.x,t.y,t.z),u.camera.position.set(t.x,t.y+20,t.z+20),h.update(),s=!1),i){';
+  const modified=addObserverFollow(minified);
+  assert.match(modified,/u\.camera\.position\.x\+=t\.x-h\.target\.x/);
+  assert.match(modified,/u\.camera\.position\.y\+=t\.y-h\.target\.y/);
+  assert.match(modified,/window\.__emergentObserverFollow/);
+});
