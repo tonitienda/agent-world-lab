@@ -6,7 +6,13 @@ function addObserverFollow(source) {
   const anchor = '    if (addMesh) {';
   const occurrences = source.split(anchor).length - 1;
   if (occurrences !== 1 || !source.includes('firstPositionUpdate')) {
-    throw new Error('Unsupported Prismarine Viewer browser bundle: observer follow hook not found exactly once');
+    const at=source.indexOf('addMesh');
+    throw new Error('Unsupported Prismarine Viewer browser bundle: ' + JSON.stringify({
+      length: source.length, markers: occurrences,
+      firstPositionUpdate: source.includes('firstPositionUpdate'),
+      aroundAddMesh: at<0?'absent':source.slice(Math.max(0,at-350),at+450),
+      head: source.slice(0,160)
+    }));
   }
   return source.replace(anchor, `    // Emergent recorder: translate the camera and its target together as the bot moves.
     // Retain camera orbit angle and zoom, and do not interfere with first-person mode.
