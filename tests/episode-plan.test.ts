@@ -6,6 +6,7 @@ import {join,resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
 
 const planner=resolve('scripts/episode-plan.ts');
+const tsxLoader=import.meta.resolve('tsx');
 function fixture(events:unknown[]){
  const dir=mkdtempSync(join(tmpdir(),'episode-plan-'));
  const session=join(dir,'session'),bin=join(dir,'bin');
@@ -15,7 +16,7 @@ function fixture(events:unknown[]){
  for(const name of ['agent-pov','observer'])writeFileSync(join(session,name+'.mp4'),'placeholder');
  const ffprobe=join(bin,'ffprobe');
  writeFileSync(ffprobe,'#!/bin/sh\necho 30\n');chmodSync(ffprobe,0o755);
- const run=(args:string[]=[])=>spawnSync(process.execPath,['--import','tsx',planner,session,'episode-test',...args],{
+ const run=(args:string[]=[])=>spawnSync(process.execPath,['--import',tsxLoader,planner,session,'episode-test',...args],{
   cwd:dir,env:{...process.env,PATH:bin+':'+process.env.PATH},encoding:'utf8'
  });
  return {dir,run,out:join(dir,'production/episode-test')};
