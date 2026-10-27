@@ -47,7 +47,7 @@ for(const name of names){
  if(!existsSync(destination))copyFileSync(join(session,name+'.mp4'),destination);
 }
 const segments:any[]=[{kind:'intro',duration:7,text:'An AI agent enters Minecraft. What will it try?'}];
-const comments:Array<{segmentIndex:number;text:string;at:number}>=[];
+const clipSegmentsByEvent=new Map<number,number>();
 const startTime=origin;
 const allTimed=events.map((e,i)=>{
  const raw=e.kind??e.action??'event';
@@ -71,7 +71,7 @@ if(invalid>0)console.warn('WARNING: '+invalid+' intention event(s) have no nonem
 if(outside.length>0)console.warn('WARNING: '+outside.length+' intention event(s) have invalid/out-of-range timestamps.');
 if(intentions.length>0&&selected.length===0)
  throw Error('No usable intentions: all report_intention events were malformed or outside the recording window.');
-if(selected.length>20)console.warn('WARNING: Only the first 20 intent events are eligible for clips.');
+if(selected.length>20)console.warn('WARNING: Preview edit plan contains at most 20 intention shots; all valid intentions remain in narration.');
 // Intent events are the voice track; do not allocate extra clips for the
 // subsequent tool results or silently drop commentary after the sixth action.
 if(selected.length===0)selected=timed.filter(e=>/move_to$|mine$|place$/i.test(e.kind));
@@ -92,28 +92,33 @@ for(const e of selected.slice(0,20)){
  // These are public, deliberately brief statements recorded by report_intention.
  if(e.kind==='report_intention'){
    const summary=String(e.detail.args?.summary??'').trim();
-   if(summary){comments.push({segmentIndex:segments.length-1,text:summary.slice(0,300),at:e.second});includedIntentions++;}
+   if(summary){clipSegmentsByEvent.set(e.index,segments.length-1);includedIntentions++;}
  }
  last=clipStart+duration;
 }
 if(intentions.length>0&&includedIntentions===0)throw Error('No intention narration survived clip selection.');
-if(selected.length>includedIntentions)console.warn('WARNING: '+(selected.length-includedIntentions)+' usable intentions omitted by clip budget/timing.');
+if(selected.length>includedIntentions)console.warn('WARNING: '+(selected.length-includedIntentions)+' intention(s) have no preview clip; their narration is still extracted.');
 console.log('  Intentions selected:       '+includedIntentions);
 if(segments.length===1)segments.push({kind:'shot',duration:Math.min(usable-clipFloor,8),shot:{kind:'split',cameras:names,start:clipFloor,duration:Math.min(usable-clipFloor,8)}});
 segments.push({kind:'outro',duration:6,text:'What prompt or scenario should we try next? Leave a comment.'});
 const plan={version:1,title:'Emergent — Pilot episode',cameras:names.map(id=>({id,file:id+'.mp4',offsetSeconds:offsets[names.indexOf(id)]})),segments};
 if(force||!existsSync(join(out,'edit-plan.json')))writeFileSync(join(out,'edit-plan.json'),JSON.stringify(plan,null,2)+'\n');
-// One text file: one spoken line per segment that calls for narration.
+// Extract every valid, in-range intention independently of preview clip selection.
 // IDs match ElevenLabs chapter exports: 1_Chapter_1.wav, 2_Chapter_1.wav, etc.
 const voiceLines=[
  {segmentIndex:0,text:'We gave Claude one simple goal in Minecraft: explore, find something interesting, and try to collect it.'},
- ...comments,
+ ...selected.filter(e=>e.kind==='report_intention').map(e=>({
+   segmentIndex:clipSegmentsByEvent.get(e.index)??null,
+   eventIndex:e.index,
+   at:e.second,
+   text:String(e.detail.args.summary).trim()
+ })),
  {segmentIndex:segments.length-1,text:'What should we ask the next agent to try? Leave your prompts and scenarios in the comments.'}
 ];
 if(force||!existsSync(join(out,'narration.txt')))writeFileSync(join(out,'narration.txt'),voiceLines.map(line=>line.text).join('\n')+'\n');
 if(force||!existsSync(join(out,'narration-manifest.json')))writeFileSync(join(out,'narration-manifest.json'),JSON.stringify(voiceLines.map((line,i)=>({
- line:i+1,segmentIndex:line.segmentIndex,text:line.text,audio:`${i+1}_Chapter_1.wav`
+ line:i+1,segmentIndex:line.segmentIndex,eventIndex:'eventIndex' in line?line.eventIndex:null,at:'at' in line?line.at:null,text:line.text,audio:`${i+1}_Chapter_1.wav`
 })),null,2)+'\n');
-console.log('  Narration lines:           '+voiceLines.length);
+console.log('  Narration lines:           '+voiceLines.length+' ('+(voiceLines.length-2)+' intentions + intro/outro)');
 console.log('Prepared',out,'using videos',lengths,'seconds; clips:',segments.length);
 console.log('Narration: '+join(out,'narration.txt')+'. Export audio as 1_Chapter_1.wav, 2_Chapter_1.wav, etc.');
