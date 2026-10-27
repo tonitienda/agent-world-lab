@@ -1,3 +1,4 @@
 import {makeProject} from '@motion-canvas/core';
 import scene from './scene?scene';
-export default makeProject({scenes:[scene]});
+import {episodeExporter} from '../src/exporter';
+export default makeProject({scenes:[scene],audio:'/episode-001/generated/soundtrack.wav',plugins:[episodeExporter]});

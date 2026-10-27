@@ -1,7 +1,54 @@
 We gave Claude one simple goal in Minecraft: explore, find something interesting, and try to collect it.
-Survey the area around spawn for anything other than plain grass, then safely collect one interesting block and describe it.
-Spawn is a flat lawn of grass, so I'm heading east to see if the terrain changes.
-East was the same flat grass, so I'm checking south of spawn for a change in terrain.
-The surface is identical in every direction, so I'm lifting one grass block beside me to see what lies under this flat world.
-The block I dug dropped into its own hole, so I'm stepping in to pick it up and see the layer beneath.
+I'm standing on a flat grassy plain with empty pockets, so first I'll dig up some earth to use as building material for a raised platform.
+My hands are empty, so I'll dig this grass block to start gathering building material.
+The dirt dropped beside the hole instead of landing in my pockets, so I'll walk over and pick it up.
+The dirt is sitting at the bottom of the little hole I dug, so I'll step down into it to grab it.
+That worked, so I'll keep extending this shallow trench to collect enough dirt for a staircase and platform.
+One more block along this line keeps the digging tidy and in one spot.
+I'll widen the trench sideways too, so the dirt piles up close to where I'm standing.
+Another block from this patch adds to the growing pile of building material.
+This finishes a small rectangular pit that should yield a neat stack of dirt.
+I'll keep the pit only one block deep so I can always step out, widening it instead of digging down.
+Another row of grass comes up, bringing me closer to the amount I need.
+This completes a third row of the pit, which should give me around nine blocks.
+The pit is full of loose dirt, so I'll walk across it to scoop everything up.
+A few more blocks are lying in the far corner, so I'll sweep through there too.
+One last pass along the edge should collect any dirt I missed.
+Eight blocks isn't quite enough for stairs plus a platform, so I'll widen the pit westward.
+Continuing along the western edge of the pit for more material.
+This rounds off another full row of dirt.
+A little extra material gives me a safety margin in case a placement goes wrong.
+Nearly there, I'll take one more block from this side.
+This should be the last block I need from the pit.
+I'll walk through the newly dug section to gather the fresh dirt.
+Sweeping back along the other edge to pick up the rest.
+A final pass through the middle of the pit should catch any stray blocks.
+One stray block is still lying in the corner of the pit, so I'll go back for it.
+I'll grab a couple of spare blocks so I can add a railing or fix a mistake later.
+One more spare block should be plenty of margin.
+And a third spare, finishing off this edge of the pit neatly.
+I'll walk to the far edge of the pit to pick up the spare blocks I just dug.
+Stepping over to the corner to collect the last loose block.
+With seventeen blocks of dirt, I'll head to untouched flat ground to start building the stairs and platform.
+This first block is the bottom step of the staircase leading up to the platform.
+Next to it goes the base of the second, taller step.
+Stacking on top makes the second step two blocks high.
+Now I'll start a support pillar that will hold up the platform's edge.
+The pillar grows to two blocks, ready to carry the platform floor.
+This first floor block caps the pillar three blocks above the grass.
+I'll step a little to the side so I can reach the whole platform floor as it spreads outward.
+Extending the floor sideways from the pillar cap, building the middle of the platform.
+This completes the central row, three blocks across.
+Now I'll widen the floor toward me, starting a second row.
+Filling in the second row of the floor.
+That finishes the second row; one more row on the far side will complete the square.
+The far row is hard to reach from here, so I'll walk around to the other side of the platform.
+Starting the final row of the floor from this side.
+Just two blocks left to close up the square floor.
+This last corner should complete a solid three-by-three platform.
+Everything is in place, so I'll start climbing by hopping onto the first step.
+The first step held me, so now I'll jump up onto the taller second step.
+One more jump should put me right in the middle of the finished platform.
+I'm up on the platform, so I'll walk to its far edge to look out over the plains.
+I'm standing on my platform three blocks above the grass. From up here the flat plain stretches in every direction, and I can see the little pit where I dug my building dirt.
 What should we ask the next agent to try? Leave your prompts and scenarios in the comments.

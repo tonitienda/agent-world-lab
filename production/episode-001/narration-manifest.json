@@ -2,43 +2,433 @@
   {
     "line": 1,
     "segmentIndex": 0,
+    "eventIndex": null,
+    "at": null,
     "text": "We gave Claude one simple goal in Minecraft: explore, find something interesting, and try to collect it.",
-    "audio": "001.mp3"
+    "audio": "1_Chapter_1.wav"
   },
   {
     "line": 2,
     "segmentIndex": 1,
-    "text": "Survey the area around spawn for anything other than plain grass, then safely collect one interesting block and describe it.",
-    "audio": "002.mp3"
+    "eventIndex": 10,
+    "at": 28.966,
+    "text": "I'm standing on a flat grassy plain with empty pockets, so first I'll dig up some earth to use as building material for a raised platform.",
+    "audio": "2_Chapter_1.wav"
   },
   {
     "line": 3,
     "segmentIndex": 2,
-    "text": "Spawn is a flat lawn of grass, so I'm heading east to see if the terrain changes.",
-    "audio": "003.mp3"
+    "eventIndex": 11,
+    "at": 28.979,
+    "text": "My hands are empty, so I'll dig this grass block to start gathering building material.",
+    "audio": "3_Chapter_1.wav"
   },
   {
     "line": 4,
     "segmentIndex": 3,
-    "text": "East was the same flat grass, so I'm checking south of spawn for a change in terrain.",
-    "audio": "004.mp3"
+    "eventIndex": 16,
+    "at": 36.56,
+    "text": "The dirt dropped beside the hole instead of landing in my pockets, so I'll walk over and pick it up.",
+    "audio": "4_Chapter_1.wav"
   },
   {
     "line": 5,
     "segmentIndex": 4,
-    "text": "The surface is identical in every direction, so I'm lifting one grass block beside me to see what lies under this flat world.",
-    "audio": "005.mp3"
+    "eventIndex": 23,
+    "at": 46.872,
+    "text": "The dirt is sitting at the bottom of the little hole I dug, so I'll step down into it to grab it.",
+    "audio": "5_Chapter_1.wav"
   },
   {
     "line": 6,
     "segmentIndex": 5,
-    "text": "The block I dug dropped into its own hole, so I'm stepping in to pick it up and see the layer beneath.",
-    "audio": "006.mp3"
+    "eventIndex": 28,
+    "at": 61.315,
+    "text": "That worked, so I'll keep extending this shallow trench to collect enough dirt for a staircase and platform.",
+    "audio": "6_Chapter_1.wav"
   },
   {
     "line": 7,
     "segmentIndex": 6,
+    "eventIndex": 31,
+    "at": 62.754,
+    "text": "One more block along this line keeps the digging tidy and in one spot.",
+    "audio": "7_Chapter_1.wav"
+  },
+  {
+    "line": 8,
+    "segmentIndex": 7,
+    "eventIndex": 34,
+    "at": 63.666,
+    "text": "I'll widen the trench sideways too, so the dirt piles up close to where I'm standing.",
+    "audio": "8_Chapter_1.wav"
+  },
+  {
+    "line": 9,
+    "segmentIndex": 8,
+    "eventIndex": 37,
+    "at": 65.107,
+    "text": "Another block from this patch adds to the growing pile of building material.",
+    "audio": "9_Chapter_1.wav"
+  },
+  {
+    "line": 10,
+    "segmentIndex": 9,
+    "eventIndex": 40,
+    "at": 66.276,
+    "text": "This finishes a small rectangular pit that should yield a neat stack of dirt.",
+    "audio": "10_Chapter_1.wav"
+  },
+  {
+    "line": 11,
+    "segmentIndex": 10,
+    "eventIndex": 43,
+    "at": 75.079,
+    "text": "I'll keep the pit only one block deep so I can always step out, widening it instead of digging down.",
+    "audio": "11_Chapter_1.wav"
+  },
+  {
+    "line": 12,
+    "segmentIndex": 11,
+    "eventIndex": 46,
+    "at": 76.3,
+    "text": "Another row of grass comes up, bringing me closer to the amount I need.",
+    "audio": "12_Chapter_1.wav"
+  },
+  {
+    "line": 13,
+    "segmentIndex": 12,
+    "eventIndex": 49,
+    "at": 77.391,
+    "text": "This completes a third row of the pit, which should give me around nine blocks.",
+    "audio": "13_Chapter_1.wav"
+  },
+  {
+    "line": 14,
+    "segmentIndex": 13,
+    "eventIndex": 52,
+    "at": 84.846,
+    "text": "The pit is full of loose dirt, so I'll walk across it to scoop everything up.",
+    "audio": "14_Chapter_1.wav"
+  },
+  {
+    "line": 15,
+    "segmentIndex": 14,
+    "eventIndex": 55,
+    "at": 85.069,
+    "text": "A few more blocks are lying in the far corner, so I'll sweep through there too.",
+    "audio": "15_Chapter_1.wav"
+  },
+  {
+    "line": 16,
+    "segmentIndex": 15,
+    "eventIndex": 58,
+    "at": 85.433,
+    "text": "One last pass along the edge should collect any dirt I missed.",
+    "audio": "16_Chapter_1.wav"
+  },
+  {
+    "line": 17,
+    "segmentIndex": 16,
+    "eventIndex": 63,
+    "at": 94.703,
+    "text": "Eight blocks isn't quite enough for stairs plus a platform, so I'll widen the pit westward.",
+    "audio": "17_Chapter_1.wav"
+  },
+  {
+    "line": 18,
+    "segmentIndex": 17,
+    "eventIndex": 66,
+    "at": 96.615,
+    "text": "Continuing along the western edge of the pit for more material.",
+    "audio": "18_Chapter_1.wav"
+  },
+  {
+    "line": 19,
+    "segmentIndex": 18,
+    "eventIndex": 69,
+    "at": 97.633,
+    "text": "This rounds off another full row of dirt.",
+    "audio": "19_Chapter_1.wav"
+  },
+  {
+    "line": 20,
+    "segmentIndex": 19,
+    "eventIndex": 72,
+    "at": 98.716,
+    "text": "A little extra material gives me a safety margin in case a placement goes wrong.",
+    "audio": "20_Chapter_1.wav"
+  },
+  {
+    "line": 21,
+    "segmentIndex": 20,
+    "eventIndex": 75,
+    "at": 99.876,
+    "text": "Nearly there, I'll take one more block from this side.",
+    "audio": "21_Chapter_1.wav"
+  },
+  {
+    "line": 22,
+    "segmentIndex": null,
+    "eventIndex": 78,
+    "at": 100.845,
+    "text": "This should be the last block I need from the pit.",
+    "audio": "22_Chapter_1.wav"
+  },
+  {
+    "line": 23,
+    "segmentIndex": null,
+    "eventIndex": 81,
+    "at": 110.207,
+    "text": "I'll walk through the newly dug section to gather the fresh dirt.",
+    "audio": "23_Chapter_1.wav"
+  },
+  {
+    "line": 24,
+    "segmentIndex": null,
+    "eventIndex": 84,
+    "at": 110.612,
+    "text": "Sweeping back along the other edge to pick up the rest.",
+    "audio": "24_Chapter_1.wav"
+  },
+  {
+    "line": 25,
+    "segmentIndex": null,
+    "eventIndex": 87,
+    "at": 110.906,
+    "text": "A final pass through the middle of the pit should catch any stray blocks.",
+    "audio": "25_Chapter_1.wav"
+  },
+  {
+    "line": 26,
+    "segmentIndex": null,
+    "eventIndex": 94,
+    "at": 139.188,
+    "text": "One stray block is still lying in the corner of the pit, so I'll go back for it.",
+    "audio": "26_Chapter_1.wav"
+  },
+  {
+    "line": 27,
+    "segmentIndex": null,
+    "eventIndex": 97,
+    "at": 139.491,
+    "text": "I'll grab a couple of spare blocks so I can add a railing or fix a mistake later.",
+    "audio": "27_Chapter_1.wav"
+  },
+  {
+    "line": 28,
+    "segmentIndex": null,
+    "eventIndex": 100,
+    "at": 141.248,
+    "text": "One more spare block should be plenty of margin.",
+    "audio": "28_Chapter_1.wav"
+  },
+  {
+    "line": 29,
+    "segmentIndex": null,
+    "eventIndex": 103,
+    "at": 141.262,
+    "text": "And a third spare, finishing off this edge of the pit neatly.",
+    "audio": "29_Chapter_1.wav"
+  },
+  {
+    "line": 30,
+    "segmentIndex": null,
+    "eventIndex": 106,
+    "at": 162.103,
+    "text": "I'll walk to the far edge of the pit to pick up the spare blocks I just dug.",
+    "audio": "30_Chapter_1.wav"
+  },
+  {
+    "line": 31,
+    "segmentIndex": null,
+    "eventIndex": 109,
+    "at": 162.828,
+    "text": "Stepping over to the corner to collect the last loose block.",
+    "audio": "31_Chapter_1.wav"
+  },
+  {
+    "line": 32,
+    "segmentIndex": null,
+    "eventIndex": 114,
+    "at": 262.214,
+    "text": "With seventeen blocks of dirt, I'll head to untouched flat ground to start building the stairs and platform.",
+    "audio": "32_Chapter_1.wav"
+  },
+  {
+    "line": 33,
+    "segmentIndex": null,
+    "eventIndex": 117,
+    "at": 264.434,
+    "text": "This first block is the bottom step of the staircase leading up to the platform.",
+    "audio": "33_Chapter_1.wav"
+  },
+  {
+    "line": 34,
+    "segmentIndex": null,
+    "eventIndex": 120,
+    "at": 278.892,
+    "text": "Next to it goes the base of the second, taller step.",
+    "audio": "34_Chapter_1.wav"
+  },
+  {
+    "line": 35,
+    "segmentIndex": null,
+    "eventIndex": 123,
+    "at": 279.045,
+    "text": "Stacking on top makes the second step two blocks high.",
+    "audio": "35_Chapter_1.wav"
+  },
+  {
+    "line": 36,
+    "segmentIndex": null,
+    "eventIndex": 126,
+    "at": 279.094,
+    "text": "Now I'll start a support pillar that will hold up the platform's edge.",
+    "audio": "36_Chapter_1.wav"
+  },
+  {
+    "line": 37,
+    "segmentIndex": null,
+    "eventIndex": 129,
+    "at": 279.249,
+    "text": "The pillar grows to two blocks, ready to carry the platform floor.",
+    "audio": "37_Chapter_1.wav"
+  },
+  {
+    "line": 38,
+    "segmentIndex": null,
+    "eventIndex": 132,
+    "at": 279.309,
+    "text": "This first floor block caps the pillar three blocks above the grass.",
+    "audio": "38_Chapter_1.wav"
+  },
+  {
+    "line": 39,
+    "segmentIndex": null,
+    "eventIndex": 135,
+    "at": 290.136,
+    "text": "I'll step a little to the side so I can reach the whole platform floor as it spreads outward.",
+    "audio": "39_Chapter_1.wav"
+  },
+  {
+    "line": 40,
+    "segmentIndex": null,
+    "eventIndex": 138,
+    "at": 290.628,
+    "text": "Extending the floor sideways from the pillar cap, building the middle of the platform.",
+    "audio": "40_Chapter_1.wav"
+  },
+  {
+    "line": 41,
+    "segmentIndex": null,
+    "eventIndex": 141,
+    "at": 291.144,
+    "text": "This completes the central row, three blocks across.",
+    "audio": "41_Chapter_1.wav"
+  },
+  {
+    "line": 42,
+    "segmentIndex": null,
+    "eventIndex": 144,
+    "at": 291.194,
+    "text": "Now I'll widen the floor toward me, starting a second row.",
+    "audio": "42_Chapter_1.wav"
+  },
+  {
+    "line": 43,
+    "segmentIndex": null,
+    "eventIndex": 147,
+    "at": 291.391,
+    "text": "Filling in the second row of the floor.",
+    "audio": "43_Chapter_1.wav"
+  },
+  {
+    "line": 44,
+    "segmentIndex": null,
+    "eventIndex": 150,
+    "at": 291.493,
+    "text": "That finishes the second row; one more row on the far side will complete the square.",
+    "audio": "44_Chapter_1.wav"
+  },
+  {
+    "line": 45,
+    "segmentIndex": null,
+    "eventIndex": 153,
+    "at": 299.425,
+    "text": "The far row is hard to reach from here, so I'll walk around to the other side of the platform.",
+    "audio": "45_Chapter_1.wav"
+  },
+  {
+    "line": 46,
+    "segmentIndex": null,
+    "eventIndex": 156,
+    "at": 300.486,
+    "text": "Starting the final row of the floor from this side.",
+    "audio": "46_Chapter_1.wav"
+  },
+  {
+    "line": 47,
+    "segmentIndex": null,
+    "eventIndex": 159,
+    "at": 301.309,
+    "text": "Just two blocks left to close up the square floor.",
+    "audio": "47_Chapter_1.wav"
+  },
+  {
+    "line": 48,
+    "segmentIndex": null,
+    "eventIndex": 162,
+    "at": 301.357,
+    "text": "This last corner should complete a solid three-by-three platform.",
+    "audio": "48_Chapter_1.wav"
+  },
+  {
+    "line": 49,
+    "segmentIndex": null,
+    "eventIndex": 167,
+    "at": 312.032,
+    "text": "Everything is in place, so I'll start climbing by hopping onto the first step.",
+    "audio": "49_Chapter_1.wav"
+  },
+  {
+    "line": 50,
+    "segmentIndex": null,
+    "eventIndex": 172,
+    "at": 324.572,
+    "text": "The first step held me, so now I'll jump up onto the taller second step.",
+    "audio": "50_Chapter_1.wav"
+  },
+  {
+    "line": 51,
+    "segmentIndex": null,
+    "eventIndex": 177,
+    "at": 332.483,
+    "text": "One more jump should put me right in the middle of the finished platform.",
+    "audio": "51_Chapter_1.wav"
+  },
+  {
+    "line": 52,
+    "segmentIndex": null,
+    "eventIndex": 182,
+    "at": 339.327,
+    "text": "I'm up on the platform, so I'll walk to its far edge to look out over the plains.",
+    "audio": "52_Chapter_1.wav"
+  },
+  {
+    "line": 53,
+    "segmentIndex": null,
+    "eventIndex": 186,
+    "at": 339.569,
+    "text": "I'm standing on my platform three blocks above the grass. From up here the flat plain stretches in every direction, and I can see the little pit where I dug my building dirt.",
+    "audio": "53_Chapter_1.wav"
+  },
+  {
+    "line": 54,
+    "segmentIndex": 21,
+    "eventIndex": null,
+    "at": null,
     "text": "What should we ask the next agent to try? Leave your prompts and scenarios in the comments.",
-    "audio": "007.mp3"
+    "audio": "54_Chapter_1.wav"
   }
 ]

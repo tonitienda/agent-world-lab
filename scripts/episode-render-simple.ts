@@ -4,8 +4,8 @@ import {join, resolve} from "node:path";
 import {spawnSync} from "node:child_process";
 
 type Camera={id:string;file:string;offsetSeconds?:number};
-type Segment={kind:"intro"|"outro"|"shot";duration:number;text?:string;shot?:{kind:string;cameras:string[];start:number;label?:string}};
-type Plan={cameras:Camera[];segments:Segment[]};
+type Segment={narration?:Array<{line:number;audio:string;at:number}>;kind:"intro"|"outro"|"shot";duration:number;text?:string;shot?:{kind:string;cameras:string[];start:number;label?:string}};
+type Plan={version?:number;cameras:Camera[];segments:Segment[]};
 const production=resolve("production");
 const episode=process.env.EPISODE_ID??"episode-001";
 if(!/^episode-[a-zA-Z0-9-]+$/.test(episode))throw Error("Invalid EPISODE_ID");
@@ -57,15 +57,17 @@ try{
    ffmpeg(["-f","lavfi","-i","color=c=0x10212b:s=1920x1080:r=30","-t",seconds(seg.duration),"-vf",`drawtext=textfile='${card.replaceAll("'","\\'")}':fontcolor=white:fontsize=54:line_spacing=18:x=(w-text_w)/2:y=(h-text_h)/2`,...common]);
   }
   segments.push(path);
-  for(const narration of lines.filter(line=>line.segmentIndex===index)){
+  const selected=plan.version===2?(seg.narration??[]):lines.filter(line=>line.segmentIndex===index).map(line=>({...line,at:0.3}));
+  for(const narration of selected){
    const preferred=join(narrationDir,narration.audio);
    const elevenLabs=join(narrationDir,`${narration.line}_Chapter_1.wav`);
    const voice=existsSync(preferred)?preferred:elevenLabs;
    if(existsSync(voice)){
     const length=probe(voice);
-    if(length>seg.duration-0.6)console.warn(`Narration ${narration.audio} is longer than segment ${index}; review overlap/timing`);
-    audio.push({path:voice,start:time+0.3});
-   }else console.warn("No voice clip (silent segment):",narration.audio);
+    if(length>seg.duration-narration.at-0.3)console.warn(`Narration ${narration.audio} is longer than segment ${index}; review overlap/timing`);
+    audio.push({path:voice,start:time+narration.at});
+   }else if(plan.version===2)throw Error("Missing voice clip: "+narration.audio);
+   else console.warn("No voice clip (silent segment):",narration.audio);
   }
   time+=seg.duration;
  }

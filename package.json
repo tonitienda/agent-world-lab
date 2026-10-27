@@ -18,7 +18,10 @@
     "episode:plan": "tsx scripts/episode-plan.ts",
     "pilot-session": "tsx scripts/pilot-agent-session.ts",
     "world:reset": "tsx scripts/reset-minecraft-world.ts",
-    "episode:render-simple": "tsx scripts/episode-render-simple.ts"
+    "episode:render-simple": "tsx scripts/episode-render-simple.ts",
+    "episode:validate": "node production/tools/episode.mjs",
+    "episode:render": "node production/tools/episode.mjs --render",
+    "episode:check-render": "node production/tools/check-render.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",

@@ -73,7 +73,7 @@ extract:
 		(echo "Missing agent-pov.mp4" && exit 1)
 	@test -f "$(SESSION_DIR)/observer.mp4" || \
 		(echo "Missing observer.mp4" && exit 1)
-	npm run episode:plan -- "$(SESSION_DIR)" "$(SESSION)"
+	npm run episode:plan -- "$(SESSION_DIR)" "$(SESSION)" --force
 	@echo ""
 	@echo "Generated:"
 	@echo "  production/$(SESSION)/narration.txt"

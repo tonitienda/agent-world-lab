@@ -1,6 +1,13 @@
 {
-  "version": 1,
-  "title": "Emergent — Pilot episode",
+  "version": 2,
+  "title": "Emergence \u2014 Episode 001: A platform from empty pockets",
+  "fps": 25,
+  "timebase": "Seconds from earliest camera captureOpenedAt (2026-10-26T16:57:30.173Z)",
+  "synchronization": {
+    "basis": "metadata cameraTimings.captureOpenedAt",
+    "precision": "Approximate; capture may begin after page creation. Visually checked mining, inventory changes, construction and climb.",
+    "origin": "2026-10-26T16:57:30.173Z"
+  },
   "cameras": [
     {
       "id": "agent-pov",
@@ -10,85 +17,443 @@
     {
       "id": "observer",
       "file": "observer.mp4",
-      "offsetSeconds": -3.034
+      "offsetSeconds": -3.318
     }
   ],
   "segments": [
     {
+      "id": "hook",
+      "kind": "shot",
+      "duration": 3.0,
+      "transition": 0.2,
+      "narration": [],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "observer"
+        ],
+        "start": 333,
+        "duration": 3.0,
+        "label": "Three blocks above the grass \u00b7 later in the experiment"
+      }
+    },
+    {
+      "id": "title",
       "kind": "intro",
-      "duration": 7,
-      "text": "An AI agent enters Minecraft. What will it try?"
+      "duration": 8.6,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 1,
+          "audio": "1_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "text": "EPISODE 001\nA platform from empty pockets"
     },
     {
+      "id": "setup",
       "kind": "shot",
-      "duration": 9,
+      "duration": 12.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 2,
+          "audio": "2_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
       "shot": {
         "kind": "full",
         "cameras": [
           "observer"
         ],
-        "start": 22.811,
-        "duration": 9,
-        "label": "Agent commentary"
+        "start": 16,
+        "duration": 12.0,
+        "label": "The agent chooses a raised platform"
       }
     },
     {
+      "id": "first-block",
       "kind": "shot",
-      "duration": 9,
+      "duration": 7.04,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 3,
+          "audio": "3_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
       "shot": {
         "kind": "full",
         "cameras": [
-          "observer"
+          "agent-pov"
         ],
-        "start": 31.811,
-        "duration": 9,
-        "label": "move_to"
+        "start": 28,
+        "duration": 7.04,
+        "label": "First block \u00b7 mining is not collection"
       }
     },
     {
+      "id": "pickup-attempt",
       "kind": "shot",
-      "duration": 9,
+      "duration": 8.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 4,
+          "audio": "4_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
       "shot": {
         "kind": "full",
         "cameras": [
-          "observer"
+          "agent-pov"
         ],
-        "start": 40.811,
-        "duration": 9,
-        "label": "move_to"
+        "start": 35,
+        "duration": 8.0,
+        "label": "Walking nearby \u00b7 inventory still empty"
       }
     },
     {
+      "id": "pickup-recovery",
       "kind": "shot",
-      "duration": 9,
+      "duration": 8.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 5,
+          "audio": "5_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
       "shot": {
         "kind": "pip",
         "cameras": [
-          "agent-pov",
-          "observer"
+          "observer",
+          "agent-pov"
         ],
-        "start": 49.811,
-        "duration": 9,
-        "label": "mine"
+        "start": 45,
+        "duration": 8.0,
+        "label": "Step into the hole \u00b7 first dirt collected"
       }
     },
     {
+      "id": "trench",
       "kind": "shot",
-      "duration": 9,
+      "duration": 9.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 6,
+          "audio": "6_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 60,
+        "duration": 9.0,
+        "label": "Gathering material"
+      }
+    },
+    {
+      "id": "shallow-pit",
+      "kind": "shot",
+      "duration": 9.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 11,
+          "audio": "11_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "pip",
+        "cameras": [
+          "observer",
+          "agent-pov"
+        ],
+        "start": 74,
+        "duration": 9.0,
+        "label": "Widening the pit, keeping it shallow"
+      }
+    },
+    {
+      "id": "eight-blocks",
+      "kind": "shot",
+      "duration": 8.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 17,
+          "audio": "17_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 94,
+        "duration": 8.0,
+        "label": "Eight blocks \u00b7 more material needed"
+      }
+    },
+    {
+      "id": "spares-and-limit",
+      "kind": "shot",
+      "duration": 8.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 26,
+          "audio": "26_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 137,
+        "duration": 8.0,
+        "label": "Spare-block sweep \u00b7 one mining attempt is out of reach"
+      }
+    },
+    {
+      "id": "construction-start",
+      "kind": "shot",
+      "duration": 8.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 32,
+          "audio": "32_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
       "shot": {
         "kind": "full",
         "cameras": [
           "observer"
         ],
-        "start": 59.955,
-        "duration": 9,
-        "label": "move_to"
+        "start": 258,
+        "duration": 8.0,
+        "label": "17 dirt collected \u00b7 the build begins"
       }
     },
     {
+      "id": "first-step",
+      "kind": "shot",
+      "duration": 7.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 33,
+          "audio": "33_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 264,
+        "duration": 7.0,
+        "label": "The bottom step"
+      }
+    },
+    {
+      "id": "stairs-and-pillar",
+      "kind": "shot",
+      "duration": 12.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 35,
+          "audio": "35_Chapter_1.wav",
+          "at": 0.35
+        },
+        {
+          "line": 38,
+          "audio": "38_Chapter_1.wav",
+          "at": 5.504
+        }
+      ],
+      "shot": {
+        "kind": "pip",
+        "cameras": [
+          "observer",
+          "agent-pov"
+        ],
+        "start": 278,
+        "duration": 12.0,
+        "label": "Two steps and a support pillar"
+      }
+    },
+    {
+      "id": "floor-spreads",
+      "kind": "shot",
+      "duration": 7.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 40,
+          "audio": "40_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 290,
+        "duration": 7.0,
+        "label": "The floor spreads outward"
+      }
+    },
+    {
+      "id": "finish-floor",
+      "kind": "shot",
+      "duration": 13.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 45,
+          "audio": "45_Chapter_1.wav",
+          "at": 0.35
+        },
+        {
+          "line": 48,
+          "audio": "48_Chapter_1.wav",
+          "at": 7.124
+        }
+      ],
+      "shot": {
+        "kind": "pip",
+        "cameras": [
+          "observer",
+          "agent-pov"
+        ],
+        "start": 298,
+        "duration": 13.0,
+        "label": "Walk around \u00b7 complete the 3 \u00d7 3 floor"
+      }
+    },
+    {
+      "id": "first-hop",
+      "kind": "shot",
+      "duration": 7.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 49,
+          "audio": "49_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "observer"
+        ],
+        "start": 311,
+        "duration": 7.0,
+        "label": "Climb \u00b7 first step"
+      }
+    },
+    {
+      "id": "second-hop",
+      "kind": "shot",
+      "duration": 7.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 50,
+          "audio": "50_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "observer"
+        ],
+        "start": 323.5,
+        "duration": 7.0,
+        "label": "Climb \u00b7 second step"
+      }
+    },
+    {
+      "id": "platform-hop",
+      "kind": "shot",
+      "duration": 6.0,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 51,
+          "audio": "51_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "split",
+        "cameras": [
+          "observer",
+          "agent-pov"
+        ],
+        "start": 331.5,
+        "duration": 6.0,
+        "label": "Climb \u00b7 onto the platform"
+      }
+    },
+    {
+      "id": "payoff",
+      "kind": "shot",
+      "duration": 12.52,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 53,
+          "audio": "53_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "pip",
+        "cameras": [
+          "observer",
+          "agent-pov"
+        ],
+        "start": 338,
+        "duration": 12.52,
+        "label": "Verified \u00b7 platform reached, three blocks above the grass"
+      }
+    },
+    {
+      "id": "outro",
       "kind": "outro",
-      "duration": 6,
-      "text": "What prompt or scenario should we try next? Leave a comment."
+      "duration": 6.76,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 54,
+          "audio": "54_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "text": "What should the next agent try?\nLeave a prompt or scenario in the comments."
     }
   ]
 }

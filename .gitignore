@@ -5,3 +5,8 @@ data/
 *.log
 .DS_Store
 coverage/
+
+# Derived production media; preserve original local recordings.
+production/output/
+production/public/episode-*/generated/
+

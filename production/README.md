@@ -1,40 +1,55 @@
-# Emergent episode composer — prototype v1
+# Emergence episode production
 
-This is a **separate production package**, not part of the Minecraft simulation or video recorder.
+The Motion Canvas scene, editor and headless MP4 exporter read the same manually editable episode timeline. The simple renderer remains a separate legacy command.
 
-## Workflow
+From the repository root:
 
-1. Record a session with `events.json`, `agent-pov.mp4` and `observer.mp4`.
-2. From repo root: `npm run episode:plan -- /absolute/path/to/session`.
-3. This copies video files into `production/public/media/`, writes `production/generated/edit-plan.json` and individual narration text files.
-4. `cd production && npm install && npm run dev`; open the Motion Canvas editor to preview, inspect, and render the montage. Install an exporter if needed for final video, e.g. `@motion-canvas/ffmpeg` and enable it in Vite configuration. See Motion Canvas rendering documentation.
-5. Edit the generated plan, then preview again. Generate **one MP3 per narration text file** in ElevenLabs and keep filenames matching the manifest. Narration audio placement and music mixing are **not implemented in this PR**.
+```sh
+npm run episode:validate
+npm run episode:render
+npm run episode:check-render
+cd production && npm run dev
+```
 
-The current scene supports `full`, `pip`, and `split` shots, fade transitions, and common intro/outro cards. All cameras are referenced by ID rather than hard-coded to two streams, allowing new cameras in future manifests.
+Use `npm run episode:render -- --preview-check` for an editor smoke check without exporting. Unmute the editor speaker control when reviewing speech.
 
-## Limitations and caveats
+The MP4 is written to `production/output/<episode>.mp4`. Run commands with `EPISODE_ID=episode-002` to select another episode. Required dependencies are Node 22+, the root and production npm packages, FFmpeg/ffprobe, and Playwright with Chromium. The render command uses the existing recorder's Playwright installation if a production-local installation is unavailable. It never starts Minecraft. To install the standalone browser dependency if needed: `cd production && npm install --save-dev playwright && npx playwright install chromium`.
 
-- The edit-plan generator uses simple rules; it does **not** infer model intentions. Its commentary is deliberately generic and must be reviewed for factual accuracy.
-- **Synchronization is approximate**: the two cameras start sequentially and metadata currently lacks reliable per-stream media-zero timestamps. The `offsetSeconds` is reserved in the plan, not yet applied. Do not use simultaneous multi-agent scenes to claim frame-accurate timing.
-- The timeline treats source times as seconds into the recorded MP4; event timestamps from `events.json` are only approximate relative to capture start. Visual review is mandatory.
-- The current Moton Canvas scene is a prototype **not verified by CI**. Use the editor to inspect layouts and video playback before publishing.
-- Scene rendering and audio assembly remain manual. The planner does not call ElevenLabs or access keys; video files in `production/public/media` are local working files and should not be committed.
-- Retain the unedited experiment footage alongside any edited output.
+Vite validates and assembles audio before starting. Open its local URL to review the timeline with synchronized sound. Choose **Emergence MP4** in Render Settings, 25 fps for this edit, to export directly from the editor. The CLI invokes Motion Canvas's `Renderer` with the same scene, camera layouts, titles and transitions; FFmpeg receives the rendered PNG frames and muxes the soundtrack. There is no single-camera substitution. An incomplete export never replaces the completed MP4.
 
-## Example edit plan excerpt
+## Editing an episode
+
+Inputs:
+
+- `production/<episode>/edit-plan.json`: v2 editorial source of truth.
+- `production/<episode>/narration-manifest.json`: original narration text, event references and exact WAV filename catalogue. Legacy `segmentIndex` is ignored by this pipeline.
+- `production/public/<episode>/audio/<line>_Chapter_1.wav`: untouched original voice clips.
+- `production/public/<episode>/video/<camera>.mp4`: untouched recordings.
+- Local log and metadata: `data/<episode>/` or `data/mcp-sessions/<episode>/`. The validator does not require logs for subsequent rerenders; they inform the editorial review.
+
+The old `episode:plan` command produces a **v1 editorial draft**, not a finished episode. Review the full log and footage, select clips, then author v2. Set fps, camera offsets and explicit narration references. Use the episode-001 project/scene wrappers as a model for a new episode; update their episode ID. The shared scene, soundtrack builder, validator and exporter require no changes.
 
 ```json
 {
-  "kind": "shot",
-  "duration": 5,
-  "shot": {
-    "kind": "pip",
-    "cameras": ["agent-pov", "observer"],
-    "start": 10,
-    "duration": 5,
-    "label": "mine"
-  }
+  "version": 2,
+  "fps": 25,
+  "cameras": [
+    {"id": "agent-pov", "file": "agent-pov.mp4", "offsetSeconds": 0},
+    {"id": "observer", "file": "observer.mp4", "offsetSeconds": -3.318}
+  ],
+  "segments": [{
+    "id": "first-step", "kind": "shot", "duration": 7, "transition": 0.2,
+    "narration": [{"line": 33, "audio": "33_Chapter_1.wav", "at": 0.35}],
+    "shot": {"kind": "full", "cameras": ["agent-pov"], "start": 264, "duration": 7,
+      "label": "The bottom step"}
+  }]
 }
 ```
 
-For experiments with multiple agents, register extra cameras under `cameras` and refer to any two in a split layout. More complex multi-view grids will be added after visual verification.
+`shot.start` is in the common capture timebase, not session elapsed time. Each selected source starts at `shot.start + camera.offsetSeconds`. Derive offsets from captureOpenedAt metadata and verify with visible changes; do not imply greater precision than the recorder supports. Full uses one camera; PIP and split use two. PIP's first camera is full size. Split fits each view without distortion. Intro/outro cards use `text` in place of `shot`.
+
+All segment durations must be integral frame counts. A dissolve consumes the first `transition` seconds of the incoming segment; it never shifts narration or adds time. Narration `at` is segment-relative. Every selected clip must fit, including 0.3 seconds at the end, and start at least 0.25 seconds after a previous clip ends. Clips must follow manifest line order. Missing assets, duration overruns and invalid camera bounds fail before rendering.
+
+After timeline or source changes, restart Vite or rerun the CLI. It automatically rebuilds the derived soundtrack; unchanged inputs reuse the cached mix. Do not edit the JSON while an export is running. `public/<episode>/generated/` and `output/` contain derived local media, not source assets. `validation.json` records measured durations and the absolute audio schedule. Original audio/video files are never renamed or replaced.
+
+No music is synthesized or fetched. If original cameras contain sound, only the primary contributes at reduced gain under the normalized voice track. Episode 001 has no source audio streams. Capture defects and timing precision are documented in its editorial report.
