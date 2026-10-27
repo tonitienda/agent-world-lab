@@ -69,3 +69,21 @@ test('refuses partially populated output without force',()=>{
   assert.equal(f.run(['--force']).status,0);
  }finally{rmSync(f.dir,{recursive:true,force:true});}
 });
+
+
+test('extracts every intention even when preview edit plan only uses first 20',()=>{
+ const f=fixture(Array.from({length:25},(_,i)=>intent(3+i,`Thought ${i+1}`)));
+ try{
+  const result=f.run();
+  assert.equal(result.status,0,result.stderr);
+  const manifest=JSON.parse(readFileSync(join(f.out,'narration-manifest.json'),'utf8'));
+  assert.equal(manifest.length,27);
+  assert.equal(manifest[25].text,'Thought 25');
+  assert.equal(manifest[25].audio,'26_Chapter_1.wav');
+  assert.equal(manifest[25].eventIndex,24);
+  assert.equal(manifest[25].segmentIndex,null);
+  assert.match(readFileSync(join(f.out,'narration.txt'),'utf8'),/Thought 25/);
+  const plan=JSON.parse(readFileSync(join(f.out,'edit-plan.json'),'utf8'));
+  assert.equal(plan.segments.length,22);
+ }finally{rmSync(f.dir,{recursive:true,force:true});}
+});
