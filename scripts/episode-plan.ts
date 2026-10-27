@@ -104,7 +104,7 @@ segments.push({kind:'outro',duration:6,text:'What prompt or scenario should we t
 const plan={version:1,title:'Emergent — Pilot episode',cameras:names.map(id=>({id,file:id+'.mp4',offsetSeconds:offsets[names.indexOf(id)]})),segments};
 if(force||!existsSync(join(out,'edit-plan.json')))writeFileSync(join(out,'edit-plan.json'),JSON.stringify(plan,null,2)+'\n');
 // One text file: one spoken line per segment that calls for narration.
-// IDs match ElevenLabs batch output 001.mp3, 002.mp3, etc.
+// IDs match ElevenLabs chapter exports: 1_Chapter_1.wav, 2_Chapter_1.wav, etc.
 const voiceLines=[
  {segmentIndex:0,text:'We gave Claude one simple goal in Minecraft: explore, find something interesting, and try to collect it.'},
  ...comments,
@@ -112,8 +112,8 @@ const voiceLines=[
 ];
 if(force||!existsSync(join(out,'narration.txt')))writeFileSync(join(out,'narration.txt'),voiceLines.map(line=>line.text).join('\n')+'\n');
 if(force||!existsSync(join(out,'narration-manifest.json')))writeFileSync(join(out,'narration-manifest.json'),JSON.stringify(voiceLines.map((line,i)=>({
- line:i+1,segmentIndex:line.segmentIndex,text:line.text,audio:String(i+1).padStart(3,'0')+'.mp3'
+ line:i+1,segmentIndex:line.segmentIndex,text:line.text,audio:`${i+1}_Chapter_1.wav`
 })),null,2)+'\n');
 console.log('  Narration lines:           '+voiceLines.length);
 console.log('Prepared',out,'using videos',lengths,'seconds; clips:',segments.length);
-console.log('Narration: '+join(out,'narration.txt')+'. Export audio as 001.mp3, 002.mp3, etc.');
+console.log('Narration: '+join(out,'narration.txt')+'. Export audio as 1_Chapter_1.wav, 2_Chapter_1.wav, etc.');
