@@ -106,7 +106,7 @@ if(force||!existsSync(join(out,'edit-plan.json')))writeFileSync(join(out,'edit-p
 // Extract every valid, in-range intention independently of preview clip selection.
 // IDs match ElevenLabs chapter exports: 1_Chapter_1.wav, 2_Chapter_1.wav, etc.
 const voiceLines=[
- {segmentIndex:0,text:'We gave Claude one simple goal in Minecraft: explore, find something interesting, and try to collect it.'},
+ {segmentIndex:0,text:'We challenged an AI agent to build a three-by-three platform, three blocks above the ground, and climb onto it.'},
  ...selected.filter(e=>e.kind==='report_intention').map(e=>({
    segmentIndex:clipSegmentsByEvent.get(e.index)??null,
    eventIndex:e.index,
