@@ -81,7 +81,7 @@ extract:
 	@echo "  production/$(SESSION)/edit-plan.json"
 	@echo ""
 	@echo "Generate ElevenLabs clips from narration.txt."
-	@echo "Save as 001.mp3, 002.mp3, etc. in:"
+	@echo "Save as 1_Chapter_1.wav, 2_Chapter_1.wav, etc. in:"
 	@echo "  production/public/$(SESSION)/audio/"
 
 # ------------------------------------------------------------
