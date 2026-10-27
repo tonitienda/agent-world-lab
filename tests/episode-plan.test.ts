@@ -35,7 +35,7 @@ test('reports counts and regenerates all narration artifacts only with --force',
   assert.match(first.stdout,/Intentions selected:\s+2/);
   const narration=join(f.out,'narration.txt'),manifest=join(f.out,'narration-manifest.json');
   assert.match(readFileSync(narration,'utf8'),/First thought/);
-  assert.equal(JSON.parse(readFileSync(manifest,'utf8')).length,4);
+  assert.deepEqual(JSON.parse(readFileSync(manifest,'utf8')).map((line:{audio:string})=>line.audio),['1_Chapter_1.wav','2_Chapter_1.wav','3_Chapter_1.wav','4_Chapter_1.wav']);
   writeFileSync(narration,'manual version\n');
   const rerun=f.run();
   assert.equal(rerun.status,0,rerun.stderr);
