@@ -40,7 +40,12 @@ test('real edit includes construction, payoff and every supported layout',()=>{
  const p=JSON.parse(readFileSync('production/episode-001/edit-plan.json','utf8'));
  const m=JSON.parse(readFileSync('production/episode-001/narration-manifest.json','utf8'));
  const result=validate(p,m,(f:string)=>({duration:f.startsWith('audio/')?1:400,audio:f.startsWith('audio/')}));
- assert.equal(result.duration,166.92);
+ assert.equal(result.duration,163.92);
+ assert.equal(p.segments[0].kind,'intro');
+ assert.equal(p.segments[0].id,'title');
+ assert.equal(p.segments[0].narration[0].audio,'1_Chapter_1.wav');
+ assert.ok(p.segments.every((s:any)=>s.id!=='hook'));
+ assert.equal(m[0].text,readFileSync('production/episode-001/narration.txt','utf8').split('\n')[0]);
  assert.deepEqual([...new Set(p.segments.filter((s:any)=>s.shot).map((s:any)=>s.shot.kind))].sort(),['full','pip','split']);
  assert.ok(result.schedule.some((v:any)=>v.line===53));
  assert.match(sessionPath(process.cwd(),'episode-001'),/data/);
@@ -75,4 +80,40 @@ test('legacy simple renderer honors v2 narration references without changing v1 
   assert.equal(run.status,0,run.stderr);
   const calls=readFileSync(log,'utf8');assert.match(calls,/2_Chapter_1.wav/);assert.doesNotMatch(calls,/1_Chapter_1.wav/);assert.match(calls,/adelay=3450/);
  }finally{rmSync(dir,{recursive:true,force:true});}
+});
+test('planning speech leads the action while footage still includes its completion',async()=>{
+ const {existsSync}=await import('node:fs');
+ const p=JSON.parse(readFileSync('production/episode-001/edit-plan.json','utf8'));
+ const timing=JSON.parse(readFileSync('production/episode-001/narration-timing.json','utf8'));
+ const eventPath='data/mcp-sessions/episode-001/events.json';
+ const events=existsSync(eventPath)?JSON.parse(readFileSync(eventPath,'utf8')):undefined;
+ for(const cue of timing.cues){
+  const segment=p.segments.find((s:any)=>s.id===cue.segment);
+  const voice=segment.narration.find((v:any)=>v.line===cue.line);
+  assert.equal(segment.shot.start,cue.sourceStart);
+  const lead=cue.sourceActionAt-segment.shot.start-voice.at;
+  assert.ok(lead>=cue.targetLead-1e-6,`line ${cue.line} starts too late`);
+  assert.ok(cue.sourceActionAt>=segment.shot.start);
+  assert.ok(cue.sourceActionAt<segment.shot.start+segment.duration);
+  if(events){
+   const event=events[cue.eventIndex];assert.equal(event.action,cue.action);
+   const origin=Date.parse(p.synchronization.origin);
+   assert.ok(Math.abs((Date.parse(event.at)-origin)/1000-cue.sourceActionAt)<.001);
+   const completion=events.slice(cue.eventIndex+1).find((e:any)=>e.action===cue.action.replace('_start',''));
+   assert.ok(completion);
+   assert.ok((Date.parse(completion.at)-origin)/1000<=segment.shot.start+segment.duration,`line ${cue.line} loses action completion`);
+  }
+ }
+ assert.ok(timing.cues.length>=17);
+});
+
+test('follow is selectable in every production layout and checked for bounds',()=>{
+ for(const kind of ['full','pip','split']){
+  const p=fixture();
+  p.cameras.push({id:'follow',file:'follow.mp4',offsetSeconds:0});
+  p.segments[0].shot={...p.segments[0].shot,kind,cameras:kind==='full'?['follow']:['follow','pov']};
+  assert.equal(validate(p,manifest,media).cameras.length,3);
+  p.cameras[2].offsetSeconds=-20;
+  assert.throws(()=>validate(p,manifest,media),/Source bounds/);
+ }
 });

@@ -40,7 +40,7 @@ try {
 } finally {
   await world.close();
   writeFileSync(join(folder, "events.json"), JSON.stringify(events, null, 2) + "\n");
-  for (const name of ["agent-pov", "observer"]) {
+  for (const name of ["agent-pov", "observer", "follow"]) {
     const file = join(folder, `${name}.mp4`);
     if (!existsSync(file) || statSync(file).size === 0) {
       console.error("Missing or empty camera recording:", file);

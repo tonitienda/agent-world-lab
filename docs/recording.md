@@ -1,6 +1,10 @@
 # Record the first Minecraft agent experiment
 
-The initial recording workflow separates **world execution** from **video capture**. Minecraft runs under Docker; the observer is a normal Minecraft Java client on your desktop. We are **not** claiming that CI produces a video: GitHub-hosted CI is for repeatable behavior checks, not cinematic recordings.
+The native recorder now captures synchronized `agent-pov.mp4`, `observer.mp4`, and
+`follow.mp4` without a Minecraft client. See [recorder setup and limitations](../packages/minecraft-recorder/README.md)
+and [MCP recorded sessions](mcp-recorded-session.md). The client-based alternatives below remain optional.
+
+The optional client workflow separates **world execution** from **video capture**. Minecraft runs under Docker; the observer is a normal Minecraft Java client on your desktop. The native recorder and CI capture workflow are documented in the links above.
 
 ## Recommended: replay-capable client
 

@@ -1,5 +1,5 @@
-import {mkdirSync, renameSync, writeFileSync} from "node:fs";
-import {dirname, join, resolve} from "node:path";
+import { existsSync, mkdirSync, renameSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 
 /** Small, durable JSON array compatible with the episode planner. */
 export class SessionEvents {
@@ -7,11 +7,29 @@ export class SessionEvents {
   private readonly entries: Record<string, unknown>[] = [];
   constructor(folder: string) {
     this.folder = resolve(folder);
-    mkdirSync(this.folder, {recursive: true});
-    this.add("session_start", {agent: process.env.AGENT_ID ?? "explorer-1", source: "mcp"});
+    if (
+      [
+        "events.json",
+        "metadata.json",
+        "agent-pov.mp4",
+        "observer.mp4",
+        "follow.mp4",
+        "agent-pov.webm",
+        "observer.webm",
+        "follow.webm",
+      ].some((file) => existsSync(join(this.folder, file)))
+    )
+      throw Error(
+        "Session folder already contains events; choose a new recording destination",
+      );
+    mkdirSync(this.folder, { recursive: true });
+    this.add("session_start", {
+      agent: process.env.AGENT_ID ?? "explorer-1",
+      source: "mcp",
+    });
   }
   add(action: string, details: unknown) {
-    this.entries.push({at: new Date().toISOString(), action, details});
+    this.entries.push({ at: new Date().toISOString(), action, details });
     const file = join(this.folder, "events.json");
     const temporary = join(this.folder, "events.json.tmp");
     writeFileSync(temporary, JSON.stringify(this.entries, null, 2) + "\n");

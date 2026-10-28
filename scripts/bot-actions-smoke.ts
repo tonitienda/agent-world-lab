@@ -11,6 +11,7 @@ type InventoryItem = { name: string; count: number };
 // This is an end-to-end tool/bot test, not an LLM test. CI supplies a disposable
 // superflat survival world. Do not run against a world you want to preserve:
 // the test digs and then tries to replace one block.
+if (process.env.AWL_DISPOSABLE_TEST !== "1") throw Error("Mutating smoke test requires AWL_DISPOSABLE_TEST=1 and a disposable server. Use npm run integration:survival.");
 const world = createWorld("minecraft");
 const assertOk = (result: { ok: boolean; message: string }, label: string) =>
   assert.equal(result.ok, true, `${label}: ${result.message}`);

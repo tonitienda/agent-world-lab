@@ -35,6 +35,7 @@ jobs:
       MC_HOST: '127.0.0.1'
       MC_PORT: '25565'
       AGENT_ID: 'ci-explorer'
+      AWL_DISPOSABLE_TEST: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -48,6 +49,10 @@ jobs:
         run: npm run integration
       - name: Test movement, mining and placing in the world
         run: npm run bot-smoke
+      - name: Test disposable ravine course and crossing
+        run: npm run integration:ravine
+      - name: Test disposable survival actions and generated presets
+        run: npm run integration:survival
       - name: Show Minecraft logs on failure
         if: failure()
         run: docker compose logs --tail=250 minecraft
@@ -92,6 +97,8 @@ jobs:
         run: |
           npm install --prefix packages/minecraft-recorder --no-audit --no-fund
           npx --prefix packages/minecraft-recorder playwright install --with-deps chromium
+      - name: Validate isolated recorder lifecycle and terrain cameras
+        run: npm run integration:recorder
       - name: Start isolated Minecraft world
         run: docker compose up -d --wait --wait-timeout 300 minecraft
       - name: Record bot movement
@@ -106,7 +113,7 @@ jobs:
           set -euo pipefail
           folder=$(find "$RUNNER_TEMP/minecraft-captures" -name metadata.json -type f -printf '%h' -quit)
           test -n "$folder"
-          for camera in agent-pov observer; do
+          for camera in agent-pov observer follow; do
             video="$folder/$camera.mp4"
             test -s "$video"
             ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,nb_frames -of json "$video"

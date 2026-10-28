@@ -7,6 +7,8 @@
   "dependencies": {
     "prismarine-viewer": "^1.33.0",
     "playwright": "^1.56.0",
-    "canvas": "^3.2.0"
+    "canvas": "^3.2.0",
+    "express": "^4.17.1",
+    "socket.io": "^4.0.0"
   }
 }

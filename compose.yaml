@@ -8,13 +8,15 @@ services:
       TYPE: VANILLA
       VERSION: "${MC_VERSION:-1.21.4}"
       LEVEL_TYPE: "${MC_LEVEL_TYPE:-minecraft:normal}"
+      SEED: "${MC_SEED:-}"
       GENERATOR_SETTINGS: "${GENERATOR_SETTINGS:-}"
       MEMORY: "${MC_MEMORY:-3G}"
       ONLINE_MODE: "FALSE"
       MODE: survival
-      DIFFICULTY: peaceful
+      DIFFICULTY: "${MC_DIFFICULTY:-normal}"
       PVP: "false"
       ENABLE_RCON: "false"
+      CREATE_CONSOLE_IN_PIPE: "true"
       ENABLE_COMMAND_BLOCK: "false"
       SPAWN_PROTECTION: "0"
       MAX_PLAYERS: "8"

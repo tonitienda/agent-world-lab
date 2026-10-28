@@ -22,22 +22,6 @@
   ],
   "segments": [
     {
-      "id": "hook",
-      "kind": "shot",
-      "duration": 3.0,
-      "transition": 0.2,
-      "narration": [],
-      "shot": {
-        "kind": "full",
-        "cameras": [
-          "observer"
-        ],
-        "start": 333,
-        "duration": 3.0,
-        "label": "Three blocks above the grass \u00b7 later in the experiment"
-      }
-    },
-    {
       "id": "title",
       "kind": "intro",
       "duration": 8.6,
@@ -90,7 +74,7 @@
         "cameras": [
           "agent-pov"
         ],
-        "start": 28,
+        "start": 26.6,
         "duration": 7.04,
         "label": "First block \u00b7 mining is not collection"
       }
@@ -112,7 +96,7 @@
         "cameras": [
           "agent-pov"
         ],
-        "start": 35,
+        "start": 34.2,
         "duration": 8.0,
         "label": "Walking nearby \u00b7 inventory still empty"
       }
@@ -135,7 +119,7 @@
           "observer",
           "agent-pov"
         ],
-        "start": 45,
+        "start": 44.52,
         "duration": 8.0,
         "label": "Step into the hole \u00b7 first dirt collected"
       }
@@ -157,7 +141,7 @@
         "cameras": [
           "agent-pov"
         ],
-        "start": 60,
+        "start": 58.96,
         "duration": 9.0,
         "label": "Gathering material"
       }
@@ -180,7 +164,7 @@
           "observer",
           "agent-pov"
         ],
-        "start": 74,
+        "start": 72.72,
         "duration": 9.0,
         "label": "Widening the pit, keeping it shallow"
       }
@@ -202,7 +186,7 @@
         "cameras": [
           "agent-pov"
         ],
-        "start": 94,
+        "start": 92.32,
         "duration": 8.0,
         "label": "Eight blocks \u00b7 more material needed"
       }
@@ -224,7 +208,7 @@
         "cameras": [
           "agent-pov"
         ],
-        "start": 137,
+        "start": 136.8,
         "duration": 8.0,
         "label": "Spare-block sweep \u00b7 one mining attempt is out of reach"
       }
@@ -268,7 +252,7 @@
         "cameras": [
           "agent-pov"
         ],
-        "start": 264,
+        "start": 262.08,
         "duration": 7.0,
         "label": "The bottom step"
       }
@@ -296,7 +280,7 @@
           "observer",
           "agent-pov"
         ],
-        "start": 278,
+        "start": 273.0,
         "duration": 12.0,
         "label": "Two steps and a support pillar"
       }
@@ -318,7 +302,7 @@
         "cameras": [
           "agent-pov"
         ],
-        "start": 290,
+        "start": 288.24,
         "duration": 7.0,
         "label": "The floor spreads outward"
       }
@@ -346,7 +330,7 @@
           "observer",
           "agent-pov"
         ],
-        "start": 298,
+        "start": 293.4,
         "duration": 13.0,
         "label": "Walk around \u00b7 complete the 3 \u00d7 3 floor"
       }
@@ -368,7 +352,7 @@
         "cameras": [
           "observer"
         ],
-        "start": 311,
+        "start": 309.68,
         "duration": 7.0,
         "label": "Climb \u00b7 first step"
       }
@@ -390,7 +374,7 @@
         "cameras": [
           "observer"
         ],
-        "start": 323.5,
+        "start": 322.2,
         "duration": 7.0,
         "label": "Climb \u00b7 second step"
       }
@@ -413,7 +397,7 @@
           "observer",
           "agent-pov"
         ],
-        "start": 331.5,
+        "start": 330.12,
         "duration": 6.0,
         "label": "Climb \u00b7 onto the platform"
       }

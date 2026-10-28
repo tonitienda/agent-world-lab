@@ -1,5 +1,7 @@
 # Emergent — standard episode workflow
 
+> **Historical recording and draft workflow.** For producing or revising an already recorded episode, use the [current production skill](../skills/emergence-episode-production/SKILL.md) and [pipeline README](../production/README.md). The older generated paths, generic Episode 001 objective and manual-audio/export limitations below are superseded for post-production. Do not run the reset/recording steps merely to edit an existing episode.
+
 This checklist is the expected process for each **Emergent** video. The agent's decisions and the original recordings are the source of truth. The editing system may shorten and explain events but must not fabricate actions or outcomes.
 
 ## A. Define the experiment
@@ -7,15 +9,15 @@ This checklist is the expected process for each **Emergent** video. The agent's 
 1. Create an episode ID (e.g., `episode-001-rerun`) and write the exact objective/prompt in `prompt.md`.
 2. Choose the model and CLI harness (Claude Code, Codex CLI, etc.) and record their versions, permitted tools, any turn/time budget, and Minecraft world configuration.
 3. Create a **fresh recording directory**. Do not overwrite the first attempt. Preserve the original run as a baseline.
-4. For an **isolated rerun**, first stop the old MCP session with `finish_session` and ensure camera MP4s are finalized. From the repo root, run `npm run world:reset` to preview the operation, then `npm run world:reset -- --yes` to archive the existing Minecraft server data and launch a fresh positive-Y superflat world. Set `EULA=TRUE` in `.env` after accepting the Minecraft EULA. The command stops the server but refuses to reset while default recorder ports 3007/3008 are active. Prior worlds are archived under `data/world-archives/<timestamp>/` and recordings under `data/mcp-sessions/` are untouched. The reset replaces the entire Minecraft server data directory, including configuration; archived data is preserved. Verify `docker compose ps` afterward.
+4. For an **isolated rerun**, first stop the old MCP session with `finish_session` and ensure camera MP4s are finalized. From the repo root, run `npm run world:reset` to preview the operation, then `npm run world:reset -- --yes` to archive the existing Minecraft server data and launch a fresh positive-Y superflat world. Set `EULA=TRUE` in `.env` after accepting the Minecraft EULA. The command stops the server but refuses to reset while default recorder ports 3007/3008/3009 are active. Prior worlds are archived under `data/world-archives/<timestamp>/` and recordings under `data/mcp-sessions/` are untouched. The reset replaces the entire Minecraft server data directory, including configuration; archived data is preserved. Verify `docker compose ps` afterward.
 
 ## B. Capture the experiment
 
-1. Configure the harness's **stdio** MCP server with `RECORD_MP4=/absolute/path/to/data/mcp-sessions/<episode>/agent-pov.mp4`, unique `AGENT_ID`, and working directory pointing to this repo. The MCP process starts the Minecraft bot and both cameras.
+1. Configure the harness's **stdio** MCP server with `RECORD_MP4=/absolute/path/to/data/mcp-sessions/<episode>/agent-pov.mp4`, unique `AGENT_ID`, and working directory pointing to this repo. The MCP process starts the Minecraft bot and all three cameras.
 2. Start/restart the CLI harness after configuring MCP. Use `world_info` and `observe` to confirm the agent is connected.
 3. Every **`move_to`**, **`mine`**, and **`place`** call now requires an **`intent`** sentence. The MCP server records that sentence automatically as `report_intention` before executing the action. The agent may still call `report_intention` explicitly for bigger strategy changes. This is declared public commentary, *not* hidden model reasoning.
 4. Let the agent use the Minecraft tools autonomously. Avoid coaching or altering the world after the run starts.
-5. Agent calls **`finish_session`** at the end; wait for both MP4 conversions to complete. SIGINT/SIGTERM to the MCP process is the fallback; do not SIGKILL.
+5. Agent calls **`finish_session`** at the end; wait for all three MP4 conversions to complete. SIGINT/SIGTERM to the MCP process is the fallback; do not SIGKILL.
 6. Save the harness's prompt and a brief run report (model, CLI version, exceptions, human interventions, approximate tokens if reported).
 
 ### Re-run Episode 001 prompt

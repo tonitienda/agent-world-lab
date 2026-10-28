@@ -1,0 +1,56 @@
+{
+  "id": "ravine-v1",
+  "agent": "emergent-002",
+  "verifiedAt": "2026-10-28T11:34:14.356Z",
+  "world": {
+    "seed": "20261027",
+    "verifiedAt": "2026-10-28T11:34:06.828Z"
+  },
+  "course": {
+    "id": "ravine-v1",
+    "constructed": true,
+    "bounds": {
+      "min": [
+        -12,
+        71,
+        -16
+      ],
+      "max": [
+        27,
+        127,
+        16
+      ]
+    },
+    "start": {
+      "x": 2.5,
+      "y": 96,
+      "z": 0.5
+    },
+    "goal": {
+      "x": 15.5,
+      "y": 96,
+      "z": 0.5,
+      "block": "gold_block"
+    },
+    "gap": {
+      "minX": 4,
+      "maxX": 11,
+      "minZ": -16,
+      "maxZ": 16,
+      "bottomY": 71,
+      "bankY": 95
+    },
+    "resources": [
+      {
+        "x": -1,
+        "y": 96,
+        "z": -5
+      },
+      {
+        "x": -6,
+        "y": 96,
+        "z": 6
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "outcome": "stopped",
+  "reason": "SIGTERM",
+  "worldConfig": {
+    "preset": "survival",
+    "seed": "20261027",
+    "levelType": "minecraft:normal",
+    "generatorSettings": "",
+    "difficulty": "normal",
+    "verifiedAt": "2026-10-28T10:07:30.242Z"
+  },
+  "source": "mcp",
+  "agent": "emergent-002",
+  "events": "events.json",
+  "cameras": [
+    "agent-pov.mp4",
+    "observer.mp4",
+    "follow.mp4"
+  ],
+  "finishedAt": "2026-10-28T10:08:04.921Z"
+}

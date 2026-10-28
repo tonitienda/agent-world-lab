@@ -1,4 +1,4 @@
-We gave Claude one simple goal in Minecraft: explore, find something interesting, and try to collect it.
+We challenged an AI agent to build a three-by-three platform, three blocks above the ground, and climb onto it.
 I'm standing on a flat grassy plain with empty pockets, so first I'll dig up some earth to use as building material for a raised platform.
 My hands are empty, so I'll dig this grass block to start gathering building material.
 The dirt dropped beside the hole instead of landing in my pockets, so I'll walk over and pick it up.

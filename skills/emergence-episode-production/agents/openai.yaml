@@ -1,0 +1,4 @@
+interface:
+  display_name: "Emergence Episode Production"
+  short_description: "Edit and render recorded Emergence experiments"
+  default_prompt: "Use $emergence-episode-production to produce or revise an episode from the existing recordings, event log, and narration."

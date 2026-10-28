@@ -4,7 +4,7 @@ AGENT_ID ?= emergent-001
 SESSION ?= episode-001
 MCP_NAME ?= agent-world
 
-SESSION_DIR := $(CURDIR)/data/mcp-sessions/$(SESSION)
+SESSION_DIR := $(CURDIR)/production/$(SESSION)
 RECORD_MP4 ?= $(SESSION_DIR)/agent-pov.mp4
 OUTPUT ?= production/output/$(SESSION).mp4
 
@@ -58,9 +58,10 @@ set-mcp:
 		-e WORLD_ADAPTER=minecraft \
 		-e AGENT_ID="$(AGENT_ID)" \
 		-e RECORD_MP4="$(RECORD_MP4)" \
-		-- npm --prefix "$(CURDIR)" run mcp
+		$(if $(SCENARIO_FILE),-e SCENARIO_FILE="$(SCENARIO_FILE)",) \
+		-- npm --silent --prefix "$(CURDIR)" run mcp
 	@echo ""
-	@echo "MCP configured. Restart Claude Code."
+	@echo "MCP configured. New Claude processes will use it; restart any existing interactive session."
 
 # ------------------------------------------------------------
 # 3. Extract episode data

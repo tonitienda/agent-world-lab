@@ -22,8 +22,10 @@ mkdirSync(out,{recursive:true});mkdirSync(media,{recursive:true});
 const events=JSON.parse(readFileSync(join(session,'events.json'),'utf8')) as Array<{at?:string;kind?:string;action?:string;details?:any;payload?:any}>;
 const names=['agent-pov','observer'];
 const metadata=JSON.parse(readFileSync(join(session,'metadata.json'),'utf8')) as {
- startedAt?:string; cameraTimings?:Array<{name:string;captureOpenedAt:string;readyAt:string}>
+ cameras?:Array<{name:string}>; startedAt?:string; cameraTimings?:Array<{name:string;captureOpenedAt:string;readyAt:string}>
 };
+// Legacy sessions remain usable; declared follow recordings must exist and probe successfully.
+if(metadata.cameras?.some(c=>c.name==='follow') || existsSync(join(session,'follow.mp4')))names.push('follow');
 const opened=new Map((metadata.cameraTimings??[]).map(c=>[c.name,Date.parse(c.captureOpenedAt)]));
 const origins=names.map(name=>opened.get(name)).filter((n):n is number=>n!==undefined&&Number.isFinite(n));
 const origin=origins.length===names.length?Math.min(...origins):Date.parse(metadata.startedAt??'');
@@ -74,7 +76,7 @@ if(intentions.length>0&&selected.length===0)
 if(selected.length>20)console.warn('WARNING: Preview edit plan contains at most 20 intention shots; all valid intentions remain in narration.');
 // Intent events are the voice track; do not allocate extra clips for the
 // subsequent tool results or silently drop commentary after the sixth action.
-if(selected.length===0)selected=timed.filter(e=>/move_to$|mine$|place$/i.test(e.kind));
+if(selected.length===0)selected=timed.filter(e=>/^(move_to|mine|place|craft|equip|drop|interact_block|interact_entity|open_container|transfer_item|eat|attack|use_item)$/i.test(e.kind));
 // Begin a shot before the action so viewers see the lead-in, not just its result.
 const preroll=3;
 let last=clipFloor;
@@ -83,10 +85,10 @@ for(const e of selected.slice(0,20)){
  const clipStart=Math.max(last,clipFloor,Math.min(usable-2,e.second-preroll));
  const duration=Math.min(9,usable-clipStart);
  if(duration<1.5)continue;
- const interaction=/mine|place|result|error/i.test(e.kind) || /mine|place/.test(String(e.detail.args?.action??''));
- // Movement is best established in the tracking observer shot; close-up
+ const interaction=/mine|place|craft|equip|drop|interact|container|transfer|eat|attack|use_item|result|error/i.test(e.kind) || /mine|place|craft|equip|drop|interact|container|transfer|eat|attack|use_item/.test(String(e.detail.args?.action??''));
+ // Movement uses the follow camera when available; close-up
  // mining/placement uses POV, with a three-second lead-in before the action.
- const camera=interaction?'agent-pov':'observer';
+ const camera=interaction?'agent-pov':names.includes('follow')?'follow':'observer';
  segments.push({kind:'shot',duration,shot:{kind:'full',cameras:[camera],start:clipStart,duration,label:e.kind==='report_intention'?String(e.detail.args?.action??'Agent commentary'):e.kind}});
  // Let the agent speak in its own words, rather than inventing commentary.
  // These are public, deliberately brief statements recorded by report_intention.
@@ -99,7 +101,7 @@ for(const e of selected.slice(0,20)){
 if(intentions.length>0&&includedIntentions===0)throw Error('No intention narration survived clip selection.');
 if(selected.length>includedIntentions)console.warn('WARNING: '+(selected.length-includedIntentions)+' intention(s) have no preview clip; their narration is still extracted.');
 console.log('  Intentions selected:       '+includedIntentions);
-if(segments.length===1)segments.push({kind:'shot',duration:Math.min(usable-clipFloor,8),shot:{kind:'split',cameras:names,start:clipFloor,duration:Math.min(usable-clipFloor,8)}});
+if(segments.length===1)segments.push({kind:'shot',duration:Math.min(usable-clipFloor,8),shot:{kind:'split',cameras:names.slice(0,2),start:clipFloor,duration:Math.min(usable-clipFloor,8)}});
 segments.push({kind:'outro',duration:6,text:'What prompt or scenario should we try next? Leave a comment.'});
 const plan={version:1,title:'Emergent — Pilot episode',cameras:names.map(id=>({id,file:id+'.mp4',offsetSeconds:offsets[names.indexOf(id)]})),segments};
 if(force||!existsSync(join(out,'edit-plan.json')))writeFileSync(join(out,'edit-plan.json'),JSON.stringify(plan,null,2)+'\n');

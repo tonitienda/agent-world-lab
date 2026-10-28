@@ -1,0 +1,76 @@
+{
+  "status": "completed",
+  "startedAt": "2026-10-28T11:34:47.399Z",
+  "cameraTimings": [
+    {
+      "name": "agent-pov",
+      "captureOpenedAt": "2026-10-28T11:34:47.399Z",
+      "readyAt": "2026-10-28T11:34:23.921Z",
+      "rawCaptureOpenedAt": "2026-10-28T11:34:20.033Z",
+      "gateAt": "2026-10-28T11:34:47.597Z",
+      "opticalGateSeconds": 27.68,
+      "rawTrimSeconds": 27.482,
+      "status": "completed"
+    },
+    {
+      "name": "observer",
+      "captureOpenedAt": "2026-10-28T11:34:47.399Z",
+      "readyAt": "2026-10-28T11:34:35.859Z",
+      "rawCaptureOpenedAt": "2026-10-28T11:34:23.967Z",
+      "gateAt": "2026-10-28T11:34:47.418Z",
+      "opticalGateSeconds": 21.36,
+      "rawTrimSeconds": 21.341,
+      "status": "completed"
+    },
+    {
+      "name": "follow",
+      "captureOpenedAt": "2026-10-28T11:34:47.399Z",
+      "readyAt": "2026-10-28T11:34:46.399Z",
+      "rawCaptureOpenedAt": "2026-10-28T11:34:35.921Z",
+      "gateAt": "2026-10-28T11:34:47.470Z",
+      "opticalGateSeconds": 7.48,
+      "rawTrimSeconds": 7.409000000000001,
+      "status": "completed"
+    }
+  ],
+  "synchronization": "optical gate aligned to shared event epoch; precision limited by capture frame rate",
+  "cameras": [
+    {
+      "name": "agent-pov",
+      "port": 3007,
+      "firstPerson": true
+    },
+    {
+      "name": "observer",
+      "port": 3008,
+      "firstPerson": false
+    },
+    {
+      "name": "follow",
+      "port": 3009,
+      "firstPerson": false
+    }
+  ],
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "endedAt": "2026-10-28T11:36:25.107Z",
+  "followTelemetry": {
+    "updates": 762,
+    "obstructedFrames": 0,
+    "minimumDistance": 3.1554628903169255,
+    "position": [
+      11.5,
+      98.35,
+      0.5002399273384852
+    ],
+    "target": [
+      15.5,
+      97.25,
+      0.5002399273369192
+    ],
+    "distance": 4.148493702538307,
+    "obstructed": false
+  }
+}

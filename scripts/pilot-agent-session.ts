@@ -79,7 +79,7 @@ try {
   }
   writeFileSync(join(dir, "events.json"), JSON.stringify(events, null, 2) + "\n");
   writeFileSync(join(dir, "session.json"), JSON.stringify({ prompt: objective, model, endpoint, startedAt, endedAt: new Date().toISOString(), maxTurns, success: !error }, null, 2) + "\n");
-  for (const name of ["agent-pov", "observer"]) {
+  for (const name of ["agent-pov", "observer", "follow"]) {
     const file = join(dir, `${name}.mp4`);
     if (!existsSync(file) || !statSync(file).size) {
       console.error("Missing recording:", file);

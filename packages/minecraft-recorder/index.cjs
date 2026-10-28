@@ -1,8 +1,10 @@
-const { mineflayer: viewer } = require("prismarine-viewer");
+const { startViewer } = require("./viewer-server.cjs");
 const { chromium } = require("playwright");
 const { spawnSync } = require("node:child_process");
-const { mkdirSync } = require("node:fs");
+const { mkdirSync, renameSync } = require("node:fs");
 const { dirname, join } = require("node:path");
+const {createFollowController, terrainSnapshot, addFollowCamera, installFollow} = require("./follow-camera.cjs");
+const {synchronizationOffset} = require("./sync.cjs");
 const {addObserverFollow} = require("./observer-follow.cjs");
 
 async function start(bot, options) {
@@ -25,19 +27,24 @@ async function start(bot, options) {
   console.error("Recorder terrain loaded:", ground.name, "at", ground.position.toString());
   const views = [
     { name: "agent-pov", port, firstPerson: true },
-    { name: "observer", port: port + 1, firstPerson: false }
+    { name: "observer", port: port + 1, firstPerson: false },
+    { name: "follow", port: port + 2, firstPerson: false }
   ];
-  for (const view of views) viewer(bot, { port: view.port, firstPerson: view.firstPerson, viewDistance: 6 });
-  const browser = await chromium.launch({
-    headless: true,
-    args: ["--enable-webgl", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--disable-dev-shm-usage"]
-  });
+  const servers = [];
+  let browser;
   const captures = [];
   const cameraTimings = [];
   const inventoryTimers = [];
   try {
+    for (const view of views) {
+      servers.push(await startViewer(bot, { port: view.port, firstPerson: view.firstPerson, viewDistance: 6 }));
+    }
+    browser = await chromium.launch({
+      headless: true,
+      args: ["--enable-webgl", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--disable-dev-shm-usage"]
+    });
     mkdirSync(dirname(options.output), { recursive: true });
-    // Start both browser views before the experiment advances.
+    // Start all browser views before the experiment advances.
     for (const view of views) {
       const context = await browser.newContext({
         viewport: { width: options.width, height: options.height },
@@ -50,11 +57,11 @@ async function start(bot, options) {
       page.on("console", m => { if (m.type() === "error") console.error(view.name, m.text()); });
       page.on("pageerror", err => console.error(view.name, "page:", err));
       if (!view.firstPerson) {
-        // Intercept only the observer viewer script; fail if the upstream hook changes.
+        // Intercept only third-person scripts; fail if the upstream hook changes.
         let patched = false;
         await page.route("**/index.js", async route => {
           const original = await route.fetch();
-          const body = addObserverFollow(await original.text());
+          const body = (view.name === "follow" ? addFollowCamera : addObserverFollow)(await original.text());
           patched = true;
           await route.fulfill({response: original, body});
         });
@@ -62,9 +69,32 @@ async function start(bot, options) {
           if (!patched) throw new Error("Observer viewer script never loaded; tracking not guaranteed");
         };
       }
+      if (view.name === "follow") {
+        await page.addInitScript({content: `(${installFollow.toString()})(${createFollowController.toString()});`});
+      }
       await page.goto(`http://127.0.0.1:${view.port}`, { waitUntil: "domcontentloaded", timeout: 15000 });
       await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
       captures[captures.length - 1].verifyObserverPatched?.();
+      if (view.name === "follow") {
+        const updateFollow = async () => {
+          await page.evaluate(state => { window.__followState = state; }, terrainSnapshot(bot));
+        };
+        await updateFollow();
+        let busy = false;
+        inventoryTimers.push(setInterval(async () => {
+          if (busy || page.isClosed()) return;
+          busy = true;
+          try { await updateFollow(); } catch (error) { console.error("Follow terrain update:", String(error)); }
+          finally { busy = false; }
+        }, 50));
+        await page.waitForFunction(() => window.__followTelemetry?.updates > 0, undefined, {timeout: 15000});
+      }
+      await page.evaluate(() => {
+        const gate = document.createElement("div");
+        gate.id = "recording-sync-gate";
+        Object.assign(gate.style, {position:"fixed",left:"0",top:"0",width:"32px",height:"32px",background:"white",zIndex:"2147483647"});
+        document.body.appendChild(gate);
+      });
       // Prismarine Viewer only renders the 3D world. Overlay the *actual*
       // Mineflayer inventory on each video, updating while recording.
       // The panel is browser UI, not a fake Minecraft inventory screen.
@@ -112,7 +142,7 @@ async function start(bot, options) {
       inventoryTimers.push(timer);
       // The third-person page uses OrbitControls. Zoom toward the bot using
       // wheel input before recording the experiment; POV is unaffected.
-      if (!view.firstPerson) {
+      if (view.name === "observer") {
         const canvas = page.locator("canvas").first();
         await canvas.hover();
         for (let n = 0; n < 5; n++) await page.mouse.wheel(0, -300);
@@ -124,39 +154,87 @@ async function start(bot, options) {
       cameraTimings.push({name: view.name, captureOpenedAt, readyAt});
       console.error("Camera ready:", view.name, "on", view.port);
     }
-    const startedAt = new Date().toISOString();
-    require("node:fs").writeFileSync(join(dirname(options.output), "metadata.json"),
-      JSON.stringify({ startedAt, cameraTimings, synchronization: "approximate (video capture may start after page creation)", cameras: views.map(v => ({ name: v.name, port: v.port, firstPerson: v.firstPerson })),
-        dimensions: { width: options.width, height: options.height } }, null, 2));
-    let stopped = false;
-    return async () => {
-      if (stopped) return;
-      stopped = true;
-      try {
+    const epoch = Date.now() + 1000;
+    const transitions = await Promise.all(captures.map(capture => capture.page.evaluate(epoch => new Promise(resolve => {
+      function tick() {
+        if (Date.now() < epoch) return requestAnimationFrame(tick);
+        const gate = document.getElementById("recording-sync-gate");
+        document.body.appendChild(gate);
+        gate.style.background = "black";
+        resolve(Date.now());
+      }
+      requestAnimationFrame(tick);
+    }), epoch)));
+    const startedAt = new Date(epoch).toISOString();
+    const metadata = { status: "recording", startedAt, cameraTimings: cameraTimings.map((timing, i) => ({
+      ...timing, rawCaptureOpenedAt: timing.captureOpenedAt,
+      captureOpenedAt: startedAt, gateAt: new Date(transitions[i]).toISOString()
+    })), synchronization: "optical gate aligned to shared event epoch; precision limited by capture frame rate",
+      cameras: views, dimensions: {width: options.width, height: options.height} };
+    const metadataPath = join(dirname(options.output), "metadata.json");
+    const saveMetadata = () => require("node:fs").writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+    saveMetadata();
+    const { createFinalizer } = require("./finalize.cjs");
+    return createFinalizer([
+      async () => {
+        metadata.endedAt = new Date().toISOString();
         inventoryTimers.forEach(clearInterval);
-        for (const capture of captures) {
-          if (!capture.firstPerson) {
+        saveMetadata();
+      },
+      ...captures.map(capture => async () => {
+        try {
+          if (capture.name === "observer") {
             const telemetry = await capture.page.evaluate(() => window.__emergentObserverFollow ?? null).catch(() => null);
             console.error("Observer camera follow updates:", telemetry?.updates ?? 0, "last target:", telemetry?.target ?? "none");
             await capture.page.screenshot({path: join(dirname(options.output), "observer-final-debug.png")}).catch(() => {});
             if (!telemetry?.updates) console.error("WARNING: Observer camera received no tracked position updates; inspect observer-final-debug.png");
+          }
+          if (capture.name === "follow") {
+            metadata.followTelemetry = await capture.page.evaluate(() => window.__followTelemetry).catch(() => null);
+            await capture.page.screenshot({path: join(dirname(options.output), "follow-final-debug.png")}).catch(() => {});
           }
           const video = capture.page.video();
           await capture.context.close();
           const webm = join(dirname(options.output), `${capture.name}.webm`);
           await video.saveAs(webm);
           const mp4 = join(dirname(options.output), `${capture.name}.mp4`);
-          const ff = spawnSync("ffmpeg", ["-y", "-v", "error", "-i", webm, "-c:v", "libx264",
-            "-pix_fmt", "yuv420p", "-movflags", "+faststart", mp4], { encoding: "utf8" });
+          const partial = join(dirname(options.output), `${capture.name}.partial.mp4`);
+          const opticalOffset = synchronizationOffset(webm);
+          const timing = metadata.cameraTimings.find(t => t.name === capture.name);
+          // Account for the measured browser scheduling delay after the shared epoch.
+          const offset = Math.max(0, opticalOffset - (Date.parse(timing.gateAt) - epoch) / 1000);
+          timing.opticalGateSeconds = opticalOffset;
+          timing.rawTrimSeconds = offset;
+          saveMetadata();
+          const duration = (Date.parse(metadata.endedAt) - epoch) / 1000;
+          const ff = spawnSync("ffmpeg", ["-y", "-v", "error", "-i", webm, "-ss", String(offset), "-t", String(duration), "-c:v", "libx264",
+            "-pix_fmt", "yuv420p", "-movflags", "+faststart", partial], { encoding: "utf8" });
           if (ff.status !== 0) throw new Error(`FFmpeg ${capture.name} failed: ${ff.stderr}`);
+          renameSync(partial, mp4);
+          timing.status = "completed";
+          saveMetadata();
           console.error("Camera saved:", mp4);
+        } catch (error) {
+          const timing = metadata.cameraTimings.find(t => t.name === capture.name);
+          timing.status = "failed";
+          timing.error = String(error);
+          saveMetadata();
+          throw error;
         }
-      } finally { await browser.close(); }
-    };
+      })
+    ], async () => {
+      inventoryTimers.forEach(clearInterval);
+      const results = await Promise.allSettled([browser.close(), ...servers.map(server => Promise.resolve().then(() => server.close()))]);
+      const errors = results.filter(r => r.status === "rejected").map(r => r.reason);
+      metadata.status = errors.length || metadata.cameraTimings.some(t => t.status === "failed") ? "failed" : "completed";
+      saveMetadata();
+      if (errors.length) throw new AggregateError(errors, "Camera cleanup failed");
+    });
   } catch (error) {
     inventoryTimers.forEach(clearInterval);
     for (const capture of captures) await capture.context.close().catch(() => {});
-    await browser.close();
+    await browser?.close().catch(() => {});
+    for (const server of servers) { try { await server.close(); } catch {} }
     throw error;
   }
 }

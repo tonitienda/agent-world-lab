@@ -21,14 +21,21 @@
     "episode:render-simple": "tsx scripts/episode-render-simple.ts",
     "episode:validate": "node production/tools/episode.mjs",
     "episode:render": "node production/tools/episode.mjs --render",
-    "episode:check-render": "node production/tools/check-render.mjs"
+    "episode:check-render": "node production/tools/check-render.mjs",
+    "world:preflight": "tsx scripts/world-preflight.ts",
+    "session:control": "tsx scripts/session-control.ts",
+    "integration:survival": "tsx scripts/survival-integration.ts",
+    "integration:recorder": "node packages/minecraft-recorder/integration.cjs",
+    "scenario:ravine": "tsx scripts/setup-ravine.ts",
+    "integration:ravine": "tsx scripts/ravine-integration.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",
     "mineflayer": "^4.32.0",
     "mineflayer-pathfinder": "^2.4.5",
     "vec3": "^0.1.10",
-    "zod": "^3.25.0"
+    "zod": "^3.25.0",
+    "prismarine-nbt": "^2.8.0"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",

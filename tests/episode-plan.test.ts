@@ -87,3 +87,46 @@ test('extracts every intention even when preview edit plan only uses first 20',(
   assert.ok(plan.segments.length<=22);
  }finally{rmSync(f.dir,{recursive:true,force:true});}
 });
+
+test('new survival decisions retain public intent and POV footage even when the action fails',()=>{
+ const summary='I will check whether these materials can become a pickaxe.';
+ const f=fixture([
+  {at:at(5),action:'report_intention',details:{args:{summary,action:'craft'}}},
+  {at:at(5),action:'craft_start',details:{args:{item:'wooden_pickaxe',count:1}}},
+  {at:at(7),action:'craft',details:{result:{ok:false,message:'Missing ingredients'}}}
+ ]);
+ try{
+  const result=f.run();assert.equal(result.status,0,result.stderr);
+  const plan=JSON.parse(readFileSync(join(f.out,'edit-plan.json'),'utf8'));
+  assert.deepEqual(plan.segments[1].shot.cameras,['agent-pov']);
+  const narration=JSON.parse(readFileSync(join(f.out,'narration-manifest.json'),'utf8'));
+  assert.equal(narration[1].text,summary);
+  assert.equal(narration.length,3);
+ }finally{rmSync(f.dir,{recursive:true,force:true});}
+});
+
+test('three-camera sessions expose follow and use it for movement while preserving narration',()=>{
+ const f=fixture([intent(5,'I will explore the cave.')]);
+ try{
+  const session=join(f.dir,'session');
+  writeFileSync(join(session,'follow.mp4'),'placeholder');
+  writeFileSync(join(session,'metadata.json'),JSON.stringify({startedAt:at(0),cameras:[{name:'agent-pov'},{name:'observer'},{name:'follow'}],cameraTimings:['agent-pov','observer','follow'].map(name=>({name,captureOpenedAt:at(0),readyAt:at(0)}))}));
+  const result=f.run();assert.equal(result.status,0,result.stderr);
+  const plan=JSON.parse(readFileSync(join(f.out,'edit-plan.json'),'utf8'));
+  assert.deepEqual(plan.cameras.map((c:any)=>c.id),['agent-pov','observer','follow']);
+  assert.deepEqual(plan.cameras.map((c:any)=>c.offsetSeconds),[0,0,0]);
+  assert.deepEqual(plan.segments[1].shot.cameras,['follow']);
+  assert.match(readFileSync(join(f.out,'narration.txt'),'utf8'),/I will explore the cave\./);
+  assert.ok(existsSync(join(f.dir,'production/public/episode-test/video/follow.mp4')));
+ }finally{rmSync(f.dir,{recursive:true,force:true});}
+});
+test('a declared third camera cannot be silently omitted',()=>{
+ const f=fixture([intent(5,'I will explore.')]);
+ try{
+  writeFileSync(join(f.dir,'session/metadata.json'),JSON.stringify({startedAt:at(0),cameras:[{name:'follow'}]}));
+  // The fake ffprobe accepts any path; use a strict stand-in for this failure case.
+  const probe=join(f.dir,'bin/ffprobe');
+  writeFileSync(probe,'#!/bin/sh\nfor arg do case "$arg" in *follow.mp4) exit 1;; esac; done\necho 30\n');
+  const result=f.run();assert.notEqual(result.status,0);assert.match(result.stderr,/follow.mp4/);
+ }finally{rmSync(f.dir,{recursive:true,force:true});}
+});

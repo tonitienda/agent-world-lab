@@ -1,7 +1,7 @@
 {
   "file": "/Users/toni/Projects/agent-world-lab/production/output/episode-001.mp4",
-  "duration": 166.92,
-  "frames": 4173,
+  "duration": 163.92,
+  "frames": 4098,
   "width": 1920,
   "height": 1080,
   "fps": 25,
@@ -11,11 +11,11 @@
   "narrationWindows": [
     {
       "line": 1,
-      "meanDb": -21.2
+      "meanDb": -21.3
     },
     {
       "line": 2,
-      "meanDb": -20.9
+      "meanDb": -20.8
     },
     {
       "line": 3,
@@ -83,7 +83,7 @@
     },
     {
       "line": 51,
-      "meanDb": -21.6
+      "meanDb": -21.5
     },
     {
       "line": 53,

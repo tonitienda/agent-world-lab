@@ -1,5 +1,7 @@
 # Emergence episode production
 
+For the complete editorial workflow and learned preferences, use [the Emergence production skill](../skills/emergence-episode-production/SKILL.md). It preserves the original brief and later steering. This README describes the current pipeline.
+
 The Motion Canvas scene, editor and headless MP4 exporter read the same manually editable episode timeline. The simple renderer remains a separate legacy command.
 
 From the repository root:
@@ -53,3 +55,10 @@ All segment durations must be integral frame counts. A dissolve consumes the fir
 After timeline or source changes, restart Vite or rerun the CLI. It automatically rebuilds the derived soundtrack; unchanged inputs reuse the cached mix. Do not edit the JSON while an export is running. `public/<episode>/generated/` and `output/` contain derived local media, not source assets. `validation.json` records measured durations and the absolute audio schedule. Original audio/video files are never renamed or replaced.
 
 No music is synthesized or fetched. If original cameras contain sound, only the primary contributes at reduced gain under the normalized voice track. Episode 001 has no source audio streams. Capture defects and timing precision are documented in its editorial report.
+
+New recorder sessions also include `follow.mp4`. The planner registers all three cameras,
+uses follow for movement and POV for interactions, and preserves the agent's intention
+narration. Full, PIP, and split shots may select follow just like any other source; PIP
+and split still show two sources at a time. Legacy two-camera sessions remain supported.
+Optically aligned MP4s share `metadata.startedAt` and have zero relative offsets;
+raw WebMs require their recorded `rawTrimSeconds` before using that timeline.
