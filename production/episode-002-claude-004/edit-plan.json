@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "title": "Emergent — Pilot episode",
+  "cameras": [
+    {
+      "id": "agent-pov",
+      "file": "agent-pov.mp4",
+      "offsetSeconds": 0
+    },
+    {
+      "id": "observer",
+      "file": "observer.mp4",
+      "offsetSeconds": 0
+    },
+    {
+      "id": "follow",
+      "file": "follow.mp4",
+      "offsetSeconds": 0
+    }
+  ],
+  "segments": [
+    {
+      "kind": "intro",
+      "duration": 7,
+      "text": "An AI agent enters Minecraft. What will it try?"
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 6.026999999999999,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 15.578,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 24.578,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 33.578,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 42.578,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 51.578,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 60.578,
+        "duration": 9,
+        "label": "craft"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 4.221999999999994,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 69.578,
+        "duration": 4.221999999999994,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "outro",
+      "duration": 6,
+      "text": "What prompt or scenario should we try next? Leave a comment."
+    }
+  ]
+}

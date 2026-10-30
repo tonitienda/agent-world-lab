@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "spawn": {"x": 0.5, "y": 80, "z": 0.5},
+  "targets": {"mainland-landmark": {"x": 40, "y": 80, "z": 0}},
+  "install": "implementation/install.mjs",
+  "verify": "implementation/verify.mjs",
+  "revision": "constructed-island-v1",
+  "required_capabilities": ["observe", "move_to", "mine", "place", "craft", "open_container", "transfer_item"]
+}

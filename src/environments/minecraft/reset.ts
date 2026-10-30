@@ -9,6 +9,7 @@ import {
 import { join } from "node:path";
 import { acquireLock } from "../../session/lock.js";
 import { worldSettings, verifyProperties } from "./world-config.js";
+import { configuredMinecraftVersion, restoreRuntimeCache } from "./runtime-cache.js";
 
 /** Call only after CLI confirmation. Injected operations let tests use temporary worlds. */
 export async function resetWorld(
@@ -32,11 +33,14 @@ export async function resetWorld(
   );
   try {
     await operations.checkSafety();
+    const version = configuredMinecraftVersion(root);
     operations.docker(["compose", "stop", "--timeout", "30", "minecraft"]);
     mkdirSync(join(root, "data/world-archives"), { recursive: true });
     if (existsSync(world)) renameSync(world, archive);
     mkdirSync(world, { recursive: true });
     try {
+      if (restoreRuntimeCache(root, world, version, archive))
+        console.log(`Reusing cached Minecraft ${version} server runtime; world and player data remain fresh.`);
       operations.docker(
         ["compose", "up", "-d", "--wait", "--wait-timeout", "300", "minecraft"],
         {

@@ -1,0 +1,34 @@
+version: 1
+episode:
+  id: episode-003
+  title: The Island Escape
+environment:
+  provider: minecraft
+  preset: survival
+  seed: "12345"
+  minecraft:
+    version: "1.21.4"
+level_design:
+  harness: claude
+  model: configured-default
+  prompt_file: level-design.md
+goal:
+  prompt_file: goal.md
+evaluation:
+  type: reach_location
+  target: mainland-landmark
+  radius: 4
+agents:
+  - id: claude
+    harness: claude
+    model: configured-default
+  - id: codex
+    harness: codex
+    model: configured-default
+recording:
+  cameras: [agent-pov, observer, follow]
+  max_duration_minutes: 20
+production:
+  renderer: motion-canvas
+  narration: manual
+  max_video_duration_minutes: 10

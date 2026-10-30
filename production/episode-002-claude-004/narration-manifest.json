@@ -1,0 +1,178 @@
+[
+  {
+    "line": 1,
+    "segmentIndex": 0,
+    "eventIndex": null,
+    "at": null,
+    "text": "You are standing at the edge of a ravine.\n\nYour objective is to reach the marked location on the opposite side without dying.\n\nYou may explore, mine, craft, build, or use any available Minecraft mechanics.\nChoose your own strategy. You do not have to build a bridge.\n\nYou have a maximum of 80 world-changing actions. Observations and inventory checks\ndo not count against this budget.\n\nStart: (2.5, 96, 0.5), facing east. The gap occupies x=4 through x=11,\nz=-16 through z=16; its stone bottom is y=71, 24 blocks below the banks.\nGoal: reach the gold landing pad centered at (15.5, 96, 0.5) alive. A tall emerald\npillar at (18, 96, 0) marks the far bank. Wood is on your side at (-1, 96, -5) and\n(-6, 96, 6). You begin with full health/food and an empty inventory.\nThe coordinates are given because observe is a local scan, not a distant view.\n\nUse only the world tools. Give brief public first-person intentions before actions.\nCall finish_session when finished: on the landing pad if you succeed, or with a\nclear explanation if you cannot complete the challenge.\n",
+    "audio": "1_Chapter_1.wav"
+  },
+  {
+    "line": 2,
+    "segmentIndex": 1,
+    "eventIndex": 7,
+    "at": 9.027,
+    "text": "Before building anything, I'll check whether solid ground continues past the ravine's southern end so I can walk around it.",
+    "audio": "2_Chapter_1.wav"
+  },
+  {
+    "line": 3,
+    "segmentIndex": 2,
+    "eventIndex": 12,
+    "at": 18.578,
+    "text": "There's no ground past the ravine's end, so I'm heading to the nearby tree to collect wood for a bridge.",
+    "audio": "3_Chapter_1.wav"
+  },
+  {
+    "line": 4,
+    "segmentIndex": 3,
+    "eventIndex": 17,
+    "at": 25.075,
+    "text": "I'll chop the base of this oak trunk first to start collecting logs.",
+    "audio": "4_Chapter_1.wav"
+  },
+  {
+    "line": 5,
+    "segmentIndex": 4,
+    "eventIndex": 20,
+    "at": 28.123,
+    "text": "Next log up the trunk, since I need about three logs for enough planks.",
+    "audio": "5_Chapter_1.wav"
+  },
+  {
+    "line": 6,
+    "segmentIndex": 5,
+    "eventIndex": 23,
+    "at": 31.166,
+    "text": "One more log within reach should give me plenty of planks for the bridge.",
+    "audio": "6_Chapter_1.wav"
+  },
+  {
+    "line": 7,
+    "segmentIndex": 6,
+    "eventIndex": 30,
+    "at": 39.909,
+    "text": "One log dropped a little out of reach, so I'll step over and grab it for a safety margin of planks.",
+    "audio": "7_Chapter_1.wav"
+  },
+  {
+    "line": 8,
+    "segmentIndex": 7,
+    "eventIndex": 33,
+    "at": 42.434,
+    "text": "I'll turn my logs into planks, which are the blocks I'll lay across the ravine.",
+    "audio": "8_Chapter_1.wav"
+  },
+  {
+    "line": 9,
+    "segmentIndex": 8,
+    "eventIndex": 36,
+    "at": 47.302,
+    "text": "With twelve planks in hand, I'm returning to the ravine edge to start the bridge.",
+    "audio": "9_Chapter_1.wav"
+  },
+  {
+    "line": 10,
+    "segmentIndex": null,
+    "eventIndex": 39,
+    "at": 51.808,
+    "text": "The first plank goes right against the bank's edge to start the walkway.",
+    "audio": "10_Chapter_1.wav"
+  },
+  {
+    "line": 11,
+    "segmentIndex": null,
+    "eventIndex": 42,
+    "at": 52.872,
+    "text": "I can still reach one block farther out, so I'll extend the bridge before stepping onto it.",
+    "audio": "11_Chapter_1.wav"
+  },
+  {
+    "line": 12,
+    "segmentIndex": null,
+    "eventIndex": 45,
+    "at": 54.863,
+    "text": "Both planks are down, so I'll carefully step out onto the end of my bridge.",
+    "audio": "12_Chapter_1.wav"
+  },
+  {
+    "line": 13,
+    "segmentIndex": null,
+    "eventIndex": 48,
+    "at": 57.8,
+    "text": "From the bridge's end I'll keep laying planks eastward over the drop.",
+    "audio": "13_Chapter_1.wav"
+  },
+  {
+    "line": 14,
+    "segmentIndex": null,
+    "eventIndex": 51,
+    "at": 58.571,
+    "text": "Another plank ahead while it's still in reach, to save on moves.",
+    "audio": "14_Chapter_1.wav"
+  },
+  {
+    "line": 15,
+    "segmentIndex": null,
+    "eventIndex": 54,
+    "at": 60.942,
+    "text": "I'm halfway across, so I'll walk to the newest plank and keep going.",
+    "audio": "15_Chapter_1.wav"
+  },
+  {
+    "line": 16,
+    "segmentIndex": null,
+    "eventIndex": 57,
+    "at": 62.046,
+    "text": "Next plank goes down past the middle of the ravine.",
+    "audio": "16_Chapter_1.wav"
+  },
+  {
+    "line": 17,
+    "segmentIndex": null,
+    "eventIndex": 60,
+    "at": 63.259,
+    "text": "One more ahead while I can reach it.",
+    "audio": "17_Chapter_1.wav"
+  },
+  {
+    "line": 18,
+    "segmentIndex": null,
+    "eventIndex": 63,
+    "at": 65.682,
+    "text": "I'm stepping out to the bridge's end to place the last two planks.",
+    "audio": "18_Chapter_1.wav"
+  },
+  {
+    "line": 19,
+    "segmentIndex": null,
+    "eventIndex": 66,
+    "at": 67.273,
+    "text": "This is the second-to-last plank needed to reach the far bank.",
+    "audio": "19_Chapter_1.wav"
+  },
+  {
+    "line": 20,
+    "segmentIndex": null,
+    "eventIndex": 69,
+    "at": 67.71,
+    "text": "The final plank should close the gap against the far bank.",
+    "audio": "20_Chapter_1.wav"
+  },
+  {
+    "line": 21,
+    "segmentIndex": null,
+    "eventIndex": 72,
+    "at": 69.725,
+    "text": "The bridge is complete, so I'll walk across onto the gold landing pad.",
+    "audio": "21_Chapter_1.wav"
+  },
+  {
+    "line": 22,
+    "segmentIndex": 9,
+    "eventIndex": null,
+    "at": null,
+    "text": "What should we ask the next agent to try? Leave your prompts and scenarios in the comments.",
+    "audio": "22_Chapter_1.wav"
+  }
+]

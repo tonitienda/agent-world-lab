@@ -130,3 +130,29 @@ test('a declared third camera cannot be silently omitted',()=>{
   const result=f.run();assert.notEqual(result.status,0);assert.match(result.stderr,/follow.mp4/);
  }finally{rmSync(f.dir,{recursive:true,force:true});}
 });
+
+test('orchestration extraction preserves valid out-of-window intentions and original event references',()=>{
+ const f=fixture([intent(5,'First thought'),intent(35,'After the camera ended'),{action:'report_intention',details:{args:{summary:'Untimed but public'}}}]);
+ try{
+  const result=f.run(['--preserve-all-intentions','--link-media']);
+  assert.equal(result.status,0,result.stderr);
+  const m=JSON.parse(readFileSync(join(f.out,'narration-manifest.json'),'utf8'));
+  assert.deepEqual(m.slice(1,-1).map((v:any)=>[v.eventIndex,v.text]),[[0,'First thought'],[1,'After the camera ended'],[2,'Untimed but public']]);
+  assert.equal(m[2].segmentIndex,null);
+  assert.equal(m[3].at,null);
+  assert.equal(readFileSync(join(f.dir,'session/agent-pov.mp4'),'utf8'),'placeholder');
+ }finally{rmSync(f.dir,{recursive:true,force:true});}
+});
+
+test('guided opening uses a concise goal excerpt consistently in narration and the manifest',()=>{
+ const f=fixture([intent(5,'I will inspect this tree.')]);
+ const previous=process.env.EMERGENCE_GOAL_TEXT;
+ const goal='You are on an island.\n\nReach the far bank.\nUse your own strategy.';
+ try{
+  process.env.EMERGENCE_GOAL_TEXT=goal;
+  const result=f.run(['--preserve-all-intentions']);assert.equal(result.status,0,result.stderr);
+  const lines=readFileSync(join(f.out,'narration.txt'),'utf8').trimEnd().split('\n');
+  const manifest=JSON.parse(readFileSync(join(f.out,'narration-manifest.json'),'utf8'));
+  assert.equal(lines.length,manifest.length);assert.equal(lines[0],'You are on an island. Reach the far bank. Use your own strategy.');assert.equal(manifest[0].text,'You are on an island. Reach the far bank. Use your own strategy.');
+ }finally{if(previous===undefined)delete process.env.EMERGENCE_GOAL_TEXT;else process.env.EMERGENCE_GOAL_TEXT=previous;rmSync(f.dir,{recursive:true,force:true});}
+});

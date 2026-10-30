@@ -10,3 +10,16 @@ coverage/
 production/output/
 production/public/episode-*/generated/
 
+
+# Go orchestrator binaries, runtime state, private design logs and immutable worlds.
+/bin/
+episodes/*/state.json
+episodes/*/designer.*.log
+episodes/*/.verification.json
+episodes/*/frozen/
+episodes/*/frozen.json
+episodes/*/runs/
+episodes/*/.scenario-*/
+# Guided runner approvals, selected take and temporary preview readiness files.
+episodes/*/.pipeline/
+episodes/*/.preview-*.json

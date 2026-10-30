@@ -1,4 +1,4 @@
-# Agent World Lab
+# The Agent Terrarium
 
 A reproducible lab for autonomous agents exploring **virtual worlds**. Minecraft is the first environment, not the architecture.
 
@@ -31,6 +31,37 @@ The Minecraft server listens on **127.0.0.1 only**. It runs with offline authent
 
 Start the Minecraft server first, and configure the MCP process working directory to this repo. The agent has low-level tools; **no autonomous planning loop is included yet**. For a first manual experiment ask your MCP-capable agent to observe the world and select an objective.
 
+## Episode orchestration CLI
+
+For the guided workflow, run:
+
+```sh
+./pipeline.sh --design codex --player claude episodes/episode-002/episode.yaml
+```
+
+The [guided pipeline](docs/guided-pipeline.md) explains each approval, opens world
+and Motion Canvas previews, waits for narration WAVs, and resumes without
+repeating an existing take. You do not need to copy approval hashes or write an
+edit-plan JSON for the initial draft.
+
+Use the [episode prompt writing guide](docs/episode-prompts.md) to keep the YAML,
+private level design and public player goal consistent. It includes templates,
+resource and observation checks, and a review of the Elevated Forest revision.
+
+
+`make cli` builds `bin/emergence`; `make cli-test` runs the Go tests. The CLI
+coordinates strict episode YAML, reviewed scenario generation, immutable world
+snapshots, isolated recorded takes, extraction and the existing Motion Canvas
+pipeline. Start with `./bin/emergence --help` and `./bin/emergence doctor`.
+
+The [Episode 003 starter](episodes/episode-003/episode.yaml), a complete
+[constructed-island example](examples/island-scenario/report.md), and the
+[CLI workflow/schema guide](docs/emergence-cli.md) explain exact commands,
+world-reset authorization, code review digests, artifacts and production stages.
+Claude gameplay uses an MCP-only tool boundary; Codex gameplay is blocked until
+filesystem isolation is available. Voice export and v2 editorial review remain
+explicit steps. Episodes 001/002 and existing Make/npm commands remain supported.
+
 ## Architecture
 
 - `src/core/`: environment-neutral world interfaces.
@@ -56,7 +87,7 @@ docker compose down    # retains local Minecraft world data
 
 Bootstrap / Milestone 1: persistent local Minecraft server, pluggable adapter contract, single Mineflayer bot, stdio MCP tools, unit tests, and smoke test.
 
-Available: survival actions, seeded world reset with archives, dual-camera recording, lifecycle controls, and disposable integration tests. Unattended model orchestration, cost limits, and guaranteed visual perception remain future work.
+Available: survival actions, seeded world reset with archives, dual-camera recording, lifecycle controls, and disposable integration tests. The Go orchestration CLI supports unattended Claude takes with process timeouts. Cost limits and guaranteed visual perception remain future work.
 
 ## Licenses and content
 
@@ -150,6 +181,7 @@ objects directly. A failed action returns `ok:false` with a diagnostic message.
 | --- | --- | --- |
 | `world_info` | none | World ID and supported actions |
 | `observe` | none | Position, health, food, time, weather, equipment, bounded visible blocks and entities with IDs |
+| `survey` | `intent` | One successful wider scan per session: radius 16 horizontally, 8 below and 12 above; visible loaded blocks grouped by material. `observe` reports the remaining allowance. |
 | `inventory` | none | Backwards-compatible item array with name/count plus slot, type, display name, durability and enchantments |
 | `equipment` | none | Items in hand, off-hand, head, torso, legs and feet |
 | `recipes` | optional `item` | Up to 128 recipes, output quantity, required ingredients, table requirement, craftability with a table |

@@ -19,9 +19,16 @@ export function sessionPath(root,episode){
  throw Error(`Missing local events.json for ${episode}`);
 }
 const safeFile=s=>typeof s==='string'&&s.length>0&&basename(s)===s&&!s.includes('..');
+export function outputResolution(plan){
+ const resolution=plan.resolution??{width:1920,height:1080};
+ const {width,height}=resolution;
+ if(!Number.isInteger(width)||!Number.isInteger(height)||width<320||height<180||width>3840||height>2160||width%2||height%2||width*9!==height*16)throw Error('Invalid output resolution: use an even 16:9 size up to 3840x2160');
+ return resolution;
+}
 export function validate(plan,manifest,media){
  const fail=m=>{throw Error(m)};
  if(plan.version!==2||!Number.isInteger(plan.fps)||plan.fps<1||plan.fps>60||!plan.segments?.length)fail('Invalid declarative edit plan');
+ outputResolution(plan);
  if(!Array.isArray(plan.cameras)||!plan.cameras.length)fail('Missing cameras');
  const cams=new Map(), voices=new Map(manifest.map(v=>[v.line,v]));
  for(const c of plan.cameras){
@@ -32,13 +39,17 @@ export function validate(plan,manifest,media){
  for(const [index,s] of plan.segments.entries()){
   if(!['shot','intro','outro'].includes(s.kind)||!Number.isFinite(s.duration)||s.duration<=0||Math.abs(s.duration*plan.fps-Math.round(s.duration*plan.fps))>1e-6)fail(`Invalid segment ${index}`);
   if(s.transition!==undefined&&(!Number.isFinite(s.transition)||s.transition<0||s.transition>s.duration))fail('Invalid transition');
+  if(s.background){
+   const c=cams.get(s.background.camera),time=s.background.time;
+   if(s.kind==='shot'||!c||!Number.isFinite(time)||time+(c.offsetSeconds??0)<0||time+(c.offsetSeconds??0)>=c.duration)fail(`Invalid title background ${index}`);
+  }
   if(s.kind==='shot'){
    const q=s.shot, count=q?.kind==='full'?1:2;
-   if(!q||!['full','pip','split'].includes(q.kind)||!Number.isFinite(q.start)||q.duration!==s.duration||q.cameras.length!==count||new Set(q.cameras).size!==count)fail(`Invalid shot ${index}`);
+   if(!q||!['full','pip','split'].includes(q.kind)||!Number.isFinite(q.start)||q.duration!==s.duration||(q.hold!==undefined&&!(Number.isFinite(q.hold)&&q.hold>=0&&q.hold<=s.duration))||q.cameras.length!==count||new Set(q.cameras).size!==count)fail(`Invalid shot ${index}`);
    for(const id of q.cameras){
     const c=cams.get(id);if(!c)fail(`Unknown camera ${id}`);
     const start=q.start+(c.offsetSeconds??0);
-    if(start<0||start+s.duration>c.duration+0.001)fail(`Source bounds: segment ${index}, ${id}`);
+    if(start<0||start+s.duration-(q.hold??0)>c.duration+0.001)fail(`Source bounds: segment ${index}, ${id}`);
    }
   }
   let voiceEnd=0;
@@ -73,9 +84,11 @@ export function prepare(production,episode){
  for(const s of plan.segments){
   if(s.kind==='shot'){
    const c=result.cameras.find(c=>c.id===s.shot.cameras[0]);
-   if(c.audio){
-    args.push('-ss',String(s.shot.start+(c.offsetSeconds??0)),'-t',String(s.duration),'-i',join(pub,'video',c.file));
-    const tag=`g${index}`;filters.push(`[${index++}:a]aresample=48000,asetpts=PTS-STARTPTS,volume=0.15,adelay=${Math.round(time*1000)}:all=1[${tag}]`);mix.push(`[${tag}]`);
+   // A held frame is silent: game sound resumes only with the picture.
+   const hold=s.shot.hold??0;
+   if(c.audio&&s.duration-hold>0){
+    args.push('-ss',String(s.shot.start+(c.offsetSeconds??0)),'-t',String(s.duration-hold),'-i',join(pub,'video',c.file));
+    const tag=`g${index}`;filters.push(`[${index++}:a]aresample=48000,asetpts=PTS-STARTPTS,volume=0.15,adelay=${Math.round((time+hold)*1000)}:all=1[${tag}]`);mix.push(`[${tag}]`);
    }
   }
   time+=s.duration;

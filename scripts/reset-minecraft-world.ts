@@ -5,6 +5,7 @@ import { createConnection } from "node:net";
 
 import { randomBytes } from "node:crypto";
 import { resetWorld } from "../src/environments/minecraft/reset.js";
+import { startupDiagnostics } from "../src/environments/minecraft/startup-diagnostics.js";
 import {
   worldSettings,
   verifyLevelDat,
@@ -43,6 +44,7 @@ if (!yes) {
   console.log(
     "All data in the server's /data mount (world, server configs, logs) is archived.",
   );
+  console.log("A matching cached vanilla server runtime is reused; world, player data and configuration are created fresh.");
   console.log(
     "Stop Claude/Codex MCP sessions and wait for MP4 files to finalize first.",
   );
@@ -58,8 +60,11 @@ function run(args: string[], env: NodeJS.ProcessEnv = process.env) {
     stdio: "inherit",
   });
   if (result.error) throw result.error;
-  if (result.status !== 0)
-    throw Error(`Docker command failed with exit ${result.status}`);
+  if (result.status !== 0) {
+    const details = args[0] === "compose" && args[1] === "up"
+      ? `\n${startupDiagnostics(root)}` : "";
+    throw Error(`Docker ${args.join(" ")} failed with exit ${result.status}${details}`);
+  }
 }
 async function isPortOpen(port: number): Promise<boolean> {
   return await new Promise((resolve) => {

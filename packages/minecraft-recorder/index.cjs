@@ -8,6 +8,10 @@ const {synchronizationOffset} = require("./sync.cjs");
 const {addObserverFollow} = require("./observer-follow.cjs");
 
 async function start(bot, options) {
+  const fps = options.fps ?? 60;
+  if (!Number.isInteger(fps) || fps < 1 || fps > 60) throw Error('Capture fps must be an integer from 1 to 60');
+  const [major, minor] = require('playwright/package.json').version.split('.').map(Number);
+  if (fps > 25 && major === 1 && minor < 64) throw Error('60 fps capture requires the updated recorder dependencies: run npm ci in packages/minecraft-recorder');
   const port = Number(process.env.RECORD_VIEWER_PORT || 3007);
   // Verify that Mineflayer can access terrain, not merely that spawn fired.
   // A WebSocket/canvas with no chunks produces an entirely blue recording.
@@ -48,7 +52,7 @@ async function start(bot, options) {
     for (const view of views) {
       const context = await browser.newContext({
         viewport: { width: options.width, height: options.height },
-        recordVideo: { dir: dirname(options.output), size: { width: options.width, height: options.height } }
+        recordVideo: { dir: dirname(options.output), size: { width: options.width, height: options.height }, fps }
       });
       captures.push({ ...view, context });
       const page = await context.newPage();
@@ -98,7 +102,7 @@ async function start(bot, options) {
       // Prismarine Viewer only renders the 3D world. Overlay the *actual*
       // Mineflayer inventory on each video, updating while recording.
       // The panel is browser UI, not a fake Minecraft inventory screen.
-      await page.evaluate(() => {
+      await page.evaluate(scale => {
         const hud = document.createElement("div");
         hud.id = "emergent-inventory";
         Object.assign(hud.style, {
@@ -107,11 +111,12 @@ async function start(bot, options) {
           background: "rgba(9, 18, 27, 0.84)", border: "1px solid #8cb8c3",
           borderRadius: "10px", padding: "11px 15px", pointerEvents: "none",
           fontFamily: "system-ui, sans-serif", fontSize: "19px",
+          transform: `scale(${scale})`, transformOrigin: "top left",
           boxShadow: "0 3px 16px rgba(0, 0, 0, .35)"
         });
         hud.innerHTML = '<div style="font-size:13px;letter-spacing:2px;color:#93cad5;margin-bottom:5px">INVENTORY</div><div id="emergent-items">Empty</div>';
         document.body.appendChild(hud);
-      });
+      }, options.width / 1280);
       let previousInventory = "";
       const updateHud = async () => {
         if (page.isClosed()) return;
@@ -170,7 +175,7 @@ async function start(bot, options) {
       ...timing, rawCaptureOpenedAt: timing.captureOpenedAt,
       captureOpenedAt: startedAt, gateAt: new Date(transitions[i]).toISOString()
     })), synchronization: "optical gate aligned to shared event epoch; precision limited by capture frame rate",
-      cameras: views, dimensions: {width: options.width, height: options.height} };
+      cameras: views, dimensions: {width: options.width, height: options.height}, capture: {backend: "playwright-chromium", requestedFps: fps} };
     const metadataPath = join(dirname(options.output), "metadata.json");
     const saveMetadata = () => require("node:fs").writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
     saveMetadata();
@@ -208,7 +213,7 @@ async function start(bot, options) {
           saveMetadata();
           const duration = (Date.parse(metadata.endedAt) - epoch) / 1000;
           const ff = spawnSync("ffmpeg", ["-y", "-v", "error", "-i", webm, "-ss", String(offset), "-t", String(duration), "-c:v", "libx264",
-            "-pix_fmt", "yuv420p", "-movflags", "+faststart", partial], { encoding: "utf8" });
+            "-r", String(fps), "-pix_fmt", "yuv420p", "-movflags", "+faststart", partial], { encoding: "utf8" });
           if (ff.status !== 0) throw new Error(`FFmpeg ${capture.name} failed: ${ff.stderr}`);
           renameSync(partial, mp4);
           timing.status = "completed";

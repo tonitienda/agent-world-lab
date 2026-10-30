@@ -83,7 +83,7 @@ const intent = z
   .min(3)
   .max(300)
   .describe(
-    "You are speaking directly to viewers as the Minecraft agent. Write one natural, concise FIRST-PERSON sentence (roughly 8–25 words), suitable to read aloud. Describe what you noticed and what you will try next, or why it matters. Use 'I', not imperatives ('Survey the area'), task lists, coordinates, API names or tool names. Never invent results or claim an action succeeded before executing it. Vary phrasing and avoid repetitive 'I'm going to...' introductions. This is public commentary, not private reasoning. Example: 'Nothing has changed to the east, so I'll check beyond the trees.'",
+    "Speak naturally to viewers in first person as the Minecraft agent. For routine actions, prefer a very short intention (usually 3–8 words); use a fuller sentence for a new strategy or an observed discovery. Avoid padding repetitive actions, coordinates, API names, task lists and repeated openings such as 'So', 'Okay' or 'I'm going to'. Follow the goal's narration personality; occasional dry humor may fit an actual setback, but most lines should be straightforward. Never invent events or claim success before executing an action. This is public commentary, not private reasoning.",
   );
 
 server.registerTool(
@@ -106,6 +106,14 @@ server.registerTool(
 );
 server.registerTool("inventory", { description: "Inspect carried items" }, () =>
   action("inventory"),
+);
+server.registerTool(
+  "survey",
+  {
+    description: "One-use wider survey of loaded, visible terrain around your current position: horizontal radius 16 blocks, 8 blocks below and 12 above. Returns material groups, visible bounds and sample coordinates, including elevated terrain. Only ONE successful use per session, enforced by the server; observe reports the remaining allowance. Does not reveal hidden blocks, unloaded terrain or solutions. Choose when to spend it.",
+    inputSchema: { intent },
+  },
+  args => action("survey", args),
 );
 server.registerTool(
   "move_to",
@@ -317,6 +325,9 @@ async function shutdown(reason: string, outcome: SessionOutcome = "stopped") {
     });
     let finalOutcome: SessionOutcome = inFlight ? "aborted" : outcome;
     try {
+      // This observation comes from the adapter, never from agent-authored text.
+      try { events.add("objective_observation", { result: await world.observe() }); }
+      catch (error) { events.add("objective_observation_error", { error: String(error) }); }
       await world.close();
     } catch (error) {
       finalOutcome = "aborted";
@@ -388,7 +399,7 @@ async function main() {
   events?.add("world_configuration", worldConfig);
   // Operator requests are handled by this process; no agent continuation or force-kill.
   const requestFile = resolve(sessionLockPath, "control.json");
-  writeFileSync(resolve(sessionLockPath, "mcp-control-ready"), "ready");
+  writeFileSync(resolve(sessionLockPath, "mcp-control-ready"), String(process.pid));
   controlTimer = setInterval(() => {
     if (!existsSync(requestFile)) return;
     try {
@@ -408,6 +419,17 @@ async function main() {
   // This makes a stale player inventory visible in the session record immediately.
   const initialInventory = await world.act("inventory", {});
   events?.add("inventory_initial", { result: initialInventory });
+  if (process.env.EMERGENCE_EXPECTED_START) {
+    const expected = JSON.parse(process.env.EMERGENCE_EXPECTED_START);
+    const actual = await world.observe() as {position: {x:number;y:number;z:number}; health:number; food:number; environment:{gameMode:string}};
+    const p = actual.position;
+    if (![expected.x, expected.y, expected.z].every(Number.isFinite) ||
+        Math.hypot(p.x-expected.x,p.y-expected.y,p.z-expected.z) > 0.5 ||
+        actual.health !== 20 || actual.food !== 20 || actual.environment.gameMode !== "survival" ||
+        !initialInventory.ok || !Array.isArray(initialInventory.data) || initialInventory.data.length !== 0)
+      throw Error("Frozen scenario starting position, inventory or survival state mismatch");
+    events.add("objective_observation", {result: actual});
+  }
   if (scenario) {
     if (!initialInventory.ok || !Array.isArray(initialInventory.data)) throw Error("Could not verify initial ravine inventory");
     verifyRavineStart(await world.observe() as Parameters<typeof verifyRavineStart>[0], initialInventory.data);

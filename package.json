@@ -27,7 +27,9 @@
     "integration:survival": "tsx scripts/survival-integration.ts",
     "integration:recorder": "node packages/minecraft-recorder/integration.cjs",
     "scenario:ravine": "tsx scripts/setup-ravine.ts",
-    "integration:ravine": "tsx scripts/ravine-integration.ts"
+    "integration:ravine": "tsx scripts/ravine-integration.ts",
+    "integration:orchestration": "tsx scripts/emergence-integration.ts",
+    "integration:pipeline": "tsx scripts/emergence-integration.ts --guided"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",

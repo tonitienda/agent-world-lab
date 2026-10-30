@@ -2,11 +2,28 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 // @ts-ignore Node-only JavaScript production helpers.
-import {validate,sessionPath} from '../production/tools/pipeline.mjs';
+import {validate,sessionPath,outputResolution} from '../production/tools/pipeline.mjs';
 import {sourceTime} from '../production/src/timeline.js';
 const manifest=[1,2].map(line=>({line,audio:`${line}_Chapter_1.wav`}));
 const fixture=()=>({version:2,fps:25,cameras:[{id:'pov',file:'pov.mp4',offsetSeconds:0},{id:'observer',file:'observer.mp4',offsetSeconds:-3.318}],segments:[{kind:'shot',duration:8,narration:[{line:1,audio:'1_Chapter_1.wav',at:.35}],shot:{kind:'pip',cameras:['pov','observer'],start:10,duration:8}}]});
 const media=(file:string)=>({duration:file.startsWith('audio/')?5:40,audio:file.startsWith('audio/')});
+test('title backgrounds use signed source offsets and reject missing cameras or out-of-bounds frames',()=>{
+ const p:any=fixture();p.segments[0].kind='intro';delete p.segments[0].shot;
+ p.segments[0].background={camera:'observer',time:4};
+ assert.doesNotThrow(()=>validate(p,manifest,media));
+ for(const background of [{camera:'missing',time:4},{camera:'observer',time:0},{camera:'pov',time:40},{camera:'pov',time:NaN}]){
+  p.segments[0].background=background;assert.throws(()=>validate(p,manifest,media),/title background/);
+ }
+});
+test('4K60 plans validate while older plans retain their original 1080p format',()=>{
+ const p:any=fixture();
+ assert.deepEqual(outputResolution(p),{width:1920,height:1080});
+ p.fps=60;p.resolution={width:3840,height:2160};
+ assert.doesNotThrow(()=>validate(p,manifest,media));
+ for(const resolution of [{width:7680,height:4320},{width:3840,height:1080},{width:3839,height:2160}]){
+  p.resolution=resolution;assert.throws(()=>validate(p,manifest,media),/output resolution/);
+ }
+});
 test('narration filename mapping remains exact, including double digit line numbers',()=>{
  const catalogue=JSON.parse(readFileSync('production/episode-001/narration-manifest.json','utf8'));
  for(const v of catalogue)assert.equal(v.audio,`${v.line}_Chapter_1.wav`);

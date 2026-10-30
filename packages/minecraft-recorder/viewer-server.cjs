@@ -42,6 +42,7 @@ async function startViewer(bot, {port,firstPerson,viewDistance=6}) {
     await new Promise(resolve=>io.close(resolve));
     throw error;
   }
+  api.port=server.address().port;
   let closing;
   api.close=()=>closing??=(new Promise(resolve=>io.close(resolve)));
   return api;

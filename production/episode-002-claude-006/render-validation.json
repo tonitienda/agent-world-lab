@@ -1,0 +1,245 @@
+{
+  "file": "/Users/toni/Projects/agent-world-lab/production/output/episode-002-claude-006.mp4",
+  "duration": 286.96,
+  "frames": 7174,
+  "width": 1920,
+  "height": 1080,
+  "fps": 25,
+  "audio": "aac",
+  "blackIntervals": [],
+  "decoded": true,
+  "narrationWindows": [
+    {
+      "line": 1,
+      "meanDb": -21.2
+    },
+    {
+      "line": 2,
+      "meanDb": -21.4
+    },
+    {
+      "line": 3,
+      "meanDb": -21.5
+    },
+    {
+      "line": 4,
+      "meanDb": -21.5
+    },
+    {
+      "line": 5,
+      "meanDb": -21.7
+    },
+    {
+      "line": 6,
+      "meanDb": -21.7
+    },
+    {
+      "line": 7,
+      "meanDb": -20.1
+    },
+    {
+      "line": 8,
+      "meanDb": -20.3
+    },
+    {
+      "line": 9,
+      "meanDb": -21.6
+    },
+    {
+      "line": 10,
+      "meanDb": -21.9
+    },
+    {
+      "line": 11,
+      "meanDb": -21.7
+    },
+    {
+      "line": 12,
+      "meanDb": -21.4
+    },
+    {
+      "line": 13,
+      "meanDb": -21.3
+    },
+    {
+      "line": 14,
+      "meanDb": -21.4
+    },
+    {
+      "line": 15,
+      "meanDb": -21.4
+    },
+    {
+      "line": 16,
+      "meanDb": -21.9
+    },
+    {
+      "line": 17,
+      "meanDb": -21.2
+    },
+    {
+      "line": 18,
+      "meanDb": -22
+    },
+    {
+      "line": 19,
+      "meanDb": -21.6
+    },
+    {
+      "line": 20,
+      "meanDb": -21.8
+    },
+    {
+      "line": 21,
+      "meanDb": -20.9
+    },
+    {
+      "line": 22,
+      "meanDb": -21.3
+    },
+    {
+      "line": 23,
+      "meanDb": -21
+    },
+    {
+      "line": 24,
+      "meanDb": -21.5
+    },
+    {
+      "line": 25,
+      "meanDb": -21
+    },
+    {
+      "line": 26,
+      "meanDb": -20.6
+    },
+    {
+      "line": 27,
+      "meanDb": -20.9
+    },
+    {
+      "line": 28,
+      "meanDb": -21.9
+    },
+    {
+      "line": 29,
+      "meanDb": -21.1
+    },
+    {
+      "line": 30,
+      "meanDb": -21.6
+    },
+    {
+      "line": 31,
+      "meanDb": -21.7
+    },
+    {
+      "line": 32,
+      "meanDb": -21.6
+    },
+    {
+      "line": 33,
+      "meanDb": -22.9
+    },
+    {
+      "line": 34,
+      "meanDb": -22
+    },
+    {
+      "line": 35,
+      "meanDb": -21.2
+    },
+    {
+      "line": 36,
+      "meanDb": -20.4
+    },
+    {
+      "line": 37,
+      "meanDb": -21.7
+    },
+    {
+      "line": 38,
+      "meanDb": -21.9
+    },
+    {
+      "line": 39,
+      "meanDb": -22.7
+    },
+    {
+      "line": 40,
+      "meanDb": -20.7
+    },
+    {
+      "line": 41,
+      "meanDb": -21.8
+    },
+    {
+      "line": 42,
+      "meanDb": -21.1
+    },
+    {
+      "line": 43,
+      "meanDb": -21.5
+    },
+    {
+      "line": 44,
+      "meanDb": -21.2
+    },
+    {
+      "line": 45,
+      "meanDb": -21
+    },
+    {
+      "line": 46,
+      "meanDb": -20.9
+    },
+    {
+      "line": 47,
+      "meanDb": -20.5
+    },
+    {
+      "line": 48,
+      "meanDb": -21.2
+    },
+    {
+      "line": 49,
+      "meanDb": -20.7
+    },
+    {
+      "line": 50,
+      "meanDb": -20.5
+    },
+    {
+      "line": 51,
+      "meanDb": -21.1
+    },
+    {
+      "line": 52,
+      "meanDb": -21.1
+    },
+    {
+      "line": 53,
+      "meanDb": -20.2
+    },
+    {
+      "line": 54,
+      "meanDb": -21.6
+    },
+    {
+      "line": 55,
+      "meanDb": -21.8
+    },
+    {
+      "line": 56,
+      "meanDb": -21.3
+    },
+    {
+      "line": 57,
+      "meanDb": -21.8
+    },
+    {
+      "line": 58,
+      "meanDb": -21.2
+    }
+  ]
+}

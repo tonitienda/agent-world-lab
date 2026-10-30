@@ -14,6 +14,8 @@ OUTPUT ?= production/output/$(SESSION).mp4
 help:
 	@echo "Emergent — Agent World Lab"
 	@echo ""
+	@echo "  make cli                    Build the Go episode orchestrator"
+	@echo "  make cli-test               Run Go tests with race detection"
 	@echo "  make reset                  Reset Minecraft world"
 	@echo "  make set-mcp                Configure Claude Code MCP"
 	@echo "  make extract                Extract edit plan and narration"
@@ -114,3 +116,11 @@ check:
 	npm run check
 	npm test
 	cd production && npm run check
+
+# Go orchestration CLI (does not change Minecraft or existing episodes).
+.PHONY: cli cli-test
+cli:
+	go build -o bin/emergence ./cmd/emergence
+
+cli-test:
+	go test -race ./...

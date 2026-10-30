@@ -1,6 +1,7 @@
 import {
   mkdirSync,
   readFileSync,
+  readdirSync,
   writeFileSync,
   rmSync,
   existsSync,
@@ -25,9 +26,30 @@ export function activeLock(
   } catch (e) {
     if ((e as NodeJS.ErrnoException).code !== "ESRCH") throw e;
   }
+  // A killed Go supervisor must not make its still-running MCP child look stale.
+  const delegates = join(path, "delegates");
+  if (existsSync(delegates)) for (const name of readdirSync(delegates)) {
+    const child = JSON.parse(readFileSync(join(delegates, name), "utf8"));
+    if (!Number.isInteger(child.pid) || child.pid <= 0) throw Error("Invalid delegated session lock; inspect manually");
+    try { process.kill(child.pid, 0); return child; }
+    catch (e) { if ((e as NodeJS.ErrnoException).code !== "ESRCH") throw e; }
+  }
 }
 export function acquireLock(kind: string, path = sessionLockPath) {
   mkdirSync(resolve(path, ".."), { recursive: true });
+  // A Go supervisor holds one reservation across reset, setup, capture and
+  // finalization. Only its explicitly delegated subprocesses may nest inside it.
+  if (process.env.EMERGENCE_LEASE && existsSync(join(path, "owner.json"))) {
+    const owner = JSON.parse(readFileSync(join(path, "owner.json"), "utf8"));
+    if (owner.token === process.env.EMERGENCE_LEASE &&
+        String(owner.pid) === process.env.EMERGENCE_OWNER_PID && activeLock(path)) {
+      const delegates = join(path, "delegates");
+      mkdirSync(delegates, {recursive:true});
+      const delegate = join(delegates, String(process.pid));
+      writeFileSync(delegate, JSON.stringify({pid:process.pid,kind}));
+      return () => { rmSync(delegate, {force:true}); }; // Parent owns the reservation.
+    }
+  }
   if (existsSync(path)) {
     const owner = activeLock(path);
     if (owner)

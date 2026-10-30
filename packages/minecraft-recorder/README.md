@@ -21,6 +21,16 @@ One Mineflayer session serves three independent Prismarine Viewer pages on loopb
 - `observer.mp4`: the existing tracking aerial orbit camera.
 - `follow.mp4`: a smooth trailing camera, four blocks behind and slightly above the player.
 
+New agent sessions default to 3840×2160 capture at 60 fps for all three cameras.
+Chromium recording uses Playwright 1.64.1 or newer; run `npm ci` in this package
+after updating. `RECORD_WIDTH`, `RECORD_HEIGHT` and `RECORD_FPS` override the direct
+adapter defaults. The guided orchestrator explicitly requests 4K/60 regardless of
+provider. Metadata records dimensions and requested frame rate. Three 4K/60 views
+are demanding; a 60 fps stream does not guarantee 60 distinct rendered frames per
+second when the machine is overloaded. Recorder timings remain measured from the
+optical gate. New Motion Canvas drafts export at 4K/60; old plans retain their
+saved settings.
+
 No Minecraft client is required. The follow camera uses the viewer's existing player
 mesh and Three.js camera. Its controller runs every animation frame, smooths yaw on
 the shortest arc, and sweeps a camera body against Mineflayer collision shapes.

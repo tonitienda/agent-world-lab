@@ -1,10 +1,16 @@
-import {readFileSync,writeFileSync,mkdirSync,copyFileSync,existsSync} from 'node:fs';
+import {readFileSync,writeFileSync,mkdirSync,copyFileSync,existsSync,linkSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
+// @ts-ignore Shared Node-only opening-copy helper.
+import {summarizeGoal} from '../production/tools/intro.mjs';
+
+const introGoal=summarizeGoal(process.env.EMERGENCE_GOAL_TEXT??'Explore, find something interesting, and try to collect it.');
 
 const args=process.argv.slice(2);
 const force=args.includes('--force');
-const positional=args.filter(a=>a!=='--force');
+const preserveAll=args.includes('--preserve-all-intentions');
+const linkMedia=args.includes('--link-media');
+const positional=args.filter(a=>!['--force','--preserve-all-intentions','--link-media'].includes(a));
 if(positional.length<1||positional.length>2||args.filter(a=>a==='--force').length>1)
  throw Error('Usage: npm run episode:plan -- <session-directory> [episode-id] [--force]');
 const session=resolve(positional[0]);
@@ -46,9 +52,12 @@ const usable=Math.min(...lengths.map((len,i)=>len-offsets[i]));
 if(usable-clipFloor<3)throw Error('Recordings too short for episode');
 for(const name of names){
  const destination=join(media,name+'.mp4');
- if(!existsSync(destination))copyFileSync(join(session,name+'.mp4'),destination);
+ if(!existsSync(destination)){
+   if(linkMedia){try{linkSync(join(session,name+'.mp4'),destination);}catch(e){if((e as NodeJS.ErrnoException).code!=='EXDEV')throw e;copyFileSync(join(session,name+'.mp4'),destination);}}
+   else copyFileSync(join(session,name+'.mp4'),destination);
+ }
 }
-const segments:any[]=[{kind:'intro',duration:7,text:'An AI agent enters Minecraft. What will it try?'}];
+const segments:any[]=[{kind:'intro',duration:7,text:introGoal}];
 const clipSegmentsByEvent=new Map<number,number>();
 const startTime=origin;
 const allTimed=events.map((e,i)=>{
@@ -71,7 +80,7 @@ console.log('  Intentions outside video:  '+outside.length);
 console.log('  Intentions within video:   '+selected.length);
 if(invalid>0)console.warn('WARNING: '+invalid+' intention event(s) have no nonempty details.args.summary.');
 if(outside.length>0)console.warn('WARNING: '+outside.length+' intention event(s) have invalid/out-of-range timestamps.');
-if(intentions.length>0&&selected.length===0)
+if(intentions.length>0&&selected.length===0&&!preserveAll)
  throw Error('No usable intentions: all report_intention events were malformed or outside the recording window.');
 if(selected.length>20)console.warn('WARNING: Preview edit plan contains at most 20 intention shots; all valid intentions remain in narration.');
 // Intent events are the voice track; do not allocate extra clips for the
@@ -98,18 +107,18 @@ for(const e of selected.slice(0,20)){
  }
  last=clipStart+duration;
 }
-if(intentions.length>0&&includedIntentions===0)throw Error('No intention narration survived clip selection.');
+if(intentions.length>0&&includedIntentions===0&&!preserveAll)throw Error('No intention narration survived clip selection.');
 if(selected.length>includedIntentions)console.warn('WARNING: '+(selected.length-includedIntentions)+' intention(s) have no preview clip; their narration is still extracted.');
 console.log('  Intentions selected:       '+includedIntentions);
 if(segments.length===1)segments.push({kind:'shot',duration:Math.min(usable-clipFloor,8),shot:{kind:'split',cameras:names.slice(0,2),start:clipFloor,duration:Math.min(usable-clipFloor,8)}});
 segments.push({kind:'outro',duration:6,text:'What prompt or scenario should we try next? Leave a comment.'});
-const plan={version:1,title:'Emergent — Pilot episode',cameras:names.map(id=>({id,file:id+'.mp4',offsetSeconds:offsets[names.indexOf(id)]})),segments};
+const plan={version:1,title:'The Agent Terrarium',fps:60,resolution:{width:3840,height:2160},cameras:names.map(id=>({id,file:id+'.mp4',offsetSeconds:offsets[names.indexOf(id)]})),segments};
 if(force||!existsSync(join(out,'edit-plan.json')))writeFileSync(join(out,'edit-plan.json'),JSON.stringify(plan,null,2)+'\n');
 // Extract every valid, in-range intention independently of preview clip selection.
 // IDs match ElevenLabs chapter exports: 1_Chapter_1.wav, 2_Chapter_1.wav, etc.
 const voiceLines=[
- {segmentIndex:0,text:'We gave Claude one simple goal in Minecraft: explore, find something interesting, and try to collect it.'},
- ...selected.filter(e=>e.kind==='report_intention').map(e=>({
+ {segmentIndex:0,text:introGoal},
+ ...(preserveAll?valid:selected.filter(e=>e.kind==='report_intention')).map(e=>({
    segmentIndex:clipSegmentsByEvent.get(e.index)??null,
    eventIndex:e.index,
    at:e.second,
@@ -117,7 +126,7 @@ const voiceLines=[
  })),
  {segmentIndex:segments.length-1,text:'What should we ask the next agent to try? Leave your prompts and scenarios in the comments.'}
 ];
-if(force||!existsSync(join(out,'narration.txt')))writeFileSync(join(out,'narration.txt'),voiceLines.map(line=>line.text).join('\n')+'\n');
+if(force||!existsSync(join(out,'narration.txt')))writeFileSync(join(out,'narration.txt'),voiceLines.map(line=>preserveAll?line.text.replace(/\s+/g,' ').trim():line.text).join('\n')+'\n');
 if(force||!existsSync(join(out,'narration-manifest.json')))writeFileSync(join(out,'narration-manifest.json'),JSON.stringify(voiceLines.map((line,i)=>({
  line:i+1,segmentIndex:line.segmentIndex,eventIndex:'eventIndex' in line?line.eventIndex:null,at:'at' in line?line.at:null,text:line.text,audio:`${i+1}_Chapter_1.wav`
 })),null,2)+'\n');

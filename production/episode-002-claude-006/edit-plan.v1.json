@@ -1,0 +1,293 @@
+{
+  "version": 1,
+  "title": "Emergent — Pilot episode",
+  "cameras": [
+    {
+      "id": "agent-pov",
+      "file": "agent-pov.mp4",
+      "offsetSeconds": 0
+    },
+    {
+      "id": "observer",
+      "file": "observer.mp4",
+      "offsetSeconds": 0
+    },
+    {
+      "id": "follow",
+      "file": "follow.mp4",
+      "offsetSeconds": 0
+    }
+  ],
+  "segments": [
+    {
+      "kind": "intro",
+      "duration": 7,
+      "text": "An AI agent enters Minecraft. What will it try?"
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 6.132,
+        "duration": 9,
+        "label": "Agent commentary"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 15.132,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 24.131999999999998,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 33.132,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 42.132,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 51.132,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 60.132,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 69.132,
+        "duration": 9,
+        "label": "mine"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 78.132,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 87.132,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 96.132,
+        "duration": 9,
+        "label": "survey"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 105.132,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 114.132,
+        "duration": 9,
+        "label": "place"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 123.132,
+        "duration": 9,
+        "label": "Agent commentary"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 132.132,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 141.132,
+        "duration": 9,
+        "label": "place"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 150.132,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 159.132,
+        "duration": 9,
+        "label": "place"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "agent-pov"
+        ],
+        "start": 168.132,
+        "duration": 9,
+        "label": "place"
+      }
+    },
+    {
+      "kind": "shot",
+      "duration": 9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "follow"
+        ],
+        "start": 177.132,
+        "duration": 9,
+        "label": "move_to"
+      }
+    },
+    {
+      "kind": "outro",
+      "duration": 6,
+      "text": "What prompt or scenario should we try next? Leave a comment."
+    }
+  ]
+}

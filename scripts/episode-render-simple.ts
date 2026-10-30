@@ -5,12 +5,14 @@ import {spawnSync} from "node:child_process";
 
 type Camera={id:string;file:string;offsetSeconds?:number};
 type Segment={narration?:Array<{line:number;audio:string;at:number}>;kind:"intro"|"outro"|"shot";duration:number;text?:string;shot?:{kind:string;cameras:string[];start:number;label?:string}};
-type Plan={version?:number;cameras:Camera[];segments:Segment[]};
+type Plan={version?:number;fps?:number;resolution?:{width:number;height:number};cameras:Camera[];segments:Segment[]};
 const production=resolve("production");
 const episode=process.env.EPISODE_ID??"episode-001";
 if(!/^episode-[a-zA-Z0-9-]+$/.test(episode))throw Error("Invalid EPISODE_ID");
 const generated=join(production,episode);
 const plan=JSON.parse(readFileSync(join(generated,"edit-plan.json"),"utf8")) as Plan;
+const {width,height}=plan.resolution??{width:1920,height:1080};
+const fps=plan.fps??30;
 const media=join(production,"public",episode,"video");
 const output=resolve(process.argv[2]??join(production,"output","episode-001.mp4"));
 const musicPath=process.env.EPISODE_MUSIC ? resolve(process.env.EPISODE_MUSIC) : undefined;
@@ -40,7 +42,7 @@ try{
   const seg=plan.segments[index];
   if(!Number.isFinite(seg.duration)||seg.duration<=0)throw Error("Invalid segment duration "+index);
   const path=join(temp,String(index).padStart(3,"0")+".mp4");
-  const common=["-an","-r","30","-c:v","libx264","-preset","fast","-crf","20","-pix_fmt","yuv420p","-movflags","+faststart",path];
+  const common=["-an","-r",String(fps),"-c:v","libx264","-preset","fast","-crf","20","-pix_fmt","yuv420p","-movflags","+faststart",path];
   if(seg.kind==="shot"){
    const id=seg.shot?.cameras[0];
    const camera=plan.cameras.find(c=>c.id===id);
@@ -50,11 +52,11 @@ try{
    const length=probe(input);
    if(from<0||from+seg.duration>length+0.15)throw Error(`Shot ${index} exceeds source ${camera.file}: ${seconds(from)} + ${seconds(seg.duration)} > ${seconds(length)}`);
    if(seg.shot?.kind!=="full")console.warn(`Shot ${index}: using only primary camera ${id} in simple render (multi-view remains in Motion Canvas editor)`);
-   ffmpeg(["-ss",seconds(from),"-i",input,"-t",seconds(seg.duration),"-vf","scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1",...common]);
+   ffmpeg(["-ss",seconds(from),"-i",input,"-t",seconds(seg.duration),"-vf",`scale=${width}:${height}:force_original_aspect_ratio=decrease,pad=${width}:${height}:(ow-iw)/2:(oh-ih)/2,setsar=1`,...common]);
   }else{
    const card=join(temp,`card-${index}.txt`);
-   writeFileSync(card,seg.kind==="intro"?"EMERGENT\n\n"+(seg.text??""):seg.text??"WHAT SHOULD WE TRY NEXT?");
-   ffmpeg(["-f","lavfi","-i","color=c=0x10212b:s=1920x1080:r=30","-t",seconds(seg.duration),"-vf",`drawtext=textfile='${card.replaceAll("'","\\'")}':fontcolor=white:fontsize=54:line_spacing=18:x=(w-text_w)/2:y=(h-text_h)/2`,...common]);
+   writeFileSync(card,seg.kind==="intro"?"THE AGENT TERRARIUM\n\n"+(seg.text??""):seg.text??"WHAT SHOULD WE TRY NEXT?");
+   ffmpeg(["-f","lavfi","-i",`color=c=0x10212b:s=${width}x${height}:r=${fps}`,"-t",seconds(seg.duration),"-vf",`drawtext=textfile='${card.replaceAll("'","\\'")}':fontcolor=white:fontsize=${54*width/1920}:line_spacing=${18*width/1920}:x=(w-text_w)/2:y=(h-text_h)/2`,...common]);
   }
   segments.push(path);
   const selected=plan.version===2?(seg.narration??[]):lines.filter(line=>line.segmentIndex===index).map(line=>({...line,at:0.3}));

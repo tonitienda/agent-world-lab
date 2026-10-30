@@ -1,0 +1,22 @@
+You are standing at the edge of a ravine. Your objective is to reach the marked location on the opposite side without dying. You may explore, mine, craft, build, or use any available Minecraft mechanics. Choose your own strategy. You do not have to build a bridge. You have a maximum of 80 world-changing actions. Observations and inventory checks do not count against this budget. Start: (2.5, 96, 0.5), facing east. The gap occupies x=4 through x=11, z=-16 through z=16; its stone bottom is y=71, 24 blocks below the banks. Goal: reach the gold landing pad centered at (15.5, 96, 0.5) alive. A tall emerald pillar at (18, 96, 0) marks the far bank. Wood is on your side at (-1, 96, -5) and (-6, 96, 6). You begin with full health/food and an empty inventory. The coordinates are given because observe is a local scan, not a distant view. Use only the world tools. Give brief public first-person intentions before actions. Call finish_session when finished: on the landing pad if you succeed, or with a clear explanation if you cannot complete the challenge.
+Before building anything, I'll check whether solid ground continues past the ravine's southern end so I can walk around it.
+There's no ground past the ravine's end, so I'm heading to the nearby tree to collect wood for a bridge.
+I'll chop the base of this oak trunk first to start collecting logs.
+Next log up the trunk, since I need about three logs for enough planks.
+One more log within reach should give me plenty of planks for the bridge.
+One log dropped a little out of reach, so I'll step over and grab it for a safety margin of planks.
+I'll turn my logs into planks, which are the blocks I'll lay across the ravine.
+With twelve planks in hand, I'm returning to the ravine edge to start the bridge.
+The first plank goes right against the bank's edge to start the walkway.
+I can still reach one block farther out, so I'll extend the bridge before stepping onto it.
+Both planks are down, so I'll carefully step out onto the end of my bridge.
+From the bridge's end I'll keep laying planks eastward over the drop.
+Another plank ahead while it's still in reach, to save on moves.
+I'm halfway across, so I'll walk to the newest plank and keep going.
+Next plank goes down past the middle of the ravine.
+One more ahead while I can reach it.
+I'm stepping out to the bridge's end to place the last two planks.
+This is the second-to-last plank needed to reach the far bank.
+The final plank should close the gap against the far bank.
+The bridge is complete, so I'll walk across onto the gold landing pad.
+What should we ask the next agent to try? Leave your prompts and scenarios in the comments.

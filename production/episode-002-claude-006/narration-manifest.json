@@ -1,0 +1,466 @@
+[
+  {
+    "line": 1,
+    "segmentIndex": 0,
+    "eventIndex": null,
+    "at": null,
+    "text": "You are standing beside a deep ravine.\n\nYour objective is to reach the gold landing pad on the opposite bank.\nChoose your own strategy. You may explore, mine, craft and build.\n\nYou start at (2.5, 96, 0.5), facing east, with an empty inventory,\nfull health and full food.\n\nKnown geography:\n\n- The ravine occupies x=4 through x=13 and extends from z=-192\n  through z=192. Its bottom is at y=71.\n- The destination is the gold landing pad centered at\n  (15.5, 96, 0.5). An emerald pillar marks the far bank.\n- On your starting bank, a raised plateau has its walking surface\n  at y=102, six blocks above your starting elevation.\n- Oak trunks begin at (-4, 102, -4), (-6, 102, 5)\n  and (-7, 102, 0). There are no ground-level trees.\n- Six dirt blocks are embedded in the starting floor at\n  x=-1 through x=0, y=95, z=-2 through z=0.\n- Most surrounding ground is stone. Mining stone without a\n  suitable pickaxe does not yield collectible building blocks.\n\nThese facts are supplied because your observation tool scans only\nnearby blocks. The camera footage is not available to you.\n\nUse only the world tools. Give brief public first-person intentions\nbefore actions. Check your inventory to confirm collected resources.\n\nWhen you believe you have reached the destination, observe to record\nyour position, then call finish_session. If you cannot complete the\nchallenge, call finish_session and explain what prevented progress.\n",
+    "audio": "1_Chapter_1.wav"
+  },
+  {
+    "line": 2,
+    "segmentIndex": 1,
+    "eventIndex": 8,
+    "at": 9.132,
+    "text": "I'll dig up the six dirt blocks to use as steps up to the plateau where the oak trees grow.",
+    "audio": "2_Chapter_1.wav"
+  },
+  {
+    "line": 3,
+    "segmentIndex": 2,
+    "eventIndex": 9,
+    "at": 9.763,
+    "text": "I'm digging the first dirt block by hand to collect it.",
+    "audio": "3_Chapter_1.wav"
+  },
+  {
+    "line": 4,
+    "segmentIndex": 3,
+    "eventIndex": 12,
+    "at": 11.718,
+    "text": "Next dirt block, collecting more building material.",
+    "audio": "4_Chapter_1.wav"
+  },
+  {
+    "line": 5,
+    "segmentIndex": 4,
+    "eventIndex": 15,
+    "at": 12.663,
+    "text": "One more dirt block from this row.",
+    "audio": "5_Chapter_1.wav"
+  },
+  {
+    "line": 6,
+    "segmentIndex": 5,
+    "eventIndex": 18,
+    "at": 16.61,
+    "text": "I'll step closer to reach the remaining dirt blocks to the west.",
+    "audio": "6_Chapter_1.wav"
+  },
+  {
+    "line": 7,
+    "segmentIndex": 6,
+    "eventIndex": 21,
+    "at": 20.234,
+    "text": "Digging the western row of dirt now.",
+    "audio": "7_Chapter_1.wav"
+  },
+  {
+    "line": 8,
+    "segmentIndex": 7,
+    "eventIndex": 24,
+    "at": 21.417,
+    "text": "Another dirt block for my stairway.",
+    "audio": "8_Chapter_1.wav"
+  },
+  {
+    "line": 9,
+    "segmentIndex": 8,
+    "eventIndex": 27,
+    "at": 22.285,
+    "text": "The last dirt block, which should give me six total.",
+    "audio": "9_Chapter_1.wav"
+  },
+  {
+    "line": 10,
+    "segmentIndex": 9,
+    "eventIndex": 34,
+    "at": 34.693,
+    "text": "I'm hopping into the shallow pit to scoop up the dropped dirt.",
+    "audio": "10_Chapter_1.wav"
+  },
+  {
+    "line": 11,
+    "segmentIndex": 10,
+    "eventIndex": 37,
+    "at": 39.255,
+    "text": "Walking across the pit to grab any remaining dirt drops.",
+    "audio": "11_Chapter_1.wav"
+  },
+  {
+    "line": 12,
+    "segmentIndex": 11,
+    "eventIndex": 42,
+    "at": 48.005,
+    "text": "I have six dirt blocks; now I'll scan the area to find the best way up the plateau wall.",
+    "audio": "12_Chapter_1.wav"
+  },
+  {
+    "line": 13,
+    "segmentIndex": 12,
+    "eventIndex": 45,
+    "at": 56.398,
+    "text": "I'll climb out of the pit and stand next to the plateau wall to start pillaring up.",
+    "audio": "13_Chapter_1.wav"
+  },
+  {
+    "line": 14,
+    "segmentIndex": 13,
+    "eventIndex": 48,
+    "at": 60.842,
+    "text": "I'll try jumping and placing dirt beneath my feet to pillar upward toward the plateau.",
+    "audio": "14_Chapter_1.wav"
+  },
+  {
+    "line": 15,
+    "segmentIndex": 14,
+    "eventIndex": 54,
+    "at": 76.681,
+    "text": "Pillaring didn't work, so I'll build a diagonal staircase of dirt up the face of the stone wall, using the wall itself to support each step.",
+    "audio": "15_Chapter_1.wav"
+  },
+  {
+    "line": 16,
+    "segmentIndex": 15,
+    "eventIndex": 55,
+    "at": 77.518,
+    "text": "I'm stepping aside so I'm not in the spot where the first step goes.",
+    "audio": "16_Chapter_1.wav"
+  },
+  {
+    "line": 17,
+    "segmentIndex": 16,
+    "eventIndex": 58,
+    "at": 81.15,
+    "text": "First step of the staircase goes right against the wall.",
+    "audio": "17_Chapter_1.wav"
+  },
+  {
+    "line": 18,
+    "segmentIndex": 17,
+    "eventIndex": 61,
+    "at": 85.299,
+    "text": "I'll hop onto the first step.",
+    "audio": "18_Chapter_1.wav"
+  },
+  {
+    "line": 19,
+    "segmentIndex": 18,
+    "eventIndex": 66,
+    "at": 123.625,
+    "text": "Second step goes one higher and one block along the wall.",
+    "audio": "19_Chapter_1.wav"
+  },
+  {
+    "line": 20,
+    "segmentIndex": 19,
+    "eventIndex": 69,
+    "at": 124.4,
+    "text": "Third step continues the climb along the stone face.",
+    "audio": "20_Chapter_1.wav"
+  },
+  {
+    "line": 21,
+    "segmentIndex": 20,
+    "eventIndex": 72,
+    "at": 129.253,
+    "text": "My body was probably blocking the second step, so I'll back off a little.",
+    "audio": "21_Chapter_1.wav"
+  },
+  {
+    "line": 22,
+    "segmentIndex": null,
+    "eventIndex": 75,
+    "at": 133.009,
+    "text": "Trying the second step again now that I'm clear of it.",
+    "audio": "22_Chapter_1.wav"
+  },
+  {
+    "line": 23,
+    "segmentIndex": null,
+    "eventIndex": 78,
+    "at": 137.103,
+    "text": "Now I'll climb onto the first step.",
+    "audio": "23_Chapter_1.wav"
+  },
+  {
+    "line": 24,
+    "segmentIndex": null,
+    "eventIndex": 81,
+    "at": 141.945,
+    "text": "Climbing up the next two steps to the third one.",
+    "audio": "24_Chapter_1.wav"
+  },
+  {
+    "line": 25,
+    "segmentIndex": null,
+    "eventIndex": 86,
+    "at": 151.22,
+    "text": "Placing the fourth step against the wall ahead of me.",
+    "audio": "25_Chapter_1.wav"
+  },
+  {
+    "line": 26,
+    "segmentIndex": null,
+    "eventIndex": 89,
+    "at": 155.621,
+    "text": "Stepping up onto the fourth step.",
+    "audio": "26_Chapter_1.wav"
+  },
+  {
+    "line": 27,
+    "segmentIndex": null,
+    "eventIndex": 92,
+    "at": 159.322,
+    "text": "Fifth step next, one block higher.",
+    "audio": "27_Chapter_1.wav"
+  },
+  {
+    "line": 28,
+    "segmentIndex": null,
+    "eventIndex": 95,
+    "at": 164.727,
+    "text": "Up onto the fifth step.",
+    "audio": "28_Chapter_1.wav"
+  },
+  {
+    "line": 29,
+    "segmentIndex": null,
+    "eventIndex": 98,
+    "at": 169.005,
+    "text": "The plateau top is just one block above me, so I'll jump onto it.",
+    "audio": "29_Chapter_1.wav"
+  },
+  {
+    "line": 30,
+    "segmentIndex": null,
+    "eventIndex": 101,
+    "at": 172.74,
+    "text": "I made it onto the plateau, so I'm heading to the oak tree nearby.",
+    "audio": "30_Chapter_1.wav"
+  },
+  {
+    "line": 31,
+    "segmentIndex": null,
+    "eventIndex": 106,
+    "at": 180.953,
+    "text": "Chopping the bottom of the oak trunk.",
+    "audio": "31_Chapter_1.wav"
+  },
+  {
+    "line": 32,
+    "segmentIndex": null,
+    "eventIndex": 109,
+    "at": 184.012,
+    "text": "Next log up the trunk.",
+    "audio": "32_Chapter_1.wav"
+  },
+  {
+    "line": 33,
+    "segmentIndex": null,
+    "eventIndex": 112,
+    "at": 187.063,
+    "text": "The top log I can reach.",
+    "audio": "33_Chapter_1.wav"
+  },
+  {
+    "line": 34,
+    "segmentIndex": null,
+    "eventIndex": 115,
+    "at": 193.948,
+    "text": "I'm going to grab the fallen logs.",
+    "audio": "34_Chapter_1.wav"
+  },
+  {
+    "line": 35,
+    "segmentIndex": null,
+    "eventIndex": 120,
+    "at": 201.977,
+    "text": "The logs landed just past the stump, so I'll walk over them.",
+    "audio": "35_Chapter_1.wav"
+  },
+  {
+    "line": 36,
+    "segmentIndex": null,
+    "eventIndex": 125,
+    "at": 211.486,
+    "text": "I'm going over to the second oak trunk.",
+    "audio": "36_Chapter_1.wav"
+  },
+  {
+    "line": 37,
+    "segmentIndex": null,
+    "eventIndex": 128,
+    "at": 215.448,
+    "text": "Chopping the base of the second oak.",
+    "audio": "37_Chapter_1.wav"
+  },
+  {
+    "line": 38,
+    "segmentIndex": null,
+    "eventIndex": 131,
+    "at": 218.506,
+    "text": "Next log up.",
+    "audio": "38_Chapter_1.wav"
+  },
+  {
+    "line": 39,
+    "segmentIndex": null,
+    "eventIndex": 134,
+    "at": 221.563,
+    "text": "And the third log.",
+    "audio": "39_Chapter_1.wav"
+  },
+  {
+    "line": 40,
+    "segmentIndex": null,
+    "eventIndex": 137,
+    "at": 227.871,
+    "text": "Collecting the dropped logs from the stump.",
+    "audio": "40_Chapter_1.wav"
+  },
+  {
+    "line": 41,
+    "segmentIndex": null,
+    "eventIndex": 140,
+    "at": 231.655,
+    "text": "I'll turn my logs into planks to use as bridge blocks.",
+    "audio": "41_Chapter_1.wav"
+  },
+  {
+    "line": 42,
+    "segmentIndex": null,
+    "eventIndex": 143,
+    "at": 240.401,
+    "text": "Heading back to the top of my dirt staircase.",
+    "audio": "42_Chapter_1.wav"
+  },
+  {
+    "line": 43,
+    "segmentIndex": null,
+    "eventIndex": 146,
+    "at": 245.976,
+    "text": "Going down the steps to the ravine's edge.",
+    "audio": "43_Chapter_1.wav"
+  },
+  {
+    "line": 44,
+    "segmentIndex": null,
+    "eventIndex": 151,
+    "at": 254.211,
+    "text": "Laying the first bridge plank over the ravine.",
+    "audio": "44_Chapter_1.wav"
+  },
+  {
+    "line": 45,
+    "segmentIndex": null,
+    "eventIndex": 154,
+    "at": 255.222,
+    "text": "Extending the bridge with a second plank.",
+    "audio": "45_Chapter_1.wav"
+  },
+  {
+    "line": 46,
+    "segmentIndex": null,
+    "eventIndex": 157,
+    "at": 256.074,
+    "text": "A third plank while it's still in reach.",
+    "audio": "46_Chapter_1.wav"
+  },
+  {
+    "line": 47,
+    "segmentIndex": null,
+    "eventIndex": 160,
+    "at": 259.798,
+    "text": "Walking carefully out onto the bridge.",
+    "audio": "47_Chapter_1.wav"
+  },
+  {
+    "line": 48,
+    "segmentIndex": null,
+    "eventIndex": 163,
+    "at": 263.81,
+    "text": "Next plank ahead of me.",
+    "audio": "48_Chapter_1.wav"
+  },
+  {
+    "line": 49,
+    "segmentIndex": null,
+    "eventIndex": 166,
+    "at": 264.889,
+    "text": "Another plank to extend further.",
+    "audio": "49_Chapter_1.wav"
+  },
+  {
+    "line": 50,
+    "segmentIndex": null,
+    "eventIndex": 169,
+    "at": 265.756,
+    "text": "One more plank while it's within reach.",
+    "audio": "50_Chapter_1.wav"
+  },
+  {
+    "line": 51,
+    "segmentIndex": null,
+    "eventIndex": 172,
+    "at": 269.153,
+    "text": "Moving forward to the end of the bridge so far.",
+    "audio": "51_Chapter_1.wav"
+  },
+  {
+    "line": 52,
+    "segmentIndex": null,
+    "eventIndex": 175,
+    "at": 273.151,
+    "text": "Continuing the bridge past the middle of the ravine.",
+    "audio": "52_Chapter_1.wav"
+  },
+  {
+    "line": 53,
+    "segmentIndex": null,
+    "eventIndex": 178,
+    "at": 274.143,
+    "text": "Another plank toward the far bank.",
+    "audio": "53_Chapter_1.wav"
+  },
+  {
+    "line": 54,
+    "segmentIndex": null,
+    "eventIndex": 181,
+    "at": 274.98,
+    "text": "Nearly across now.",
+    "audio": "54_Chapter_1.wav"
+  },
+  {
+    "line": 55,
+    "segmentIndex": null,
+    "eventIndex": 184,
+    "at": 278.74,
+    "text": "Stepping to the end of the bridge to place the last plank.",
+    "audio": "55_Chapter_1.wav"
+  },
+  {
+    "line": 56,
+    "segmentIndex": null,
+    "eventIndex": 187,
+    "at": 279.643,
+    "text": "The final plank should connect to the gold pad on the far bank.",
+    "audio": "56_Chapter_1.wav"
+  },
+  {
+    "line": 57,
+    "segmentIndex": null,
+    "eventIndex": 190,
+    "at": 283.304,
+    "text": "Crossing the last stretch onto the center of the gold landing pad.",
+    "audio": "57_Chapter_1.wav"
+  },
+  {
+    "line": 58,
+    "segmentIndex": 21,
+    "eventIndex": null,
+    "at": null,
+    "text": "What should we ask the next agent to try? Leave your prompts and scenarios in the comments.",
+    "audio": "58_Chapter_1.wav"
+  }
+]

@@ -7,6 +7,7 @@ import { Vec3 } from "vec3";
 import type { Item } from "prismarine-item";
 import { readRavineManifest, verifyBotRavine } from "./ravine.js";
 import { readWorldConfig } from "./world-config.js";
+import { surveyLimits, surveySurroundings } from "./survey.js";
 import { acquireLock } from "../../session/lock.js";
 import type { ActionResult, WorldAdapter } from "../../core/types.js";
 
@@ -39,6 +40,7 @@ function withTimeout<T>(task: Promise<T>, ms = 30000): Promise<T> {
 
 export const minecraftCapabilities = [
   "observe",
+  "survey",
   "inventory",
   "equipment",
   "recipes",
@@ -119,18 +121,20 @@ async function enableCapture(
       "Recording artifacts already exist; choose a new output folder",
     );
   mkdirSync(dirname(output), { recursive: true });
-  const width = Number(process.env.RECORD_WIDTH ?? "1280");
-  const height = Number(process.env.RECORD_HEIGHT ?? "720");
+  const width = Number(process.env.RECORD_WIDTH ?? "3840");
+  const height = Number(process.env.RECORD_HEIGHT ?? "2160");
+  const fps = Number(process.env.RECORD_FPS ?? "60");
   if (![width, height].every((n) => Number.isInteger(n) && n > 0))
     throw new Error("Invalid recording dimensions");
+  if (!Number.isInteger(fps) || fps < 1 || fps > 60) throw Error("RECORD_FPS must be an integer from 1 to 60");
   const recorder =
     require("../../../packages/minecraft-recorder/index.cjs") as {
       start(
         bot: Bot,
-        options: { output: string; width: number; height: number },
+        options: { output: string; width: number; height: number; fps: number },
       ): Promise<() => Promise<void>>;
     };
-  return await recorder.start(bot, { output, width, height });
+  return await recorder.start(bot, { output, width, height, fps });
 }
 
 export class MinecraftAdapter implements WorldAdapter {
@@ -140,6 +144,7 @@ export class MinecraftAdapter implements WorldAdapter {
   private closing?: Promise<void>;
   private busy = false;
   private timedOut = false;
+  private surveyUsed = false;
   private observedEntities = new Set<number>();
   private container?: {
     window:
@@ -334,6 +339,7 @@ export class MinecraftAdapter implements WorldAdapter {
       world: this.id,
       position: { x: p.x, y: p.y, z: p.z },
       health: bot.health,
+      survey: { usesRemaining: this.surveyUsed ? 0 : 1, limits: surveyLimits },
       food: bot.food,
       timeOfDay: bot.time.timeOfDay,
       equipment: this.equipment(),
@@ -401,6 +407,13 @@ export class MinecraftAdapter implements WorldAdapter {
     )
       throw Error("Close the current window before this action");
     switch (action) {
+      case "survey": {
+        if (this.surveyUsed)
+          return { ok: false, message: "Survey already used: only one successful survey is allowed per session", data: { usesRemaining: 0 } };
+        const data = surveySurroundings(bot);
+        this.surveyUsed = true;
+        return { ok: true, message: "One-use survey completed; no surveys remain this session", data: { ...data, usesRemaining: 0 } };
+      }
       case "inventory":
         return {
           ok: true,

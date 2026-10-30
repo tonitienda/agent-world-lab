@@ -141,6 +141,7 @@ test("disconnected adapter returns structured failure and close is safe", async 
 });
 
 import { resetWorld } from "../src/environments/minecraft/reset.js";
+import { configuredMinecraftVersion } from "../src/environments/minecraft/runtime-cache.js";
 import { readFileSync } from "node:fs";
 for (const preset of ["survival", "superflat"])
   test(`reset ${preset} archives only fixture data, verifies settings, and excludes concurrent sessions`, async () => {
@@ -149,6 +150,15 @@ for (const preset of ["survival", "superflat"])
     const config = worldSettings(preset, "42");
     mkdirSync(join(root, "data/minecraft"), { recursive: true });
     writeFileSync(join(root, "data/minecraft", "sentinel"), "original-world");
+    const version = configuredMinecraftVersion(root);
+    const jar = `minecraft_server.${version}.jar`;
+    if (version) {
+      writeFileSync(join(root, "data/minecraft", jar), "fixture-server-runtime");
+      writeFileSync(join(root, "data/minecraft/.vanilla-manifest.json"), JSON.stringify({
+        "@type": "me.itzg.helpers.vanilla.VanillaManifest", minecraftVersion: version,
+        serverEntry: jar, files: [jar],
+      }));
+    }
     let calls = 0,
       verified = false;
     const ops = {
@@ -159,6 +169,10 @@ for (const preset of ["survival", "superflat"])
       docker: (_args: string[], env?: NodeJS.ProcessEnv) => {
         calls++;
         if (env) {
+          // The runtime must be present before Docker starts. Old world state
+          // must not be carried into the replacement directory with it.
+          if (version) assert.equal(readFileSync(join(root, "data/minecraft", jar), "utf8"), "fixture-server-runtime");
+          assert.equal(existsSync(join(root, "data/minecraft/sentinel")), false);
           assert.equal(env.MC_LEVEL_TYPE, config.levelType);
           assert.equal(env.GENERATOR_SETTINGS, config.generatorSettings);
           writeFileSync(

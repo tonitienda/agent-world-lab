@@ -1,0 +1,36 @@
+version: 1
+episode:
+  id: episode-002
+  title: The Ravine Crossing
+environment:
+  provider: minecraft
+  preset: survival
+  # Same seed as the legacy scripts/run-episode-002.sh takes.
+  seed: "20261027"
+  minecraft:
+    version: "1.21.4"
+level_design:
+  harness: codex
+  model: configured-default
+  prompt_file: level-design.md
+goal:
+  prompt_file: goal.md
+evaluation:
+  type: reach_location
+  target: gold-landing-pad
+  # The pad is 3x3; 2 blocks from its centre means standing on or beside it.
+  radius: 2
+agents:
+  - id: claude
+    harness: claude
+    model: configured-default
+  - id: codex
+    harness: codex
+    model: configured-default
+recording:
+  cameras: [agent-pov, observer, follow]
+  max_duration_minutes: 20
+production:
+  renderer: motion-canvas
+  narration: manual
+  max_video_duration_minutes: 10
