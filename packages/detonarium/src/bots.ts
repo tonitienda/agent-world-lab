@@ -10,15 +10,21 @@ export type Bot = (state: MatchState) => Action;
 /** What a bomb placed at a cell would hit right now, and how far (Manhattan) the closest enemy is. */
 export type BlastTargets = { crates: number; enemies: number; nearestEnemy: number };
 
-function targetsAt(state: MatchState, me: Player, pos: Pos): BlastTargets {
+function targetsAt(state: MatchState, me: Player, pos: Pos, doomed: Set<number>): BlastTargets {
   const cells = blastCells(state, { owner: me.id, pos, fuse: state.rules.fuse, range: me.range });
   const enemies = state.players.filter((o) => o.alive && o.id !== me.id);
   return {
-    crates: cells.filter((p) => state.cells[index(state.rules, p)] === "crate").length,
+    crates: cells.filter((p) => state.cells[index(state.rules, p)] === "crate" && !doomed.has(index(state.rules, p))).length,
     enemies: enemies.filter((o) => cells.some((p) => p.x === o.pos.x && p.y === o.pos.y)).length,
     nearestEnemy: Math.min(...enemies.map((o) => Math.abs(o.pos.x - pos.x) + Math.abs(o.pos.y - pos.y))),
   };
 }
+
+/** Cells some bomb already on the board will blast: crates there are as good as gone. */
+function doomedCells(state: MatchState): Set<number> {
+  return new Set(state.bombs.flatMap((b) => blastCells(state, b).map((p) => index(state.rules, p))));
+}
+const armed = (state: MatchState, me: Player) => state.bombs.filter((b) => b.owner === me.id).length < me.bombs;
 
 /**
  * A bomb here is allowed only with capacity and a way out of its own blast. Normally
@@ -27,7 +33,7 @@ function targetsAt(state: MatchState, me: Player, pos: Pos): BlastTargets {
  * line is always close and would otherwise veto every attack.
  */
 function canBombSafely(state: MatchState, me: Player, risky = false): boolean {
-  if (state.bombs.filter((b) => b.owner === me.id).length >= me.bombs) return false;
+  if (!armed(state, me)) return false;
   if (state.bombs.some((b) => b.pos.x === me.pos.x && b.pos.y === me.pos.y)) return false;
   const bomb: Bomb = { owner: me.id, pos: me.pos, fuse: state.rules.fuse, range: me.range };
   return escape(state, me.id, { extra: [bomb], avoid: risky ? [] : crowd(state, me.id) }) !== null;
@@ -75,18 +81,23 @@ export function createBot(kind: BotKind, player: number, seed: number): Bot {
     if (kind === "passive") return "stay";
 
     const options = safeMoves(state, me);
+    // Every bomb is out: wait for one to come back rather than pace around (fleeing is handled above).
+    if (!armed(state, me) && options.includes("stay")) return "stay";
+    const doomed = doomedCells(state);
     if (kind === "wanderer") {
-      if (targetsAt(state, me, me.pos).crates > 0 && random() < 0.4 && canBombSafely(state, me)) return "bomb";
+      if (targetsAt(state, me, me.pos, doomed).crates > 0 && random() < 0.4 && canBombSafely(state, me)) return "bomb";
       const moving = options.filter((a) => a !== "stay");
       return moving.length > 0 && random() < 0.8 ? pick(moving) : "stay";
     }
 
-    const here = targetsAt(state, me, me.pos);
+    const here = targetsAt(state, me, me.pos, doomed);
     if ((here.enemies > 0 || here.crates > 0) && shouldBomb(here, me, random) && canBombSafely(state, me, here.enemies > 0)) return "bomb";
     for (const wants of [(t: BlastTargets) => t.enemies > 0, (t: BlastTargets) => t.crates > 0]) {
-      const step = route(state, player, (p, k) => k > 0 && wants(targetsAt(state, me, p)), { danger });
+      const step = route(state, player, (p, k) => k > 0 && wants(targetsAt(state, me, p, doomed)), { danger });
       if (step && step !== "stay" && options.includes(step)) return step;
     }
+    // Nothing worth walking to: mostly hold still, with the odd step so it never looks frozen.
+    if (options.includes("stay") && random() < 0.75) return "stay";
     return options.length > 0 ? pick(options) : "stay";
   };
 }
