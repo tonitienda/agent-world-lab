@@ -8,6 +8,7 @@
   "exports": "./src/index.ts",
   "scripts": {
     "check": "tsc -p .",
-    "test": "node --import tsx --test test/*.test.ts"
+    "test": "node --import tsx --test test/*.test.ts",
+    "replay": "tsx examples/bot-replay.ts"
   }
 }
