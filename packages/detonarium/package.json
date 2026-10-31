@@ -1,0 +1,13 @@
+{
+  "name": "detonarium",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Deterministic simultaneous-turn bomb arena for agents, bots and humans",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "check": "tsc -p .",
+    "test": "node --import tsx --test test/*.test.ts"
+  }
+}

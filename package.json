@@ -9,8 +9,8 @@
   "scripts": {
     "mcp": "tsx src/mcp/main.ts",
     "smoke": "tsx scripts/smoke.ts",
-    "check": "tsc --noEmit",
-    "test": "node --import tsx --test tests/*.test.ts",
+    "check": "tsc --noEmit && tsc -p packages/detonarium",
+    "test": "node --import tsx --test tests/*.test.ts packages/detonarium/test/*.test.ts",
     "integration": "tsx scripts/integration.ts",
     "record": "tsx scripts/record-session.ts",
     "bot-smoke": "tsx scripts/bot-actions-smoke.ts",
