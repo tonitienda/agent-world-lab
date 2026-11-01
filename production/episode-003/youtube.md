@@ -6,13 +6,11 @@ it from there again if the music changes.
 
 ## Title
 
-Recommended:
+**Claude Opus 5.5 vs Stockfish 1500: just the board, no hints**
 
-**Can Claude beat Stockfish with no list of legal moves?**
+Chosen for search: it leads with both player names. Considered:
 
-Alternatives:
-
-- Claude Opus 5.5 vs Stockfish 1500: just the board, no hints
+- Can Claude beat Stockfish with no list of legal moves?
 - An AI plays chess blind to the rules: Claude vs Stockfish 1500
 
 ## Description
