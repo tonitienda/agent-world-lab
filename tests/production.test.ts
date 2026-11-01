@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {existsSync,readFileSync} from 'node:fs';
 // @ts-ignore Node-only JavaScript production helpers.
 import {validate,sessionPath,outputResolution} from '../production/tools/pipeline.mjs';
 import {sourceTime} from '../production/src/timeline.js';
@@ -65,7 +65,8 @@ test('real edit includes construction, payoff and every supported layout',()=>{
  assert.equal(m[0].text,readFileSync('production/episode-001/narration.txt','utf8').split('\n')[0]);
  assert.deepEqual([...new Set(p.segments.filter((s:any)=>s.shot).map((s:any)=>s.shot.kind))].sort(),['full','pip','split']);
  assert.ok(result.schedule.some((v:any)=>v.line===53));
- assert.match(sessionPath(process.cwd(),'episode-001'),/data/);
+ // Recordings are gitignored; only check session lookup where they exist locally.
+ if(['data/episode-001','data/mcp-sessions/episode-001'].some((d)=>existsSync(`${d}/events.json`)))assert.match(sessionPath(process.cwd(),'episode-001'),/data/);
 });
 test('episode camera offsets agree with the local recording metadata when available',async(t)=>{
  const {existsSync}=await import('node:fs');
