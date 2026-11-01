@@ -325,6 +325,8 @@ function wrap(text: string, width: number): string[] {
 
 export type CardOptions = {
   title?: string;
+  /** Channel wordmark on the intro splash, shown a beat before the rest. */
+  channel?: string;
   /** One line under each player in the intro; defaults describe agent/engine. */
   notes?: Partial<Record<Side, string>>;
   /** Closing hook on the outro, e.g. "Next: Stockfish 2000". */
@@ -342,8 +344,18 @@ function engineNote(label: string): string {
 }
 
 export function renderIntro(replay: ChessReplay, options: CardOptions = {}): string {
-  const fade = clamp01((options.t ?? 1) * 4);
-  const out = [`<rect width="${FRAME.width}" height="${FRAME.height}" fill="${COLORS.bg}"/>`, `<g opacity="${fade}">`];
+  const t = options.t ?? 1;
+  const out = [`<rect width="${FRAME.width}" height="${FRAME.height}" fill="${COLORS.bg}"/>`];
+  if (options.channel) {
+    // Wordmark between two thin rules; it lands first, then the match card fades in under it.
+    const name = options.channel.toUpperCase();
+    const half = name.length * 13 + 40;
+    out.push(`<g opacity="${clamp01(t * 6)}">`);
+    out.push(`<text x="960" y="138" font-size="28" font-weight="700" letter-spacing="8" text-anchor="middle" fill="${COLORS.text}" ${FONT}>${esc(name)}</text>`);
+    for (const dir of [-1, 1]) out.push(`<line x1="${960 + dir * half}" y1="128" x2="${960 + dir * (half + 120)}" y2="128" stroke="${COLORS.accent}" stroke-width="2"/>`);
+    out.push(`</g>`);
+  }
+  out.push(`<g opacity="${options.channel ? clamp01((t - 0.1) * 5) : clamp01(t * 4)}">`);
   out.push(`<text x="960" y="230" font-size="40" font-weight="700" text-anchor="middle" fill="${COLORS.accent}" ${FONT}>${esc(options.title ?? "Chess")}</text>`);
   (["white", "black"] as const).forEach((side, i) => {
     const p = replay.players[side];

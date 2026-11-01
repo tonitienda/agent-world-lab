@@ -2,7 +2,7 @@
 // Usage:
 //   tsx examples/record.ts <outDir> [replay.json]          record an existing replay (e.g. a Claude game)
 //   tsx examples/record.ts <outDir> --engines 1500,2000    play Stockfish vs Stockfish first (white,black Elo)
-// Env: CHESS_TITLE, CHESS_NEXT (outro hook), CHESS_ANALYSIS_DEPTH (default 18; 0 skips analysis).
+// Env: CHESS_TITLE, CHESS_CHANNEL (intro wordmark), CHESS_NEXT (outro hook), CHESS_ANALYSIS_DEPTH (default 18; 0 skips analysis).
 // Writes board.mp4, replay.json, analysis.json (cached between runs) and narration.json (card and cue timestamps).
 import { execFile, execFileSync } from "node:child_process";
 import { existsSync, linkSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -33,6 +33,7 @@ writeFileSync(join(outDir, "replay.json"), JSON.stringify(replay, null, 2));
 const positions = replayPositions(replay);
 const title = process.env.CHESS_TITLE ?? "Episode 003 · Chess";
 const next = process.env.CHESS_NEXT;
+const channel = process.env.CHESS_CHANNEL ?? "The Agent Terrarium";
 
 // Analysis drives the win bar, callouts and pacing; reuse it while the game and depth are unchanged.
 const depth = Number(process.env.CHESS_ANALYSIS_DEPTH ?? 18);
@@ -83,7 +84,7 @@ for (const seg of story.segments) {
         ply: seg.ply, t, positions, title, caption: seg.caption, callout: seg.callout, calloutAge: k / FPS,
         illegal: seg.illegal, thinking: seg.thinking, clock, whiteWin: whiteWin(seg.ply, t),
       }));
-    } else if (seg.kind === "intro") svgs.push(renderIntro(replay, { title, t: progress }));
+    } else if (seg.kind === "intro") svgs.push(renderIntro(replay, { title, channel, t: progress }));
     else svgs.push(renderOutro(replay, analysis, { title, next, t: progress }));
   }
 }

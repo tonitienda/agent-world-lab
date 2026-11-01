@@ -30,7 +30,8 @@ npm run chess:play -- --elo 1500 --side white                    # Claude vs Sto
 
 The recorder writes `board.mp4`, `replay.json`, `analysis.json` (cached; set
 `CHESS_ANALYSIS_DEPTH`, default 18, 0 to skip) and `narration.json` (card and cue start
-times for the voice track). `CHESS_TITLE` and `CHESS_NEXT` set the title and the outro hook.
+times for the voice track). `CHESS_TITLE` and `CHESS_NEXT` set the title and the outro hook; `CHESS_CHANNEL` sets the
+channel wordmark on the intro splash (default "The Agent Terrarium").
 
 A move's rationale comes from `make_move`'s optional `rationale`, or else from the text the
 agent wrote before the call: `scripts/chess-rationale.ts` harvests it from the transcript

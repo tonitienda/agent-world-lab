@@ -146,6 +146,32 @@ The old `episode:plan` command produces a **v1 editorial draft**, not a finished
 
 `shot.start` is in the common capture timebase, not session elapsed time. Each selected source starts at `shot.start + camera.offsetSeconds`. Derive offsets from captureOpenedAt metadata and verify with visible changes; do not imply greater precision than the recorder supports. Full uses one camera; PIP and split use two. PIP's first camera is full size. Split fits each view without distortion. Intro/outro cards use `text` in place of `shot`.
 
+### Background music
+
+A plan may add a quiet music bed. The file lives in `production/public/<episode>/music/`
+(like audio, it is committed alongside the episode). The track loops to cover the episode,
+fades in and out, and dips under narration (a sidechain compressor keyed on the voices)
+unless `duck` is `false`. `volume` defaults to 0.12, `fadeIn` to 2 s and `fadeOut` to 4 s;
+`start` skips into the track.
+
+```json
+"music": {
+  "file": "clean-soul.mp3", "volume": 0.12,
+  "attribution": {
+    "title": "Clean Soul", "artist": "Kevin MacLeod",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300033",
+    "license": "Creative Commons: By Attribution 4.0 License",
+    "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+    "text": "\"Clean Soul\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/"
+  }
+}
+```
+
+Validation refuses music without an attribution `title`, `artist` and `text`. Copy `text`
+verbatim from the licensor (incompetech's "Attribution Code"). `episode:validate` writes the
+credits to `validation.json` (`credits`), and `credits(plan)` in `tools/pipeline.mjs` returns
+them for the video description.
+
 All segment durations must be integral frame counts. A dissolve consumes the first `transition` seconds of the incoming segment; it never shifts narration or adds time. Narration `at` is segment-relative. Every selected clip must fit, including 0.3 seconds at the end, and start at least 0.25 seconds after a previous clip ends. Clips must follow manifest line order. Missing assets, duration overruns and invalid camera bounds fail before rendering.
 
 After timeline or source changes, restart Vite or rerun the CLI. It automatically rebuilds the derived soundtrack; unchanged inputs reuse the cached mix. Do not edit the JSON while an export is running. `public/<episode>/generated/` and `output/` contain derived local media, not source assets. `validation.json` records measured durations and the absolute audio schedule. Original audio/video files are never renamed or replaced.

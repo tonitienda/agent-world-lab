@@ -9,7 +9,11 @@ export type Segment = {
   background?:{camera:string;time:number};
   shot?:Shot;
 };
-export type EpisodePlan = {version?:number; title?:string; fps?:number; resolution?:{width:number;height:number}; cameras:Camera[]; segments:Segment[]};
+/** Exact credit wording from the licensor (e.g. incompetech's attribution code), for the video description. */
+export type Attribution = {title:string; artist:string; text:string; source?:string; license?:string; licenseUrl?:string};
+/** Background music from public/<episode>/music/: looped, faded, and ducked under narration unless `duck` is false. */
+export type Music = {file:string; volume?:number; start?:number; fadeIn?:number; fadeOut?:number; duck?:boolean; attribution:Attribution};
+export type EpisodePlan = {version?:number; title?:string; fps?:number; resolution?:{width:number;height:number}; music?:Music; cameras:Camera[]; segments:Segment[]};
 export const sourceTime = (camera:Camera, start:number) => start+(camera.offsetSeconds??0);
 export const heldSourceTime = (camera:Camera, shot:Shot, elapsed:number) =>
   sourceTime(camera,shot.start)+Math.min(shot.duration,Math.max(0,elapsed-(shot.hold??0)));

@@ -113,6 +113,8 @@ test("cards name the players, the result and the stats", () => {
   const replay = foolsMate();
   assert.match(renderIntro(replay), /Stockfish 1500.*Claude|Claude.*Stockfish 1500/s);
   assert.match(renderIntro(replay), /average club player/);
+  assert.doesNotMatch(renderIntro(replay), /TERRARIUM/);
+  assert.match(renderIntro(replay, { channel: "The Agent Terrarium" }), /THE AGENT TERRARIUM/);
   const outro = renderOutro(replay, analysis, { next: "Next: Stockfish 2000" });
   assert.match(outro, /Claude wins by checkmate/);
   assert.match(outro, /Next: Stockfish 2000/);
