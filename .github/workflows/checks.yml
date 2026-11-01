@@ -17,6 +17,11 @@ jobs:
           node-version: '22'
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      # The soundtrack test mixes real audio.
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update -o Acquire::Retries=3
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends -o Acquire::Retries=3 ffmpeg
       - name: TypeScript
         run: npm run check
       - name: Unit tests
@@ -44,7 +49,10 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Start isolated Minecraft Java server
-        run: docker compose up -d --wait --wait-timeout 300 minecraft
+        # Create the bind-mount folder first so Docker does not make data/ root-owned.
+        run: |
+          mkdir -p data/minecraft
+          docker compose up -d --wait --wait-timeout 300 minecraft
       - name: Test real Mineflayer session and in-world actions
         run: npm run integration
       - name: Test movement, mining and placing in the world
@@ -100,7 +108,10 @@ jobs:
       - name: Validate isolated recorder lifecycle and terrain cameras
         run: npm run integration:recorder
       - name: Start isolated Minecraft world
-        run: docker compose up -d --wait --wait-timeout 300 minecraft
+        # Create the bind-mount folder first so Docker does not make data/ root-owned.
+        run: |
+          mkdir -p data/minecraft
+          docker compose up -d --wait --wait-timeout 300 minecraft
       - name: Record bot movement
         timeout-minutes: 3
         env:

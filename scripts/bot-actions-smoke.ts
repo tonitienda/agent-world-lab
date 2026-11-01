@@ -58,9 +58,18 @@ try {
   assert.ok(inventory.some(i => i.name === "dirt" && i.count > 0),
     `Mined drop was not collected: ${JSON.stringify(inventory)}`);
 
-  // First climb to an adjacent surface block; a distant diagonal route can stall.
-  assertOk(await world.act("move_to", { x: target.x, y: feetY, z: target.z + 1 }), "climb from hole");
-  assertOk(await world.act("move_to", { x: target.x + 2, y: feetY, z: target.z + 1 }), "move from hole");
+  // First climb to an adjacent surface block; a distant diagonal route can stall,
+  // and on a freshly started server one side's jump occasionally times out, so try each side.
+  const exits = [{ dx: 0, dz: 1 }, { dx: 0, dz: -1 }, { dx: -1, dz: 0 }];
+  let climbed = { ok: false, message: "no exit tried" };
+  let exit = exits[0];
+  for (exit of exits) {
+    climbed = await world.act("move_to", { x: target.x + exit.dx, y: feetY, z: target.z + exit.dz });
+    if (climbed.ok) break;
+    console.log(`Climb towards ${JSON.stringify(exit)} failed (${climbed.message}); trying another side`);
+  }
+  assertOk(climbed, "climb from hole");
+  assertOk(await world.act("move_to", { x: target.x + 2, y: feetY, z: target.z + exit.dz }), "move from hole");
   assertOk(await world.act("place", { ...target, item: "dirt" }), "place");
   const restored = await world.observe() as Observation;
   assert.ok(restored.nearbyBlocks.some(b =>

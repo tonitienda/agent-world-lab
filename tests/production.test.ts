@@ -1,8 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {existsSync,readFileSync} from 'node:fs';
 // @ts-ignore Node-only JavaScript production helpers.
-import {validate,sessionPath,outputResolution} from '../production/tools/pipeline.mjs';
+import {validate,sessionPath,outputResolution,credits,prepare} from '../production/tools/pipeline.mjs';
 import {sourceTime} from '../production/src/timeline.js';
 const manifest=[1,2].map(line=>({line,audio:`${line}_Chapter_1.wav`}));
 const fixture=()=>({version:2,fps:25,cameras:[{id:'pov',file:'pov.mp4',offsetSeconds:0},{id:'observer',file:'observer.mp4',offsetSeconds:-3.318}],segments:[{kind:'shot',duration:8,narration:[{line:1,audio:'1_Chapter_1.wav',at:.35}],shot:{kind:'pip',cameras:['pov','observer'],start:10,duration:8}}]});
@@ -65,7 +65,8 @@ test('real edit includes construction, payoff and every supported layout',()=>{
  assert.equal(m[0].text,readFileSync('production/episode-001/narration.txt','utf8').split('\n')[0]);
  assert.deepEqual([...new Set(p.segments.filter((s:any)=>s.shot).map((s:any)=>s.shot.kind))].sort(),['full','pip','split']);
  assert.ok(result.schedule.some((v:any)=>v.line===53));
- assert.match(sessionPath(process.cwd(),'episode-001'),/data/);
+ // Recordings are gitignored; only check session lookup where they exist locally.
+ if(['data/episode-001','data/mcp-sessions/episode-001'].some((d)=>existsSync(`${d}/events.json`)))assert.match(sessionPath(process.cwd(),'episode-001'),/data/);
 });
 test('episode camera offsets agree with the local recording metadata when available',async(t)=>{
  const {existsSync}=await import('node:fs');
@@ -133,4 +134,49 @@ test('follow is selectable in every production layout and checked for bounds',()
   p.cameras[2].offsetSeconds=-20;
   assert.throws(()=>validate(p,manifest,media),/Source bounds/);
  }
+});
+
+const cleanSoul={title:'Clean Soul',artist:'Kevin MacLeod',source:'https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300033',
+ license:'Creative Commons: By Attribution 4.0 License',licenseUrl:'http://creativecommons.org/licenses/by/4.0/',
+ text:'"Clean Soul" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/'};
+test('background music is optional, probed, and never accepted without its attribution',()=>{
+ const p:any=fixture();assert.equal(validate(p,manifest,media).music,null);assert.deepEqual(credits(p),[]);
+ p.music={file:'clean-soul.mp3',volume:.1,attribution:cleanSoul};
+ const probed:string[]=[];
+ const result=validate(p,manifest,(f:string)=>(probed.push(f),f.startsWith('music/')?{duration:307,audio:true}:media(f)));
+ assert.ok(probed.includes('music/clean-soul.mp3'));assert.equal(result.music.duration,307);
+ assert.deepEqual(credits(p),[{kind:'music',...cleanSoul}]);
+ for(const mutate of [
+  (m:any)=>delete m.attribution,
+  (m:any)=>m.attribution={...cleanSoul,text:' '},
+  (m:any)=>m.file='../clean-soul.mp3',
+  (m:any)=>m.volume=0,
+  (m:any)=>m.volume=2,
+  (m:any)=>m.fadeOut=-1,
+ ]){const q:any=fixture();q.music=structuredClone(p.music);mutate(q.music);assert.throws(()=>validate(q,manifest,(f:string)=>f.startsWith('music/')?{duration:307,audio:true}:media(f)));}
+});
+test('the soundtrack mixes a looped, ducked music bed and validation records the credits',async()=>{
+ const {mkdtempSync,mkdirSync,rmSync}=await import('node:fs');const {tmpdir}=await import('node:os');const {join}=await import('node:path');
+ const {execFileSync}=await import('node:child_process');
+ const dir=mkdtempSync(join(tmpdir(),'production-music-'));
+ try{
+  const pub=join(dir,'public/episode-test');for(const d of ['video','audio','music'])mkdirSync(join(pub,d),{recursive:true});mkdirSync(join(dir,'episode-test'));
+  const ff=(...a:string[])=>execFileSync('ffmpeg',['-loglevel','error','-y',...a]);
+  ff('-f','lavfi','-i','color=c=black:s=320x180:d=12','-r','25',join(pub,'video/board.mp4'));
+  ff('-f','lavfi','-i','sine=frequency=440:duration=2',join(pub,'audio/1_Chapter_1.wav'));
+  // A track shorter than the episode, so it has to loop.
+  ff('-f','lavfi','-i','sine=frequency=220:duration=5',join(pub,'music/bed.wav'));
+  const plan={version:2,fps:25,music:{file:'bed.wav',attribution:cleanSoul},cameras:[{id:'board',file:'board.mp4'}],
+   segments:[{kind:'shot',duration:12,narration:[{line:1,audio:'1_Chapter_1.wav',at:4}],shot:{kind:'full',cameras:['board'],start:0,duration:12}}]};
+  const {writeFileSync}=await import('node:fs');
+  writeFileSync(join(dir,'episode-test/edit-plan.json'),JSON.stringify(plan));
+  writeFileSync(join(dir,'episode-test/narration-manifest.json'),JSON.stringify([{line:1,audio:'1_Chapter_1.wav'}]));
+  const {soundtrack}=prepare(dir,'episode-test');
+  const duration=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','csv=p=0',soundtrack],{encoding:'utf8'}));
+  assert.ok(Math.abs(duration-12)<.05,`soundtrack lasts ${duration}`);
+  // The bed is ducked while the voice speaks: compare 220 Hz energy with and without speech.
+  const levelOf=(from:number)=>{const r=execFileSync('sh',['-c',`ffmpeg -ss ${from} -t 1 -i '${soundtrack}' -af bandpass=f=220:w=40,volumedetect -f null - 2>&1`],{encoding:'utf8'});return Number(/mean_volume: (-?[\d.]+)/.exec(r)![1]);};
+  assert.ok(levelOf(4.6)<levelOf(8.5)-3,`bed should dip under speech: ${levelOf(4.6)} vs ${levelOf(8.5)} dB`);
+  assert.deepEqual(JSON.parse(readFileSync(join(dir,'episode-test/validation.json'),'utf8')).credits,[{kind:'music',...cleanSoul}]);
+ }finally{rmSync(dir,{recursive:true,force:true});}
 });

@@ -9,14 +9,15 @@ import pathfinderModule from "mineflayer-pathfinder";
 import {Vec3} from "vec3";
 import {prepareRavine, verifyBotRavine, waitUntil, RAVINE} from "../src/environments/minecraft/ravine.js";
 import {worldSettings} from "../src/environments/minecraft/world-config.js";
+import {tempRoot, serverUid, serverUserEnv} from "./temp-root.js";
 
 const root=resolve(import.meta.dirname,"..");
 if(process.env.EULA!=="TRUE" && !(existsSync(join(root,".env")) && /^\s*EULA\s*=\s*["']?TRUE["']?\s*$/m.test(readFileSync(join(root,".env"),"utf8"))))throw Error("Accept the Minecraft EULA with EULA=TRUE before running fixtures");
-const folder=mkdtempSync("/private/tmp/awl-ravine-fixture-");
+const folder=mkdtempSync(join(tempRoot,"awl-ravine-fixture-"));
 const name=`awl-ravine-${process.pid}-${Date.now()}`;
 const docker=(...args:string[])=>execFileSync("docker",args,{encoding:"utf8",timeout:30000,stdio:["ignore","pipe","pipe"]}).trim();
 const exec=promisify(execFile);
-const command=async(text:string)=>{await exec("docker",["exec","--user","1000",name,"mc-send-to-console",text],{timeout:10000});};
+const command=async(text:string)=>{await exec("docker",["exec","--user",serverUid,name,"mc-send-to-console",text],{timeout:10000});};
 const username="ravine-fixture";
 let bot:Bot|undefined;
 async function disconnect(){
@@ -35,7 +36,7 @@ console.log("Disposable ravine fixture:",folder,name);
 try{
  const jar=join(root,"data/minecraft/minecraft_server.1.21.4.jar");
  if(existsSync(jar))copyFileSync(jar,join(folder,"minecraft_server.1.21.4.jar"));
- docker("run","-d","--name",name,"--label","agent-world-lab.disposable=true","-p","127.0.0.1::25565","-v",`${folder}:/data`,
+ docker("run","-d","--name",name,"--label","agent-world-lab.disposable=true","-p","127.0.0.1::25565","-v",`${folder}:/data`,...serverUserEnv,
   "-e","EULA=TRUE","-e","VERSION=1.21.4","-e","ONLINE_MODE=FALSE","-e","MODE=survival","-e","DIFFICULTY=peaceful","-e","LEVEL_TYPE=minecraft:flat",
   "-e",`GENERATOR_SETTINGS=${worldSettings("superflat","12345").generatorSettings}`,"-e","SEED=12345","-e","SPAWN_PROTECTION=0","-e","ENABLE_RCON=FALSE","-e","CREATE_CONSOLE_IN_PIPE=TRUE","-e","MEMORY=1G","itzg/minecraft-server:java21");
  let healthy=false;

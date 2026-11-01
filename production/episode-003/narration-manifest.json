@@ -1,0 +1,212 @@
+[
+  {
+    "line": 1,
+    "voice": "presenter",
+    "at": 0.3,
+    "slot": 6.7,
+    "ply": null,
+    "kind": "intro",
+    "text": "Claude Opus 5.5 versus Stockfish 1500. No list of legal moves, just the board.",
+    "audio": "1_Chapter_1.wav"
+  },
+  {
+    "line": 2,
+    "voice": "agent",
+    "at": 12.8,
+    "slot": 13.292,
+    "ply": 9,
+    "kind": "rationale",
+    "text": "Four moves in: the engine played the Elephant Gambit and just took back my d5 pawn with its queen. Next I'm playing Nc3 to hit the queen and go after the e4 pawn.",
+    "audio": "2_Chapter_1.wav"
+  },
+  {
+    "line": 3,
+    "voice": "agent",
+    "at": 32.492,
+    "slot": 2.908,
+    "ply": 17,
+    "kind": "intention",
+    "text": "Recapture; queenless and a pawn up.",
+    "audio": "3_Chapter_1.wav"
+  },
+  {
+    "line": 4,
+    "voice": "agent",
+    "at": 39.4,
+    "slot": 11.754,
+    "ply": 21,
+    "kind": "rationale",
+    "text": "The queens are off the board and I'm still a pawn up. Black's bishop is attacking my e4 knight, so I'm covering it with Bd3, which also guards c2.",
+    "audio": "4_Chapter_1.wav"
+  },
+  {
+    "line": 5,
+    "voice": "agent",
+    "at": 55.154,
+    "slot": 3.677,
+    "ply": 25,
+    "kind": "intention",
+    "text": "King to safety before the middlegame heats up.",
+    "audio": "5_Chapter_1.wav"
+  },
+  {
+    "line": 6,
+    "voice": "agent",
+    "at": 65.631,
+    "slot": 3.677,
+    "ply": 31,
+    "kind": "intention",
+    "text": "Recapture; doubled pawns, but still a pawn up.",
+    "audio": "6_Chapter_1.wav"
+  },
+  {
+    "line": 7,
+    "voice": "agent",
+    "at": 72.108,
+    "slot": 11.754,
+    "ply": 33,
+    "kind": "rationale",
+    "text": "Played the forced recapture gxf3. I'm still a pawn up, but now with doubled f-pawns. Next comes Bf5+, a check that sets the bishop up on a strong square.",
+    "audio": "7_Chapter_1.wav"
+  },
+  {
+    "line": 8,
+    "voice": "agent",
+    "at": 86.262,
+    "slot": 4.446,
+    "ply": 37,
+    "kind": "intention",
+    "text": "Trade to shatter the pawns in front of Black's king.",
+    "audio": "8_Chapter_1.wav"
+  },
+  {
+    "line": 9,
+    "voice": "agent",
+    "at": 97.508,
+    "slot": 2.523,
+    "ply": 43,
+    "kind": "intention",
+    "text": "Rook to the open e-file.",
+    "audio": "9_Chapter_1.wav"
+  },
+  {
+    "line": 10,
+    "voice": "agent",
+    "at": 104.631,
+    "slot": 21.369,
+    "ply": 45,
+    "kind": "rationale",
+    "text": "Rook to the e-file is done, and Black pushed ...f6. I'm going Re6, which hits f6 and h6 at once. f6 has no defender. Slip on my part: the e3 bishop is sitting on the e-file, so the rook can't get to e6. New plan is Kh1 followed by Rg1 to press on g5.",
+    "audio": "10_Chapter_1.wav"
+  },
+  {
+    "line": 11,
+    "voice": "agent",
+    "at": 132.8,
+    "slot": 4.831,
+    "ply": 51,
+    "kind": "intention",
+    "text": "Grab the bishop with check and leave Black's pawns a mess.",
+    "audio": "11_Chapter_1.wav"
+  },
+  {
+    "line": 12,
+    "voice": "agent",
+    "at": 146.031,
+    "slot": 12.523,
+    "ply": 57,
+    "kind": "rationale",
+    "text": "Black pushed ...f4 to hit my bishop, but nothing guards that pawn, so I'm taking it with the bishop. The g5 pawn is protected by both the bishop and the rook.",
+    "audio": "12_Chapter_1.wav"
+  },
+  {
+    "line": 13,
+    "voice": "agent",
+    "at": 160.954,
+    "slot": 3.677,
+    "ply": 61,
+    "kind": "intention",
+    "text": "Nobody's guarding the h4 knight. I'll take it.",
+    "audio": "13_Chapter_1.wav"
+  },
+  {
+    "line": 14,
+    "voice": "agent",
+    "at": 173.431,
+    "slot": 4.831,
+    "ply": 67,
+    "kind": "intention",
+    "text": "Both rooks reach c1, so I'm writing it unambiguously: a-rook checks.",
+    "audio": "14_Chapter_1.wav"
+  },
+  {
+    "line": 15,
+    "voice": "agent",
+    "at": 185.862,
+    "slot": 12.138,
+    "ply": 77,
+    "kind": "rationale",
+    "text": "b3 got the pawn off the b-file. Black's rook went to g5 to support the g4 pawn, so I'm playing Bf4 to attack that rook and the d6 pawn together.",
+    "audio": "15_Chapter_1.wav"
+  },
+  {
+    "line": 16,
+    "voice": "agent",
+    "at": 200.4,
+    "slot": 4.831,
+    "ply": 81,
+    "kind": "intention",
+    "text": "Trade a pair of rooks; a piece up, swaps help me.",
+    "audio": "16_Chapter_1.wav"
+  },
+  {
+    "line": 17,
+    "voice": "agent",
+    "at": 213.231,
+    "slot": 9.446,
+    "ply": 89,
+    "kind": "rationale",
+    "text": "Material stands at rook, bishop and five pawns against rook and two pawns. I'll push my passed h-pawn and keep Black's rook busy.",
+    "audio": "17_Chapter_1.wav"
+  },
+  {
+    "line": 18,
+    "voice": "agent",
+    "at": 231.077,
+    "slot": 2.523,
+    "ply": 103,
+    "kind": "intention",
+    "text": "Promote. New queen on h8.",
+    "audio": "18_Chapter_1.wav"
+  },
+  {
+    "line": 19,
+    "voice": "agent",
+    "at": 236.4,
+    "slot": 4.062,
+    "ply": 105,
+    "kind": "intention",
+    "text": "The rook is just sitting on d8. Taking it.",
+    "audio": "19_Chapter_1.wav"
+  },
+  {
+    "line": 20,
+    "voice": "agent",
+    "at": 246.862,
+    "slot": 2.908,
+    "ply": 113,
+    "kind": "intention",
+    "text": "Rook lands on c6 for checkmate.",
+    "audio": "20_Chapter_1.wav"
+  },
+  {
+    "line": 21,
+    "voice": "presenter",
+    "at": 254.269,
+    "slot": 7.7,
+    "ply": null,
+    "kind": "outro",
+    "text": "Claude Opus 5.5 wins by checkmate after 57 moves. Along the way, it tried 3 illegal moves.",
+    "audio": "21_Chapter_1.wav"
+  }
+]

@@ -35,6 +35,17 @@ export function validate(plan,manifest,media){
   if(!c.id||cams.has(c.id)||!safeFile(c.file)||!Number.isFinite(c.offsetSeconds??0))fail('Invalid camera');
   const p=media(`video/${c.file}`);cams.set(c.id,{...c,...p});
  }
+ let music=null;
+ if(plan.music!==undefined){
+  const m=plan.music,a=m?.attribution,text=v=>typeof v==='string'&&v.trim().length>0;
+  if(!m||!safeFile(m.file))fail('Invalid music file');
+  for(const k of ['volume','start','fadeIn','fadeOut'])if(m[k]!==undefined&&!(Number.isFinite(m[k])&&m[k]>=0))fail(`Invalid music ${k}`);
+  if(m.volume!==undefined&&(m.volume===0||m.volume>1))fail('Invalid music volume');
+  // Licensed music is only usable with its credit, so the plan carries the licensor's exact wording.
+  if(!a||!text(a.title)||!text(a.artist)||!text(a.text))fail('Music needs attribution with title, artist and text');
+  const p=media(`music/${m.file}`);if(!p.audio)fail('Music file has no audio');
+  music={...m,duration:p.duration};
+ }
  let timeline=0,lastLine=0;const schedule=[];
  for(const [index,s] of plan.segments.entries()){
   if(!['shot','intro','outro'].includes(s.kind)||!Number.isFinite(s.duration)||s.duration<=0||Math.abs(s.duration*plan.fps-Math.round(s.duration*plan.fps))>1e-6)fail(`Invalid segment ${index}`);
@@ -65,7 +76,12 @@ export function validate(plan,manifest,media){
   }
   timeline+=s.duration;
  }
- return {duration:Number(timeline.toFixed(6)),schedule,cameras:[...cams.values()]};
+ return {duration:Number(timeline.toFixed(6)),schedule,cameras:[...cams.values()],music};
+}
+/** Credits the episode's description must carry: each licensed asset's exact attribution text. */
+export function credits(plan){
+ const a=plan.music?.attribution;
+ return a?[{kind:'music',title:a.title,artist:a.artist,source:a.source,license:a.license,licenseUrl:a.licenseUrl,text:a.text}]:[];
 }
 export function prepare(production,episode){
  if(!/^episode-[a-zA-Z0-9-]+$/.test(episode))throw Error('Invalid episode ID');
@@ -76,7 +92,7 @@ export function prepare(production,episode){
  const out=join(pub,'generated');mkdirSync(out,{recursive:true});
  const fingerprint=createHash('sha256').update(JSON.stringify({plan,manifest,version:1,assets:[...cache.keys()].map(rel=>{const s=statSync(join(pub,rel));return [rel,s.size,s.mtimeMs]})})).digest('hex');
  const stamp=join(out,'soundtrack.sha256');
- writeFileSync(join(folder,'validation.json'),JSON.stringify({...result,sourceAudio:result.cameras.map(c=>({id:c.id,audio:c.audio}))},null,2)+'\n');
+ writeFileSync(join(folder,'validation.json'),JSON.stringify({...result,sourceAudio:result.cameras.map(c=>({id:c.id,audio:c.audio})),credits:credits(plan)},null,2)+'\n');
  if(existsSync(stamp)&&readFileSync(stamp,'utf8')===fingerprint&&existsSync(join(out,'soundtrack.wav')))return {plan,...result,soundtrack:join(out,'soundtrack.wav')};
  const args=['-hide_banner','-loglevel','error','-y'];const filters=[],mix=[];
  // Only the primary recording contributes game sound, so simultaneous views never double it.
@@ -93,11 +109,25 @@ export function prepare(production,episode){
   }
   time+=s.duration;
  }
+ const voices=[];
  for(const v of result.schedule){
   args.push('-i',join(pub,'audio',v.audio));
   const tag=`n${index}`;
-  filters.push(`[${index++}:a]aresample=48000,asetpts=PTS-STARTPTS,loudnorm=I=-18:TP=-2:LRA=7,adelay=${Math.round(v.start*1000)}:all=1[${tag}]`);mix.push(`[${tag}]`);
+  filters.push(`[${index++}:a]aresample=48000,asetpts=PTS-STARTPTS,loudnorm=I=-18:TP=-2:LRA=7,adelay=${Math.round(v.start*1000)}:all=1[${tag}]`);voices.push(`[${tag}]`);
  }
+ const m=result.music;
+ if(m){
+  // The bed loops to cover the episode, fades at both ends, and dips while someone speaks.
+  const d=result.duration,fadeIn=Math.min(m.fadeIn??2,d/2),fadeOut=Math.min(m.fadeOut??4,d/2);
+  args.push('-stream_loop','-1','-ss',String(m.start??0),'-i',join(pub,'music',m.file));
+  filters.push(`[${index++}:a]aresample=48000,asetpts=PTS-STARTPTS,atrim=duration=${d},volume=${m.volume??0.12},afade=t=in:d=${fadeIn},afade=t=out:st=${d-fadeOut}:d=${fadeOut}[bed]`);
+  if(voices.length&&m.duck!==false){
+   filters.push(`${voices.join('')}amix=inputs=${voices.length}:normalize=0:dropout_transition=0,asplit=2[voice][speech]`,
+    // The compressor stops when its key ends, so the key runs on as silence after the last line.
+    `[speech]apad[key]`,`[bed][key]sidechaincompress=threshold=0.02:ratio=4:attack=20:release=500[ducked]`);
+   mix.push('[voice]','[ducked]');
+  }else mix.push(...voices,'[bed]');
+ }else mix.push(...voices);
  if(!mix.length)throw Error('Episode has no audio');
  filters.push(`${mix.join('')}amix=inputs=${mix.length}:normalize=0:dropout_transition=0,alimiter=limit=0.95:latency=1,apad,atrim=duration=${result.duration}[out]`);
  command('ffmpeg',[...args,'-filter_complex',filters.join(';'),'-map','[out]','-ar','48000','-ac','2','-c:a','pcm_s16le',join(out,'soundtrack.wav')]);

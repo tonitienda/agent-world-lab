@@ -17,6 +17,7 @@ import {
   verifyProperties,
   verifyLevelDat,
 } from "../src/environments/minecraft/world-config.js";
+import { serverUserEnv, tempRoot } from "./temp-root.js";
 
 const root = resolve(import.meta.dirname, "..");
 if (
@@ -33,7 +34,7 @@ if (
   );
 if (process.env.RECORD_MP4)
   throw Error("Unset RECORD_MP4 for disposable integration tests");
-const folder = mkdtempSync(join("/private/tmp", "awl-survival-fixture-"));
+const folder = mkdtempSync(join(tempRoot, "awl-survival-fixture-"));
 console.log("Disposable fixture artifacts:", folder);
 const name = `awl-fixture-${process.pid}-${Date.now()}`;
 const docker = (...args: string[]) =>
@@ -61,6 +62,7 @@ try {
     "127.0.0.1::25565",
     "-v",
     `${folder}:/data`,
+    ...serverUserEnv,
     "-e",
     "EULA=TRUE",
     "-e",
@@ -352,7 +354,7 @@ try {
     );
   }
   docker("rm", "-f", name);
-  const normalFolder = mkdtempSync(join("/private/tmp", "awl-normal-fixture-"));
+  const normalFolder = mkdtempSync(join(tempRoot, "awl-normal-fixture-"));
   if (existsSync(jar))
     copyFileSync(jar, join(normalFolder, "minecraft_server.1.21.4.jar"));
   docker(
@@ -366,6 +368,7 @@ try {
     "127.0.0.1::25565",
     "-v",
     `${normalFolder}:/data`,
+    ...serverUserEnv,
     "-e",
     "EULA=TRUE",
     "-e",
