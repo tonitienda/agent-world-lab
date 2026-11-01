@@ -17,7 +17,7 @@ import {
   verifyProperties,
   verifyLevelDat,
 } from "../src/environments/minecraft/world-config.js";
-import { tempRoot } from "./temp-root.js";
+import { serverUserEnv, tempRoot } from "./temp-root.js";
 
 const root = resolve(import.meta.dirname, "..");
 if (
@@ -62,6 +62,7 @@ try {
     "127.0.0.1::25565",
     "-v",
     `${folder}:/data`,
+    ...serverUserEnv,
     "-e",
     "EULA=TRUE",
     "-e",
@@ -367,6 +368,7 @@ try {
     "127.0.0.1::25565",
     "-v",
     `${normalFolder}:/data`,
+    ...serverUserEnv,
     "-e",
     "EULA=TRUE",
     "-e",
