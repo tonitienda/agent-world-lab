@@ -433,3 +433,21 @@ export function renderOutro(replay: ChessReplay, analysis: Analysis | null, opti
   out.push(`</g>`);
   return svg(out);
 }
+
+/**
+ * Closing card: a short thank-you at the top, and the rest left plain so the platform's end-screen
+ * suggestions (video tiles, subscribe) sit on a quiet background.
+ */
+export function renderEnd(replay: ChessReplay, options: CardOptions & { message?: string } = {}): string {
+  const fade = clamp01((options.t ?? 1) * 8);
+  const out = [`<rect width="${FRAME.width}" height="${FRAME.height}" fill="${COLORS.bg}"/>`, `<g opacity="${fade}">`];
+  out.push(`<text x="960" y="170" font-size="64" font-weight="700" text-anchor="middle" fill="${COLORS.text}" ${FONT}>${esc(options.message ?? "Thanks for watching")}</text>`);
+  if (options.channel) {
+    const name = options.channel.toUpperCase();
+    const half = name.length * 13 + 40;
+    out.push(`<text x="960" y="236" font-size="28" font-weight="700" letter-spacing="8" text-anchor="middle" fill="${COLORS.accent}" ${FONT}>${esc(name)}</text>`);
+    for (const dir of [-1, 1]) out.push(`<line x1="${960 + dir * half}" y1="226" x2="${960 + dir * (half + 120)}" y2="226" stroke="${COLORS.accent}" stroke-width="2"/>`);
+  }
+  out.push(`</g>`);
+  return svg(out);
+}

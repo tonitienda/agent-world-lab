@@ -1,0 +1,152 @@
+{
+  "version": 2,
+  "title": "Episode 003: Claude Opus 5.5 vs Stockfish 1500",
+  "fps": 30,
+  "music": {
+    "file": "clean-soul.mp3",
+    "volume": 0.5,
+    "fadeIn": 2,
+    "fadeOut": 4,
+    "attribution": {
+      "title": "Clean Soul",
+      "artist": "Kevin MacLeod",
+      "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300033",
+      "license": "Creative Commons: By Attribution 4.0 License",
+      "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+      "text": "\"Clean Soul\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "cameras": [
+    {
+      "id": "board",
+      "file": "board.mp4"
+    }
+  ],
+  "segments": [
+    {
+      "id": "game",
+      "kind": "shot",
+      "duration": 293.8,
+      "narration": [
+        {
+          "line": 1,
+          "audio": "1_Chapter_1.wav",
+          "at": 0.3
+        },
+        {
+          "line": 2,
+          "audio": "2_Chapter_1.wav",
+          "at": 14.615
+        },
+        {
+          "line": 3,
+          "audio": "3_Chapter_1.wav",
+          "at": 33.997
+        },
+        {
+          "line": 4,
+          "audio": "4_Chapter_1.wav",
+          "at": 42.098
+        },
+        {
+          "line": 5,
+          "audio": "5_Chapter_1.wav",
+          "at": 57.721
+        },
+        {
+          "line": 6,
+          "audio": "6_Chapter_1.wav",
+          "at": 68.7
+        },
+        {
+          "line": 7,
+          "audio": "7_Chapter_1.wav",
+          "at": 76.75
+        },
+        {
+          "line": 8,
+          "audio": "8_Chapter_1.wav",
+          "at": 92.942
+        },
+        {
+          "line": 9,
+          "audio": "9_Chapter_1.wav",
+          "at": 104.6
+        },
+        {
+          "line": 10,
+          "audio": "10_Chapter_1.wav",
+          "at": 112.307
+        },
+        {
+          "line": 11,
+          "audio": "11_Chapter_1.wav",
+          "at": 142.486
+        },
+        {
+          "line": 12,
+          "audio": "12_Chapter_1.wav",
+          "at": 156.136
+        },
+        {
+          "line": 13,
+          "audio": "13_Chapter_1.wav",
+          "at": 170.943
+        },
+        {
+          "line": 14,
+          "audio": "14_Chapter_1.wav",
+          "at": 184.157
+        },
+        {
+          "line": 15,
+          "audio": "15_Chapter_1.wav",
+          "at": 198.888
+        },
+        {
+          "line": 16,
+          "audio": "16_Chapter_1.wav",
+          "at": 214.374
+        },
+        {
+          "line": 17,
+          "audio": "17_Chapter_1.wav",
+          "at": 227.363
+        },
+        {
+          "line": 18,
+          "audio": "18_Chapter_1.wav",
+          "at": 246.263
+        },
+        {
+          "line": 19,
+          "audio": "19_Chapter_1.wav",
+          "at": 253.608
+        },
+        {
+          "line": 20,
+          "audio": "20_Chapter_1.wav",
+          "at": 265.258
+        },
+        {
+          "line": 21,
+          "audio": "21_Chapter_1.wav",
+          "at": 273.884
+        },
+        {
+          "line": 22,
+          "audio": "22_Chapter_1.wav",
+          "at": 284.084
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 0,
+        "duration": 293.8
+      }
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "duration": 293.8,
+  "schedule": [
+    {
+      "line": 1,
+      "audio": "1_Chapter_1.wav",
+      "at": 0.3,
+      "start": 0.3,
+      "duration": 7.915102
+    },
+    {
+      "line": 2,
+      "audio": "2_Chapter_1.wav",
+      "at": 14.615,
+      "start": 14.615,
+      "duration": 12.382041
+    },
+    {
+      "line": 3,
+      "audio": "3_Chapter_1.wav",
+      "at": 33.997,
+      "start": 33.997,
+      "duration": 3.500408
+    },
+    {
+      "line": 4,
+      "audio": "4_Chapter_1.wav",
+      "at": 42.098,
+      "start": 42.098,
+      "duration": 11.023673
+    },
+    {
+      "line": 5,
+      "audio": "5_Chapter_1.wav",
+      "at": 57.721,
+      "start": 57.721,
+      "duration": 3.578776
+    },
+    {
+      "line": 6,
+      "audio": "6_Chapter_1.wav",
+      "at": 68.7,
+      "start": 68.7,
+      "duration": 4.649796
+    },
+    {
+      "line": 7,
+      "audio": "7_Chapter_1.wav",
+      "at": 76.75,
+      "start": 76.75,
+      "duration": 13.191837
+    },
+    {
+      "line": 8,
+      "audio": "8_Chapter_1.wav",
+      "at": 92.942,
+      "start": 92.942,
+      "duration": 4.257959
+    },
+    {
+      "line": 9,
+      "audio": "9_Chapter_1.wav",
+      "at": 104.6,
+      "start": 104.6,
+      "duration": 2.507755
+    },
+    {
+      "line": 10,
+      "audio": "10_Chapter_1.wav",
+      "at": 112.307,
+      "start": 112.307,
+      "duration": 22.778776
+    },
+    {
+      "line": 11,
+      "audio": "11_Chapter_1.wav",
+      "at": 142.486,
+      "start": 142.486,
+      "duration": 4.649796
+    },
+    {
+      "line": 12,
+      "audio": "12_Chapter_1.wav",
+      "at": 156.136,
+      "start": 156.136,
+      "duration": 11.807347
+    },
+    {
+      "line": 13,
+      "audio": "13_Chapter_1.wav",
+      "at": 170.943,
+      "start": 170.943,
+      "duration": 3.813878
+    },
+    {
+      "line": 14,
+      "audio": "14_Chapter_1.wav",
+      "at": 184.157,
+      "start": 184.157,
+      "duration": 6.530612
+    },
+    {
+      "line": 15,
+      "audio": "15_Chapter_1.wav",
+      "at": 198.888,
+      "start": 198.888,
+      "duration": 12.486531
+    },
+    {
+      "line": 16,
+      "audio": "16_Chapter_1.wav",
+      "at": 214.374,
+      "start": 214.374,
+      "duration": 4.388571
+    },
+    {
+      "line": 17,
+      "audio": "17_Chapter_1.wav",
+      "at": 227.363,
+      "start": 227.363,
+      "duration": 9.900408
+    },
+    {
+      "line": 18,
+      "audio": "18_Chapter_1.wav",
+      "at": 246.263,
+      "start": 246.263,
+      "duration": 3.94449
+    },
+    {
+      "line": 19,
+      "audio": "19_Chapter_1.wav",
+      "at": 253.608,
+      "start": 253.608,
+      "duration": 4.649796
+    },
+    {
+      "line": 20,
+      "audio": "20_Chapter_1.wav",
+      "at": 265.258,
+      "start": 265.258,
+      "duration": 3.526531
+    },
+    {
+      "line": 21,
+      "audio": "21_Chapter_1.wav",
+      "at": 273.884,
+      "start": 273.884,
+      "duration": 9.299592
+    },
+    {
+      "line": 22,
+      "audio": "22_Chapter_1.wav",
+      "at": 284.084,
+      "start": 284.084,
+      "duration": 1.541224
+    }
+  ],
+  "cameras": [
+    {
+      "id": "board",
+      "file": "board.mp4",
+      "duration": 293.8,
+      "audio": false
+    }
+  ],
+  "music": {
+    "file": "clean-soul.mp3",
+    "volume": 0.5,
+    "fadeIn": 2,
+    "fadeOut": 4,
+    "attribution": {
+      "title": "Clean Soul",
+      "artist": "Kevin MacLeod",
+      "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300033",
+      "license": "Creative Commons: By Attribution 4.0 License",
+      "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+      "text": "\"Clean Soul\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/"
+    },
+    "duration": 306.7298
+  },
+  "sourceAudio": [
+    {
+      "id": "board",
+      "audio": false
+    }
+  ],
+  "credits": [
+    {
+      "kind": "music",
+      "title": "Clean Soul",
+      "artist": "Kevin MacLeod",
+      "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300033",
+      "license": "Creative Commons: By Attribution 4.0 License",
+      "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+      "text": "\"Clean Soul\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/"
+    }
+  ]
+}

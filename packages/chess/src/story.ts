@@ -7,7 +7,7 @@ export type Callout = { text: string; tone: CalloutTone };
 
 /** One stretch of the video. Board segments animate the move at `ply` when `animate` is set. */
 export type Segment =
-  | { kind: "intro" | "outro"; duration: number }
+  | { kind: "intro" | "outro" | "end"; duration: number }
   | {
       kind: "board";
       duration: number;
@@ -36,6 +36,8 @@ export type NarrationCue = {
 export type Pacing = {
   intro: number;
   outro: number;
+  /** Closing card held for the platform's end-screen suggestions (YouTube allows 5-20 s); 0 omits it. */
+  end: number;
   quietSlide: number;
   quietHold: number;
   keySlide: number;
@@ -50,6 +52,7 @@ export type Pacing = {
 export const DEFAULT_PACING: Pacing = {
   intro: 7,
   outro: 8,
+  end: 10,
   quietSlide: 0.35,
   quietHold: 0.25,
   keySlide: 0.6,
@@ -77,6 +80,12 @@ function calloutFor(replay: ChessReplay, analysis: Analysis | null, ply: number,
 }
 
 const wordsIn = (text: string) => text.split(/\s+/).filter(Boolean).length;
+
+/** Seconds into a card before its voice-over starts. */
+export const VOICE_LEAD = 0.3;
+
+/** Measured voice-over lengths in seconds (cues by ply); they replace the reading-speed estimate. */
+export type Voicing = { intro?: number; outro?: number; end?: number; cues?: Record<number, number> };
 
 /** Last square named in a move, e.g. "Rxe6+" -> "e6", "e2e4" -> "e4". */
 export function targetSquare(input: string): string | null {
@@ -130,10 +139,13 @@ export function illegalOrigins(fen: string, input: string): string[] {
  * Turns a game into an edit: narration (the agent's intention, while it "thinks") before key agent
  * moves, slow motion with a callout at turning points, rejected moves shown, quiet moves played fast.
  */
-export function buildStory(replay: ChessReplay, analysis: Analysis | null, pacing: Pacing = DEFAULT_PACING) {
-  const segments: Segment[] = [{ kind: "intro", duration: pacing.intro }];
+export function buildStory(replay: ChessReplay, analysis: Analysis | null, pacing: Pacing = DEFAULT_PACING, voicing: Voicing = {}) {
+  // A card stretches to fit its recorded voice-over, keeping the narration pad after it.
+  const card = (minimum: number, voice?: number) => Math.max(minimum, voice === undefined ? 0 : VOICE_LEAD + voice + pacing.narrationPad);
+  const intro = card(pacing.intro, voicing.intro);
+  const segments: Segment[] = [{ kind: "intro", duration: intro }];
   const cues: NarrationCue[] = [];
-  let clock = pacing.intro;
+  let clock = intro;
   const push = (segment: Segment) => {
     segments.push(segment);
     clock += segment.duration;
@@ -165,7 +177,8 @@ export function buildStory(replay: ChessReplay, analysis: Analysis | null, pacin
     // voicing), else the short intention at turning points.
     const said = agent ? record.rationale ?? (key ? record.intention : undefined) : undefined;
     if (said) {
-      const duration = Math.max(pacing.narrationMin, wordsIn(said) / pacing.wordsPerSecond + pacing.narrationPad);
+      const voice = voicing.cues?.[ply] ?? wordsIn(said) / pacing.wordsPerSecond;
+      const duration = Math.max(pacing.narrationMin, voice + pacing.narrationPad);
       cues.push({ ply, text: said, start: clock, duration, kind: record.rationale ? "rationale" : "intention" });
       push({ kind: "board", duration, ply: ply - 1, animate: false, caption: said, thinking: record.side });
     }
@@ -176,6 +189,7 @@ export function buildStory(replay: ChessReplay, analysis: Analysis | null, pacin
   });
 
   push({ kind: "board", duration: 2, ply: replay.moves.length, animate: false });
-  push({ kind: "outro", duration: pacing.outro });
+  push({ kind: "outro", duration: card(pacing.outro, voicing.outro) });
+  if (pacing.end > 0) push({ kind: "end", duration: card(pacing.end, voicing.end) });
   return { segments, cues, duration: clock };
 }
