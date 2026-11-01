@@ -1,10 +1,11 @@
 /** Real CLI -> disposable world -> scripted MCP harness -> three cameras ->
  * extraction -> Motion Canvas -> MP4 validation. No paid model calls.
- * All mutable inputs are copied into a fresh /private/tmp repository; existing
+ * All mutable inputs are copied into a fresh temporary repository; existing
  * worlds, episodes and recordings are never mounted or modified. */
 import assert from 'node:assert/strict';
 import {mkdtempSync,cpSync,mkdirSync,symlinkSync,writeFileSync,readFileSync,existsSync,chmodSync} from 'node:fs';
 import {join,resolve} from 'node:path';
+import {tempRoot} from './temp-root.js';
 import {execFileSync,spawn} from 'node:child_process';
 import {createServer} from 'node:net';
 import {createRequire} from 'node:module';
@@ -12,7 +13,7 @@ import {fileURLToPath} from 'node:url';
 const source=resolve(import.meta.dirname,'..');
 const guided=process.argv.includes('--guided');
 if(!existsSync(join(source,'.env'))||!/^\s*EULA\s*=\s*["']?TRUE["']?\s*$/m.test(readFileSync(join(source,'.env'),'utf8')))throw Error('This fixture requires the existing local Minecraft EULA acceptance');
-const root=mkdtempSync('/private/tmp/emergence-e2e-');
+const root=mkdtempSync(join(tempRoot,'emergence-e2e-'));
 console.log('DISPOSABLE orchestration repository:',root);
 const project='emergence-e2e-'+process.pid;
 async function freePort(){const server=createServer();await new Promise<void>(r=>server.listen(0,'127.0.0.1',r));const port=(server.address() as {port:number}).port;await new Promise<void>(r=>server.close(()=>r()));return port;}

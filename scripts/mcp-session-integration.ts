@@ -7,6 +7,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { minecraftCapabilities } from "../src/environments/minecraft/adapter.js";
+import { tempRoot } from "./temp-root.js";
 
 if (
   process.env.AWL_DISPOSABLE_TEST !== "1" ||
@@ -16,7 +17,7 @@ if (
   throw Error("Requires a disposable fixture on a random port");
 const root = resolve(import.meta.dirname, "..");
 for (const outcome of ["completed", "stopped", "aborted"] as const) {
-  const folder = mkdtempSync("/private/tmp/awl-mcp-session-");
+  const folder = mkdtempSync(join(tempRoot, "awl-mcp-session-"));
   const env = Object.fromEntries(
     Object.entries({
       ...process.env,

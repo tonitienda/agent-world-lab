@@ -9,10 +9,11 @@ import pathfinderModule from "mineflayer-pathfinder";
 import {Vec3} from "vec3";
 import {prepareRavine, verifyBotRavine, waitUntil, RAVINE} from "../src/environments/minecraft/ravine.js";
 import {worldSettings} from "../src/environments/minecraft/world-config.js";
+import {tempRoot} from "./temp-root.js";
 
 const root=resolve(import.meta.dirname,"..");
 if(process.env.EULA!=="TRUE" && !(existsSync(join(root,".env")) && /^\s*EULA\s*=\s*["']?TRUE["']?\s*$/m.test(readFileSync(join(root,".env"),"utf8"))))throw Error("Accept the Minecraft EULA with EULA=TRUE before running fixtures");
-const folder=mkdtempSync("/private/tmp/awl-ravine-fixture-");
+const folder=mkdtempSync(join(tempRoot,"awl-ravine-fixture-"));
 const name=`awl-ravine-${process.pid}-${Date.now()}`;
 const docker=(...args:string[])=>execFileSync("docker",args,{encoding:"utf8",timeout:30000,stdio:["ignore","pipe","pipe"]}).trim();
 const exec=promisify(execFile);
