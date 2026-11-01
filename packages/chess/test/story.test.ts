@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  buildStory, ChessMatch, DEFAULT_PACING, illegalOrigins, renderFrame, renderIntro, renderOutro, targetSquare,
+  buildStory, ChessMatch, DEFAULT_PACING, illegalOrigins, renderEnd, renderFrame, renderIntro, renderOutro, targetSquare, VOICE_LEAD,
   type Analysis, type PlayerInfo,
 } from "../src/index.js";
 
@@ -33,9 +33,21 @@ const analysis: Analysis = {
 test("the story opens and closes on cards and sums to its duration", () => {
   const story = buildStory(foolsMate(), analysis);
   assert.equal(story.segments[0].kind, "intro");
-  assert.equal(story.segments.at(-1)!.kind, "outro");
+  assert.deepEqual(story.segments.slice(-2).map((s) => [s.kind, s.duration]), [["outro", DEFAULT_PACING.outro], ["end", DEFAULT_PACING.end]]);
   const total = story.segments.reduce((s, seg) => s + seg.duration, 0);
   assert.ok(Math.abs(total - story.duration) < 1e-9);
+  assert.equal(buildStory(foolsMate(), analysis, { ...DEFAULT_PACING, end: 0 }).segments.at(-1)!.kind, "outro");
+});
+
+test("recorded voice-overs set the narration slots and stretch cards that are too short", () => {
+  const { narrationPad } = DEFAULT_PACING;
+  const story = buildStory(foolsMate(), analysis, DEFAULT_PACING, { intro: 9, outro: 2, end: 1.5, cues: { 4: 4.2 } });
+  assert.equal(story.segments[0].duration, VOICE_LEAD + 9 + narrationPad, "intro grows to fit its line");
+  assert.equal(story.cues[0].duration, 4.2 + narrationPad);
+  const [outro, end] = story.segments.slice(-2);
+  assert.equal(outro.duration, DEFAULT_PACING.outro, "a short line keeps the card's own length");
+  assert.equal(end.duration, DEFAULT_PACING.end);
+  assert.match(renderEnd(foolsMate(), { channel: "The Agent Terrarium" }), /Thanks for watching[\s\S]*THE AGENT TERRARIUM/);
 });
 
 test("turning points get callouts and slow motion, quiet moves play fast", () => {

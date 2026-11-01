@@ -19,3 +19,4 @@ Promote. New queen on h8.
 The rook is just sitting on d8. Taking it.
 Rook lands on c6 for checkmate.
 Claude Opus 5.5 wins by checkmate after 57 moves. Along the way, it tried 3 illegal moves.
+Thanks for watching.

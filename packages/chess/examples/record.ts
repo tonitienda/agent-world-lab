@@ -2,16 +2,17 @@
 // Usage:
 //   tsx examples/record.ts <outDir> [replay.json]          record an existing replay (e.g. a Claude game)
 //   tsx examples/record.ts <outDir> --engines 1500,2000    play Stockfish vs Stockfish first (white,black Elo)
-// Env: CHESS_TITLE, CHESS_CHANNEL (intro wordmark), CHESS_NEXT (outro hook), CHESS_ANALYSIS_DEPTH (default 18; 0 skips analysis).
+// Env: CHESS_TITLE, CHESS_CHANNEL (intro and end wordmark), CHESS_NEXT (outro hook), CHESS_ANALYSIS_DEPTH (default 18; 0 skips analysis),
+//      CHESS_VOICE (production/<episode> folder: time cards and cues from its recorded WAVs, see scripts/chess-narration.ts).
 // Writes board.mp4, replay.json, analysis.json (cached between runs) and narration.json (card and cue timestamps).
 import { execFile, execFileSync } from "node:child_process";
 import { existsSync, linkSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { availableParallelism } from "node:os";
-import { join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { promisify } from "node:util";
 import {
-  analyseReplay, buildStory, playEngines, renderFrame, renderIntro, renderOutro, replayPositions,
-  type Analysis, type ChessReplay,
+  analyseReplay, buildStory, DEFAULT_PACING, playEngines, renderEnd, renderFrame, renderIntro, renderOutro, replayPositions,
+  type Analysis, type ChessReplay, type Voicing,
 } from "../src/index.js";
 
 const run = promisify(execFile);
@@ -49,13 +50,30 @@ if (depth > 0) {
   }
 }
 
-const story = buildStory(replay, analysis);
-const outro = story.segments.at(-1)!;
+// Recorded narration: the manifest maps each WAV to its card or cue (production/public/<episode>/audio).
+const voicing: Voicing = {};
+if (process.env.CHESS_VOICE) {
+  const folder = process.env.CHESS_VOICE;
+  const audio = join(dirname(folder), "public", basename(folder), "audio");
+  const manifest: { kind: string; ply: number | null; audio: string }[] = JSON.parse(readFileSync(join(folder, "narration-manifest.json"), "utf8"));
+  voicing.cues = {};
+  for (const line of manifest) {
+    const file = join(audio, line.audio);
+    if (!existsSync(file)) continue;
+    const seconds = Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file], { encoding: "utf8" }));
+    if (line.kind === "intro" || line.kind === "outro" || line.kind === "end") voicing[line.kind] = seconds;
+    else if (line.ply !== null) voicing.cues[line.ply] = seconds;
+  }
+  console.log(`Timing from ${Object.keys(voicing.cues).length} cue recordings in ${audio}`);
+}
+
+const story = buildStory(replay, analysis, DEFAULT_PACING, voicing);
+const slot = (kind: string) => {
+  let start = 0;
+  for (const s of story.segments) { if (s.kind === kind) return { start, duration: s.duration }; start += s.duration; }
+};
 writeFileSync(join(outDir, "narration.json"), JSON.stringify({
-  duration: story.duration,
-  intro: { start: 0, duration: story.segments[0].duration },
-  outro: { start: story.duration - outro.duration, duration: outro.duration },
-  cues: story.cues,
+  duration: story.duration, intro: slot("intro"), outro: slot("outro"), end: slot("end"), cues: story.cues,
 }, null, 2));
 
 const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
@@ -85,7 +103,8 @@ for (const seg of story.segments) {
         illegal: seg.illegal, thinking: seg.thinking, clock, whiteWin: whiteWin(seg.ply, t),
       }));
     } else if (seg.kind === "intro") svgs.push(renderIntro(replay, { title, channel, t: progress }));
-    else svgs.push(renderOutro(replay, analysis, { title, next, t: progress }));
+    else if (seg.kind === "outro") svgs.push(renderOutro(replay, analysis, { title, next, t: progress }));
+    else svgs.push(renderEnd(replay, { channel, t: progress }));
   }
 }
 
