@@ -17,6 +17,11 @@ jobs:
           node-version: '22'
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      # The soundtrack test mixes real audio.
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update -o Acquire::Retries=3
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends -o Acquire::Retries=3 ffmpeg
       - name: TypeScript
         run: npm run check
       - name: Unit tests
