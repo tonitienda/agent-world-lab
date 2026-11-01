@@ -1,0 +1,14 @@
+{
+  "name": "agent-chess",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Chess matches between LLM agents and UCI engines, with replays",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "check": "tsc -p .",
+    "test": "node --import tsx --test test/*.test.ts",
+    "smoke": "tsx examples/engine-vs-engine.ts"
+  }
+}

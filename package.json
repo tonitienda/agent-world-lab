@@ -9,8 +9,8 @@
   "scripts": {
     "mcp": "tsx src/mcp/main.ts",
     "smoke": "tsx scripts/smoke.ts",
-    "check": "tsc --noEmit && tsc -p packages/detonarium",
-    "test": "node --import tsx --test tests/*.test.ts packages/detonarium/test/*.test.ts",
+    "check": "tsc --noEmit && tsc -p packages/detonarium && tsc -p packages/chess",
+    "test": "node --import tsx --test tests/*.test.ts packages/detonarium/test/*.test.ts packages/chess/test/*.test.ts",
     "integration": "tsx scripts/integration.ts",
     "record": "tsx scripts/record-session.ts",
     "bot-smoke": "tsx scripts/bot-actions-smoke.ts",
@@ -29,15 +29,20 @@
     "scenario:ravine": "tsx scripts/setup-ravine.ts",
     "integration:ravine": "tsx scripts/ravine-integration.ts",
     "integration:orchestration": "tsx scripts/emergence-integration.ts",
-    "integration:pipeline": "tsx scripts/emergence-integration.ts --guided"
+    "integration:pipeline": "tsx scripts/emergence-integration.ts --guided",
+    "chess:play": "tsx scripts/chess-session.ts",
+    "chess:record": "tsx packages/chess/examples/record.ts",
+    "chess:mcp": "tsx src/mcp/chess.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",
+    "chess.js": "^1.4.0",
     "mineflayer": "^4.32.0",
     "mineflayer-pathfinder": "^2.4.5",
+    "prismarine-nbt": "^2.8.0",
+    "stockfish": "^17.1.0",
     "vec3": "^0.1.10",
-    "zod": "^3.25.0",
-    "prismarine-nbt": "^2.8.0"
+    "zod": "^3.25.0"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",
