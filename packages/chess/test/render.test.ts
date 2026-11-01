@@ -5,7 +5,8 @@ import { ChessMatch, FRAME, renderFrame, type PlayerInfo } from "../src/index.js
 const white: PlayerInfo = { id: "claude", kind: "agent", label: "Claude" };
 const black: PlayerInfo = { id: "sf", kind: "engine", label: "Stockfish 1500" };
 
-const pieceCount = (svg: string) => (svg.match(/[♚♛♜♝♞♟]/g) ?? []).length;
+/** Pieces on the board only (the player cards also show captured pieces). */
+const pieceCount = (svg: string) => (/dominant-baseline="central">(.*?)<\/g>/.exec(svg)![1].match(/[♚♛♜♝♞♟]/g) ?? []).length;
 
 test("frames show 32 pieces at the start and fade captures mid-move", () => {
   const match = new ChessMatch({ white, black });

@@ -11,6 +11,9 @@ export type EngineOptions = {
   movetimeMs: number;
 };
 
+/** Centipawns, or moves to mate (negative: the side to move gets mated). */
+export type Score = { cp: number } | { mate: number };
+
 /** The pinned npm build (single-threaded NNUE) so every run faces the same opponent. */
 function bundledStockfish(): string[] {
   const root = dirname(createRequire(import.meta.url).resolve("stockfish/package.json"));
@@ -22,6 +25,7 @@ export class UciEngine {
   private readonly process: ChildProcessWithoutNullStreams;
   private buffer = "";
   private waiters: { match: (line: string) => boolean; resolve: (line: string) => void }[] = [];
+  private lastScore: Score = { cp: 0 };
   name = "unknown engine";
 
   private constructor(readonly options: EngineOptions) {
@@ -35,6 +39,9 @@ export class UciEngine {
         const line = this.buffer.slice(0, newline).trim();
         this.buffer = this.buffer.slice(newline + 1);
         if (line.startsWith("id name ")) this.name = line.slice(8);
+        const score = / score (cp|mate) (-?\d+)/.exec(line);
+        if (line.startsWith("info ") && score && !line.includes(" bound"))
+          this.lastScore = score[1] === "cp" ? { cp: Number(score[2]) } : { mate: Number(score[2]) };
         const index = this.waiters.findIndex((w) => w.match(line));
         if (index >= 0) this.waiters.splice(index, 1)[0].resolve(line);
       }
@@ -60,6 +67,15 @@ export class UciEngine {
     this.send(`go movetime ${this.options.movetimeMs}`);
     const line = await this.waitFor((l) => l.startsWith("bestmove "));
     return line.split(/\s+/)[1];
+  }
+
+  /** Fixed-depth search; the score is from the side to move's point of view. */
+  async analyse(fen: string, depth: number): Promise<{ best: string; score: Score }> {
+    this.lastScore = { cp: 0 };
+    this.send(`position fen ${fen}`);
+    this.send(`go depth ${depth}`);
+    const line = await this.waitFor((l) => l.startsWith("bestmove "), 120_000);
+    return { best: line.split(/\s+/)[1], score: this.lastScore };
   }
 
   quit() {
