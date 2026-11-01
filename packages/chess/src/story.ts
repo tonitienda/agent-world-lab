@@ -24,7 +24,14 @@ export type Segment =
     };
 
 /** A narration line to voice, placed on the video timeline. */
-export type NarrationCue = { ply: number; text: string; start: number; duration: number };
+export type NarrationCue = {
+  ply: number;
+  text: string;
+  start: number;
+  duration: number;
+  /** "rationale": the agent's longer reasoning; "intention": its one-line note for the move. */
+  kind: "rationale" | "intention";
+};
 
 export type Pacing = {
   intro: number;
@@ -41,7 +48,7 @@ export type Pacing = {
 };
 
 export const DEFAULT_PACING: Pacing = {
-  intro: 5,
+  intro: 7,
   outro: 8,
   quietSlide: 0.35,
   quietHold: 0.25,
@@ -154,13 +161,16 @@ export function buildStory(replay: ChessReplay, analysis: Analysis | null, pacin
       });
     }
 
-    if (agent && key && record.intention) {
-      const duration = Math.max(pacing.narrationMin, wordsIn(record.intention) / pacing.wordsPerSecond + pacing.narrationPad);
-      cues.push({ ply, text: record.intention, start: clock, duration });
-      push({ kind: "board", duration, ply: ply - 1, animate: false, caption: record.intention, thinking: record.side });
+    // The agent's own words before its move: the longer rationale when it offered one (always worth
+    // voicing), else the short intention at turning points.
+    const said = agent ? record.rationale ?? (key ? record.intention : undefined) : undefined;
+    if (said) {
+      const duration = Math.max(pacing.narrationMin, wordsIn(said) / pacing.wordsPerSecond + pacing.narrationPad);
+      cues.push({ ply, text: said, start: clock, duration, kind: record.rationale ? "rationale" : "intention" });
+      push({ kind: "board", duration, ply: ply - 1, animate: false, caption: said, thinking: record.side });
     }
 
-    const caption = agent && key ? record.intention : undefined;
+    const caption = agent && (key || record.rationale) ? record.intention : undefined;
     push({ kind: "board", duration: key ? pacing.keySlide : pacing.quietSlide, ply, animate: true, caption });
     push({ kind: "board", duration: key ? pacing.keyHold : pacing.quietHold, ply, animate: false, caption, callout: callout ?? undefined });
   });

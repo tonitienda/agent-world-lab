@@ -3,7 +3,7 @@
 //   tsx examples/record.ts <outDir> [replay.json]          record an existing replay (e.g. a Claude game)
 //   tsx examples/record.ts <outDir> --engines 1500,2000    play Stockfish vs Stockfish first (white,black Elo)
 // Env: CHESS_TITLE, CHESS_NEXT (outro hook), CHESS_ANALYSIS_DEPTH (default 18; 0 skips analysis).
-// Writes board.mp4, replay.json, analysis.json (cached between runs) and narration.json (cue timestamps).
+// Writes board.mp4, replay.json, analysis.json (cached between runs) and narration.json (card and cue timestamps).
 import { execFile, execFileSync } from "node:child_process";
 import { existsSync, linkSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { availableParallelism } from "node:os";
@@ -49,7 +49,13 @@ if (depth > 0) {
 }
 
 const story = buildStory(replay, analysis);
-writeFileSync(join(outDir, "narration.json"), JSON.stringify({ duration: story.duration, cues: story.cues }, null, 2));
+const outro = story.segments.at(-1)!;
+writeFileSync(join(outDir, "narration.json"), JSON.stringify({
+  duration: story.duration,
+  intro: { start: 0, duration: story.segments[0].duration },
+  outro: { start: story.duration - outro.duration, duration: outro.duration },
+  cues: story.cues,
+}, null, 2));
 
 const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
 const whiteWin = (ply: number, t: number) => {

@@ -4,6 +4,7 @@ import { spawn, execFileSync } from "node:child_process";
 import { createWriteStream, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
+import { withRationales } from "./chess-rationale.js";
 
 const { values } = parseArgs({
   options: {
@@ -58,8 +59,10 @@ child.stderr.pipe(createWriteStream(resolve(out, "claude.stderr.log")));
 const code: number = await new Promise((done) => child.on("close", done));
 console.log(`claude exited with ${code}`);
 
-const replayPath = resolve(out, "session/replay.json");
-const replay = JSON.parse(readFileSync(replayPath, "utf8"));
+// The recorder gets an enriched copy: the agent's free text attached to its moves as rationale.
+const replay = withRationales(JSON.parse(readFileSync(resolve(out, "session/replay.json"), "utf8")), readFileSync(resolve(out, "transcript.jsonl"), "utf8"));
+const replayPath = resolve(out, "replay.json");
+writeFileSync(replayPath, JSON.stringify(replay, null, 2));
 console.log(`${replay.moves.length} plies, ${replay.illegal.length} illegal attempts, result ${JSON.stringify(replay.result)}`);
 if (!values["no-record"])
   execFileSync(process.execPath, ["--import", "tsx", resolve(root, "packages/chess/examples/record.ts"), out, replayPath], { stdio: "inherit", cwd: root });

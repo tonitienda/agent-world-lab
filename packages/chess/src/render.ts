@@ -248,7 +248,10 @@ function panel(replay: ChessReplay, ply: number, t: number, options: FrameOption
     const y = 150 + i * 110;
     const player = replay.players[side];
     const shown = options.illegal?.index ?? -1;
-    const illegal = replay.illegal.filter((a, k) => a.side === side && (a.ply <= ply || k <= shown)).length;
+    // While the side thinks about its next move with no attempt on show, its rejected attempts at
+    // that move have already been shown (the story plays them before the narration).
+    const after = options.thinking === side && !options.illegal;
+    const illegal = replay.illegal.filter((a, k) => a.side === side && (a.ply <= ply || k <= shown || (after && a.ply === ply + 1))).length;
     const thinking = played.filter((m) => m.side === side);
     const avg = thinking.length ? thinking.reduce((s, m) => s + m.thinkMs, 0) / thinking.length / 1000 : 0;
     const active = !over && side === toMove;
@@ -270,14 +273,23 @@ function panel(replay: ChessReplay, ply: number, t: number, options: FrameOption
       out.push(`<text x="${x + w - (lead > 0 ? 110 : 48)}" y="${y + 74}" font-size="20" text-anchor="end" fill="${illegal ? COLORS.bad : COLORS.muted}" ${FONT}>${illegal} illegal</text>`);
   });
 
-  // Move list: the last rows that fit, current move highlighted.
+  // Caption (agent intention, or its longer rationale) or the final result. Long captions get a
+  // smaller font and a taller box, which the move list makes room for.
+  const footer = over ? resultLine(replay.result!, replay) : options.caption;
+  const long = !over && !!footer && wrap(`“${footer}”`, 44).length > 3;
+  const style = over ? { size: 32, chars: 44, lh: 34, max: 3 } : long ? { size: 23, chars: 56, lh: 29, max: 8 } : { size: 27, chars: 44, lh: 34, max: 3 };
+  const lines = footer ? wrap(over ? footer : `“${footer}”`, style.chars) : [];
+  if (lines.length > style.max) lines.splice(style.max - 1, Infinity, lines.slice(style.max - 1).join(" ").slice(0, style.chars - 2) + "…”");
+  const boxTop = over || !lines.length ? 840 : Math.min(840, 996 - (96 + (lines.length - 1) * style.lh));
+
+  // Move list: the last rows that fit above the caption, current move highlighted.
   const rows: string[][] = [];
   for (const m of played) {
     if (m.side === "white" || !rows.length) rows.push([m.side === "white" ? m.san : "…", m.side === "black" ? m.san : ""]);
     else rows.at(-1)![1] = m.san;
   }
   const firstMove = Number(replay.startFen.split(" ")[5] ?? 1);
-  const visible = 8;
+  const visible = Math.max(1, Math.min(8, Math.floor((boxTop - 30 - 510) / 40) + 1));
   const start = Math.max(0, rows.length - visible);
   rows.slice(start).forEach(([wm, bm], i) => {
     const y = 510 + i * 40;
@@ -288,17 +300,14 @@ function panel(replay: ChessReplay, ply: number, t: number, options: FrameOption
     out.push(`<text x="${x + 300}" y="${y}" font-size="26" fill="${last && bm ? COLORS.accent : COLORS.text}" ${FONT}>${esc(bm)}</text>`);
   });
 
-  // Caption (agent intention) or the final result.
-  const footer = over ? resultLine(replay.result!, replay) : options.caption;
   if (footer) {
     const agentLabel = Object.values(replay.players).find((p) => p.kind === "agent")?.label;
-    out.push(`<rect x="${x + 24}" y="840" width="${w - 48}" height="156" rx="12" fill="${over ? "#3a2f12" : COLORS.card}"/>`);
-    if (!over && agentLabel) out.push(`<text x="${x + 48}" y="876" font-size="18" fill="${COLORS.muted}" ${FONT}>${esc(agentLabel)} says</text>`);
-    const lines = wrap(over ? footer : `“${footer}”`, 44).slice(0, 3);
+    out.push(`<rect x="${x + 24}" y="${boxTop}" width="${w - 48}" height="${996 - boxTop}" rx="12" fill="${over ? "#3a2f12" : COLORS.card}"/>`);
+    if (!over && agentLabel) out.push(`<text x="${x + 48}" y="${boxTop + 36}" font-size="18" fill="${COLORS.muted}" ${FONT}>${esc(agentLabel)} says</text>`);
     lines.forEach((line, i) =>
       out.push(over
         ? `<text x="${x + 48}" y="${900 + i * 34}" font-size="32" font-weight="700" fill="${COLORS.accent}" ${FONT}>${esc(line)}</text>`
-        : `<text x="${x + 48}" y="${914 + i * 34}" font-size="27" font-style="italic" fill="${COLORS.text}" ${FONT}>${esc(line)}</text>`));
+        : `<text x="${x + 48}" y="${boxTop + 74 + i * style.lh}" font-size="${style.size}" font-style="italic" fill="${COLORS.text}" ${FONT}>${esc(line)}</text>`));
   }
   return out;
 }

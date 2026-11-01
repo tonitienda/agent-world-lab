@@ -18,7 +18,8 @@ Chess matches between LLM agents and UCI engines, recorded as replays and MP4s.
 - `analyseReplay` rates every position with full-strength Stockfish after the game
   (never shown to the players) and grades moves with Lichess's thresholds.
 - `buildStory` turns a replay plus analysis into the edit: intro, narration beats before
-  key agent moves, slow motion with plain-language callouts at turning points, quiet
+  key agent moves and before any move the agent explained (its `rationale`, voiced in full
+  while the slide keeps the one-line `intention`), slow motion with plain-language callouts at turning points, quiet
   moves played fast, rejected moves shown, outro. `renderIntro`/`renderOutro` draw the
   cards (the outro has stats and a win-chance graph).
 
@@ -28,8 +29,15 @@ npm run chess:play -- --elo 1500 --side white                    # Claude vs Sto
 ```
 
 The recorder writes `board.mp4`, `replay.json`, `analysis.json` (cached; set
-`CHESS_ANALYSIS_DEPTH`, default 18, 0 to skip) and `narration.json` (cue start times
-for the voice track). `CHESS_TITLE` and `CHESS_NEXT` set the title and the outro hook.
+`CHESS_ANALYSIS_DEPTH`, default 18, 0 to skip) and `narration.json` (card and cue start
+times for the voice track). `CHESS_TITLE` and `CHESS_NEXT` set the title and the outro hook.
+
+A move's rationale comes from `make_move`'s optional `rationale`, or else from the text the
+agent wrote before the call: `scripts/chess-rationale.ts` harvests it from the transcript
+(`chess:play` does this before recording). `scripts/chess-narration.ts <video dir>
+<production dir>` turns `narration.json` into the episode's `narration.txt` and
+`narration-manifest.json`, with presenter lines over the intro and outro cards; it warns
+when a line won't fit its slot.
 
 Rendering needs `rsvg-convert` and `ffmpeg`; pieces use the Apple Symbols (or DejaVu
 Sans) chess glyphs.

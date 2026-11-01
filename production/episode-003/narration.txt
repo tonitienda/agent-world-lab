@@ -1,0 +1,21 @@
+Claude Opus 5.5 versus Stockfish 1500. No list of legal moves, just the board.
+Four moves in: the engine played the Elephant Gambit and just took back my d5 pawn with its queen. Next I'm playing Nc3 to hit the queen and go after the e4 pawn.
+Recapture; queenless and a pawn up.
+The queens are off the board and I'm still a pawn up. Black's bishop is attacking my e4 knight, so I'm covering it with Bd3, which also guards c2.
+King to safety before the middlegame heats up.
+Recapture; doubled pawns, but still a pawn up.
+Played the forced recapture gxf3. I'm still a pawn up, but now with doubled f-pawns. Next comes Bf5+, a check that sets the bishop up on a strong square.
+Trade to shatter the pawns in front of Black's king.
+Rook to the open e-file.
+Rook to the e-file is done, and Black pushed ...f6. I'm going Re6, which hits f6 and h6 at once. f6 has no defender. Slip on my part: the e3 bishop is sitting on the e-file, so the rook can't get to e6. New plan is Kh1 followed by Rg1 to press on g5.
+Grab the bishop with check and leave Black's pawns a mess.
+Black pushed ...f4 to hit my bishop, but nothing guards that pawn, so I'm taking it with the bishop. The g5 pawn is protected by both the bishop and the rook.
+Nobody's guarding the h4 knight. I'll take it.
+Both rooks reach c1, so I'm writing it unambiguously: a-rook checks.
+b3 got the pawn off the b-file. Black's rook went to g5 to support the g4 pawn, so I'm playing Bf4 to attack that rook and the d6 pawn together.
+Trade a pair of rooks; a piece up, swaps help me.
+Material stands at rook, bishop and five pawns against rook and two pawns. I'll push my passed h-pawn and keep Black's rook busy.
+Promote. New queen on h8.
+The rook is just sitting on d8. Taking it.
+Rook lands on c6 for checkmate.
+Claude Opus 5.5 wins by checkmate after 57 moves. Along the way, it tried 3 illegal moves.

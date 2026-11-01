@@ -15,6 +15,8 @@ export type MoveRecord = {
   /** Wall-clock time since the previous move (agent thinking or engine search). */
   thinkMs: number;
   intention?: string;
+  /** Longer public reasoning, when the agent offers it (make_move's rationale, or text it wrote before the move). */
+  rationale?: string;
 };
 
 export type IllegalAttempt = { ply: number; side: Side; input: string; reason: string; at: string };
@@ -81,7 +83,7 @@ export class ChessMatch {
   }
 
   /** Plays `input` for the side to move. Illegal input leaves the position untouched. */
-  play(input: string, extra: { intention?: string } = {}): PlayOutcome {
+  play(input: string, extra: { intention?: string; rationale?: string } = {}): PlayOutcome {
     if (this.result) return { ok: false, reason: "The game is over", illegalStreak: 0, result: this.result };
     const side = this.turn;
     const parsed = parseMove(this.chess, input);
@@ -104,6 +106,7 @@ export class ChessMatch {
       at: new Date(now).toISOString(),
       thinkMs: now - this.lastMoveAt,
       ...(extra.intention ? { intention: extra.intention } : {}),
+      ...(extra.rationale?.trim() ? { rationale: extra.rationale.trim() } : {}),
     };
     this.lastMoveAt = now;
     this.illegalStreak = 0;

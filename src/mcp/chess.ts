@@ -70,18 +70,21 @@ server.registerTool(
     inputSchema: {
       move: z.string().describe("Your move"),
       intention: z.string().max(200).describe("One short public first-person line for viewers about why you play this move"),
+      rationale: z.string().max(600).optional().describe(
+        "Optional: your reasoning for viewers in one to three first-person sentences, when the move has a real idea behind it " +
+        "(a plan, a threat you see, a tactic, a correction). Omit it for routine moves."),
     },
   },
-  async ({ move, intention }) => {
+  async ({ move, intention, rationale }) => {
     if (finished || match.over) return response({ ok: false, message: "The game is over", result: match.result });
     if (match.turn !== side) return response({ ok: false, message: "It is not your turn" });
-    const outcome = match.play(move, { intention });
+    const outcome = match.play(move, { intention, rationale });
     if (!outcome.ok) {
-      events.add("illegal_move", { move, intention, reason: outcome.reason, streak: outcome.illegalStreak });
+      events.add("illegal_move", { move, intention, rationale, reason: outcome.reason, streak: outcome.illegalStreak });
       saveReplay();
       return response({ ok: false, reason: outcome.reason, illegalAttemptsInARow: outcome.illegalStreak, result: outcome.result });
     }
-    events.add("agent_move", { move, san: outcome.move.san, intention, thinkMs: outcome.move.thinkMs });
+    events.add("agent_move", { move, san: outcome.move.san, intention, rationale, thinkMs: outcome.move.thinkMs });
     saveReplay();
     const reply = match.over ? null : await engineMove();
     return response({ ok: true, yourMove: outcome.move.san, opponentReply: reply?.san ?? null, position: agentView(match, side) });

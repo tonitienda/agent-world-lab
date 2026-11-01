@@ -70,6 +70,24 @@ test("rejected moves are shown before the move, and key agent moves are narrated
   assert.match(frame, /1 illegal/);
   assert.match(frame, /thinking\.\./);
   assert.match(renderFrame(replay, { ply: 2, t: 1 }), /0 illegal/);
+  // Narrating after the rejection, before the move lands: the attempt still counts.
+  assert.match(renderFrame(replay, { ply: 3, t: 1, thinking: "black" }), /1 illegal/);
+});
+
+test("a rationale is voiced even on a quiet move, while the slide keeps the short intention", () => {
+  const match = new ChessMatch({ white, black });
+  match.play("e4");
+  const why = "Meeting the centre head on keeps my bishop and queen free, and I want to see how Stockfish answers.";
+  match.play("e5", { intention: "Mirror in the centre.", rationale: why });
+  const story = buildStory(match.replay(), null);
+  assert.deepEqual(story.cues.map((c) => [c.ply, c.kind, c.text]), [[2, "rationale", why]]);
+  const board = story.segments.filter((s) => s.kind === "board");
+  assert.equal(board.find((s) => s.ply === 1 && s.thinking)?.caption, why);
+  assert.equal(board.find((s) => s.ply === 2 && s.animate)?.caption, "Mirror in the centre.");
+  // Long text gets the taller caption box, and the move list shrinks above it.
+  const frame = renderFrame(match.replay(), { ply: 1, t: 1, caption: why.repeat(6) });
+  assert.match(frame, /font-size="23" font-style="italic"/);
+  assert.match(frame, /…”/);
 });
 
 test("illegalOrigins points at the piece a rejected move meant", () => {
