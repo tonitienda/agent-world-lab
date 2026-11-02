@@ -10,7 +10,7 @@ export function viewerHtml(replay: Replay, options: { cell?: number } = {}): str
   const names = replay.players.map((p) => p.name);
   const kills = replay.players.map(() => 0);
   const frames = replayFrames(replay).map(({ state, events }) => {
-    for (const e of events) if (e.type === "eliminated" && typeof e.by === "number" && e.by !== e.player) kills[e.by]++;
+    for (const e of events) if (e.type === "eliminated" && e.by !== "collapse") for (const k of e.by) if (k !== e.player) kills[k]++;
     return {
       svg: renderSvg(state, { cell, events }),
       follow: state.players.map((p) => viewBox(state, { kind: "follow", player: p.id, radius: FOLLOW_RADIUS }, cell)),

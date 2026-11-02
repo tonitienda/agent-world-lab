@@ -34,7 +34,8 @@ export type Player = {
   range: number;
 };
 export type Bomb = { owner: number; pos: Pos; fuse: number; range: number };
-export type Flame = { pos: Pos; owner: number; ticks: number };
+/** `owners`: every player whose blast is burning this cell, ascending. */
+export type Flame = { pos: Pos; owners: number[]; ticks: number };
 
 export type MatchState = {
   seed: number;
@@ -65,7 +66,11 @@ export type MatchEvent =
   | { type: "crate_destroyed"; pos: Pos; revealed: PickupKind | null }
   | { type: "pickup_destroyed"; pos: Pos; kind: PickupKind }
   | { type: "pickup_collected"; player: number; kind: PickupKind; pos: Pos }
-  | { type: "eliminated"; player: number; by: number | "collapse"; pos: Pos }
+  /**
+   * `by` lists every player whose blast reached the cell, ascending, so a trap counts for the
+   * trapper even when the victim's own bomb burns there too. A self-elimination is `by: [player]`.
+   */
+  | { type: "eliminated"; player: number; by: number[] | "collapse"; pos: Pos }
   | { type: "collapse"; pos: Pos }
   | { type: "match_over"; winner: number | null; reason: "last_standing" | "all_down" | "time_limit" };
 

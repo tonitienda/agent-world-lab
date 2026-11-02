@@ -54,7 +54,7 @@ test("hunters clear crates and rarely blow themselves up", () => {
   let selfKills = 0, crates = 0, bombs = 0;
   for (let seed = 1; seed <= 10; seed++) {
     const { events } = play(["hunter", "hunter", "hunter", "hunter"], seed, { suddenDeathTick: null });
-    selfKills += events.filter((e) => e.type === "eliminated" && e.by === e.player).length;
+    selfKills += events.filter((e) => e.type === "eliminated" && e.by !== "collapse" && e.by.join() === String(e.player)).length;
     crates += events.filter((e) => e.type === "crate_destroyed").length;
     bombs += events.filter((e) => e.type === "bomb_placed").length;
   }

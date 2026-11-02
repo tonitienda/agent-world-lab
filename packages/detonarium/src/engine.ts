@@ -92,8 +92,11 @@ export function step(state: MatchState, actions: readonly Action[], options: Ste
         chained.fuse = 0;
         queue.push(chained);
       }
-      s.flames = s.flames.filter((f) => !samePos(f.pos, p));
-      s.flames.push({ pos: p, owner: bomb.owner, ticks: rules.flameTicks });
+      // Overlapping blasts share the cell: keep every owner, so all of them get the credit.
+      const old = s.flames.find((f) => samePos(f.pos, p));
+      const owners = [...new Set([...(old?.owners ?? []), bomb.owner])].sort((a, b) => a - b);
+      s.flames = s.flames.filter((f) => f !== old);
+      s.flames.push({ pos: p, owners, ticks: rules.flameTicks });
     }
     events.push({ type: "exploded", owner: bomb.owner, pos: bomb.pos, cells });
   }
@@ -121,7 +124,7 @@ export function step(state: MatchState, actions: readonly Action[], options: Ste
     const flame = player.alive && s.flames.find((f) => samePos(f.pos, player.pos));
     if (!flame) continue;
     player.alive = false;
-    events.push({ type: "eliminated", player: player.id, by: flame.owner, pos: player.pos });
+    events.push({ type: "eliminated", player: player.id, by: flame.owners, pos: player.pos });
   }
 
   for (const player of alive) {

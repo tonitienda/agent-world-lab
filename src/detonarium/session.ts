@@ -292,7 +292,8 @@ export class DetonariumSession {
       case "pickup_destroyed": return `a +${e.kind} pickup at ${at(e.pos)} burned`;
       case "eliminated": {
         const who = e.player === AGENT ? "you were" : `${this.names[e.player]} was`;
-        const cause = e.by === "collapse" ? "the collapsing arena" : e.by === e.player ? (e.player === AGENT ? "your own bomb" : "their own bomb") : e.by === AGENT ? "your bomb" : `${this.names[e.by]}'s bomb`;
+        const bomb = (k: number) => (k === e.player ? (e.player === AGENT ? "your own bomb" : "their own bomb") : k === AGENT ? "your bomb" : `${this.names[k]}'s bomb`);
+        const cause = e.by === "collapse" ? "the collapsing arena" : e.by.map(bomb).join(" and ");
         return `${who} eliminated by ${cause}`;
       }
       case "collapse": return `the arena collapsed at ${at(e.pos)}`;
