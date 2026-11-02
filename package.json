@@ -32,7 +32,8 @@
     "integration:pipeline": "tsx scripts/emergence-integration.ts --guided",
     "chess:play": "tsx scripts/chess-session.ts",
     "chess:record": "tsx packages/chess/examples/record.ts",
-    "chess:mcp": "tsx src/mcp/chess.ts"
+    "chess:mcp": "tsx src/mcp/chess.ts",
+    "detonarium:mcp": "tsx src/mcp/detonarium.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",
