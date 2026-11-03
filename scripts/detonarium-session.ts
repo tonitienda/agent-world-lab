@@ -1,12 +1,17 @@
 // Play Detonarium games: Claude (MCP-only, same isolation as the episode harness) vs CPU bots.
 // Each game is its own Claude process and session folder; games do not share notes (yet).
 // Usage: tsx scripts/detonarium-session.ts [--games 3] [--seed 1] [--bots hunter,hunter,hunter]
-//        [--model id] [--alert-radius 4] [--out dir]
+//        [--model id] [--alert-radius 4] [--out dir] [--stand-in hunter]
+// --stand-in plays the agent slot with a CPU bot instead of Claude, in-process, and writes the
+// same session files: for testing the recorder and editing without spending a real game.
 // Seeds are seed, seed+1, ... per game. Recording to video is a separate step.
 import { spawn } from "node:child_process";
-import { createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { createWriteStream, existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
+import { createBot, type BotKind } from "../packages/detonarium/src/index.js";
+import { DetonariumSession } from "../src/detonarium/session.js";
+import { SessionEvents } from "../src/mcp/session-events.js";
 
 const { values } = parseArgs({
   options: {
@@ -16,6 +21,7 @@ const { values } = parseArgs({
     model: { type: "string", default: "claude-opus-5-5" },
     "alert-radius": { type: "string", default: "4" },
     out: { type: "string" },
+    "stand-in": { type: "string" },
   },
 });
 const root = resolve(import.meta.dirname, "..");
@@ -33,6 +39,28 @@ for (let game = 1; game <= games; game++) {
   const dir = resolve(out, `game-${game}`);
   if (existsSync(resolve(dir, "session"))) throw new Error(`${dir} already has a session; choose a new --out`);
   mkdirSync(dir, { recursive: true });
+  if (values["stand-in"]) {
+    const kind = values["stand-in"] as BotKind;
+    const session = new DetonariumSession({ seed, bots: values.bots.split(",") as BotKind[], agentName: `Stand-in (${kind})`, alertRadius: Number(values["alert-radius"]) });
+    const events = new SessionEvents(resolve(dir, "session"));
+    events.add("detonarium_configuration", { seed, bots: values.bots.split(","), rules: session.state.rules, standIn: kind });
+    const player = createBot(kind, 0, seed * 10);
+    while (session.agentAlive && !session.state.over) {
+      const action = player(session.state);
+      const result = session.stepOnce(action, `[stand-in] ${action}`);
+      events.add("step", { action, ticks: result.ticks, stoppedBecause: result.stoppedBecause, happened: result.happened, tick: result.view.tick, pos: result.view.you.pos });
+    }
+    session.finishWithoutAgent();
+    events.add("session_finish", { result: session.result(), ticks: session.state.tick, calls: session.calls.length });
+    for (const [name, data] of [["replay.json", session.replay], ["calls.json", session.calls]] as const) {
+      const file = resolve(dir, "session", name);
+      writeFileSync(file + ".tmp", JSON.stringify(data, null, 2) + "\n");
+      renameSync(file + ".tmp", file);
+    }
+    summary.push({ game, seed, exit: 0, result: session.result(), ticks: session.state.tick });
+    console.log(`game ${game}/${games}: stand-in ${kind} vs ${values.bots} (seed ${seed}) → ${dir}: ${session.state.tick} ticks; ${session.result()}`);
+    continue;
+  }
   const configPath = resolve(dir, "mcp-config.json");
   writeFileSync(configPath, JSON.stringify({
     mcpServers: {

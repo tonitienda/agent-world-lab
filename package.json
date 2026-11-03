@@ -34,7 +34,8 @@
     "chess:record": "tsx packages/chess/examples/record.ts",
     "chess:mcp": "tsx src/mcp/chess.ts",
     "detonarium:mcp": "tsx src/mcp/detonarium.ts",
-    "detonarium:play": "tsx scripts/detonarium-session.ts"
+    "detonarium:play": "tsx scripts/detonarium-session.ts",
+    "detonarium:record": "tsx scripts/detonarium-record.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.0",

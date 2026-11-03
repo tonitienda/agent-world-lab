@@ -87,7 +87,7 @@ server.registerTool(
   },
   async ({ x, y, max_ticks, intention, rationale }) => {
     if (gameOver()) return overResponse();
-    return record("move_to", { x, y, max_ticks, intention, rationale }, session.moveTo({ x, y }, intention, max_ticks));
+    return record("move_to", { x, y, max_ticks, intention, rationale }, session.moveTo({ x, y }, intention, max_ticks, rationale));
   },
 );
 
@@ -96,7 +96,7 @@ server.registerTool(
   { description: "Drop a bomb on your cell. Takes one tick. Refused if all your bombs are already ticking.", inputSchema: { intention, rationale } },
   async ({ intention, rationale }) => {
     if (gameOver()) return overResponse();
-    return record("place_bomb", { intention, rationale }, session.placeBomb(intention));
+    return record("place_bomb", { intention, rationale }, session.placeBomb(intention, rationale));
   },
 );
 
@@ -108,7 +108,7 @@ server.registerTool(
   },
   async ({ ticks, intention, rationale }) => {
     if (gameOver()) return overResponse();
-    return record("wait", { ticks, intention, rationale }, session.wait(ticks, intention));
+    return record("wait", { ticks, intention, rationale }, session.wait(ticks, intention, rationale));
   },
 );
 
@@ -120,7 +120,7 @@ server.registerTool(
   },
   async ({ action, intention, rationale }) => {
     if (gameOver()) return overResponse();
-    return record("step", { action, intention, rationale }, session.stepOnce(action, intention));
+    return record("step", { action, intention, rationale }, session.stepOnce(action, intention, rationale));
   },
 );
 
