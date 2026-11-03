@@ -79,8 +79,12 @@ func (a *App) Pipeline(ctx context.Context, path string, o PipelineOptions) erro
 	if o.Player == "" {
 		o.Player = "claude"
 	}
-	if _, e := harness.Command(harness.Request{Harness: o.Designer}); e != nil {
-		return e
+	peek, peekErr := config.LoadFile(path)
+	game := peekErr == nil && peek.Environment.Game()
+	if !game {
+		if _, e := harness.Command(harness.Request{Harness: o.Designer}); e != nil {
+			return e
+		}
 	}
 	if _, e := harness.Command(harness.Request{Harness: o.Player, Player: true}); e != nil {
 		return e
@@ -93,6 +97,10 @@ func (a *App) Pipeline(ctx context.Context, path string, o PipelineOptions) erro
 		c, e := config.LoadFile(path)
 		if e != nil {
 			return e
+		}
+		if c.Environment.Game() {
+			fmt.Fprintf(a.Out, "Guided pipeline for %s (%s)\nPlayer: %s\n1. Show the settings and player goal; ask before playing.\n2. Play %d round(s), each an isolated MCP-only session, from seed %s.\n3. Render every round to MP4 with the replay recorder.\nNarration and the edited episode stay manual for game providers.\nNo episode files, models or services changed.\n", c.Episode.ID, c.Environment.Provider, o.Player, c.Rounds, c.Environment.Seed)
+			return nil
 		}
 		fmt.Fprintf(a.Out, "Guided pipeline for %s\nDesigner: %s; player: %s\n1. Generate (or reuse) scenario source.\n2. Automated code review; explain findings; ask before installation/reset.\n3. Serve browser world preview; ask before freeze/gameplay.\n4. Run a unique take and record the existing three cameras.\n5. Extract all public narration; wait for the named WAV files.\n6. Measure full audio, prepare v2 draft; show Motion Canvas preview.\n7. Ask before rendering and checking the final MP4.\nNo episode files, models, services or worlds changed.\n", c.Episode.ID, o.Designer, o.Player)
 		return nil
@@ -135,6 +143,9 @@ func (a *App) Pipeline(ctx context.Context, path string, o PipelineOptions) erro
 	}
 	if runErr == nil && existing.Workflow == "running" {
 		return fmt.Errorf("take %s is unfinished; inspect/finalize it before using a new --take. It will not be rerun", runOptions.Take)
+	}
+	if c.Environment.Game() {
+		return a.pipelineGame(ctx, w, d, c, agent, runOptions, os.IsNotExist(runErr))
 	}
 	// A completed recording can proceed through audio/edit/render without another
 	// reset or scenario preview, even if the user stopped at the audio prompt.
@@ -353,9 +364,11 @@ func (a *App) pipelineConfig(path string, o PipelineOptions) (string, config.Con
 	}
 	original := c
 	sourceDir := filepath.Dir(source)
-	level, e := c.LevelDesign.Text(sourceDir)
-	if e != nil {
-		return "", c, e
+	level := ""
+	if !c.Environment.Game() {
+		if level, e = c.LevelDesign.Text(sourceDir); e != nil {
+			return "", c, e
+		}
 	}
 	goal, e := c.Goal.Text(sourceDir)
 	if e != nil {
@@ -387,9 +400,13 @@ func (a *App) pipelineConfig(path string, o PipelineOptions) (string, config.Con
 			if e = os.Mkdir(d, 0755); e != nil {
 				return "", c, e
 			}
-			c.LevelDesign.Prompt = config.Prompt{PromptFile: "level-design.md"}
+			files := map[string]string{"goal.md": goal}
+			if !c.Environment.Game() {
+				c.LevelDesign.Prompt = config.Prompt{PromptFile: "level-design.md"}
+				files["level-design.md"] = level
+			}
 			c.Goal = config.Prompt{PromptFile: "goal.md"}
-			for name, text := range map[string]string{"level-design.md": level, "goal.md": goal} {
+			for name, text := range files {
 				if e = storage.Write(filepath.Join(d, name), []byte(text)); e != nil {
 					return "", c, e
 				}
@@ -418,7 +435,7 @@ func (a *App) pipelineConfig(path string, o PipelineOptions) (string, config.Con
 		return "", c, e
 	}
 	changed := false
-	if s.FrozenHash == "" && c.LevelDesign.Harness != o.Designer {
+	if !c.Environment.Game() && s.FrozenHash == "" && c.LevelDesign.Harness != o.Designer {
 		c.LevelDesign.Harness = o.Designer
 		changed = true
 	}
@@ -434,6 +451,9 @@ func (a *App) pipelineConfig(path string, o PipelineOptions) (string, config.Con
 	if !found {
 		if s.FrozenHash != "" {
 			return "", c, fmt.Errorf("frozen episode has no %s player; add it before freezing a new episode", o.Player)
+		}
+		if c.Environment.Game() && o.Player != "claude" {
+			return "", c, fmt.Errorf("game providers support the claude player only")
 		}
 		c.Agents = append(c.Agents, config.Agent{ID: o.Player, Harness: o.Player, Model: "configured-default"})
 		changed = true
@@ -760,4 +780,47 @@ func (a *App) pipelineEditPreview(ctx context.Context, w wizard, id, pid string,
 			fmt.Fprintln(a.Out, "Enter y, r or q.")
 		}
 	}
+}
+
+// pipelineGame is the guided flow for game providers: confirm, play every round, render.
+func (a *App) pipelineGame(ctx context.Context, w wizard, d string, c config.Config, agent config.Agent, take Options, fresh bool) error {
+	id := c.Episode.ID
+	if fresh {
+		goal, e := c.Goal.Text(d)
+		if e != nil {
+			return e
+		}
+		goalHash := promptHash(goal)
+		fmt.Fprintf(a.Out, "STEP 1 — Review the game before %s plays.\nProvider: %s; seed %s; %d round(s); evaluation %s; limit %d minutes per round.\n", agent.ID, c.Environment.Provider, c.Environment.Seed, c.Rounds, c.Evaluation.Type, c.Recording.MaxDurationMinutes)
+		if dt := c.Environment.Detonarium; dt != nil {
+			fmt.Fprintf(a.Out, "Bots: %s; alert radius %d; longest macro %d ticks.\n", strings.Join(dt.Bots, ", "), dt.AlertRadius, dt.MaxMacroTicks)
+		}
+		if ch := c.Environment.Chess; ch != nil {
+			fmt.Fprintf(a.Out, "Agent plays %s vs Stockfish %s; %d ms per engine move; forfeit after %d illegal attempts.\n", ch.Side, ch.Elo, ch.MovetimeMs, ch.MaxIllegal)
+		}
+		fmt.Fprintf(a.Out, "Player goal (SHA-256 %s):\n---\n%s\n---\n", goalHash, gameGoal(c, goal))
+		if e = w.confirm(ctx, fmt.Sprintf("Play take %s now?", take.Take)); e != nil {
+			return e
+		}
+		fmt.Fprintln(a.Out, "\nSTEP 2 — Play every round.")
+		e = a.RunAgent(ctx, id, Options{Agent: agent.ID, Take: take.Take, ExpectedGoalHash: goalHash})
+		if e != nil {
+			if ctx.Err() != nil {
+				return ctx.Err()
+			}
+			fmt.Fprintf(a.Out, "Take ended with: %v\nFinished rounds are preserved.\n", e)
+			if e = w.confirm(ctx, "Render the rounds that finished?"); e != nil {
+				return e
+			}
+		}
+	} else {
+		fmt.Fprintf(a.Out, "Resuming recorded take %s; rounds are not replayed.\n", take.Take)
+	}
+	fmt.Fprintln(a.Out, "\nSTEP 3 — Render every round with the replay recorder.")
+	if e := a.RenderGame(ctx, id, take); e != nil {
+		return e
+	}
+	dest, _ := a.runPath(d, take)
+	fmt.Fprintf(a.Out, "\nFinished: round videos and cut files are in %s.\nNarration and the edited episode are manual for game providers for now.\n", dest)
+	return nil
 }

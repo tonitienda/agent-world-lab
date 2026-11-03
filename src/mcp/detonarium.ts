@@ -33,7 +33,10 @@ function response(result: unknown) {
 }
 
 function save() {
-  for (const [name, data] of [["replay.json", session.replay], ["calls.json", session.calls]] as const) {
+  const outcome = session.outcome();
+  const files: [string, unknown][] = [["replay.json", session.replay], ["calls.json", session.calls]];
+  if (outcome) files.push(["outcome.json", outcome]);
+  for (const [name, data] of files) {
     const file = resolve(sessionFolder, name);
     writeFileSync(file + ".tmp", JSON.stringify(data, null, 2) + "\n");
     renameSync(file + ".tmp", file);

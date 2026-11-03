@@ -74,7 +74,7 @@ for (let game = 1; game <= games; game++) {
     }
     session.finishWithoutAgent();
     events.add("session_finish", { result: session.result(), ticks: session.state.tick, calls: session.calls.length });
-    for (const [name, data] of [["replay.json", session.replay], ["calls.json", session.calls]] as const) {
+    for (const [name, data] of [["replay.json", session.replay], ["calls.json", session.calls], ["outcome.json", session.outcome()]] as const) {
       const file = resolve(dir, "session", name);
       writeFileSync(file + ".tmp", JSON.stringify(data, null, 2) + "\n");
       renameSync(file + ".tmp", file);

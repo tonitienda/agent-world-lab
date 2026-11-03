@@ -78,7 +78,9 @@ type Run struct {
 	ExitCode             int        `json:"exit_code"`
 	Artifacts            string     `json:"artifacts"`
 	ProductionID         string     `json:"production_id,omitempty"`
-	Error                string     `json:"error,omitempty"`
+	// Rounds of a game take (game providers only).
+	Rounds []RoundResult `json:"rounds,omitempty"`
+	Error  string        `json:"error,omitempty"`
 }
 type Evaluation struct {
 	Outcome  string `json:"outcome"`
@@ -228,7 +230,18 @@ func (a *App) Lock() (func(), error) {
 	}
 	return func() { _ = syscall.Flock(int(f.Fd()), syscall.LOCK_UN); f.Close() }, nil
 }
-func (a *App) Init(id string) error {
+func (a *App) Init(id string) error { return a.InitProvider(id, "minecraft") }
+
+// InitProvider creates a new episode for a provider: minecraft (designed scenario) or a game.
+func (a *App) InitProvider(id, provider string) error {
+	files := map[string]string{"episode.yaml": Starter(id), "level-design.md": DesignerPrompt, "goal.md": GoalPrompt}
+	if provider != "minecraft" {
+		yaml, e := GameStarter(id, provider)
+		if e != nil {
+			return e
+		}
+		files = map[string]string{"episode.yaml": yaml, "goal.md": GameGoalPrompt(provider)}
+	}
 	d, e := a.dir(id)
 	if e != nil {
 		return e
@@ -242,7 +255,7 @@ func (a *App) Init(id string) error {
 	if e = os.Mkdir(d, 0755); e != nil {
 		return fmt.Errorf("episode already exists or cannot be created: %w", e)
 	}
-	for name, text := range map[string]string{"episode.yaml": Starter(id), "level-design.md": DesignerPrompt, "goal.md": GoalPrompt} {
+	for name, text := range files {
 		if e = storage.Write(filepath.Join(d, name), []byte(text)); e != nil {
 			return e
 		}

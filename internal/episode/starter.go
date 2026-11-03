@@ -124,3 +124,60 @@ discoverable terrain for these actual tools; camera footage is not model input.
 The world snapshot includes all installed world data, player data and setup files;
 restoration must work WITHOUT rerunning your scripts or the level designer.
 `
+
+// GameStarter is the episode.yaml for a new game episode: no level design, a game
+// section, rounds and a win evaluation.
+func GameStarter(id, provider string) (string, error) {
+	var game string
+	switch provider {
+	case "detonarium":
+		game = `  detonarium:
+    bots: [hunter, hunter, hunter]
+    alert_radius: 4       # a rival bomb this close interrupts move_to and wait
+    max_macro_ticks: 20   # longest single move_to or wait
+`
+	case "chess":
+		game = `  chess:
+    side: white
+    elo: "1500"           # Stockfish strength, or "full"
+    movetime_ms: 500
+    max_illegal: 5        # illegal attempts in a row before forfeit
+`
+	default:
+		return "", fmt.Errorf("unknown provider %q (use minecraft, detonarium or chess)", provider)
+	}
+	return fmt.Sprintf(`version: 1
+episode:
+  id: %s
+  title: New %s episode
+environment:
+  provider: %s
+  seed: "1"               # round n plays seed + n - 1
+%srounds: 3
+goal:
+  prompt_file: goal.md
+evaluation:
+  type: win_rounds
+  wins: 1
+agents:
+  - id: claude
+    harness: claude
+    model: claude-opus-5-5
+recording:
+  max_duration_minutes: 45   # per round
+production:
+  narration: manual
+  max_video_duration_minutes: 10
+`, id, provider, provider, game), nil
+}
+
+// GameGoalPrompt is a placeholder goal; episodes/episode-004/goal.md (Detonarium) and
+// episodes/episode-003/goal.md (chess) are complete examples.
+func GameGoalPrompt(provider string) string {
+	placeholder := map[string]string{"detonarium": "{{RIVALS}} CPU rivals", "chess": "a chess engine, playing {{SIDE}}"}[provider]
+	return fmt.Sprintf(`You are playing %s against %s. Play to win.
+
+Explain the rules, the tools and when to call finish_session, then the narration style for
+The Agent Terrarium. See episodes/episode-004/goal.md or episodes/episode-003/goal.md.
+`, map[string]string{"detonarium": "Detonarium, a bomb arena game,", "chess": "a game of chess"}[provider], placeholder)
+}

@@ -18,7 +18,8 @@ const help = `emergence — reproducible episode orchestration
 Usage: emergence [--root PATH] COMMAND [EPISODE] [OPTIONS]
   pipeline YAML --design codex --player claude [--take 001]
                                  guided prompts, browser previews, audio pause, render
-  episode new ID                 create YAML and separate prompts (never overwrite)
+  episode new ID [--provider minecraft|detonarium|chess]
+                                 create YAML and separate prompts (never overwrite)
   episode validate ID            strict, static validation only
   scenario generate ID           generate inert scenario code for review
     --bundle FILE                import an existing designer JSON bundle instead
@@ -27,6 +28,8 @@ Usage: emergence [--root PATH] COMMAND [EPISODE] [OPTIONS]
   scenario freeze ID             reverify and snapshot the actual installed world
   run ID --agent ID [--take 001] --yes
                                  restore frozen world, record an isolated take
+  render ID --agent ID [--take 001]
+                                 game providers: render every round to MP4
   runs list ID                   list infrastructure and objective outcomes
   extract ID --agent ID [--take 001]
                                  extract all intentions and v1 editorial draft
@@ -36,6 +39,8 @@ Usage: emergence [--root PATH] COMMAND [EPISODE] [OPTIONS]
   doctor                         report relevant local prerequisites
 
 --dry-run is available on scenario, run, extract and produce commands.
+Game providers (detonarium, chess) have no scenario: run plays the configured
+rounds directly, and render replaces extract/produce.
 World installation/restoration require --yes. Freeze stops Minecraft but never
 resets it. Generated code additionally requires its exact --approve-code digest.
 Take directories and completed MP4s are never overwritten. No automatic retries.
@@ -44,8 +49,8 @@ filesystem isolation boundary is available. See docs/emergence-cli.md.
 `
 
 type parsed struct {
-	root, command, sub, id, bundle, stage, design, player string
-	o                                                     episode.Options
+	root, command, sub, id, bundle, stage, design, player, provider string
+	o                                                               episode.Options
 }
 
 func parse(args []string) (parsed, error) {
@@ -67,7 +72,7 @@ func parse(args []string) (parsed, error) {
 			p.o.Yes = true
 		case "--dry-run":
 			p.o.DryRun = true
-		case "--root", "--agent", "--take", "--approve-code", "--bundle", "--stage", "--design", "--player":
+		case "--root", "--agent", "--take", "--approve-code", "--bundle", "--stage", "--design", "--player", "--provider":
 			if i+1 == len(args) || strings.HasPrefix(args[i+1], "--") {
 				return p, fmt.Errorf("missing value for %s", s)
 			}
@@ -90,6 +95,8 @@ func parse(args []string) (parsed, error) {
 				p.design = v
 			case "--player":
 				p.player = v
+			case "--provider":
+				p.provider = v
 			}
 		default:
 			return p, fmt.Errorf("unknown option %s", s)
@@ -161,7 +168,7 @@ func run() error {
 	a := episode.New(p.root, os.Stdout)
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
-	mutating := p.command == "pipeline" || p.command == "run" || p.command == "extract" || p.command == "produce" || p.command == "scenario" || (p.command == "episode" && p.sub == "new")
+	mutating := p.command == "pipeline" || p.command == "run" || p.command == "render" || p.command == "extract" || p.command == "produce" || p.command == "scenario" || (p.command == "episode" && p.sub == "new")
 	if mutating && !p.o.DryRun {
 		release, e := a.Lock()
 		if e != nil {
@@ -178,7 +185,10 @@ func run() error {
 			if p.o.DryRun {
 				return fmt.Errorf("episode new does not accept --dry-run")
 			}
-			return a.Init(p.id)
+			if p.provider == "" {
+				p.provider = "minecraft"
+			}
+			return a.InitProvider(p.id, p.provider)
 		case "validate":
 			return a.Validate(p.id)
 		}
@@ -193,6 +203,8 @@ func run() error {
 		}
 	case "run":
 		return a.RunAgent(ctx, p.id, p.o)
+	case "render":
+		return a.RenderGame(ctx, p.id, p.o)
 	case "runs":
 		if p.sub == "list" {
 			return a.List(p.id)
