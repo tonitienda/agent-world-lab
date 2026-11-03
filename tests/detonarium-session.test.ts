@@ -98,3 +98,16 @@ test("calls are recorded with intentions and tick spans", () => {
     [["wait", "breathe", 0, 2, "done"], ["move_to", "edge right", 2, 3, "arrived"]],
   );
 });
+
+test("outcome is null while the match runs and records the engine result after", () => {
+  const s = session();
+  assert.equal(s.outcome(), null);
+  s.placeBomb("oops");
+  s.wait(20, "stand still");
+  s.finishWithoutAgent();
+  const o = s.outcome();
+  assert.ok(o);
+  assert.equal(o.provider, "detonarium");
+  assert.equal(o.agent_won, false);
+  assert.equal(o.over, true);
+});

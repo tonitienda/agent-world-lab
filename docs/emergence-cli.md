@@ -71,7 +71,7 @@ empty prompts and unsafe artifact paths fail static validation.
 | --- | --- |
 | `version` | `1` |
 | `episode.id`, `episode.title` | Required; ID starts `episode-` and matches directory |
-| `environment.provider` | `minecraft` (only implemented provider) |
+| `environment.provider` | `minecraft`; also `detonarium` and `chess` (see [Game providers](#game-providers)) |
 | `environment.preset` | `survival`; also `superflat` |
 | `environment.seed` | Required signed 64-bit decimal; quote it |
 | `environment.minecraft.version` | `1.21.4`; actual snapshot version is checked |
@@ -93,6 +93,44 @@ Harness/model identifiers are independent; model strings are passed as argument
 values, and `configured-default` omits the model flag. Current harness adapters
 are `claude` and `codex`. Multiple agent definitions support separate sequential
 takes; simultaneous multi-agent play is not implemented.
+
+## Game providers
+
+`detonarium` (the bomb arena) and `chess` (against Stockfish) are fully defined by a seed
+and settings, so they have no level design, scenario, world snapshot or reset. Create one
+with `emergence episode new episode-NNN --provider detonarium` (or `chess`); the starter
+is complete apart from the goal prompt.
+
+| Field | Required / default |
+| --- | --- |
+| `environment.seed` | Required; round n plays `seed + n - 1` |
+| `environment.detonarium.bots` | 1 to 3 of `passive`, `wanderer`, `hunter`; the agent is player 0 |
+| `environment.detonarium.alert_radius`, `.max_macro_ticks` | 4 and 20: rival-bomb interrupt distance, longest `move_to`/`wait` |
+| `environment.chess.side`, `.elo`, `.movetime_ms`, `.max_illegal` | `white`, `"1500"` (or `"full"`), 500, 5 |
+| `rounds` | 1; up to 20 games per take |
+| `evaluation.type` | `win_match` (1 round) or `win_rounds` with `evaluation.wins` |
+| `agents[].harness` | `claude` only (MCP-only isolation) |
+| `recording.cameras` | `[board]`, rendered from the replay |
+| `recording.max_duration_minutes` | Per round |
+| `production.renderer` | `replay` |
+
+`environment.preset`, `environment.minecraft`, `level_design`, `evaluation.target` and
+`.radius` must be absent. `{{RIVALS}}` (Detonarium) and `{{SIDE}}` (chess) in the goal
+are filled in for the player.
+
+`emergence run ID --agent claude` plays every configured round, each in its own isolated
+session with the game's MCP server (`npm run detonarium:mcp` or `chess:mcp`), into
+`runs/<agent>/take-NNN/round-N/`. No `--yes` is needed: nothing is reset. The objective
+comes only from `round-N/session/outcome.json`, which the MCP server writes from the
+engine's result; a round without it is `aborted`. Every round is played even once the
+result is decided, because the episode shows them all.
+
+`emergence render ID --agent claude` renders each Detonarium round to `round-N/round.mp4`
+with bullet time (`npm run detonarium:record`) plus a `round.cut.json`, skipping rounds
+already rendered. Chess rendering is not wired into the CLI yet (`npm run chess:record`).
+`scenario`, `extract` and `produce` refuse game episodes. The guided `pipeline` shows the
+settings and goal, asks once, plays all rounds and renders them; narration and the edited
+episode remain manual for games.
 
 ## Scenario contract, approval and verification
 

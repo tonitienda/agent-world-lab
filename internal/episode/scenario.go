@@ -112,6 +112,9 @@ func (a *App) Generate(ctx context.Context, id, bundle string, o Options) error 
 	if e != nil {
 		return e
 	}
+	if c.Environment.Game() {
+		return errGameScenario(c)
+	}
 	s, e := state(d)
 	if e != nil {
 		return e
@@ -267,6 +270,9 @@ func (a *App) ValidateScenario(ctx context.Context, id string, o Options) error 
 	if e != nil {
 		return e
 	}
+	if c.Environment.Game() {
+		return errGameScenario(c)
+	}
 	s, e := state(d)
 	if e != nil {
 		return e
@@ -323,6 +329,9 @@ func (a *App) Freeze(ctx context.Context, id string, o Options) error {
 	d, c, e := a.load(id)
 	if e != nil {
 		return e
+	}
+	if c.Environment.Game() {
+		return errGameScenario(c)
 	}
 	s, e := state(d)
 	if e != nil {
@@ -470,4 +479,9 @@ func (a *App) frozen(d string, c config.Config) (string, Frozen, error) {
 		return "", f, fmt.Errorf("scenario configuration or level design changed after freeze; create a new episode for world/evaluation changes. Only the player goal may vary between takes")
 	}
 	return p, f, nil
+}
+
+// Game providers have no designed scenario or world to install, freeze or restore.
+func errGameScenario(c config.Config) error {
+	return fmt.Errorf("%s episodes have no scenario: a game is defined by its seed and settings; use run directly", c.Environment.Provider)
 }

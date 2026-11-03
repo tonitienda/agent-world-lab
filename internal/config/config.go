@@ -37,9 +37,32 @@ type Environment struct {
 		Version string `yaml:"version"`
 		Port    int    `yaml:"port"`
 	} `yaml:"minecraft"`
+	Detonarium *Detonarium `yaml:"detonarium"`
+	Chess      *Chess      `yaml:"chess"`
 }
+
+// Detonarium configures the bomb arena: the agent is player 0 against CPU bots.
+type Detonarium struct {
+	Bots          []string `yaml:"bots"`
+	AlertRadius   int      `yaml:"alert_radius"`
+	MaxMacroTicks int      `yaml:"max_macro_ticks"`
+}
+
+// Chess configures one game against Stockfish. Elo is a number or "full" (no cap).
+type Chess struct {
+	Side       string `yaml:"side"`
+	Elo        string `yaml:"elo"`
+	MovetimeMs int    `yaml:"movetime_ms"`
+	MaxIllegal int    `yaml:"max_illegal"`
+}
+
+// Game providers are fully defined by seed and settings: no designed scenario or world snapshot.
+func (e Environment) Game() bool { return e.Provider == "detonarium" || e.Provider == "chess" }
+
 type Config struct {
 	Version int `yaml:"version"`
+	// Rounds a take plays (game providers only); round n uses seed + n - 1.
+	Rounds  int `yaml:"rounds"`
 	Episode struct {
 		ID    string `yaml:"id"`
 		Title string `yaml:"title"`
@@ -51,6 +74,8 @@ type Config struct {
 		Type   string  `yaml:"type"`
 		Target string  `yaml:"target"`
 		Radius float64 `yaml:"radius"`
+		// Wins needed for win_rounds.
+		Wins int `yaml:"wins"`
 	} `yaml:"evaluation"`
 	Agents    []Agent `yaml:"agents"`
 	Recording struct {
@@ -91,26 +116,40 @@ func loadFile(path string, matchDirectory bool) (Config, error) {
 	if c.Environment.Provider == "" {
 		c.Environment.Provider = "minecraft"
 	}
-	if c.Environment.Preset == "" {
-		c.Environment.Preset = "survival"
+	if c.Environment.Game() {
+		// Minecraft-only sections must be absent rather than silently ignored.
+		if c.Environment.Preset != "" || c.Environment.Minecraft.Version != "" || c.Environment.Minecraft.Port != 0 {
+			return c, fmt.Errorf("environment.preset and environment.minecraft apply only to provider minecraft")
+		}
+		if c.LevelDesign != (Designer{}) {
+			return c, fmt.Errorf("level_design applies only to provider minecraft; %s games are defined by seed and settings", c.Environment.Provider)
+		}
+		applyGameDefaults(&c)
+	} else {
+		if c.Environment.Preset == "" {
+			c.Environment.Preset = "survival"
+		}
+		if c.Environment.Minecraft.Port == 0 {
+			c.Environment.Minecraft.Port = 25565
+		}
+		if c.Environment.Minecraft.Version == "" {
+			c.Environment.Minecraft.Version = "1.21.4"
+		}
+		if c.LevelDesign.Harness == "" {
+			c.LevelDesign.Harness = "claude"
+		}
+		if len(c.Recording.Cameras) == 0 {
+			c.Recording.Cameras = []string{"agent-pov", "observer", "follow"}
+		}
+		if c.Production.Renderer == "" {
+			c.Production.Renderer = "motion-canvas"
+		}
 	}
-	if c.Environment.Minecraft.Port == 0 {
-		c.Environment.Minecraft.Port = 25565
-	}
-	if c.Environment.Minecraft.Version == "" {
-		c.Environment.Minecraft.Version = "1.21.4"
-	}
-	if c.LevelDesign.Harness == "" {
-		c.LevelDesign.Harness = "claude"
+	if c.Rounds == 0 {
+		c.Rounds = 1
 	}
 	if c.Recording.MaxDurationMinutes == 0 {
 		c.Recording.MaxDurationMinutes = 20
-	}
-	if len(c.Recording.Cameras) == 0 {
-		c.Recording.Cameras = []string{"agent-pov", "observer", "follow"}
-	}
-	if c.Production.Renderer == "" {
-		c.Production.Renderer = "motion-canvas"
 	}
 	if c.Production.Narration == "" {
 		c.Production.Narration = "manual"
@@ -118,7 +157,7 @@ func loadFile(path string, matchDirectory bool) (Config, error) {
 	if c.Production.MaxVideoDurationMinutes == 0 {
 		c.Production.MaxVideoDurationMinutes = 10
 	}
-	if c.Evaluation.Radius == 0 {
+	if c.Evaluation.Radius == 0 && !c.Environment.Game() {
 		c.Evaluation.Radius = 4
 	}
 	if e = c.validate(dir, matchDirectory); e != nil {
@@ -164,28 +203,23 @@ func (c Config) validate(dir string, matchDirectory bool) error {
 	if strings.TrimSpace(c.Episode.Title) == "" {
 		return fmt.Errorf("episode.title is required")
 	}
-	if c.Environment.Provider != "minecraft" {
-		return fmt.Errorf("unsupported environment provider %q", c.Environment.Provider)
-	}
-	if c.Environment.Preset != "survival" && c.Environment.Preset != "superflat" {
-		return fmt.Errorf("unsupported Minecraft preset")
-	}
 	if _, e := strconv.ParseInt(c.Environment.Seed, 10, 64); e != nil {
 		return fmt.Errorf("environment.seed must be a signed 64-bit decimal integer")
 	}
-	if c.Environment.Minecraft.Port < 1024 || c.Environment.Minecraft.Port > 65535 {
-		return fmt.Errorf("minecraft.port must be 1024..65535")
-	}
-	if !versionValid(c.Environment.Minecraft.Version) {
-		return fmt.Errorf("invalid Minecraft version")
-	}
-	for name, p := range map[string]Prompt{"level_design": c.LevelDesign.Prompt, "goal": c.Goal} {
-		if _, e := p.Text(dir); e != nil {
-			return fmt.Errorf("%s: %w", name, e)
+	switch c.Environment.Provider {
+	case "minecraft":
+		if e := c.validateMinecraft(dir); e != nil {
+			return e
 		}
+	case "detonarium", "chess":
+		if e := c.validateGame(); e != nil {
+			return e
+		}
+	default:
+		return fmt.Errorf("unsupported environment provider %q (use minecraft, detonarium or chess)", c.Environment.Provider)
 	}
-	if !supported(c.LevelDesign.Harness) {
-		return fmt.Errorf("unsupported designer harness")
+	if _, e := c.Goal.Text(dir); e != nil {
+		return fmt.Errorf("goal: %w", e)
 	}
 	if len(c.Agents) == 0 {
 		return fmt.Errorf("at least one agent is required")
@@ -203,16 +237,10 @@ func (c Config) validate(dir string, matchDirectory bool) error {
 			return fmt.Errorf("unsupported harness %q", a.Harness)
 		}
 	}
-	if c.Evaluation.Type != "reach_location" || storage.ID(c.Evaluation.Target) != nil || math.IsNaN(c.Evaluation.Radius) || c.Evaluation.Radius <= 0 || c.Evaluation.Radius > 128 {
-		return fmt.Errorf("evaluation requires reach_location, a named target, and radius in (0,128]")
-	}
-	if strings.Join(c.Recording.Cameras, ",") != "agent-pov,observer,follow" {
-		return fmt.Errorf("current recorder requires cameras [agent-pov, observer, follow]")
-	}
 	if c.Recording.MaxDurationMinutes < 1 || c.Recording.MaxDurationMinutes > 1440 {
 		return fmt.Errorf("recording duration must be 1..1440 minutes")
 	}
-	if c.Production.Renderer != "motion-canvas" || !contains([]string{"manual", "elevenlabs"}, c.Production.Narration) || c.Production.MaxVideoDurationMinutes < 1 {
+	if !contains([]string{"manual", "elevenlabs"}, c.Production.Narration) || c.Production.MaxVideoDurationMinutes < 1 {
 		return fmt.Errorf("unsupported production configuration")
 	}
 	for _, p := range []string{"scenario", "runs", "state.json"} {
@@ -222,6 +250,135 @@ func (c Config) validate(dir string, matchDirectory bool) error {
 	}
 	return nil
 }
+func (c Config) validateMinecraft(dir string) error {
+	if c.Environment.Detonarium != nil || c.Environment.Chess != nil {
+		return fmt.Errorf("environment.detonarium and environment.chess need the matching provider")
+	}
+	if c.Rounds != 1 {
+		return fmt.Errorf("rounds applies only to game providers")
+	}
+	if c.Environment.Preset != "survival" && c.Environment.Preset != "superflat" {
+		return fmt.Errorf("unsupported Minecraft preset")
+	}
+	if c.Environment.Minecraft.Port < 1024 || c.Environment.Minecraft.Port > 65535 {
+		return fmt.Errorf("minecraft.port must be 1024..65535")
+	}
+	if !versionValid(c.Environment.Minecraft.Version) {
+		return fmt.Errorf("invalid Minecraft version")
+	}
+	if _, e := c.LevelDesign.Prompt.Text(dir); e != nil {
+		return fmt.Errorf("level_design: %w", e)
+	}
+	if !supported(c.LevelDesign.Harness) {
+		return fmt.Errorf("unsupported designer harness")
+	}
+	if c.Evaluation.Type != "reach_location" || c.Evaluation.Wins != 0 || storage.ID(c.Evaluation.Target) != nil || math.IsNaN(c.Evaluation.Radius) || c.Evaluation.Radius <= 0 || c.Evaluation.Radius > 128 {
+		return fmt.Errorf("evaluation requires reach_location, a named target, and radius in (0,128]")
+	}
+	if strings.Join(c.Recording.Cameras, ",") != "agent-pov,observer,follow" {
+		return fmt.Errorf("current recorder requires cameras [agent-pov, observer, follow]")
+	}
+	if c.Production.Renderer != "motion-canvas" {
+		return fmt.Errorf("unsupported production configuration")
+	}
+	return nil
+}
+
+func applyGameDefaults(c *Config) {
+	if len(c.Recording.Cameras) == 0 {
+		c.Recording.Cameras = []string{"board"}
+	}
+	if c.Production.Renderer == "" {
+		c.Production.Renderer = "replay"
+	}
+	if d := c.Environment.Detonarium; d != nil {
+		if d.AlertRadius == 0 {
+			d.AlertRadius = 4
+		}
+		if d.MaxMacroTicks == 0 {
+			d.MaxMacroTicks = 20
+		}
+	}
+	if ch := c.Environment.Chess; ch != nil {
+		if ch.Side == "" {
+			ch.Side = "white"
+		}
+		if ch.Elo == "" {
+			ch.Elo = "1500"
+		}
+		if ch.MovetimeMs == 0 {
+			ch.MovetimeMs = 500
+		}
+		if ch.MaxIllegal == 0 {
+			ch.MaxIllegal = 5
+		}
+	}
+}
+
+func (c Config) validateGame() error {
+	p := c.Environment.Provider
+	switch {
+	case p == "detonarium" && (c.Environment.Detonarium == nil || c.Environment.Chess != nil):
+		return fmt.Errorf("provider detonarium needs an environment.detonarium section and no environment.chess")
+	case p == "chess" && (c.Environment.Chess == nil || c.Environment.Detonarium != nil):
+		return fmt.Errorf("provider chess needs an environment.chess section and no environment.detonarium")
+	}
+	if d := c.Environment.Detonarium; d != nil {
+		if len(d.Bots) < 1 || len(d.Bots) > 3 {
+			return fmt.Errorf("environment.detonarium.bots must list 1 to 3 bots")
+		}
+		for _, b := range d.Bots {
+			if !contains([]string{"passive", "wanderer", "hunter"}, b) {
+				return fmt.Errorf("unknown Detonarium bot %q (use passive, wanderer or hunter)", b)
+			}
+		}
+		if d.AlertRadius < 0 || d.AlertRadius > 20 || d.MaxMacroTicks < 1 || d.MaxMacroTicks > 400 {
+			return fmt.Errorf("environment.detonarium needs alert_radius 0..20 and max_macro_ticks 1..400")
+		}
+	}
+	if ch := c.Environment.Chess; ch != nil {
+		if ch.Side != "white" && ch.Side != "black" {
+			return fmt.Errorf("environment.chess.side must be white or black")
+		}
+		if n, e := strconv.Atoi(ch.Elo); ch.Elo != "full" && (e != nil || n < 1320 || n > 3190) {
+			return fmt.Errorf("environment.chess.elo must be 1320..3190 or full")
+		}
+		if ch.MovetimeMs < 10 || ch.MovetimeMs > 60000 || ch.MaxIllegal < 1 || ch.MaxIllegal > 50 {
+			return fmt.Errorf("environment.chess needs movetime_ms 10..60000 and max_illegal 1..50")
+		}
+	}
+	if c.Rounds < 1 || c.Rounds > 20 {
+		return fmt.Errorf("rounds must be 1..20")
+	}
+	switch c.Evaluation.Type {
+	case "win_match":
+		if c.Rounds != 1 || c.Evaluation.Wins != 0 {
+			return fmt.Errorf("win_match is for a single round; use win_rounds with wins for several")
+		}
+	case "win_rounds":
+		if c.Evaluation.Wins < 1 || c.Evaluation.Wins > c.Rounds {
+			return fmt.Errorf("win_rounds needs evaluation.wins between 1 and rounds")
+		}
+	default:
+		return fmt.Errorf("game providers evaluate win_match or win_rounds, not %q", c.Evaluation.Type)
+	}
+	if c.Evaluation.Target != "" || c.Evaluation.Radius != 0 {
+		return fmt.Errorf("evaluation.target and radius apply only to reach_location")
+	}
+	for _, a := range c.Agents {
+		if a.Harness != "claude" {
+			return fmt.Errorf("game providers support the claude harness only (MCP-only isolation)")
+		}
+	}
+	if strings.Join(c.Recording.Cameras, ",") != "board" {
+		return fmt.Errorf("game providers record a single [board] camera, rendered from the replay")
+	}
+	if c.Production.Renderer != "replay" {
+		return fmt.Errorf("game providers render with production.renderer: replay")
+	}
+	return nil
+}
+
 func versionValid(s string) bool {
 	for _, x := range strings.Split(s, ".") {
 		if n, e := strconv.Atoi(x); e != nil || n < 0 || x == "" || strings.ContainsAny(x, "+-") {

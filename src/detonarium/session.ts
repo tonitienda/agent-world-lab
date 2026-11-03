@@ -145,6 +145,13 @@ export class DetonariumSession {
     };
   }
 
+  /** The engine's result for the orchestrator (outcome.json); null while the match runs. */
+  outcome(): { provider: "detonarium"; over: true; agent_won: boolean; draw: boolean; winner: string | null; detail: string } | null {
+    const s = this.state;
+    if (!s.over) return null;
+    return { provider: "detonarium", over: true, agent_won: s.winner === AGENT, draw: s.winner === null, winner: s.winner === null ? null : this.names[s.winner], detail: `${this.result()} at tick ${s.tick}` };
+  }
+
   result(): string | null {
     const s = this.state;
     if (!s.over) return s.players[AGENT].alive ? null : `${this.names[AGENT]} was eliminated; the match continues without you`;

@@ -51,6 +51,11 @@ bomb-arena genre: its own name, art and rules; no third-party names or assets.
 
 ## Pipeline work (shared with Chess)
 
+Status: the Go CLI side is done (provider switch, `rounds:`, `win_match`/`win_rounds`,
+game runs and `render`; see `docs/emergence-cli.md`, "Game providers"). Detonarium ships
+as its own MCP server (`src/mcp/detonarium.ts`) rather than an adapter in `main.ts`, and
+renders a single bullet-time board camera. `survive_ticks` was not needed.
+
 - `internal/config`: provider switch (`minecraft | detonarium | chess`) with
   per-provider blocks; `rounds:`; evaluation types `win_match`,
   `survive_ticks`, `win_rounds`.

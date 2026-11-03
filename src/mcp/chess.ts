@@ -39,6 +39,13 @@ function saveReplay() {
   const file = resolve(sessionFolder, "replay.json");
   writeFileSync(file + ".tmp", JSON.stringify(match.replay(), null, 2) + "\n");
   renameSync(file + ".tmp", file);
+  // The engine's result for the orchestrator; written once the game is decided.
+  const result = match.result;
+  if (result) {
+    const outcome = { provider: "chess", over: true, agent_won: result.winner === side, draw: result.winner === null, winner: result.winner, detail: result.termination };
+    writeFileSync(resolve(sessionFolder, "outcome.json.tmp"), JSON.stringify(outcome, null, 2) + "\n");
+    renameSync(resolve(sessionFolder, "outcome.json.tmp"), resolve(sessionFolder, "outcome.json"));
+  }
 }
 
 async function engineMove() {

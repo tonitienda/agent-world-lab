@@ -36,6 +36,9 @@ func (a *App) RunAgent(ctx context.Context, id string, o Options) (err error) {
 	if _, e = harness.Command(harness.Request{Harness: agent.Harness, Player: true}); e != nil {
 		return e
 	}
+	if c.Environment.Game() {
+		return a.runGame(ctx, d, c, agent, o)
+	}
 
 	snapshot, f, e := a.frozen(d, c)
 	if e != nil {
@@ -275,6 +278,9 @@ func (a *App) recorded(id string, o Options) (string, config.Config, string, Run
 	d, c, e := a.load(id)
 	if e != nil {
 		return d, c, "", Run{}, e
+	}
+	if c.Environment.Game() {
+		return d, c, "", Run{}, fmt.Errorf("extract and produce are for Minecraft takes; render a %s take with: emergence render %s --agent %s", c.Environment.Provider, id, o.Agent)
 	}
 	p, e := a.runPath(d, o)
 	if e != nil {
