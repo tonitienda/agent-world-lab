@@ -1,4 +1,4 @@
-import { index } from "./board.js";
+import { index, samePos } from "./board.js";
 import { crowd, dangerMap, escape, MOVES, route, settled } from "./danger.js";
 import { blastCells } from "./engine.js";
 import { seededRandom } from "./rng.js";
@@ -11,6 +11,9 @@ export type Bot = (state: MatchState) => Action;
 export type BlastTargets = { crates: number; enemies: number; pickups: number; nearestEnemy: number };
 /** How many steps a bot will detour to collect a revealed pickup. */
 const PICKUP_REACH = 6;
+/** Ticks before sudden death when bots start playing safe, and how many ticks early their escape must finish. */
+const ENDGAME_LEAD = 10;
+const ENDGAME_MARGIN = 2;
 
 function targetsAt(state: MatchState, me: Player, pos: Pos, doomed: Set<number>): BlastTargets {
   const cells = blastCells(state, { owner: me.id, pos, fuse: state.rules.fuse, range: me.range });
@@ -39,8 +42,12 @@ const armed = (state: MatchState, me: Player) => state.bombs.filter((b) => b.own
 function canBombSafely(state: MatchState, me: Player, risky = false): boolean {
   if (!armed(state, me)) return false;
   if (state.bombs.some((b) => b.pos.x === me.pos.x && b.pos.y === me.pos.y)) return false;
-  const bomb: Bomb = { owner: me.id, pos: me.pos, fuse: state.rules.fuse, range: me.range };
-  return escape(state, me.id, { extra: [bomb], avoid: risky ? [] : crowd(state, me.id) }) !== null;
+  // In the collapsing endgame there is no room for error: no gambles, and the way out must
+  // leave a margin, because a single bounce or a newly fallen cell can close it.
+  const { suddenDeathTick } = state.rules;
+  const endgame = suddenDeathTick !== null && state.tick >= suddenDeathTick - ENDGAME_LEAD;
+  const bomb: Bomb = { owner: me.id, pos: me.pos, fuse: state.rules.fuse - (endgame ? ENDGAME_MARGIN : 0), range: me.range };
+  return escape(state, me.id, { extra: [bomb], avoid: risky && !endgame ? [] : crowd(state, me.id) }) !== null;
 }
 
 /** Escape preferring cells no rival can contest next tick, so solid players do not bounce us back. */
@@ -80,7 +87,25 @@ export function createBot(kind: BotKind, player: number, seed: number): Bot {
   const random = seededRandom(seed);
   const pick = <T>(items: T[]): T => items[Math.floor(random() * items.length)];
   let last: Action = "stay";
-  const bot: Bot = (state) => (last = decide(state));
+  let lastPos: Pos | null = null;
+  const bot: Bot = (state) => {
+    const me = state.players[player];
+    let action = decide(state);
+    // Simultaneous moves: two players heading for the same free cell both bounce, and identical
+    // plans would bounce forever while the fuses burn. After a bounce, avoid that cell if there
+    // is another way; otherwise yield on a coin flip so one of the two gets through.
+    const tried = lastPos && me?.alive && samePos(me.pos, lastPos) && last in MOVES ? nextPos(lastPos, last) : null;
+    const contested = tried && state.cells[index(state.rules, tried)] === "floor" && !state.bombs.some((b) => samePos(b.pos, tried)) ? tried : null;
+    if (contested && action in MOVES && samePos(nextPos(me.pos, action), contested)) {
+      const danger = dangerMap(state);
+      const inDanger = !settled(danger, index(state.rules, me.pos), 0);
+      const detour = inDanger ? escape(state, player, { danger, avoid: [contested] }) : null;
+      if (detour && detour !== "stay") action = detour;
+      else if (random() < 0.5) action = "stay";
+    }
+    lastPos = me?.alive ? me.pos : null;
+    return (last = action);
+  };
   const decide: Bot = (state) => {
     const me = state.players[player];
     if (!me?.alive || state.over) return "stay";

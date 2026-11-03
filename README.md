@@ -129,6 +129,23 @@ make set-mcp AGENT_ID=agent-002 SESSION=episode-002
 
 1 - Create a directory with "episode-nnn" under `production` with a prompt.txt
 
+### Detonarium (episode 004)
+
+Claude plays the bomb arena against CPU bots through `src/mcp/detonarium.ts`. The arena
+is frozen while Claude thinks and only advances inside its actions.
+
+```sh
+npm run detonarium:play -- --games 3            # Claude vs three hunter bots, seeds 1-3
+npm run detonarium:play -- --games 3 --stand-in hunter --out /tmp/dry   # same files, a bot in Claude's slot
+npm run detonarium:record -- data/detonarium-sessions/<run>/game-1 --title "Game 1"
+```
+
+Each game folder gets `session/replay.json`, `session/calls.json` (every tool call with its
+intention and rationale) and `session/events.json`. The recorder finds Claude's kills
+(traps included) and its elimination, renders the game with bullet time around them, and
+writes `game.mp4` plus `game.cut.json`, which lists every freeze on the video clock so
+narration can be laid on it. Needs `rsvg-convert` and `ffmpeg`.
+
 ## Survival experiments
 
 Reset only after all sessions have finalized. Reset defaults to the historical

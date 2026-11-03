@@ -54,10 +54,30 @@ test("hunters clear crates and rarely blow themselves up", () => {
   let selfKills = 0, crates = 0, bombs = 0;
   for (let seed = 1; seed <= 10; seed++) {
     const { events } = play(["hunter", "hunter", "hunter", "hunter"], seed, { suddenDeathTick: null });
-    selfKills += events.filter((e) => e.type === "eliminated" && e.by === e.player).length;
+    selfKills += events.filter((e) => e.type === "eliminated" && e.by !== "collapse" && e.by.join() === String(e.player)).length;
     crates += events.filter((e) => e.type === "crate_destroyed").length;
     bombs += events.filter((e) => e.type === "bomb_placed").length;
   }
   assert.ok(crates > 100, `hunters destroyed only ${crates} crates in 10 matches`);
   assert.ok(selfKills / bombs < 0.02, `${selfKills} self-eliminations from ${bombs} bombs`);
+});
+
+test("bots that bounce off each other do not keep bouncing", () => {
+  // Two bots heading for the same free cell both bounce; identical plans used to repeat
+  // until a fuse ran out. A streak of 4+ bumps for one player means the tie was never broken.
+  let longest = 0;
+  for (let seed = 1; seed <= 20; seed++) {
+    let state = createMatch({ seed });
+    const bots = [0, 1, 2, 3].map((i) => createBot("hunter", i, seed * 10 + i));
+    const streak = [0, 0, 0, 0];
+    while (!state.over) {
+      const result = step(state, bots.map((bot) => bot(state)));
+      for (const p of [0, 1, 2, 3]) {
+        streak[p] = result.events.some((e) => e.type === "bumped" && e.player === p) ? streak[p] + 1 : 0;
+        longest = Math.max(longest, streak[p]);
+      }
+      state = result.state;
+    }
+  }
+  assert.ok(longest <= 3, `a bot bounced ${longest} ticks in a row`);
 });

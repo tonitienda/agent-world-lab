@@ -47,7 +47,7 @@ test("a bomb explodes after its fuse and credits the kill", () => {
   s.players[0].pos = { x: 3, y: 3 }; // off both blast lines of the bomb at (1,1)
   const { state, events } = run(s, 5);
   assert.equal(state.players[1].alive, false);
-  assert.ok(events.some((e) => e.type === "eliminated" && e.player === 1 && e.by === 0));
+  assert.ok(events.some((e) => e.type === "eliminated" && e.player === 1 && e.by !== "collapse" && e.by.join() === "0"));
   assert.deepEqual(events.find((e) => e.type === "match_over"), { type: "match_over", winner: 0, reason: "last_standing" });
 });
 
@@ -104,4 +104,16 @@ test("random matches always end and replay identically", () => {
     assert.ok(a.state.tick <= a.state.rules.maxTicks);
     assert.deepEqual(a.events, b.events);
   }
+});
+
+test("a trap credits the trapper even when the victim's own bomb also burns there", () => {
+  const s = empty({ players: 2 });
+  s.players[0].pos = { x: 1, y: 5 };
+  s.players[1].pos = { x: 3, y: 1 };
+  // Victim's own bomb on one side, the trapper's on the other, both reaching (3, 1) on the same tick.
+  s.bombs.push({ owner: 1, pos: { x: 5, y: 1 }, fuse: 1, range: 2 });
+  s.bombs.push({ owner: 0, pos: { x: 1, y: 1 }, fuse: 1, range: 2 });
+  const { events } = step(s, ["stay", "stay"]);
+  const out = events.find((e) => e.type === "eliminated" && e.player === 1);
+  assert.deepEqual(out && out.type === "eliminated" ? out.by : null, [0, 1]);
 });
