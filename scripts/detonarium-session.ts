@@ -1,37 +1,59 @@
 // Play Detonarium games: Claude (MCP-only, same isolation as the episode harness) vs CPU bots.
 // Each game is its own Claude process and session folder; games do not share notes (yet).
-// Usage: tsx scripts/detonarium-session.ts [--games 3] [--seed 1] [--bots hunter,hunter,hunter]
-//        [--model id] [--alert-radius 4] [--out dir] [--stand-in hunter]
+// Usage: tsx scripts/detonarium-session.ts [--episode episodes/episode-004/episode.yaml]
+//        [--games 3] [--seed 1] [--bots hunter,hunter,hunter] [--model id] [--alert-radius 4]
+//        [--max-macro-ticks 20] [--out dir] [--stand-in hunter]
+// Settings come from the episode file; any flag given overrides it. The settings actually used
+// are saved as run.json in the output folder, next to a copy of the prompt.
 // --stand-in plays the agent slot with a CPU bot instead of Claude, in-process, and writes the
 // same session files: for testing the recorder and editing without spending a real game.
 // Seeds are seed, seed+1, ... per game. Recording to video is a separate step.
 import { spawn } from "node:child_process";
 import { createWriteStream, existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { createBot, type BotKind } from "../packages/detonarium/src/index.js";
+import { loadEpisode } from "../src/detonarium/episode.js";
 import { DetonariumSession } from "../src/detonarium/session.js";
 import { SessionEvents } from "../src/mcp/session-events.js";
 
-const { values } = parseArgs({
+const root = resolve(import.meta.dirname, "..");
+const { values: flags } = parseArgs({
   options: {
-    games: { type: "string", default: "1" },
-    seed: { type: "string", default: "1" },
-    bots: { type: "string", default: "hunter,hunter,hunter" },
-    model: { type: "string", default: "claude-opus-5-5" },
-    "alert-radius": { type: "string", default: "4" },
+    episode: { type: "string", default: resolve(root, "episodes/episode-004/episode.yaml") },
+    games: { type: "string" },
+    seed: { type: "string" },
+    bots: { type: "string" },
+    model: { type: "string" },
+    "alert-radius": { type: "string" },
+    "max-macro-ticks": { type: "string" },
     out: { type: "string" },
     "stand-in": { type: "string" },
   },
 });
-const root = resolve(import.meta.dirname, "..");
-const out = resolve(values.out ?? `data/detonarium-sessions/${new Date().toISOString().replace(/[:.]/g, "-")}`);
+const episode = loadEpisode(flags.episode);
+const settings = {
+  episode: episode.episode,
+  episodeFile: relative(root, resolve(flags.episode)),
+  games: Number(flags.games ?? episode.games),
+  seed: Number(flags.seed ?? episode.environment.seed),
+  bots: flags.bots ? (flags.bots.split(",").map((b) => b.trim()) as BotKind[]) : episode.environment.bots,
+  model: flags.model ?? episode.player.model,
+  alertRadius: Number(flags["alert-radius"] ?? episode.environment.alert_radius),
+  maxMacroTicks: Number(flags["max-macro-ticks"] ?? episode.environment.max_macro_ticks),
+  standIn: flags["stand-in"] ?? null,
+  overrides: Object.keys(flags).filter((k) => !["episode", "out"].includes(k)),
+};
+const values = { ...flags, bots: settings.bots.join(","), model: settings.model, "alert-radius": String(settings.alertRadius) };
+const out = resolve(flags.out ?? `data/detonarium-sessions/${new Date().toISOString().replace(/[:.]/g, "-")}`);
 mkdirSync(out, { recursive: true });
-const games = Number(values.games);
-const firstSeed = Number(values.seed);
+const games = settings.games;
+const firstSeed = settings.seed;
 const label = values.model.replace(/^claude-/, "Claude ").replace(/-(\d+)-(\d+)$/, " $1.$2").replace(/\b(opus|sonnet|haiku|fable)\b/, (m) => m[0].toUpperCase() + m.slice(1));
-const botCount = values.bots.split(",").length;
-const prompt = readFileSync(resolve(root, "episodes/episode-004/goal.md"), "utf8").replaceAll("{{RIVALS}}", String(botCount));
+const botCount = settings.bots.length;
+const prompt = readFileSync(episode.promptPath, "utf8").replaceAll("{{RIVALS}}", String(botCount));
+writeFileSync(resolve(out, "run.json"), JSON.stringify(settings, null, 2) + "\n");
+writeFileSync(resolve(out, "goal.md"), prompt);
 
 const summary: { game: number; seed: number; exit: number; result: string | null; ticks: number | null }[] = [];
 for (let game = 1; game <= games; game++) {
@@ -41,7 +63,7 @@ for (let game = 1; game <= games; game++) {
   mkdirSync(dir, { recursive: true });
   if (values["stand-in"]) {
     const kind = values["stand-in"] as BotKind;
-    const session = new DetonariumSession({ seed, bots: values.bots.split(",") as BotKind[], agentName: `Stand-in (${kind})`, alertRadius: Number(values["alert-radius"]) });
+    const session = new DetonariumSession({ seed, bots: values.bots.split(",") as BotKind[], agentName: `Stand-in (${kind})`, alertRadius: settings.alertRadius, maxMacroTicks: settings.maxMacroTicks });
     const events = new SessionEvents(resolve(dir, "session"));
     events.add("detonarium_configuration", { seed, bots: values.bots.split(","), rules: session.state.rules, standIn: kind });
     const player = createBot(kind, 0, seed * 10);
@@ -72,7 +94,8 @@ for (let game = 1; game <= games; game++) {
           SESSION_LOG_DIR: resolve(dir, "session"),
           DETONARIUM_SEED: String(seed),
           DETONARIUM_BOTS: values.bots,
-          DETONARIUM_ALERT_RADIUS: values["alert-radius"],
+          DETONARIUM_ALERT_RADIUS: String(settings.alertRadius),
+          DETONARIUM_MAX_MACRO_TICKS: String(settings.maxMacroTicks),
           AGENT_ID: "claude",
           AGENT_LABEL: label,
         },

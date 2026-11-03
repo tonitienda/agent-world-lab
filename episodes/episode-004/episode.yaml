@@ -1,0 +1,19 @@
+# Episode 004: Claude vs CPU bots in Detonarium, our bomb arena.
+# Read by scripts/detonarium-session.ts (npm run detonarium:play -- --episode <this file>);
+# the Go CLI does not support this provider yet. Command-line flags override these values.
+version: 1
+episode:
+  id: episode-004
+  title: Detonarium
+environment:
+  provider: detonarium
+  seed: 1               # game n plays seed + n - 1
+  bots: [hunter, hunter, hunter]
+  alert_radius: 4       # a rival bomb this close interrupts move_to and wait
+  max_macro_ticks: 20   # longest single move_to or wait
+goal:
+  prompt_file: goal.md
+player:
+  harness: claude
+  model: claude-opus-5-5
+games: 3

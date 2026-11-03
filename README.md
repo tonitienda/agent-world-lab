@@ -132,10 +132,14 @@ make set-mcp AGENT_ID=agent-002 SESSION=episode-002
 ### Detonarium (episode 004)
 
 Claude plays the bomb arena against CPU bots through `src/mcp/detonarium.ts`. The arena
-is frozen while Claude thinks and only advances inside its actions.
+is frozen while Claude thinks and only advances inside its actions. Settings (seed, bots,
+model, number of games, interrupt radius) live in `episodes/episode-004/episode.yaml`, read by
+the runner rather than the Go CLI. Any flag overrides it, and each run saves the settings it
+used as `run.json` plus a copy of the prompt.
 
 ```sh
-npm run detonarium:play -- --games 3            # Claude vs three hunter bots, seeds 1-3
+npm run detonarium:play                         # as configured in episode.yaml
+npm run detonarium:play -- --games 1 --seed 7   # flags override the file
 npm run detonarium:play -- --games 3 --stand-in hunter --out /tmp/dry   # same files, a bot in Claude's slot
 npm run detonarium:record -- data/detonarium-sessions/<run>/game-1 --title "Game 1"
 ```
