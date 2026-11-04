@@ -2,9 +2,9 @@
 
 Next two episodes:
 
-- **Episode 003 — Detonarium**: our own bomb-arena game. One LLM agent vs
+- **Episode 004 — Detonarium**: our own bomb-arena game. One LLM agent vs
   three CPU bots, best-of-N rounds.
-- **Episode 004 — Chess**: the agent vs Stockfish at a fixed rating
+- **Episode 003 — Chess**: the agent vs Stockfish at a fixed rating
   (`chess.js` for rules).
 
 Both need the same pipeline generalization (see "Pipeline work"). Detonarium
@@ -14,7 +14,7 @@ goes first by choice; it is built so the engine itself is reusable by others.
 
 Lives in `packages/detonarium/` as an isolated, dependency-free package. It
 must not import anything from `src/` or know about LLMs, MCP or video. Once the
-API settles (after episode 003 ships) it is extracted to its own public repo
+API settles (after the Detonarium episode ships) it is extracted to its own public repo
 with `git subtree split`, licensed Apache-2.0. It is our own game in the
 bomb-arena genre: its own name, art and rules; no third-party names or assets.
 
@@ -68,3 +68,66 @@ bomb-arena genre: its own name, art and rules; no third-party names or assets.
 
 - Full-board vs. limited-view observation for the agent.
 - Rounds per episode and how notes carry between rounds.
+
+## Next recording: observation fairness
+
+The intended contract is full-board visibility, **without automatically reporting
+opponents' upgrade totals**. This differs from hiding visible fire or changing the
+rules. Everyone starts with the published base stats. The agent may track each
+rival's observed pickups and learn from visible explosions itself.
+
+The agent-facing API now enforces these observation changes:
+
+- Keep own range/capacity and observable rival identity, position and alive status.
+  Remove `rivals[].range` and `rivals[].bombCapacity`.
+- Keep visible bombs, positions and owners. Remove `range` from enemy bomb records
+  too; hiding the rival field alone still leaks the same information. Own bomb
+  range may remain. Shared fuse rules and visible countdowns are unchanged for
+  this revision; the requested restriction concerns opponent blast reach.
+- Keep actually burning cells visible. Their observed extent can support an
+  inference, but a wall/crate can truncate a blast, so it is not proof of maximum
+  range. Do not supply future enemy blast previews or automatic safety verdicts.
+- Observable pickup events may identify who collected which item. During macros,
+  preserve chronological order and tick so an agent can maintain its own evidence
+  ledger. Do not replace hidden fields with an automatic rival upgrade counter.
+  Missed evidence leaves uncertainty.
+- Apply the contract to `observe` and every action response, event/alert text,
+  error and helper tool. Authoritative state/replay data may retain full stats for
+  simulation and editing, but must be inaccessible to the playing agent through
+  files or extra tools. Clearly distinguish privileged viewer overlays.
+- Audit CPU bot danger/escape helpers too. Use observation-based estimates or
+  explicitly document any remaining information asymmetry; do not claim equal
+  information while bots read authoritative rival ranges.
+
+Implemented in `src/detonarium/session.ts`: the API omits rival upgrade totals
+and enemy bomb ranges in observations and all action results. Event messages carry
+their tick so pickup evidence stays usable during macros. The shared MCP response
+paths use this filtered view, including refused actions and game-over responses.
+Simulation/replay stats remain intact, and no inferred upgrade counter is supplied.
+
+CPU information parity is still pending: bots in `packages/detonarium/src/bots.ts`
+receive full simulation state and use exact bomb ranges for danger/escape planning.
+This API change restricts the LLM player; it does not change bot behaviour or claim
+equal information between the LLM and CPU opponents.
+
+Regression checks and remaining bot audit:
+
+1. Increase a rival's private stats in a fixture; no upgrade totals or enemy bomb
+   ranges may appear in any agent-visible response, including action results.
+2. Own stats and visible board, flames and pickup events remain usable.
+3. Pickup events across multi-tick macros identify the actor and tick without
+   reporting a derived rival stat total.
+4. Audit bot planning against hidden versus observed upgrades and document its
+   knowledge model. Unobserved private stats must not masquerade as observations.
+5. Seeded replay reconstruction and simulation remain deterministic.
+
+Precise avoidance is legitimate when supported by observations. Remove privileged
+knowledge rather than forcing bad moves, random deaths or false uncertainty.
+
+## Next production handoff
+
+Follow [narration and round presentation](narration-and-rounds.md): label every
+presenter and agent clip, hand off both speaker bundles, and include an opening
+splash plus introductions/transitions for each game. Agent narration should come
+from the dedicated spoken field, with a friendly voice and situational humour.
+Use a fresh take/production directory for replacement games and generated audio.

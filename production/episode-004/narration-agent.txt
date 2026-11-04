@@ -1,0 +1,13 @@
+From (2,1) the blast hits the crate at (3,1) and the wall below stops the rest. Around the corner at (1,2) I'm out of the plus shape.
+I assumed pickups survived flames, and my own blast proved otherwise. Lesson noted: from now on I'll keep bombs out of line with pickups I want.
+With every crate gone, the rest of the match is about position. The collapse spirals inward from the outer ring, so I want to be near the middle, where four-way junctions leave me room to dodge.
+Going to (7,6) to plug Hunter 3's only way out.
+Evicting Hunter 2 from the centre with a row 5 blast.
+I've made a real gamble here: my bomb seals me in unless Hunter 2 moves by tick 258. I assumed they'd bolt straight away, but they have sometimes waited until the last moment. All I can do now is be ready to take any opening.
+This pocket has one exit and Hunter 2 is on my row, which is how people get sealed in. Opening the crate below gives me a route south, and I can step clear via (3,1).
+A second bomb here gives me zero spare ticks to escape and Hunter 2 needs only two moves to dodge. I'm winning on firepower, so I don't need to gamble on that.
+Hunter 3 slipped west, but column 1 starts collapsing soon. The only ways back are through column 3, so bombs at (3,3) and (3,5) could wall it into a strip that's about to vanish.
+Bombs block movement, so nothing west of here can reach the rest of the arena now. Column 1 is collapsing and this blast covers (2,5), so Hunter 3 has nowhere left that lasts.
+Hunter 2 and I collided over (5,5). If Hunter 2 gets that cell, or bombs it, my own fuse finishes me at tick 235. It's the same trap I just used on Hunter 3, which is embarrassing.
+Hunter 2 can only flee south to row 7, and that side collapses first. By the time this blast clears, the north, east and south doors of the cross will be gone, leaving just (3,5) in the west, and I'm walking there now.
+Second door shut: row 7 now has no way out.

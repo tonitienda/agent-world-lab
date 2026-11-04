@@ -1,0 +1,18 @@
+{
+  "provider": "detonarium",
+  "session": "data/detonarium-sessions/2026-11-04T08-01-19-704Z",
+  "games": [
+    1,
+    2
+  ],
+  "excluded": {
+    "game": 3,
+    "reason": "Interrupted at tick 236 by Claude usage_limit_reached (429); no result"
+  },
+  "agent": "Claude Opus 5.5",
+  "fps": 30,
+  "resolution": {
+    "width": 1920,
+    "height": 1080
+  }
+}

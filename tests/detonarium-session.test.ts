@@ -17,6 +17,72 @@ test("observe shows the full board with the agent in the top-left corner", () =>
   assert.equal(view.result, null);
 });
 
+function hiddenStatsFixture() {
+  const s = session();
+  s.state.players[0].range = 4;
+  s.state.players[0].bombs = 2;
+  s.state.players[1].range = 9;
+  s.state.players[1].bombs = 7;
+  s.state.bombs = [
+    { owner: 0, pos: { ...s.state.players[0].pos }, fuse: 7, range: 3 },
+    { owner: 1, pos: { ...s.state.players[1].pos }, fuse: 7, range: 9 },
+  ];
+  return s;
+}
+
+function assertHiddenStats(view: ReturnType<DetonariumSession["observe"]>) {
+  for (const rival of view.rivals) assert.deepEqual(Object.keys(rival).sort(), ["alive", "name", "pos", "symbol"]);
+  for (const bomb of view.bombs) {
+    if (bomb.owner === "Claude") assert.ok(Object.hasOwn(bomb, "range"));
+    else assert.deepEqual(Object.keys(bomb).sort(), ["owner", "pos", "ticksToExplode"]);
+  }
+}
+
+test("private rival upgrades and enemy bomb reach cannot change an observation", () => {
+  const s = hiddenStatsFixture();
+  s.state.flames = [{ pos: { x: 3, y: 3 }, owners: [1], ticks: 2 }];
+  const before = s.observe();
+  assertHiddenStats(before);
+  assert.equal(before.you.range, 4);
+  assert.equal(before.you.bombCapacity, 2);
+  assert.equal(before.bombs[0].range, 3, "own bombs keep their placement-time range");
+  assert.deepEqual(before.flames, [{ pos: { x: 3, y: 3 }, ticksLeft: 2 }]);
+  assert.equal(before.board[4][6], "*", "existing fire remains visible");
+  s.state.players[1].range = 15;
+  s.state.players[1].bombs = 12;
+  s.state.bombs[1].range = 15;
+  assert.deepEqual(s.observe(), before);
+  assert.equal(s.state.bombs[1].range, 15, "authoritative simulation retains private stats");
+});
+
+test("successful and refused actions all return observations without rival stats", () => {
+  const actions = [
+    (s: DetonariumSession) => s.wait(2, "watch"),
+    (s: DetonariumSession) => s.stepOnce("stay", "watch"),
+    (s: DetonariumSession) => s.moveTo({ x: 2, y: 1 }, "move"),
+    (s: DetonariumSession) => s.moveTo({ x: 0, y: 0 }, "blocked target"),
+    (s: DetonariumSession) => s.placeBomb("already a bomb here"),
+    (s: DetonariumSession) => { s.state.bombs.shift(); return s.placeBomb("new bomb"); },
+    (s: DetonariumSession) => { s.state.over = true; return s.wait(1, "finished"); },
+  ];
+  for (const action of actions) {
+    const result = action(hiddenStatsFixture());
+    assertHiddenStats(result.view);
+    assert.ok(result.happened.every((line) => !/range[=:]|capacity[=:]/i.test(line)));
+  }
+});
+
+test("macro pickup evidence names the rival and tick without supplying an upgrade total", () => {
+  const s = session();
+  const rival = s.state.players[1];
+  s.state.pickups[rival.pos.y * s.state.rules.width + rival.pos.x] = "range";
+  const result = s.wait(3, "watch for pickups");
+  assert.deepEqual(result.happened.filter((line) => line.includes("collected")), ["[tick 1] Passive 1 collected +range"]);
+  assert.equal(rival.range, 2, "step uses a fresh state rather than mutating the old player");
+  assert.equal(s.state.players[1].range, 3);
+  assertHiddenStats(result.view);
+});
+
 test("the world is frozen between calls and advances only inside a macro", () => {
   const s = session();
   s.observe();
@@ -97,4 +163,24 @@ test("calls are recorded with intentions and tick spans", () => {
     s.calls.map((c) => [c.tool, c.intention, c.tickStart, c.tickEnd, c.stoppedBecause]),
     [["wait", "breathe", 0, 2, "done"], ["move_to", "edge right", 2, 3, "arrived"]],
   );
+});
+
+test("spoken narration stays separate from technical summaries without changing game actions", () => {
+  const narrated = session();
+  const plain = session();
+  narrated.moveTo({ x: 2, y: 1 }, "move (2,1)", 20, "Reach the crate lane", "Closer to that crate.");
+  plain.moveTo({ x: 2, y: 1 }, "move (2,1)");
+  narrated.placeBomb("bomb (2,1)", "Fuse runs for eight ticks", "A bomb here should open the passage.");
+  plain.placeBomb("bomb (2,1)");
+  narrated.stepOnce("left", "left", "Leave the bomb cell", "Back around the corner.");
+  plain.stepOnce("left", "left");
+  narrated.wait(1, "wait 1", "Let the fuse advance", "Waiting for the blast.");
+  plain.wait(1, "wait 1");
+  assert.deepEqual(narrated.state, plain.state);
+  assert.deepEqual(narrated.calls.map((c) => c.narration), [
+    "Closer to that crate.", "A bomb here should open the passage.", "Back around the corner.", "Waiting for the blast.",
+  ]);
+  assert.equal(narrated.calls[1].rationale, "Fuse runs for eight ticks");
+  assert.equal(narrated.calls[1].intention, "bomb (2,1)");
+  assert.ok(plain.calls.every((c) => c.narration === undefined));
 });

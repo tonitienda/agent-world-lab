@@ -52,10 +52,13 @@ function record(tool: string, args: Record<string, unknown>, result: MacroResult
   return response({ ...result, view: session.observe() });
 }
 
-const intention = z.string().max(200).describe("One short public first-person line for viewers about what you are doing and why");
+const intention = z.string().max(200).describe("Short action label for the log; may include coordinates. Not the spoken narration.");
 const rationale = z.string().max(600).optional().describe(
-  "Optional: one to three first-person sentences for viewers when there is a real idea behind this action " +
-  "(a plan, a threat you see, a trap, a correction). Omit it for routine actions.");
+  "Optional concise technical summary of the plan, threat or correction. Coordinates and fuse timing belong here, not in narration. This is not voiceover or private reasoning.");
+const narration = z.string().min(3).max(300).describe(
+  "Human-friendly spoken commentary in first person, supplied before the action. Usually 3–8 words for a routine action, or one short sentence for a plan or correction. " +
+  "Use plain conversational language. No coordinates, row/column numbers, tick arithmetic, tool names or tactical lists. Describe the visible aim or risk; do not claim an outcome before it happens. " +
+  "Example: I'll block the passage, then get around the corner before it blows.");
 const gameOver = () => (finished || session.state.over || !session.agentAlive);
 const overResponse = () => response({ ok: false, message: "The match is over for you", result: session.result(), view: session.observe() });
 
@@ -63,7 +66,7 @@ const server = new McpServer({ name: "agent-world-detonarium", version: "0.1.0" 
 
 server.registerTool(
   "observe",
-  { description: "Look at the whole arena. Time does not pass while you look or think: the arena only moves during move_to, place_bomb, wait and step." },
+  { description: "Look at the whole arena. Your own upgrades are shown; rival upgrade totals and enemy bomb ranges are hidden. Infer them from observed pickups and explosions. Time does not pass while you look or think: the arena only moves during move_to, place_bomb, wait and step." },
   async () => {
     events.add("observe", { tick: session.state.tick });
     return response(session.observe());
@@ -83,20 +86,21 @@ server.registerTool(
       max_ticks: z.number().int().min(1).optional().describe("Stop after this many ticks even if not arrived"),
       intention,
       rationale,
+      narration,
     },
   },
-  async ({ x, y, max_ticks, intention, rationale }) => {
+  async ({ x, y, max_ticks, intention, rationale, narration }) => {
     if (gameOver()) return overResponse();
-    return record("move_to", { x, y, max_ticks, intention, rationale }, session.moveTo({ x, y }, intention, max_ticks, rationale));
+    return record("move_to", { x, y, max_ticks, intention, rationale, narration }, session.moveTo({ x, y }, intention, max_ticks, rationale, narration));
   },
 );
 
 server.registerTool(
   "place_bomb",
-  { description: "Drop a bomb on your cell. Takes one tick. Refused if all your bombs are already ticking.", inputSchema: { intention, rationale } },
-  async ({ intention, rationale }) => {
+  { description: "Drop a bomb on your cell. Takes one tick. Refused if all your bombs are already ticking.", inputSchema: { intention, rationale, narration } },
+  async ({ intention, rationale, narration }) => {
     if (gameOver()) return overResponse();
-    return record("place_bomb", { intention, rationale }, session.placeBomb(intention, rationale));
+    return record("place_bomb", { intention, rationale, narration }, session.placeBomb(intention, rationale, narration));
   },
 );
 
@@ -104,11 +108,11 @@ server.registerTool(
   "wait",
   {
     description: "Stay where you are for a number of ticks. Stops early if a rival places a bomb near you.",
-    inputSchema: { ticks: z.number().int().min(1).describe("How many ticks to wait"), intention, rationale },
+    inputSchema: { ticks: z.number().int().min(1).describe("How many ticks to wait"), intention, rationale, narration },
   },
-  async ({ ticks, intention, rationale }) => {
+  async ({ ticks, intention, rationale, narration }) => {
     if (gameOver()) return overResponse();
-    return record("wait", { ticks, intention, rationale }, session.wait(ticks, intention, rationale));
+    return record("wait", { ticks, intention, rationale, narration }, session.wait(ticks, intention, rationale, narration));
   },
 );
 
@@ -116,11 +120,11 @@ server.registerTool(
   "step",
   {
     description: "Take exactly one tick with one action: stay, up, down, left, right or bomb. Up is toward row 0.",
-    inputSchema: { action: z.enum(["stay", "up", "down", "left", "right", "bomb"]), intention, rationale },
+    inputSchema: { action: z.enum(["stay", "up", "down", "left", "right", "bomb"]), intention, rationale, narration },
   },
-  async ({ action, intention, rationale }) => {
+  async ({ action, intention, rationale, narration }) => {
     if (gameOver()) return overResponse();
-    return record("step", { action, intention, rationale }, session.stepOnce(action, intention, rationale));
+    return record("step", { action, intention, rationale, narration }, session.stepOnce(action, intention, rationale, narration));
   },
 );
 

@@ -1,0 +1,226 @@
+{
+  "duration": 375.333333,
+  "audioSourcesUnchanged": true,
+  "cues": [
+    {
+      "line": 1,
+      "audio": "1_Chapter_1.wav",
+      "game": 1,
+      "tick": 0,
+      "role": "outcome",
+      "voiceStart": 1.25,
+      "voiceEnd": 12.87449,
+      "holdEnd": 13.433333333333334
+    },
+    {
+      "line": 2,
+      "audio": "2_Chapter_1.wav",
+      "game": 1,
+      "tick": 0,
+      "role": "outcome",
+      "voiceStart": 13.683,
+      "voiceEnd": 25.803815999999998,
+      "holdEnd": 26.366333333333333
+    },
+    {
+      "line": 3,
+      "audio": "3_Chapter_1.wav",
+      "game": 1,
+      "tick": 1,
+      "role": "decision",
+      "voiceStart": 26.783,
+      "voiceEnd": 40.418918000000005,
+      "holdEnd": 40.99966666666667
+    },
+    {
+      "line": 4,
+      "audio": "4_Chapter_1.wav",
+      "game": 1,
+      "tick": 115,
+      "role": "decision",
+      "voiceStart": 60.283,
+      "voiceEnd": 70.653612,
+      "holdEnd": 71.233
+    },
+    {
+      "line": 5,
+      "audio": "5_Chapter_1.wav",
+      "game": 1,
+      "tick": 119,
+      "role": "decision",
+      "voiceStart": 72.183,
+      "voiceEnd": 84.747898,
+      "holdEnd": 85.29966666666667
+    },
+    {
+      "line": 6,
+      "audio": "6_Chapter_1.wav",
+      "game": 1,
+      "tick": 244,
+      "role": "decision",
+      "voiceStart": 106.417,
+      "voiceEnd": 112.085571,
+      "holdEnd": 112.667
+    },
+    {
+      "line": 7,
+      "audio": "7_Chapter_1.wav",
+      "game": 1,
+      "tick": 250,
+      "role": "outcome",
+      "voiceStart": 113.983,
+      "voiceEnd": 122.760143,
+      "holdEnd": 123.333
+    },
+    {
+      "line": 8,
+      "audio": "8_Chapter_1.wav",
+      "game": 1,
+      "tick": 252,
+      "role": "decision",
+      "voiceStart": 124.483,
+      "voiceEnd": 129.02830600000001,
+      "holdEnd": 129.59966666666668
+    },
+    {
+      "line": 9,
+      "audio": "9_Chapter_1.wav",
+      "game": 1,
+      "tick": 254,
+      "role": "decision",
+      "voiceStart": 134.317,
+      "voiceEnd": 150.878633,
+      "holdEnd": 151.43366666666668
+    },
+    {
+      "line": 10,
+      "audio": "10_Chapter_1.wav",
+      "game": 1,
+      "tick": 260,
+      "role": "outcome",
+      "voiceStart": 156.35,
+      "voiceEnd": 166.98183699999998,
+      "holdEnd": 167.53333333333333
+    },
+    {
+      "line": 11,
+      "audio": "11_Chapter_1.wav",
+      "game": 2,
+      "tick": 0,
+      "role": "outcome",
+      "voiceStart": 170.817,
+      "voiceEnd": 178.888837,
+      "holdEnd": 179.467
+    },
+    {
+      "line": 12,
+      "audio": "12_Chapter_1.wav",
+      "game": 2,
+      "tick": 27,
+      "role": "decision",
+      "voiceStart": 184.25,
+      "voiceEnd": 197.128367,
+      "holdEnd": 197.7
+    },
+    {
+      "line": 13,
+      "audio": "13_Chapter_1.wav",
+      "game": 2,
+      "tick": 128,
+      "role": "decision",
+      "voiceStart": 214.817,
+      "voiceEnd": 225.422714,
+      "holdEnd": 226.00033333333334
+    },
+    {
+      "line": 14,
+      "audio": "14_Chapter_1.wav",
+      "game": 2,
+      "tick": 223,
+      "role": "decision",
+      "voiceStart": 242.117,
+      "voiceEnd": 256.614959,
+      "holdEnd": 257.167
+    },
+    {
+      "line": 15,
+      "audio": "15_Chapter_1.wav",
+      "game": 2,
+      "tick": 227,
+      "role": "decision",
+      "voiceStart": 258.684,
+      "voiceEnd": 272.55502,
+      "holdEnd": 273.134
+    },
+    {
+      "line": 16,
+      "audio": "16_Chapter_1.wav",
+      "game": 2,
+      "tick": 230,
+      "role": "decision",
+      "voiceStart": 278.984,
+      "voiceEnd": 294.866449,
+      "holdEnd": 295.43399999999997
+    },
+    {
+      "line": 17,
+      "audio": "17_Chapter_1.wav",
+      "game": 2,
+      "tick": 235,
+      "role": "outcome",
+      "voiceStart": 301.584,
+      "voiceEnd": 309.133388,
+      "holdEnd": 309.7006666666667
+    },
+    {
+      "line": 18,
+      "audio": "18_Chapter_1.wav",
+      "game": 2,
+      "tick": 246,
+      "role": "decision",
+      "voiceStart": 314.617,
+      "voiceEnd": 330.865163,
+      "holdEnd": 331.4336666666667
+    },
+    {
+      "line": 19,
+      "audio": "19_Chapter_1.wav",
+      "game": 2,
+      "tick": 250,
+      "role": "decision",
+      "voiceStart": 337.817,
+      "voiceEnd": 342.571286,
+      "holdEnd": 343.13366666666667
+    },
+    {
+      "line": 20,
+      "audio": "20_Chapter_1.wav",
+      "game": 2,
+      "tick": 254,
+      "role": "outcome",
+      "voiceStart": 346.384,
+      "voiceEnd": 356.59787800000004,
+      "holdEnd": 357.1673333333334
+    },
+    {
+      "line": 21,
+      "audio": "21_Chapter_1.wav",
+      "game": 2,
+      "tick": 254,
+      "role": "outcome",
+      "voiceStart": 357.45,
+      "voiceEnd": 368.996122,
+      "holdEnd": 369.56666666666666
+    },
+    {
+      "line": 22,
+      "audio": "22_Chapter_1.wav",
+      "game": 2,
+      "tick": 254,
+      "role": "outcome",
+      "voiceStart": 369.85,
+      "voiceEnd": 372.723469,
+      "holdEnd": 373.3
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "clips": [
+    {
+      "line": 1,
+      "audio": "1_Chapter_1.wav",
+      "seconds": 11.62449,
+      "sha256": "e30d3110a85142dcd840dec46a9c2737713a5fdd8e2bc87010f768e08f99b21a",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 2,
+      "audio": "2_Chapter_1.wav",
+      "seconds": 12.120816,
+      "sha256": "2b156fdbd3378b202640e8407830c9263bbf991f23f5fb3aaf531efc45ec987b",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 3,
+      "audio": "3_Chapter_1.wav",
+      "seconds": 13.635918,
+      "sha256": "0776ae6f98e33cc7d490e9788521e93014e11556d86ea740ab22c1937415e8f0",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 4,
+      "audio": "4_Chapter_1.wav",
+      "seconds": 10.370612,
+      "sha256": "abc3520160e973aaf430014c5c15ec964fb11c7551fcd1c545d372e8234444d8",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 5,
+      "audio": "5_Chapter_1.wav",
+      "seconds": 12.564898,
+      "sha256": "d550c8c923f19eb81dab75ffe24fe7f86fab96d200d3a143c224e62eb2f2a9dd",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 6,
+      "audio": "6_Chapter_1.wav",
+      "seconds": 5.668571,
+      "sha256": "01a461b8f889b640806ed41dfde85021a3183900c559b866d874a828d097adcb",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 7,
+      "audio": "7_Chapter_1.wav",
+      "seconds": 8.777143,
+      "sha256": "f0a8e9cee1ec7ec7f273101ae4035c9a56fa2df6b3733526aea0cff1a3a47f85",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 8,
+      "audio": "8_Chapter_1.wav",
+      "seconds": 4.545306,
+      "sha256": "35ce461e1ac9158daad939fa7375649fd037f0964198e0c8dded54fc11b24f6b",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 9,
+      "audio": "9_Chapter_1.wav",
+      "seconds": 16.561633,
+      "sha256": "0fb4273dafae6b476853b9039c3b1cf278e3964eaa9883d0282d3c8ebe32534d",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 10,
+      "audio": "10_Chapter_1.wav",
+      "seconds": 10.631837,
+      "sha256": "24f78022c76a8ea734b230e4e805f4aae3c365abe1e43643c44fb7d65c044337",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 11,
+      "audio": "11_Chapter_1.wav",
+      "seconds": 8.071837,
+      "sha256": "c7cec41f3aabe32c3566244ef5c1ca4a8f6f5b1eac242876ec09637b9b41fd9b",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 12,
+      "audio": "12_Chapter_1.wav",
+      "seconds": 12.878367,
+      "sha256": "b9c07ce8a4e669bbaa344d4eb904990554c75126c4aeacba10c70fd0b8a6a967",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 13,
+      "audio": "13_Chapter_1.wav",
+      "seconds": 10.605714,
+      "sha256": "182c41fe7c1f6bbe8f205cb2e5e307f930f4e947f755113e29dc0fa42f1a578f",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 14,
+      "audio": "14_Chapter_1.wav",
+      "seconds": 14.497959,
+      "sha256": "ada27b47ac3ee1a8cd88aeb85b15c76364807783a8417c0cf59b288bd5bd7778",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 15,
+      "audio": "15_Chapter_1.wav",
+      "seconds": 13.87102,
+      "sha256": "0a97ebb65ebcdd571c1a2d9f6d450ffcc940607c359b52799f062dd75142d3c9",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 16,
+      "audio": "16_Chapter_1.wav",
+      "seconds": 15.882449,
+      "sha256": "4a57dc1cf43723ad3ba42dd9c16b702b7ef6231fae464be1a4c7f751b956a91d",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 17,
+      "audio": "17_Chapter_1.wav",
+      "seconds": 7.549388,
+      "sha256": "a49c62177a9d0e62153cd7f7e0ac8fc69956edce345b9d52d56363fc1c8a9f92",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 18,
+      "audio": "18_Chapter_1.wav",
+      "seconds": 16.248163,
+      "sha256": "4e21469c3cc8a5b6a6365c1517cdeab34c520954a57a53fe0b90fa6cfaeba152",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 19,
+      "audio": "19_Chapter_1.wav",
+      "seconds": 4.754286,
+      "sha256": "4b62f161e5c614785a77d99dd497f87331f29551e6e0132359dbd019ce6393e9",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 20,
+      "audio": "20_Chapter_1.wav",
+      "seconds": 10.213878,
+      "sha256": "179cc09a8fd5b869c664589096537b7625904a3a31bbc2eeccfe88c9829ccd4b",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 21,
+      "audio": "21_Chapter_1.wav",
+      "seconds": 11.546122,
+      "sha256": "98ed6e31c85f847887d114595a596b54029e0005eedc2027ee66bc64aa41d57b",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    },
+    {
+      "line": 22,
+      "audio": "22_Chapter_1.wav",
+      "seconds": 2.873469,
+      "sha256": "58959e60474b5576d7a75b54c609001881b24f8b627734176f92ea862aaa00a5",
+      "codec_type": "audio",
+      "sample_rate": "44100",
+      "channels": 1
+    }
+  ],
+  "speechSeconds": 235.493876
+}

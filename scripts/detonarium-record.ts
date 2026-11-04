@@ -4,6 +4,7 @@
 // Needs rsvg-convert and ffmpeg on PATH.
 // Usage: tsx scripts/detonarium-record.ts <game dir> [--moments kill,death] [--out file.mp4]
 //        [--tps 6] [--fps 30] [--width 1920] [--height 1080] [--title "Game 1"]
+//        [--narration production/episode-004/narration-manifest.json --game 1]
 // <game dir> holds session/replay.json and session/calls.json (from detonarium-session.ts).
 // Writes the MP4 and <out>.cut.json, which lists every freeze (video time, length, caption)
 // so narration can be laid onto the same clock.
@@ -15,6 +16,7 @@ import { parseArgs, promisify } from "node:util";
 import { blastCells, PLAYER_COLORS, renderSvg, replayFrames, type Pos, type Replay } from "../packages/detonarium/src/index.js";
 import { findMoments, type Moment, type MomentKind } from "../src/detonarium/moments.js";
 import { AGENT, type CallRecord } from "../src/detonarium/session.js";
+import { gameNarration, type NarrationCue } from "../src/detonarium/narration.js";
 
 const run = promisify(execFile);
 const { values, positionals } = parseArgs({
@@ -27,6 +29,8 @@ const { values, positionals } = parseArgs({
     width: { type: "string", default: "1920" },
     height: { type: "string", default: "1080" },
     title: { type: "string" },
+    narration: { type: "string" },
+    game: { type: "string" },
   },
 });
 if (positionals.length !== 1) throw new Error("usage: detonarium-record.ts <game dir> [options]");
@@ -45,8 +49,8 @@ const moments: Moment[] = findMoments(replay, calls).filter((m) => kinds.has(m.k
 // ---- Clock: speed keyframes in tick space, plus freezes (narration slots). ----
 /** Seconds a caption needs on screen until real narration audio replaces the estimate. */
 const readTime = (text: string) => Math.max(2, text.split(/\s+/).length / 2.6 + 0.8);
-const decisionText = (m: Moment) => m.call?.rationale ?? m.call?.intention ?? "";
-type Freeze = { tick: number; seconds: number; caption: string; moment: number; role: "decision" | "outcome" };
+const decisionText = (m: Moment) => m.call?.narration ?? m.call?.intention ?? "";
+type Freeze = { tick: number; seconds: number; caption: string; moment: number; role: "decision" | "outcome"; line?: number; audio?: string };
 const freezes: Freeze[] = [];
 type Key = [tick: number, speed: number];
 const inner: Key[] = [];
@@ -63,6 +67,15 @@ moments.forEach((m, i) => {
   freezes.push({ tick: K, seconds: 1.5, caption: m.summary, moment: i, role: "outcome" });
   windows.push([Math.min(P, K) - 4, K + 3]);
 });
+// Editorial narration holds use the pre-action state for plans and the settled
+// result for observations. Actual WAV durations can replace the estimates later.
+if (values.narration) {
+  const cues: NarrationCue[] = JSON.parse(readFileSync(resolve(values.narration), "utf8"));
+  freezes.length = 0;
+  for (const cue of gameNarration(cues, Number(values.game), last)) {
+    freezes.push({ tick: cue.tick, seconds: cue.seconds, caption: cue.text, moment: -1, role: cue.role, line: cue.line, audio: cue.audio });
+  }
+}
 const inside = (t: number) => windows.some(([a, b]) => t > a && t < b);
 const keys: Key[] = [[0, NORMAL], [last, NORMAL], ...inner];
 for (const [a, b] of windows) for (const t of [a, b]) if (!inside(t)) keys.push([t, NORMAL]);
@@ -81,6 +94,10 @@ type Shot = { tau: number; s: number; freeze?: Freeze };
 const timeline: Shot[] = [];
 for (let k = 0; k < FPS; k++) timeline.push({ tau: 0, s: 0 });
 const pending = [...freezes].sort((a, b) => a.tick - b.tick);
+while (pending[0]?.tick === 0) {
+  const freeze = pending.shift()!;
+  for (let k = 0; k < freeze.seconds * FPS; k++) timeline.push({ tau: 0, s: 0, freeze });
+}
 let tau = 0;
 while (tau < last) {
   const s = speed(tau);
@@ -188,7 +205,7 @@ execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-framerate", String(FPS), "
 rmSync(dir, { recursive: true });
 
 // The cut: where each freeze sits on the video clock, for laying narration on later.
-const cut = { video: out, fps: FPS, frames: timeline.length, seconds: timeline.length / FPS, moments: moments.map(({ call, ...m }) => ({ ...m, intention: call?.intention, rationale: call?.rationale })),
+const cut = { video: out, fps: FPS, frames: timeline.length, seconds: timeline.length / FPS, moments: moments.map(({ call, ...m }) => ({ ...m, intention: call?.intention, rationale: call?.rationale, narration: call?.narration })),
   freezes: [] as (Freeze & { videoStart: number })[] };
 timeline.forEach((shot, k) => { if (shot.freeze && timeline[k - 1]?.freeze !== shot.freeze) cut.freezes.push({ ...shot.freeze, videoStart: Number((k / FPS).toFixed(3)) }); });
 writeFileSync(out.replace(/\.mp4$/, "") + ".cut.json", JSON.stringify(cut, null, 2) + "\n");

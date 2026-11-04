@@ -51,8 +51,10 @@ export type AgentView = {
   board: string[];
   legend: string;
   you: { name: string; pos: Pos; alive: boolean; bombCapacity: number; bombsTicking: number; range: number };
-  rivals: { name: string; symbol: string; pos: Pos; alive: boolean; bombCapacity: number; range: number }[];
-  bombs: { owner: string; pos: Pos; ticksToExplode: number; range: number }[];
+  /** Visible rivals only; upgrade totals must be inferred from observed events. */
+  rivals: { name: string; symbol: string; pos: Pos; alive: boolean }[];
+  /** Range is included only for the agent's own bombs. Absence means unknown. */
+  bombs: { owner: string; pos: Pos; ticksToExplode: number; range?: number }[];
   flames: { pos: Pos; ticksLeft: number }[];
   suddenDeath: { startsAtTick: number; nextCollapses: Pos[] } | null;
   rules: { fuseTicks: number; flameTicks: number; maxTicks: number };
@@ -65,6 +67,8 @@ export type CallRecord = {
   args: Record<string, unknown>;
   intention: string;
   rationale?: string;
+  /** Short spoken commentary, separate from the technical action summary. */
+  narration?: string;
   tickStart: number;
   tickEnd: number;
   stoppedBecause: StopReason;
@@ -135,8 +139,8 @@ export class DetonariumSession {
       },
       rivals: s.players
         .filter((p) => p.id !== AGENT)
-        .map((p) => ({ name: this.names[p.id], symbol: symbol(p.id), pos: p.pos, alive: p.alive, bombCapacity: p.bombs, range: p.range })),
-      bombs: s.bombs.map((b) => ({ owner: this.names[b.owner], pos: b.pos, ticksToExplode: b.fuse, range: b.range })),
+        .map((p) => ({ name: this.names[p.id], symbol: symbol(p.id), pos: p.pos, alive: p.alive })),
+      bombs: s.bombs.map((b) => ({ owner: this.names[b.owner], pos: b.pos, ticksToExplode: b.fuse, ...(b.owner === AGENT ? { range: b.range } : {}) })),
       flames: s.flames.map((f) => ({ pos: f.pos, ticksLeft: f.ticks })),
       suddenDeath: sd === null ? null : { startsAtTick: sd, nextCollapses: s.collapseOrder.slice(collapsed, collapsed + 6) },
       rules: { fuseTicks: s.rules.fuse, flameTicks: s.rules.flameTicks, maxTicks: s.rules.maxTicks },
@@ -152,8 +156,8 @@ export class DetonariumSession {
   }
 
   /** Walk toward (x, y), re-planning every tick around walls, crates, bombs, flames and players. */
-  moveTo(target: Pos, intention: string, maxTicks = this.maxMacroTicks, rationale?: string): MacroResult {
-    return this.macro("move_to", { x: target.x, y: target.y, maxTicks }, { intention, rationale }, maxTicks, () => {
+  moveTo(target: Pos, intention: string, maxTicks = this.maxMacroTicks, rationale?: string, narration?: string): MacroResult {
+    return this.macro("move_to", { x: target.x, y: target.y, maxTicks }, { intention, rationale, narration }, maxTicks, () => {
       const me = this.state.players[AGENT];
       if (samePos(me.pos, target)) return { stop: "arrived" };
       const next = this.firstStep(target);
@@ -161,24 +165,24 @@ export class DetonariumSession {
     }, () => (samePos(this.state.players[AGENT].pos, target) ? "arrived" : null));
   }
 
-  placeBomb(intention: string, rationale?: string): MacroResult {
+  placeBomb(intention: string, rationale?: string, narration?: string): MacroResult {
     const s = this.state;
     const me = s.players[AGENT];
     const ticking = s.bombs.filter((b) => b.owner === AGENT).length;
     if (me.alive && !s.over && (ticking >= me.bombs || s.bombs.some((b) => samePos(b.pos, me.pos)))) {
       return { ok: false, ticks: 0, stoppedBecause: "blocked", happened: ["No bomb placed: all your bombs are ticking or a bomb is already here"], view: this.observe() };
     }
-    return this.macro("place_bomb", {}, { intention, rationale }, 1, () => ({ action: "bomb" }));
+    return this.macro("place_bomb", {}, { intention, rationale, narration }, 1, () => ({ action: "bomb" }));
   }
 
-  wait(ticks: number, intention: string, rationale?: string): MacroResult {
+  wait(ticks: number, intention: string, rationale?: string, narration?: string): MacroResult {
     const n = Math.max(1, Math.min(Math.floor(ticks), this.maxMacroTicks));
-    return this.macro("wait", { ticks: n }, { intention, rationale }, n, () => ({ action: "stay" }));
+    return this.macro("wait", { ticks: n }, { intention, rationale, narration }, n, () => ({ action: "stay" }));
   }
 
   /** One tick with a single raw action. */
-  stepOnce(action: Action, intention: string, rationale?: string): MacroResult {
-    return this.macro("step", { action }, { intention, rationale }, 1, () => ({ action }));
+  stepOnce(action: Action, intention: string, rationale?: string, narration?: string): MacroResult {
+    return this.macro("step", { action }, { intention, rationale, narration }, 1, () => ({ action }));
   }
 
   /** After the agent is out, let the bots finish so the replay and result are complete. */
@@ -189,7 +193,7 @@ export class DetonariumSession {
   private macro(
     tool: string,
     args: Record<string, unknown>,
-    note: { intention: string; rationale?: string },
+    note: { intention: string; rationale?: string; narration?: string },
     maxTicks: number,
     choose: () => { action?: Action; stop?: StopReason },
     reached: () => StopReason | null = () => null,
@@ -213,7 +217,7 @@ export class DetonariumSession {
         }
         const events = this.advance(choice.action!);
         ticks++;
-        happened.push(...events.map((e) => this.describe(e)).filter((line): line is string => line !== null));
+        happened.push(...events.map((e) => this.describe(e)).filter((line): line is string => line !== null).map((line) => `[tick ${this.state.tick}] ${line}`));
         if (this.state.over) { stoppedBecause = "match_over"; break; }
         if (!this.agentAlive) { stoppedBecause = "eliminated"; break; }
         const done = reached();
@@ -222,7 +226,7 @@ export class DetonariumSession {
       }
     }
     const ok = !["blocked", "unreachable"].includes(stoppedBecause) || ticks > 0;
-    this.calls.push({ tool, args, intention: note.intention, ...(note.rationale ? { rationale: note.rationale } : {}), tickStart, tickEnd: this.state.tick, stoppedBecause });
+    this.calls.push({ tool, args, intention: note.intention, ...(note.rationale ? { rationale: note.rationale } : {}), ...(note.narration ? { narration: note.narration } : {}), tickStart, tickEnd: this.state.tick, stoppedBecause });
     return { ok, ticks, stoppedBecause, happened, view: this.observe() };
   }
 

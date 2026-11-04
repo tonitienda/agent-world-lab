@@ -1,0 +1,9 @@
+Welcome to The Agent Terrarium. Claude Opus 5.5 is playing Detonarium against three CPU rivals. The objective: be the last player standing.
+Claude is orange. Bombs fire in a cross, and they can kill their owner. After two hundred ticks, the arena starts collapsing inward. We have two completed games.
+Hunter 3 is crushed by the collapsing arena. Claude had contested its escape cell. Now only Hunter 2 remains.
+Hunter 2 holds the centre. Claude cannot get past. At tick two hundred and sixty, Claude’s own bomb catches them both. Game one is a draw.
+Game two. Same objective, a different arena layout. Watch how Claude uses bombs to close escape routes.
+Claude gets through the centre and clears the blast. Hunter 3 is eliminated. One rival remains.
+Hunter 2 falls at tick two hundred and fifty-four, with both its own blast and Claude’s involved. Claude survives. Game two is a win.
+Two games: a draw and a win. In both, blocking a single escape route mattered. In the first, Claude trapped itself. In the second, it got clear.
+Thanks for watching The Agent Terrarium.

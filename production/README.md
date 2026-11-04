@@ -14,6 +14,13 @@ For the complete editorial workflow and learned preferences, use [The Agent Terr
 
 The Motion Canvas scene, editor and headless MP4 exporter read the same manually editable episode timeline. The simple renderer remains a separate legacy command.
 
+For future scripts and multi-game edits, follow the
+[narration and round presentation requirements](../docs/narration-and-rounds.md).
+The audio handoff must visibly distinguish presenter and agent speech and include
+all intro/transition/outro lines. Include an opening splash and clear game/round
+cards between games. These are intentional interstitials; ordinary agent commentary
+stays over gameplay. Existing builders do not all insert these cards yet.
+
 From the repository root:
 
 ```sh

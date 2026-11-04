@@ -1,7 +1,8 @@
 import { index } from "./board.js";
 import type { Direction, MatchEvent, MatchState, PickupKind, Pos } from "./types.js";
 
-export const PLAYER_COLORS = ["#4cc9f0", "#f72585", "#90be6d", "#f9c74f"];
+/** Slot 0 is the agent (Claude orange); the rest are bots, muted so the agent stands out. */
+export const PLAYER_COLORS = ["#d97757", "#7d8fa8", "#a08a9e", "#8a9a86"];
 const C = {
   background: "#14161f",
   floor: "#262b38",
@@ -125,6 +126,8 @@ export function renderSvg(state: MatchState, options: RenderOptions = {}): strin
 <radialGradient id="dn-bomb" cx="35%" cy="35%" r="75%"><stop offset="0" stop-color="#525a75"/><stop offset="1" stop-color="#101219"/></radialGradient>
 <radialGradient id="dn-glow"><stop offset="0" stop-color="#ffd166" stop-opacity="0.4"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient>
 </defs>`);
+  // Owned bombs use the same palette as their players; pickups stay neutral.
+  out.push(`<defs>${PLAYER_COLORS.map((color, owner) => `<radialGradient id="dn-bomb-${owner}" cx="35%" cy="35%" r="75%"><stop offset="0" stop-color="${shade(color, 0.25)}"/><stop offset="1" stop-color="${shade(color, -0.65)}"/></radialGradient>`).join("")}</defs>`);
   out.push(`<rect x="0" y="0" width="${width * cell}" height="${height * cell}" fill="${C.floor}"/>`);
 
   for (let y = 0; y < height; y++) {
@@ -166,7 +169,7 @@ export function renderSvg(state: MatchState, options: RenderOptions = {}): strin
     const { cx, cy } = centre(bomb.pos);
     const fresh = events.some((e) => e.type === "bomb_placed" && e.pos.x === bomb.pos.x && e.pos.y === bomb.pos.y);
     const remaining = Math.min(rules.fuse, bomb.fuse + 1 - t) / rules.fuse;
-    drawBomb(out, cx, cy, cell, fresh ? easeOutBack(clamp(t * 1.6, 0, 1)) : 1, remaining, bomb.fuse <= 2, time);
+    drawBomb(out, cx, cy, cell, fresh ? easeOutBack(clamp(t * 1.6, 0, 1)) : 1, remaining, bomb.fuse <= 2, time, bomb.owner);
   }
 
   const flames = new Map(state.flames.map((fl) => [index(rules, fl.pos), fl]));
@@ -261,14 +264,14 @@ function pickup(out: string[], kind: PickupKind, cx: number, cy: number, cell: n
   out.push(`</g>`);
 }
 
-function drawBomb(out: string[], cx: number, cy: number, cell: number, pop: number, remaining: number, low: boolean, time: number) {
+function drawBomb(out: string[], cx: number, cy: number, cell: number, pop: number, remaining: number, low: boolean, time: number, owner: number) {
   const r = cell * 0.28;
   const pulse = 1 + (low ? 0.08 : 0.03) * Math.sin(2 * Math.PI * time * (low ? 2 : 0.5));
   const ring = cell * 0.43, length = 2 * Math.PI * ring;
   out.push(`<ellipse cx="${cx}" cy="${f(cy + r * 0.95)}" rx="${f(r * 0.85 * pop)}" ry="${f(r * 0.25 * pop)}" fill="#00000066"/>`);
   out.push(`<circle cx="${cx}" cy="${cy}" r="${f(ring)}" fill="none" stroke="${low ? C.fuseLow : C.fuse}" stroke-opacity="0.55" stroke-width="${f(cell * 0.04)}" stroke-linecap="round" stroke-dasharray="${f(length * remaining)} ${f(length)}" transform="rotate(-90 ${cx} ${cy})"/>`);
   out.push(`<g transform="translate(${cx} ${cy}) scale(${f(Math.max(0, pop * pulse))})">`);
-  out.push(`<circle r="${f(r)}" fill="url(#dn-bomb)"/>`);
+  out.push(`<circle r="${f(r)}" fill="url(#dn-bomb-${owner})" stroke="${PLAYER_COLORS[owner]}" stroke-width="${f(cell * 0.025)}"/>`);
   if (low) out.push(`<circle r="${f(r)}" fill="${C.fuseLow}" opacity="${f(0.25 + 0.25 * Math.sin(2 * Math.PI * time * 2))}"/>`);
   out.push(`<rect x="${f(r * 0.42)}" y="${f(-r * 0.98)}" width="${f(r * 0.4)}" height="${f(r * 0.32)}" rx="2" fill="#5b6380" transform="rotate(45 ${f(r * 0.62)} ${f(-r * 0.82)})"/>`);
   // The cord burns down with the fuse; its spark flickers.
@@ -297,24 +300,26 @@ function drawPlayer(out: string[], id: number, p: Pose, cell: number) {
     out.push(`<ellipse cx="${f(side * r * 0.42)}" cy="${f(r * 0.85 - lift)}" rx="${f(r * 0.26)}" ry="${f(r * 0.15)}" fill="${dark}"/>`);
   }
   const top = -r * 0.92, stroke = f(cell * 0.03);
-  if (id === 0) {
+  const agent = id === 0;
+  if (agent) {
+    // The agent: halo, antenna with a lit tip, round body.
+    out.push(`<circle r="${f(r * 1.4)}" fill="none" stroke="${color}" stroke-width="${f(cell * 0.03)}" opacity="0.55"/>`);
     out.push(`<path d="M0 ${f(top)}Q${f(r * 0.2)} ${f(top - r * 0.35)} ${f(r * 0.08)} ${f(top - r * 0.6)}" stroke="${dark}" stroke-width="${stroke}" fill="none"/><circle cx="${f(r * 0.08)}" cy="${f(top - r * 0.6)}" r="${f(r * 0.15)}" fill="${C.spark}" stroke="${dark}" stroke-width="${stroke}"/>`);
-  } else if (id === 1) {
-    for (const s of [-1, 1]) out.push(`<path d="M${f(s * r * 0.62)} ${f(-r * 0.55)}L${f(s * r * 0.82)} ${f(top - r * 0.4)}L${f(s * r * 0.22)} ${f(top + r * 0.05)}Z" fill="#f1e9dc" stroke="${dark}" stroke-width="${stroke}" stroke-linejoin="round"/>`);
-  } else if (id === 2) {
-    out.push(`<path d="M0 ${f(top)}q${f(-r * 0.05)} ${f(-r * 0.3)} ${f(r * 0.05)} ${f(-r * 0.4)}" stroke="#4f772d" stroke-width="${stroke}" fill="none"/><ellipse cx="${f(r * 0.28)}" cy="${f(top - r * 0.42)}" rx="${f(r * 0.28)}" ry="${f(r * 0.13)}" transform="rotate(-25 ${f(r * 0.28)} ${f(top - r * 0.42)})" fill="#b5e48c" stroke="#4f772d" stroke-width="${stroke}"/>`);
+    out.push(`<ellipse rx="${f(r)}" ry="${f(r * 0.95)}" fill="${color}" stroke="${dark}" stroke-width="${f(cell * 0.035)}"/>`);
+    out.push(`<ellipse cx="${f(-r * 0.38)}" cy="${f(-r * 0.42)}" rx="${f(r * 0.26)}" ry="${f(r * 0.15)}" fill="${light}" opacity="0.7" transform="rotate(-30 ${f(-r * 0.38)} ${f(-r * 0.42)})"/>`);
   } else {
-    const xs = [-0.5, -0.33, -0.17, 0, 0.17, 0.33, 0.5], ys = [0, -0.45, -0.05, -0.55, -0.05, -0.45, 0];
-    out.push(`<polygon points="${xs.map((x, k) => `${f(x * r)},${f(top + r * 0.2 + ys[k] * r)}`).join(" ")}" fill="${C.spark}" stroke="${dark}" stroke-width="${stroke}" stroke-linejoin="round"/>`);
+    // A bot: plain box, nothing on top.
+    out.push(`<rect x="${f(-r * 0.9)}" y="${f(-r * 0.85)}" width="${f(r * 1.8)}" height="${f(r * 1.7)}" rx="${f(r * 0.18)}" fill="${color}" stroke="${dark}" stroke-width="${f(cell * 0.035)}"/>`);
   }
-  out.push(`<ellipse rx="${f(r)}" ry="${f(r * 0.95)}" fill="${color}" stroke="${dark}" stroke-width="${f(cell * 0.035)}"/>`);
-  out.push(`<ellipse cx="${f(-r * 0.38)}" cy="${f(-r * 0.42)}" rx="${f(r * 0.26)}" ry="${f(r * 0.15)}" fill="${light}" opacity="0.7" transform="rotate(-30 ${f(-r * 0.38)} ${f(-r * 0.42)})"/>`);
   const look = DIRS[p.look];
   for (const side of [-1, 1]) {
     const ex = f(side * r * 0.36 + look.x * r * 0.25), ey = f(-r * 0.1 + look.y * r * 0.2);
     if (d !== null) {
       const k = f(r * 0.13);
       out.push(`<path d="M${f(ex - k)} ${f(ey - k)}L${f(ex + k)} ${f(ey + k)}M${f(ex + k)} ${f(ey - k)}L${f(ex - k)} ${f(ey + k)}" stroke="${C.ink}" stroke-width="${stroke}" stroke-linecap="round"/>`);
+    } else if (!agent) {
+      // Bots get flat dot eyes that track direction but carry no expression.
+      out.push(`<circle cx="${ex}" cy="${ey}" r="${f(r * 0.11)}" fill="${C.ink}"/>`);
     } else {
       out.push(`<ellipse cx="${ex}" cy="${ey}" rx="${f(r * 0.2)}" ry="${f(r * 0.24)}" fill="#fff"/><circle cx="${f(ex + look.x * r * 0.08)}" cy="${f(ey + look.y * r * 0.08)}" r="${f(r * 0.11)}" fill="${C.ink}"/>`);
     }
