@@ -1,0 +1,266 @@
+{
+  "status": "estimated narration over moving replay",
+  "audioPending": true,
+  "duration": 261.733333,
+  "schedule": [
+    {
+      "line": 1,
+      "audio": "1_Chapter_1.wav",
+      "at": 0.25,
+      "start": 0.25,
+      "duration": 7.8999999999999995
+    },
+    {
+      "line": 2,
+      "audio": "2_Chapter_1.wav",
+      "at": 0.25,
+      "start": 9.516666666666667,
+      "duration": 5
+    },
+    {
+      "line": 3,
+      "audio": "3_Chapter_1.wav",
+      "at": 6.05,
+      "start": 15.316666666666666,
+      "duration": 10.833333333333332
+    },
+    {
+      "line": 4,
+      "audio": "4_Chapter_1.wav",
+      "at": 0.41700000000000004,
+      "start": 27.683666666666667,
+      "duration": 2.9000000000000004
+    },
+    {
+      "line": 5,
+      "audio": "5_Chapter_1.wav",
+      "at": 5.817,
+      "start": 33.083666666666666,
+      "duration": 2.9000000000000004
+    },
+    {
+      "line": 6,
+      "audio": "6_Chapter_1.wav",
+      "at": 9.85,
+      "start": 37.11666666666667,
+      "duration": 5.833333333333334
+    },
+    {
+      "line": 7,
+      "audio": "7_Chapter_1.wav",
+      "at": 16.483,
+      "start": 43.74966666666667,
+      "duration": 2.9000000000000004
+    },
+    {
+      "line": 9,
+      "audio": "9_Chapter_1.wav",
+      "at": 20.183,
+      "start": 47.449666666666666,
+      "duration": 5.4
+    },
+    {
+      "line": 10,
+      "audio": "10_Chapter_1.wav",
+      "at": 26.383,
+      "start": 53.64966666666666,
+      "duration": 5.4
+    },
+    {
+      "line": 11,
+      "audio": "11_Chapter_1.wav",
+      "at": 34.75,
+      "start": 62.016666666666666,
+      "duration": 4.166666666666667
+    },
+    {
+      "line": 12,
+      "audio": "12_Chapter_1.wav",
+      "at": 42.15,
+      "start": 69.41666666666666,
+      "duration": 2.9000000000000004
+    },
+    {
+      "line": 13,
+      "audio": "13_Chapter_1.wav",
+      "at": 50.217,
+      "start": 77.48366666666666,
+      "duration": 3.7333333333333334
+    },
+    {
+      "line": 14,
+      "audio": "14_Chapter_1.wav",
+      "at": 54.75,
+      "start": 82.01666666666667,
+      "duration": 5.4
+    },
+    {
+      "line": 15,
+      "audio": "15_Chapter_1.wav",
+      "at": 60.95,
+      "start": 88.21666666666667,
+      "duration": 3.7333333333333334
+    },
+    {
+      "line": 16,
+      "audio": "16_Chapter_1.wav",
+      "at": 65.483,
+      "start": 92.74966666666667,
+      "duration": 4.166666666666667
+    },
+    {
+      "line": 17,
+      "audio": "17_Chapter_1.wav",
+      "at": 77.617,
+      "start": 104.88366666666667,
+      "duration": 5.833333333333334
+    },
+    {
+      "line": 18,
+      "audio": "18_Chapter_1.wav",
+      "at": 92.183,
+      "start": 119.44966666666667,
+      "duration": 2.5
+    },
+    {
+      "line": 19,
+      "audio": "19_Chapter_1.wav",
+      "at": 0.25,
+      "start": 130.15,
+      "duration": 6.666666666666667
+    },
+    {
+      "line": 20,
+      "audio": "20_Chapter_1.wav",
+      "at": 7.716666666666667,
+      "start": 137.61666666666667,
+      "duration": 4.166666666666667
+    },
+    {
+      "line": 24,
+      "audio": "24_Chapter_1.wav",
+      "at": 11.083,
+      "start": 153.983,
+      "duration": 5
+    },
+    {
+      "line": 25,
+      "audio": "25_Chapter_1.wav",
+      "at": 16.883,
+      "start": 159.78300000000002,
+      "duration": 3.7333333333333334
+    },
+    {
+      "line": 26,
+      "audio": "26_Chapter_1.wav",
+      "at": 21.417,
+      "start": 164.317,
+      "duration": 4.566666666666666
+    },
+    {
+      "line": 27,
+      "audio": "27_Chapter_1.wav",
+      "at": 33.65,
+      "start": 176.55,
+      "duration": 2.9000000000000004
+    },
+    {
+      "line": 28,
+      "audio": "28_Chapter_1.wav",
+      "at": 41.717,
+      "start": 184.61700000000002,
+      "duration": 5
+    },
+    {
+      "line": 29,
+      "audio": "29_Chapter_1.wav",
+      "at": 50.683,
+      "start": 193.583,
+      "duration": 7.066666666666666
+    },
+    {
+      "line": 30,
+      "audio": "30_Chapter_1.wav",
+      "at": 58.55,
+      "start": 201.45,
+      "duration": 5
+    },
+    {
+      "line": 32,
+      "audio": "32_Chapter_1.wav",
+      "at": 65.25,
+      "start": 208.15,
+      "duration": 4.166666666666667
+    },
+    {
+      "line": 33,
+      "audio": "33_Chapter_1.wav",
+      "at": 70.217,
+      "start": 213.11700000000002,
+      "duration": 3.7333333333333334
+    },
+    {
+      "line": 34,
+      "audio": "34_Chapter_1.wav",
+      "at": 75.317,
+      "start": 218.21699999999998,
+      "duration": 4.166666666666667
+    },
+    {
+      "line": 35,
+      "audio": "35_Chapter_1.wav",
+      "at": 82.283,
+      "start": 225.183,
+      "duration": 4.566666666666666
+    },
+    {
+      "line": 36,
+      "audio": "36_Chapter_1.wav",
+      "at": 87.983,
+      "start": 230.883,
+      "duration": 5
+    },
+    {
+      "line": 37,
+      "audio": "37_Chapter_1.wav",
+      "at": 96.183,
+      "start": 239.08300000000003,
+      "duration": 4.166666666666667
+    },
+    {
+      "line": 38,
+      "audio": "38_Chapter_1.wav",
+      "at": 101.15,
+      "start": 244.05,
+      "duration": 4.166666666666667
+    },
+    {
+      "line": 40,
+      "audio": "40_Chapter_1.wav",
+      "at": 0.25,
+      "start": 249.41666666666669,
+      "duration": 7.500000000000001
+    },
+    {
+      "line": 41,
+      "audio": "41_Chapter_1.wav",
+      "at": 8.55,
+      "start": 257.7166666666667,
+      "duration": 2.9000000000000004
+    }
+  ],
+  "cameras": [
+    {
+      "id": "board",
+      "file": "board.mp4",
+      "offsetSeconds": 0,
+      "duration": 261.733333,
+      "audio": false
+    }
+  ],
+  "music": null,
+  "gameplaySeconds": 208.9,
+  "stationarySeconds": 19.733333333333334,
+  "movingPercent": 90.55369395244935,
+  "activeClips": 35
+}

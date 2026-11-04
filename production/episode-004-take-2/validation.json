@@ -1,0 +1,267 @@
+{
+  "duration": 263.2,
+  "schedule": [
+    {
+      "line": 1,
+      "audio": "1_Chapter_1.wav",
+      "at": 0.25,
+      "start": 0.25,
+      "duration": 10.684082
+    },
+    {
+      "line": 2,
+      "audio": "2_Chapter_1.wav",
+      "at": 0.25,
+      "start": 12.316666666666666,
+      "duration": 4.04898
+    },
+    {
+      "line": 3,
+      "audio": "3_Chapter_1.wav",
+      "at": 5.116666666666666,
+      "start": 17.183333333333334,
+      "duration": 10.004898
+    },
+    {
+      "line": 4,
+      "audio": "4_Chapter_1.wav",
+      "at": 0.41700000000000004,
+      "start": 28.750333333333334,
+      "duration": 3.317551
+    },
+    {
+      "line": 5,
+      "audio": "5_Chapter_1.wav",
+      "at": 5.817,
+      "start": 34.150333333333336,
+      "duration": 4.075102
+    },
+    {
+      "line": 6,
+      "audio": "6_Chapter_1.wav",
+      "at": 10.717,
+      "start": 39.050333333333334,
+      "duration": 5.067755
+    },
+    {
+      "line": 7,
+      "audio": "7_Chapter_1.wav",
+      "at": 16.617,
+      "start": 44.95033333333333,
+      "duration": 2.66449
+    },
+    {
+      "line": 8,
+      "audio": "8_Chapter_1.wav",
+      "at": 20.083,
+      "start": 48.41633333333333,
+      "duration": 4.806531
+    },
+    {
+      "line": 9,
+      "audio": "9_Chapter_1.wav",
+      "at": 25.717,
+      "start": 54.05033333333333,
+      "duration": 5.433469
+    },
+    {
+      "line": 10,
+      "audio": "10_Chapter_1.wav",
+      "at": 34.083,
+      "start": 62.41633333333333,
+      "duration": 4.493061
+    },
+    {
+      "line": 11,
+      "audio": "11_Chapter_1.wav",
+      "at": 41.483,
+      "start": 69.81633333333333,
+      "duration": 3.160816
+    },
+    {
+      "line": 12,
+      "audio": "12_Chapter_1.wav",
+      "at": 49.55,
+      "start": 77.88333333333333,
+      "duration": 3.709388
+    },
+    {
+      "line": 13,
+      "audio": "13_Chapter_1.wav",
+      "at": 54.083,
+      "start": 82.41633333333333,
+      "duration": 4.675918
+    },
+    {
+      "line": 14,
+      "audio": "14_Chapter_1.wav",
+      "at": 59.583,
+      "start": 87.91633333333333,
+      "duration": 3.94449
+    },
+    {
+      "line": 15,
+      "audio": "15_Chapter_1.wav",
+      "at": 64.35,
+      "start": 92.68333333333332,
+      "duration": 4.362449
+    },
+    {
+      "line": 16,
+      "audio": "16_Chapter_1.wav",
+      "at": 76.483,
+      "start": 104.81633333333333,
+      "duration": 5.22449
+    },
+    {
+      "line": 17,
+      "audio": "17_Chapter_1.wav",
+      "at": 91.05,
+      "start": 119.38333333333333,
+      "duration": 3.395918
+    },
+    {
+      "line": 18,
+      "audio": "18_Chapter_1.wav",
+      "at": 0.25,
+      "start": 130.08333333333334,
+      "duration": 7.079184
+    },
+    {
+      "line": 19,
+      "audio": "19_Chapter_1.wav",
+      "at": 8.15,
+      "start": 137.98333333333335,
+      "duration": 4.362449
+    },
+    {
+      "line": 20,
+      "audio": "20_Chapter_1.wav",
+      "at": 11.083,
+      "start": 154.54966666666667,
+      "duration": 5.381224
+    },
+    {
+      "line": 21,
+      "audio": "21_Chapter_1.wav",
+      "at": 17.283,
+      "start": 160.74966666666666,
+      "duration": 3.709388
+    },
+    {
+      "line": 22,
+      "audio": "22_Chapter_1.wav",
+      "at": 21.817,
+      "start": 165.28366666666668,
+      "duration": 4.022857
+    },
+    {
+      "line": 23,
+      "audio": "23_Chapter_1.wav",
+      "at": 34.05,
+      "start": 177.51666666666665,
+      "duration": 2.66449
+    },
+    {
+      "line": 24,
+      "audio": "24_Chapter_1.wav",
+      "at": 42.117,
+      "start": 185.58366666666666,
+      "duration": 4.884898
+    },
+    {
+      "line": 25,
+      "audio": "25_Chapter_1.wav",
+      "at": 51.083,
+      "start": 194.54966666666667,
+      "duration": 6.530612
+    },
+    {
+      "line": 26,
+      "audio": "26_Chapter_1.wav",
+      "at": 58.417,
+      "start": 201.88366666666667,
+      "duration": 3.787755
+    },
+    {
+      "line": 27,
+      "audio": "27_Chapter_1.wav",
+      "at": 65.117,
+      "start": 208.58366666666666,
+      "duration": 4.597551
+    },
+    {
+      "line": 28,
+      "audio": "28_Chapter_1.wav",
+      "at": 70.517,
+      "start": 213.98366666666666,
+      "duration": 4.336327
+    },
+    {
+      "line": 29,
+      "audio": "29_Chapter_1.wav",
+      "at": 75.683,
+      "start": 219.1496666666667,
+      "duration": 3.604898
+    },
+    {
+      "line": 30,
+      "audio": "30_Chapter_1.wav",
+      "at": 82.65,
+      "start": 226.11666666666667,
+      "duration": 3.657143
+    },
+    {
+      "line": 31,
+      "audio": "31_Chapter_1.wav",
+      "at": 88.35,
+      "start": 231.81666666666666,
+      "duration": 4.440816
+    },
+    {
+      "line": 32,
+      "audio": "32_Chapter_1.wav",
+      "at": 96.55,
+      "start": 240.01666666666665,
+      "duration": 3.892245
+    },
+    {
+      "line": 33,
+      "audio": "33_Chapter_1.wav",
+      "at": 101.25,
+      "start": 244.71666666666667,
+      "duration": 4.623673
+    },
+    {
+      "line": 34,
+      "audio": "34_Chapter_1.wav",
+      "at": 0.25,
+      "start": 250.55,
+      "duration": 7.523265
+    },
+    {
+      "line": 35,
+      "audio": "35_Chapter_1.wav",
+      "at": 8.583333333333334,
+      "start": 258.8833333333333,
+      "duration": 3.186939
+    }
+  ],
+  "cameras": [
+    {
+      "id": "board",
+      "file": "board.mp4",
+      "offsetSeconds": 0,
+      "duration": 263.2,
+      "audio": false
+    }
+  ],
+  "music": null,
+  "sourceAudio": [
+    {
+      "id": "board",
+      "audio": false
+    }
+  ],
+  "credits": []
+}

@@ -16,6 +16,9 @@ The Motion Canvas scene, editor and headless MP4 exporter read the same manually
 
 For future scripts and multi-game edits, follow the
 [narration and round presentation requirements](../docs/narration-and-rounds.md).
+For the next Detonarium production, also follow the
+[next-video brief](../docs/detonarium-next-video.md), including required event-driven
+sound effects, the stronger mixed bot lineup, and pre-recording acceptance checks.
 The audio handoff must visibly distinguish presenter and agent speech and include
 all intro/transition/outro lines. Include an opening splash and clear game/round
 cards between games. These are intentional interstitials; ordinary agent commentary

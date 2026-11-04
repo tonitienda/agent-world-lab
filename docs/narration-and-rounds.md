@@ -23,8 +23,9 @@ replacement audio set gets its own production/take directory.
   speaker changes.
 - Also provide separate, speech-only `narration-agent.txt` and
   `narration-presenter.txt`, with a filename mapping for each. Keep the master
-  `narration.txt` if useful. Preserve global manifest IDs when splitting speakers;
-  the first presenter clip is not necessarily `1_Chapter_1.wav`.
+  `narration.txt` if useful. Before audio generation, number the final active master script consecutively so
+  master line N saves as `N_Chapter_1.wav`. Speaker subsets retain those master IDs;
+  do not number each subset from 1.
 - Generate one whole clip per manifest entry. Intro, rules, transition and outro
   clips are part of the required audio set even though the playing agent did not
   say them. Check the exact filename set before declaring audio ready.
@@ -74,6 +75,27 @@ bundle and manifest. Allow roughly 2–3 seconds for a silent transition; for a 
 card, fit the full measured clip plus breathing room. Keep cards readable, avoid
 redundant long introductions, and retain gameplay during ordinary agent commentary.
 
-This is a production requirement, not a claim that existing builders insert cards.
-The current Detonarium two-game builder emits one continuous board shot and needs
-an implementation change to create these interstitial segments.
+The Detonarium builder supports these cards through `source.json` → `cards`,
+using `beforeGame` or `afterGames` placement and a matching `card` ID on presenter
+manifest entries. Card speech is excluded from in-game holds. Use `--episode` to
+select a fresh production take. Existing takes without card metadata remain as
+authored; adding the requirement does not silently rewrite them.
+
+## Playback and repeated lines
+
+Prefer moving slow motion under speech to a long freeze for every line. Use brief
+lead-ins so a plan begins before its action completes; stretch the real source
+interval without reversing, looping or inventing movement. Keep observations after
+the events they describe. Use splash cards for rules and result summaries when
+there is no appropriate gameplay left. Freeze only when a truthful source interval
+cannot provide motion. Retiming must consume the same source chronology in preview,
+export and the audio schedule. Re-probe replacement WAVs and recompute speeds.
+
+Review selected narration across all games, not just within each one. Omit repeated
+catchphrases and near-identical routine exchanges, retaining the variant that adds
+most to the story. Isolated agents may independently repeat themselves; do not imply
+shared memory or write replacement lines as if they were recorded agent speech.
+Preserve existing supplied audio and spoken words. Before audio generation,
+renumber the final active script and all manifest/timing references together so
+master line numbers match WAV filenames. If supplied audio already requires
+retaining old IDs, provide an explicit row-to-file map and preserve those files.

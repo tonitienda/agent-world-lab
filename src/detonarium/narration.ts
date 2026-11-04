@@ -8,6 +8,16 @@ export type NarrationCue = {
   role: "decision" | "outcome";
 };
 
+/** Explicit editorial slow-motion ranges; these do not imply kill attribution. */
+export function focusRanges(value: string, lastTick: number): [number, number][] {
+  if (!value) return [];
+  return value.split(",").map((part) => {
+    const [from, to, extra] = part.split(":").map(Number);
+    if (extra !== undefined || !Number.isFinite(from) || !Number.isFinite(to) || from < 0 || to <= from || to > lastTick) throw new Error(`Invalid focus range: ${part}`);
+    return [from, to];
+  });
+}
+
 /** Select one game's cues, including opening/final holds, without reordering ties. */
 export function gameNarration(cues: NarrationCue[], game: number, lastTick: number): NarrationCue[] {
   const selected = cues.filter((cue) => cue.game === game);

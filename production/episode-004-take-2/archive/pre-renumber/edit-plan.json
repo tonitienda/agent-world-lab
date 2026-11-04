@@ -1,0 +1,283 @@
+{
+  "version": 2,
+  "title": "Episode 004: Claude in Detonarium — Two Games",
+  "fps": 30,
+  "resolution": {
+    "width": 1920,
+    "height": 1080
+  },
+  "cameras": [
+    {
+      "id": "board",
+      "file": "board.mp4",
+      "offsetSeconds": 0
+    }
+  ],
+  "segments": [
+    {
+      "id": "opening",
+      "kind": "shot",
+      "duration": 9.266666666666667,
+      "narration": [
+        {
+          "line": 1,
+          "audio": "1_Chapter_1.wav",
+          "at": 0.25
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 0,
+        "duration": 9.266666666666667
+      }
+    },
+    {
+      "id": "game-1-card",
+      "kind": "shot",
+      "duration": 18,
+      "narration": [
+        {
+          "line": 2,
+          "audio": "2_Chapter_1.wav",
+          "at": 0.25
+        },
+        {
+          "line": 3,
+          "audio": "3_Chapter_1.wav",
+          "at": 6.05
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 9.266666666666667,
+        "duration": 18
+      }
+    },
+    {
+      "id": "game-1",
+      "kind": "shot",
+      "duration": 102.63333333333334,
+      "narration": [
+        {
+          "line": 4,
+          "audio": "4_Chapter_1.wav",
+          "at": 0.41700000000000004
+        },
+        {
+          "line": 5,
+          "audio": "5_Chapter_1.wav",
+          "at": 5.817
+        },
+        {
+          "line": 6,
+          "audio": "6_Chapter_1.wav",
+          "at": 9.85
+        },
+        {
+          "line": 7,
+          "audio": "7_Chapter_1.wav",
+          "at": 16.483
+        },
+        {
+          "line": 9,
+          "audio": "9_Chapter_1.wav",
+          "at": 20.183
+        },
+        {
+          "line": 10,
+          "audio": "10_Chapter_1.wav",
+          "at": 26.383
+        },
+        {
+          "line": 11,
+          "audio": "11_Chapter_1.wav",
+          "at": 34.75
+        },
+        {
+          "line": 12,
+          "audio": "12_Chapter_1.wav",
+          "at": 42.15
+        },
+        {
+          "line": 13,
+          "audio": "13_Chapter_1.wav",
+          "at": 50.217
+        },
+        {
+          "line": 14,
+          "audio": "14_Chapter_1.wav",
+          "at": 54.75
+        },
+        {
+          "line": 15,
+          "audio": "15_Chapter_1.wav",
+          "at": 60.95
+        },
+        {
+          "line": 16,
+          "audio": "16_Chapter_1.wav",
+          "at": 65.483
+        },
+        {
+          "line": 17,
+          "audio": "17_Chapter_1.wav",
+          "at": 77.617
+        },
+        {
+          "line": 18,
+          "audio": "18_Chapter_1.wav",
+          "at": 92.183
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 27.266666666666666,
+        "duration": 102.63333333333334
+      }
+    },
+    {
+      "id": "game-2-card",
+      "kind": "shot",
+      "duration": 13,
+      "narration": [
+        {
+          "line": 19,
+          "audio": "19_Chapter_1.wav",
+          "at": 0.25
+        },
+        {
+          "line": 20,
+          "audio": "20_Chapter_1.wav",
+          "at": 7.716666666666667
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 129.9,
+        "duration": 13
+      }
+    },
+    {
+      "id": "game-2",
+      "kind": "shot",
+      "duration": 106.26666666666667,
+      "narration": [
+        {
+          "line": 24,
+          "audio": "24_Chapter_1.wav",
+          "at": 11.083
+        },
+        {
+          "line": 25,
+          "audio": "25_Chapter_1.wav",
+          "at": 16.883
+        },
+        {
+          "line": 26,
+          "audio": "26_Chapter_1.wav",
+          "at": 21.417
+        },
+        {
+          "line": 27,
+          "audio": "27_Chapter_1.wav",
+          "at": 33.65
+        },
+        {
+          "line": 28,
+          "audio": "28_Chapter_1.wav",
+          "at": 41.717
+        },
+        {
+          "line": 29,
+          "audio": "29_Chapter_1.wav",
+          "at": 50.683
+        },
+        {
+          "line": 30,
+          "audio": "30_Chapter_1.wav",
+          "at": 58.55
+        },
+        {
+          "line": 32,
+          "audio": "32_Chapter_1.wav",
+          "at": 65.25
+        },
+        {
+          "line": 33,
+          "audio": "33_Chapter_1.wav",
+          "at": 70.217
+        },
+        {
+          "line": 34,
+          "audio": "34_Chapter_1.wav",
+          "at": 75.317
+        },
+        {
+          "line": 35,
+          "audio": "35_Chapter_1.wav",
+          "at": 82.283
+        },
+        {
+          "line": 36,
+          "audio": "36_Chapter_1.wav",
+          "at": 87.983
+        },
+        {
+          "line": 37,
+          "audio": "37_Chapter_1.wav",
+          "at": 96.183
+        },
+        {
+          "line": 38,
+          "audio": "38_Chapter_1.wav",
+          "at": 101.15
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 142.9,
+        "duration": 106.26666666666667
+      }
+    },
+    {
+      "id": "ending",
+      "kind": "shot",
+      "duration": 12.566666666666666,
+      "narration": [
+        {
+          "line": 40,
+          "audio": "40_Chapter_1.wav",
+          "at": 0.25
+        },
+        {
+          "line": 41,
+          "audio": "41_Chapter_1.wav",
+          "at": 8.55
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 249.16666666666666,
+        "duration": 12.566666666666666
+      }
+    }
+  ]
+}

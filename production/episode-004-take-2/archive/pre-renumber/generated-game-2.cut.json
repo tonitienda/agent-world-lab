@@ -1,0 +1,283 @@
+{
+  "video": "/Users/toni/Projects/agent-world-lab/production/public/episode-004-take-2/generated/game-2.mp4",
+  "fps": 30,
+  "frames": 3188,
+  "seconds": 106.26666666666667,
+  "moments": [],
+  "narrationMode": "flow",
+  "stationarySeconds": 9.533333333333333,
+  "narration": [
+    {
+      "tick": 65,
+      "seconds": 5.8,
+      "caption": "Rivals on both sides. Nobody's bombs are ready yet, I hope.",
+      "moment": -1,
+      "role": "decision",
+      "line": 24,
+      "audio": "24_Chapter_1.wav",
+      "videoStart": 10.833
+    },
+    {
+      "tick": 68,
+      "seconds": 4.533333333333333,
+      "caption": "The fire's dying down. Time to slip out.",
+      "moment": -1,
+      "role": "decision",
+      "line": 25,
+      "audio": "25_Chapter_1.wav",
+      "videoStart": 16.633
+    },
+    {
+      "tick": 79,
+      "seconds": 5.366666666666666,
+      "caption": "Everyone's at the top end. Nice and quiet down here.",
+      "moment": -1,
+      "role": "decision",
+      "line": 26,
+      "audio": "26_Chapter_1.wav",
+      "videoStart": 21.167
+    },
+    {
+      "tick": 148,
+      "seconds": 3.7,
+      "caption": "I'm getting fond of this spot.",
+      "moment": -1,
+      "role": "decision",
+      "line": 27,
+      "audio": "27_Chapter_1.wav",
+      "videoStart": 33.4
+    },
+    {
+      "tick": 192,
+      "seconds": 5.8,
+      "caption": "The floor starts falling soon. Time to think about the middle.",
+      "moment": -1,
+      "role": "decision",
+      "line": 28,
+      "audio": "28_Chapter_1.wav",
+      "videoStart": 41.467
+    },
+    {
+      "tick": 226,
+      "seconds": 7.866666666666666,
+      "caption": "Hunter 3 is caught by its own bomb. Claude turns to the next rival's escape route.",
+      "moment": -1,
+      "role": "outcome",
+      "line": 29,
+      "audio": "29_Chapter_1.wav",
+      "videoStart": 50.433
+    },
+    {
+      "tick": 226,
+      "seconds": 5.8,
+      "caption": "I'll stand in the gap and block that rival's way out.",
+      "moment": -1,
+      "role": "decision",
+      "line": 30,
+      "audio": "30_Chapter_1.wav",
+      "videoStart": 58.3
+    },
+    {
+      "tick": 231,
+      "seconds": 4.966666666666667,
+      "caption": "Blocked again, and that bomb's nearly due. I'm out.",
+      "moment": -1,
+      "role": "decision",
+      "line": 32,
+      "audio": "32_Chapter_1.wav",
+      "videoStart": 65
+    },
+    {
+      "tick": 233,
+      "seconds": 4.533333333333333,
+      "caption": "Just one rival left! No silly mistakes now.",
+      "moment": -1,
+      "role": "decision",
+      "line": 33,
+      "audio": "33_Chapter_1.wav",
+      "videoStart": 69.967
+    },
+    {
+      "tick": 241,
+      "seconds": 4.966666666666667,
+      "caption": "They've gone south. I'll cut them off down there.",
+      "moment": -1,
+      "role": "decision",
+      "line": 34,
+      "audio": "34_Chapter_1.wav",
+      "videoStart": 75.067
+    },
+    {
+      "tick": 246,
+      "seconds": 5.366666666666666,
+      "caption": "Here's a bomb to keep this door shut behind me.",
+      "moment": -1,
+      "role": "decision",
+      "line": 35,
+      "audio": "35_Chapter_1.wav",
+      "videoStart": 82.033
+    },
+    {
+      "tick": 250,
+      "seconds": 5.8,
+      "caption": "Last door's shut. Now I need to dodge my own bombs.",
+      "moment": -1,
+      "role": "decision",
+      "line": 36,
+      "audio": "36_Chapter_1.wav",
+      "videoStart": 87.733
+    },
+    {
+      "tick": 256,
+      "seconds": 4.966666666666667,
+      "caption": "Down off the row, before my last bomb goes.",
+      "moment": -1,
+      "role": "decision",
+      "line": 37,
+      "audio": "37_Chapter_1.wav",
+      "videoStart": 95.933
+    },
+    {
+      "tick": 257,
+      "seconds": 4.966666666666667,
+      "caption": "That last rival's run out of floor. Fingers crossed.",
+      "moment": -1,
+      "role": "decision",
+      "line": 38,
+      "audio": "38_Chapter_1.wav",
+      "videoStart": 100.9
+    }
+  ],
+  "freezes": [
+    {
+      "tick": 65,
+      "seconds": 0.6666666666666666,
+      "caption": "Rivals on both sides. Nobody's bombs are ready yet, I hope.",
+      "moment": -1,
+      "role": "decision",
+      "line": 24,
+      "audio": "24_Chapter_1.wav",
+      "videoStart": 10.833
+    },
+    {
+      "tick": 68,
+      "seconds": 0.6666666666666666,
+      "caption": "The fire's dying down. Time to slip out.",
+      "moment": -1,
+      "role": "decision",
+      "line": 25,
+      "audio": "25_Chapter_1.wav",
+      "videoStart": 16.633
+    },
+    {
+      "tick": 79,
+      "seconds": 0.6666666666666666,
+      "caption": "Everyone's at the top end. Nice and quiet down here.",
+      "moment": -1,
+      "role": "decision",
+      "line": 26,
+      "audio": "26_Chapter_1.wav",
+      "videoStart": 21.167
+    },
+    {
+      "tick": 148,
+      "seconds": 0.6666666666666666,
+      "caption": "I'm getting fond of this spot.",
+      "moment": -1,
+      "role": "decision",
+      "line": 27,
+      "audio": "27_Chapter_1.wav",
+      "videoStart": 33.4
+    },
+    {
+      "tick": 192,
+      "seconds": 0.6666666666666666,
+      "caption": "The floor starts falling soon. Time to think about the middle.",
+      "moment": -1,
+      "role": "decision",
+      "line": 28,
+      "audio": "28_Chapter_1.wav",
+      "videoStart": 41.467
+    },
+    {
+      "tick": 226,
+      "seconds": 0.6666666666666666,
+      "caption": "I'll stand in the gap and block that rival's way out.",
+      "moment": -1,
+      "role": "decision",
+      "line": 30,
+      "audio": "30_Chapter_1.wav",
+      "videoStart": 58.3
+    },
+    {
+      "tick": 231,
+      "seconds": 0.6666666666666666,
+      "caption": "Blocked again, and that bomb's nearly due. I'm out.",
+      "moment": -1,
+      "role": "decision",
+      "line": 32,
+      "audio": "32_Chapter_1.wav",
+      "videoStart": 65
+    },
+    {
+      "tick": 233,
+      "seconds": 0.6666666666666666,
+      "caption": "Just one rival left! No silly mistakes now.",
+      "moment": -1,
+      "role": "decision",
+      "line": 33,
+      "audio": "33_Chapter_1.wav",
+      "videoStart": 69.967
+    },
+    {
+      "tick": 241,
+      "seconds": 0.6666666666666666,
+      "caption": "They've gone south. I'll cut them off down there.",
+      "moment": -1,
+      "role": "decision",
+      "line": 34,
+      "audio": "34_Chapter_1.wav",
+      "videoStart": 75.067
+    },
+    {
+      "tick": 246,
+      "seconds": 0.6666666666666666,
+      "caption": "Here's a bomb to keep this door shut behind me.",
+      "moment": -1,
+      "role": "decision",
+      "line": 35,
+      "audio": "35_Chapter_1.wav",
+      "videoStart": 82.033
+    },
+    {
+      "tick": 250,
+      "seconds": 0.6666666666666666,
+      "caption": "Last door's shut. Now I need to dodge my own bombs.",
+      "moment": -1,
+      "role": "decision",
+      "line": 36,
+      "audio": "36_Chapter_1.wav",
+      "videoStart": 87.733
+    },
+    {
+      "tick": 256,
+      "seconds": 0.6666666666666666,
+      "caption": "Down off the row, before my last bomb goes.",
+      "moment": -1,
+      "role": "decision",
+      "line": 37,
+      "audio": "37_Chapter_1.wav",
+      "videoStart": 95.933
+    },
+    {
+      "tick": 257,
+      "seconds": 0.6666666666666666,
+      "caption": "That last rival's run out of floor. Fingers crossed.",
+      "moment": -1,
+      "role": "decision",
+      "line": 38,
+      "audio": "38_Chapter_1.wav",
+      "videoStart": 100.9
+    }
+  ]
+}

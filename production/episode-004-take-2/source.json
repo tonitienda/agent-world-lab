@@ -1,0 +1,68 @@
+{
+  "provider": "detonarium",
+  "session": "data/detonarium-sessions/2026-11-04T13-14-00-174Z",
+  "games": [
+    1,
+    2
+  ],
+  "excluded": {
+    "game": 3,
+    "ticks": 102,
+    "reason": "Claude usage_limit_reached; no match result"
+  },
+  "agent": "Claude Opus 5.5",
+  "fps": 30,
+  "tps": 6,
+  "resolution": {
+    "width": 1920,
+    "height": 1080
+  },
+  "cards": [
+    {
+      "id": "opening",
+      "beforeGame": 1,
+      "title": "DETONARIUM",
+      "body": "Claude Opus 5.5 vs three CPU rivals\nBe the last player standing."
+    },
+    {
+      "id": "game-1-card",
+      "beforeGame": 1,
+      "title": "GAME 1",
+      "body": "Claude vs three CPU rivals\nKeep an exit open."
+    },
+    {
+      "id": "game-2-card",
+      "beforeGame": 2,
+      "title": "GAME 2",
+      "body": "A fresh arena. The same objective.\nBe the last player standing."
+    },
+    {
+      "id": "ending",
+      "afterGames": true,
+      "title": "TWO GAMES · TWO WINS",
+      "body": "Thanks for watching\nThe Agent Terrarium"
+    }
+  ],
+  "focus": {
+    "2": [
+      [
+        224,
+        234
+      ],
+      [
+        240,
+        258
+      ]
+    ]
+  },
+  "narrationMode": "flow",
+  "omittedOriginalClipIds": [
+    8,
+    21,
+    22,
+    23,
+    31,
+    39
+  ],
+  "narrationNumbering": "consecutive master script rows"
+}

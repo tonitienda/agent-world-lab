@@ -1,0 +1,558 @@
+[
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 1,
+    "text": "First bomb down, nice and polite.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 1,
+      "field": "narration",
+      "tickStart": 1,
+      "tickEnd": 2
+    },
+    "line": 4,
+    "audio": "4_Chapter_1.wav",
+    "seconds": 3.7,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 29,
+    "text": "Three crates, one bomb. Very thrifty.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 9,
+      "field": "narration",
+      "tickStart": 29,
+      "tickEnd": 30
+    },
+    "line": 5,
+    "audio": "5_Chapter_1.wav",
+    "seconds": 3.7,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 49,
+    "text": "Sandwiched between my own bombs, so I'll let the top one go first.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 17,
+      "field": "narration",
+      "tickStart": 49,
+      "tickEnd": 52
+    },
+    "line": 6,
+    "audio": "6_Chapter_1.wav",
+    "seconds": 6.633333333333334,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 54,
+    "text": "Racing a rival for that pickup.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 20,
+      "field": "narration",
+      "tickStart": 54,
+      "tickEnd": 55
+    },
+    "line": 7,
+    "audio": "7_Chapter_1.wav",
+    "seconds": 3.7,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 56,
+    "text": "Got it! Three bombs now, and here's one for my new neighbours.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 22,
+      "field": "narration",
+      "tickStart": 56,
+      "tickEnd": 57
+    },
+    "line": 9,
+    "audio": "9_Chapter_1.wav",
+    "seconds": 6.2,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 72,
+    "text": "One rival gone, caught by their own bomb. More crates this way.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 33,
+      "field": "narration",
+      "tickStart": 72,
+      "tickEnd": 75
+    },
+    "line": 10,
+    "audio": "10_Chapter_1.wav",
+    "seconds": 6.2,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 118,
+    "text": "Four bombs, loads of reach. Now toward the middle.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 58,
+      "field": "narration",
+      "tickStart": 118,
+      "tickEnd": 122
+    },
+    "line": 11,
+    "audio": "11_Chapter_1.wav",
+    "seconds": 4.966666666666667,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 158,
+    "text": "They're busy decorating the top corner.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 75,
+      "field": "narration",
+      "tickStart": 158,
+      "tickEnd": 162
+    },
+    "line": 12,
+    "audio": "12_Chapter_1.wav",
+    "seconds": 3.7,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 202,
+    "text": "There goes the top edge. Bye bye, corner.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 87,
+      "field": "narration",
+      "tickStart": 202,
+      "tickEnd": 206
+    },
+    "line": 13,
+    "audio": "13_Chapter_1.wav",
+    "seconds": 4.533333333333333,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 211,
+    "text": "That rival's backed into a dead end. I'm going for the door.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 89,
+      "field": "narration",
+      "tickStart": 211,
+      "tickEnd": 214
+    },
+    "line": 14,
+    "audio": "14_Chapter_1.wav",
+    "seconds": 6.2,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 215,
+    "text": "We bumped noses in the doorway. Pushing again.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 91,
+      "field": "narration",
+      "tickStart": 215,
+      "tickEnd": 216
+    },
+    "line": 15,
+    "audio": "15_Chapter_1.wav",
+    "seconds": 4.533333333333333,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 216,
+    "text": "Got the doorway! Sorry, neighbour, this one's the lid.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 92,
+      "field": "narration",
+      "tickStart": 216,
+      "tickEnd": 217
+    },
+    "line": 16,
+    "audio": "16_Chapter_1.wav",
+    "seconds": 4.966666666666667,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 224,
+    "text": "One down the same way, one to go. Same trick might work twice.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 97,
+      "field": "narration",
+      "tickStart": 224,
+      "tickEnd": 225
+    },
+    "line": 17,
+    "audio": "17_Chapter_1.wav",
+    "seconds": 6.633333333333334,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 1,
+    "tick": 228,
+    "text": "Door's shut. Sorry, last neighbour.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-1/session/calls.json",
+      "index": 100,
+      "field": "narration",
+      "tickStart": 228,
+      "tickEnd": 229
+    },
+    "line": 18,
+    "audio": "18_Chapter_1.wav",
+    "seconds": 3.3,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 65,
+    "text": "Rivals on both sides. Nobody's bombs are ready yet, I hope.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 31,
+      "field": "narration",
+      "tickStart": 65,
+      "tickEnd": 66
+    },
+    "line": 24,
+    "audio": "24_Chapter_1.wav",
+    "seconds": 5.8,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 68,
+    "text": "The fire's dying down. Time to slip out.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 34,
+      "field": "narration",
+      "tickStart": 68,
+      "tickEnd": 69
+    },
+    "line": 25,
+    "audio": "25_Chapter_1.wav",
+    "seconds": 4.533333333333333,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 79,
+    "text": "Everyone's at the top end. Nice and quiet down here.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 41,
+      "field": "narration",
+      "tickStart": 79,
+      "tickEnd": 83
+    },
+    "line": 26,
+    "audio": "26_Chapter_1.wav",
+    "seconds": 5.366666666666666,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 148,
+    "text": "I'm getting fond of this spot.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 62,
+      "field": "narration",
+      "tickStart": 148,
+      "tickEnd": 158
+    },
+    "line": 27,
+    "audio": "27_Chapter_1.wav",
+    "seconds": 3.7,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 192,
+    "text": "The floor starts falling soon. Time to think about the middle.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 72,
+      "field": "narration",
+      "tickStart": 192,
+      "tickEnd": 200
+    },
+    "line": 28,
+    "audio": "28_Chapter_1.wav",
+    "seconds": 5.8,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "presenter",
+    "game": 2,
+    "tick": 226,
+    "text": "Hunter 3 is caught by its own bomb. Claude turns to the next rival's escape route.",
+    "role": "outcome",
+    "kind": "context",
+    "source": {
+      "type": "editorial",
+      "evidence": "Recorded goal and verified replay events"
+    },
+    "line": 29,
+    "audio": "29_Chapter_1.wav",
+    "seconds": 7.866666666666666,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 226,
+    "text": "I'll stand in the gap and block that rival's way out.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 85,
+      "field": "narration",
+      "tickStart": 226,
+      "tickEnd": 227
+    },
+    "line": 30,
+    "audio": "30_Chapter_1.wav",
+    "seconds": 5.8,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 231,
+    "text": "Blocked again, and that bomb's nearly due. I'm out.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 90,
+      "field": "narration",
+      "tickStart": 231,
+      "tickEnd": 232
+    },
+    "line": 32,
+    "audio": "32_Chapter_1.wav",
+    "seconds": 4.966666666666667,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 233,
+    "text": "Just one rival left! No silly mistakes now.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 92,
+      "field": "narration",
+      "tickStart": 233,
+      "tickEnd": 234
+    },
+    "line": 33,
+    "audio": "33_Chapter_1.wav",
+    "seconds": 4.533333333333333,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 241,
+    "text": "They've gone south. I'll cut them off down there.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 97,
+      "field": "narration",
+      "tickStart": 241,
+      "tickEnd": 243
+    },
+    "line": 34,
+    "audio": "34_Chapter_1.wav",
+    "seconds": 4.966666666666667,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 246,
+    "text": "Here's a bomb to keep this door shut behind me.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 99,
+      "field": "narration",
+      "tickStart": 246,
+      "tickEnd": 247
+    },
+    "line": 35,
+    "audio": "35_Chapter_1.wav",
+    "seconds": 5.366666666666666,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 250,
+    "text": "Last door's shut. Now I need to dodge my own bombs.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 103,
+      "field": "narration",
+      "tickStart": 250,
+      "tickEnd": 251
+    },
+    "line": 36,
+    "audio": "36_Chapter_1.wav",
+    "seconds": 5.8,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 256,
+    "text": "Down off the row, before my last bomb goes.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 107,
+      "field": "narration",
+      "tickStart": 256,
+      "tickEnd": 257
+    },
+    "line": 37,
+    "audio": "37_Chapter_1.wav",
+    "seconds": 4.966666666666667,
+    "timing": "estimate; rebuild from complete WAV durations"
+  },
+  {
+    "voice": "agent",
+    "game": 2,
+    "tick": 257,
+    "text": "That last rival's run out of floor. Fingers crossed.",
+    "role": "decision",
+    "kind": "narration",
+    "source": {
+      "type": "call",
+      "file": "data/detonarium-sessions/2026-11-04T13-14-00-174Z/game-2/session/calls.json",
+      "index": 108,
+      "field": "narration",
+      "tickStart": 257,
+      "tickEnd": 258
+    },
+    "line": 38,
+    "audio": "38_Chapter_1.wav",
+    "seconds": 4.966666666666667,
+    "timing": "estimate; rebuild from complete WAV durations"
+  }
+]

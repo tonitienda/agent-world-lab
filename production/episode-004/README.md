@@ -3,8 +3,8 @@
 This folder preserves the existing two-game take and its original audio mapping.
 For the next take, use the updated [narration/card requirements](../../docs/narration-and-rounds.md)
 and [opponent-information specification](../../docs/detonarium-plan.md#next-recording-observation-fairness).
-Use a new production directory for replacement recordings. The current two-game
-builder has no splash segments and still needs that implementation change. New
+Use a new production directory for replacement recordings. This older take has no splash segments. The builder now supports splash metadata
+for new takes, such as `episode-004-take-2`. New
 LLM observations now hide opponent upgrades and enemy bomb ranges. CPU bots still
 use full simulation state; the information restriction currently applies to the
 LLM player, not to CPU planning.

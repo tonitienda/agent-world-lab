@@ -16,7 +16,8 @@ import { parseArgs, promisify } from "node:util";
 import { blastCells, PLAYER_COLORS, renderSvg, replayFrames, type Pos, type Replay } from "../packages/detonarium/src/index.js";
 import { findMoments, type Moment, type MomentKind } from "../src/detonarium/moments.js";
 import { AGENT, type CallRecord } from "../src/detonarium/session.js";
-import { gameNarration, type NarrationCue } from "../src/detonarium/narration.js";
+import { focusRanges, gameNarration, type NarrationCue } from "../src/detonarium/narration.js";
+import { flowTimeline } from "../src/detonarium/flow-timeline.js";
 
 const run = promisify(execFile);
 const { values, positionals } = parseArgs({
@@ -31,6 +32,8 @@ const { values, positionals } = parseArgs({
     title: { type: "string" },
     narration: { type: "string" },
     game: { type: "string" },
+    focus: { type: "string", default: "" },
+    "narration-mode": { type: "string", default: "pause" },
   },
 });
 if (positionals.length !== 1) throw new Error("usage: detonarium-record.ts <game dir> [options]");
@@ -67,6 +70,10 @@ moments.forEach((m, i) => {
   freezes.push({ tick: K, seconds: 1.5, caption: m.summary, moment: i, role: "outcome" });
   windows.push([Math.min(P, K) - 4, K + 3]);
 });
+for (const [from, to] of focusRanges(values.focus, last)) {
+  inner.push([from, 0.8], [Math.min(to, last - 0.001), 0.8]);
+  windows.push([from - 2, to + 2]);
+}
 // Editorial narration holds use the pre-action state for plans and the settled
 // result for observations. Actual WAV durations can replace the estimates later.
 if (values.narration) {
@@ -90,7 +97,7 @@ const speed = (tau: number) => {
 /** 0..1: how far into slow motion the frame is, for letterbox and vignette. */
 const slowness = (tau: number, s: number) => (inside(tau) ? Math.max(0, Math.min(1, (NORMAL - s) / (NORMAL - 0.25))) : 0);
 
-type Shot = { tau: number; s: number; freeze?: Freeze };
+type Shot = { tau: number; s: number; freeze?: Freeze; speech?: Freeze };
 const timeline: Shot[] = [];
 for (let k = 0; k < FPS; k++) timeline.push({ tau: 0, s: 0 });
 const pending = [...freezes].sort((a, b) => a.tick - b.tick);
@@ -112,6 +119,13 @@ while (tau < last) {
   timeline.push({ tau, s });
 }
 for (let k = 0; k < 2 * FPS; k++) timeline.push({ tau: last, s: 0 });
+if (!["pause", "flow"].includes(values["narration-mode"])) throw new Error("Unknown narration mode");
+const flowing = values["narration-mode"] === "flow";
+if (flowing) {
+  timeline.length = 0;
+  timeline.push(...flowTimeline(freezes, last, FPS, speed));
+  for (let k = 0; k < Math.ceil(0.4 * FPS); k++) timeline.push({ tau: last, s: 0 });
+}
 
 // ---- Drawing. ----
 const { width: cols, height: rows } = frames[0].state.rules;
@@ -146,10 +160,11 @@ function wrap(text: string, max: number): string[] {
 
 function frameSvg(k: number): string {
   const { tau, s, freeze } = timeline[k];
+  const speech = timeline[k].speech ?? freeze;
   const n = Math.max(0, Math.min(last, Math.ceil(tau - 1e-9)));
   const t = n === 0 ? 1 : Math.max(0.0001, Math.min(1, tau - (n - 1)));
   const board = renderSvg(frames[n].state, { cell: CELL, events: frames[n].events, t }).replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
-  const slow = Math.max(slowness(tau, s), freeze ? 1 : 0);
+  const slow = Math.max(slowness(tau, s), speech ? 1 : 0);
   const eased = slow * slow * (3 - 2 * slow);
   const bar = eased * Math.round(H * 0.089);
   const o: string[] = [];
@@ -173,14 +188,14 @@ function frameSvg(k: number): string {
     o.push(`<circle cx="${px + 16 * u}" cy="${y - 10 * u}" r="${15 * u}" fill="${PLAYER_COLORS[i]}" opacity="${p.alive ? 1 : 0.25}"/>`);
     o.push(`<text x="${px + 48 * u}" y="${y}" font-family="DejaVu Sans" font-size="${29 * u}" fill="${p.alive ? "#e6e9f2" : "#565d70"}"${p.alive ? "" : ` text-decoration="line-through"`}>${esc(names[i])}${k_[i] ? `  ${"✕".repeat(k_[i])}` : ""}</text>`);
   });
-  const label = freeze ? "PAUSED" : s < NORMAL - 0.01 && slow > 0 ? `${(s / NORMAL).toFixed(2)}×` : "";
+  const label = freeze ? (flowing ? "" : "PAUSED") : s < NORMAL - 0.01 && slow > 0 ? `${(s / NORMAL).toFixed(2)}×` : "";
   if (label) o.push(`<text x="${px}" y="${top + 460 * u}" font-family="DejaVu Sans Mono" font-size="${42 * u}" fill="#ffd166" opacity="${eased.toFixed(2)}">${label}</text>`);
   o.push(`<rect width="${W}" height="${bar.toFixed(1)}" fill="#000"/><rect y="${(H - bar).toFixed(1)}" width="${W}" height="${bar.toFixed(1)}" fill="#000"/>`);
   // Caption in the lower bar during a freeze: the agent's own words, or the outcome.
-  if (freeze?.caption) {
-    const lines = wrap(freeze.caption, 90);
+  if (speech?.caption) {
+    const lines = wrap(speech.caption, 90);
     const size = (lines.length > 1 ? 24 : 29) * u;
-    lines.forEach((line, i) => o.push(`<text x="${W / 2}" y="${H - bar / 2 + (i - (lines.length - 1) / 2) * size * 1.2 + size * 0.35}" text-anchor="middle" font-family="DejaVu Sans" font-style="${freeze.role === "decision" ? "italic" : "normal"}" font-size="${size}" fill="${freeze.role === "decision" ? "#e6e9f2" : "#ffd166"}">${esc(line)}</text>`));
+    lines.forEach((line, i) => o.push(`<text x="${W / 2}" y="${H - bar / 2 + (i - (lines.length - 1) / 2) * size * 1.2 + size * 0.35}" text-anchor="middle" font-family="DejaVu Sans" font-style="${speech.role === "decision" ? "italic" : "normal"}" font-size="${size}" fill="${speech.role === "decision" ? "#e6e9f2" : "#ffd166"}">${esc(line)}</text>`));
   }
   o.push(`</svg>`);
   return o.join("");
@@ -206,7 +221,13 @@ rmSync(dir, { recursive: true });
 
 // The cut: where each freeze sits on the video clock, for laying narration on later.
 const cut = { video: out, fps: FPS, frames: timeline.length, seconds: timeline.length / FPS, moments: moments.map(({ call, ...m }) => ({ ...m, intention: call?.intention, rationale: call?.rationale, narration: call?.narration })),
+  narrationMode: values["narration-mode"], stationarySeconds: timeline.filter((s) => s.s === 0).length / FPS,
+  narration: [] as (Freeze & { videoStart: number })[],
   freezes: [] as (Freeze & { videoStart: number })[] };
-timeline.forEach((shot, k) => { if (shot.freeze && timeline[k - 1]?.freeze !== shot.freeze) cut.freezes.push({ ...shot.freeze, videoStart: Number((k / FPS).toFixed(3)) }); });
+timeline.forEach((shot, k) => {
+  const cue = shot.speech ?? shot.freeze, prev = timeline[k - 1]?.speech ?? timeline[k - 1]?.freeze;
+  if (cue && prev !== cue) cut.narration.push({ ...cue, videoStart: Number((k / FPS).toFixed(3)) });
+  if (shot.freeze && timeline[k - 1]?.freeze !== shot.freeze) cut.freezes.push({ ...shot.freeze, seconds: timeline.slice(k).findIndex((s) => s.freeze !== shot.freeze) / FPS, videoStart: Number((k / FPS).toFixed(3)) });
+});
 writeFileSync(out.replace(/\.mp4$/, "") + ".cut.json", JSON.stringify(cut, null, 2) + "\n");
 console.log(`${out}: ${cut.seconds.toFixed(1)} s, ${moments.length} moments, ${cut.freezes.length} freezes, rendered in ${((Date.now() - started) / 1000).toFixed(0)} s`);

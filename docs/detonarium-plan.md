@@ -1,6 +1,11 @@
 # Detonarium and Chess plan
 
-Next two episodes:
+For the next Detonarium video, start with the
+[next-video brief](detonarium-next-video.md): required sound effects, a proposed
+two-normal/one-smart CPU lineup, information fairness, and the production lessons
+from Episode 004. The sections below retain the original engine/pipeline design.
+
+Original episode allocation:
 
 - **Episode 004 — Detonarium**: our own bomb-arena game. One LLM agent vs
   three CPU bots, best-of-N rounds.
@@ -76,7 +81,8 @@ opponents' upgrade totals**. This differs from hiding visible fire or changing t
 rules. Everyone starts with the published base stats. The agent may track each
 rival's observed pickups and learn from visible explosions itself.
 
-The agent-facing API now enforces these observation changes:
+The observation contract is below. Filtering is implemented for the LLM API;
+the CPU information audit is tracked separately.
 
 - Keep own range/capacity and observable rival identity, position and alive status.
   Remove `rivals[].range` and `rivals[].bombCapacity`.

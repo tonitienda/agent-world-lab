@@ -1,0 +1,153 @@
+{
+  "file": "/Users/toni/Projects/agent-world-lab/production/output/episode-004-take-2.mp4",
+  "duration": 263.2,
+  "frames": 7896,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "audio": "aac",
+  "blackIntervals": [],
+  "decoded": true,
+  "narrationWindows": [
+    {
+      "line": 1,
+      "meanDb": -21.9
+    },
+    {
+      "line": 2,
+      "meanDb": -21.4
+    },
+    {
+      "line": 3,
+      "meanDb": -21.6
+    },
+    {
+      "line": 4,
+      "meanDb": -20.9
+    },
+    {
+      "line": 5,
+      "meanDb": -21.6
+    },
+    {
+      "line": 6,
+      "meanDb": -21.8
+    },
+    {
+      "line": 7,
+      "meanDb": -21.8
+    },
+    {
+      "line": 8,
+      "meanDb": -21
+    },
+    {
+      "line": 9,
+      "meanDb": -21.5
+    },
+    {
+      "line": 10,
+      "meanDb": -20.8
+    },
+    {
+      "line": 11,
+      "meanDb": -20.3
+    },
+    {
+      "line": 12,
+      "meanDb": -21.4
+    },
+    {
+      "line": 13,
+      "meanDb": -21.3
+    },
+    {
+      "line": 14,
+      "meanDb": -21.4
+    },
+    {
+      "line": 15,
+      "meanDb": -21.9
+    },
+    {
+      "line": 16,
+      "meanDb": -21.9
+    },
+    {
+      "line": 17,
+      "meanDb": -21.1
+    },
+    {
+      "line": 18,
+      "meanDb": -21.2
+    },
+    {
+      "line": 19,
+      "meanDb": -21.7
+    },
+    {
+      "line": 20,
+      "meanDb": -21.7
+    },
+    {
+      "line": 21,
+      "meanDb": -21.1
+    },
+    {
+      "line": 22,
+      "meanDb": -21.4
+    },
+    {
+      "line": 23,
+      "meanDb": -22.1
+    },
+    {
+      "line": 24,
+      "meanDb": -21.3
+    },
+    {
+      "line": 25,
+      "meanDb": -21.3
+    },
+    {
+      "line": 26,
+      "meanDb": -21.4
+    },
+    {
+      "line": 27,
+      "meanDb": -20.9
+    },
+    {
+      "line": 28,
+      "meanDb": -21.2
+    },
+    {
+      "line": 29,
+      "meanDb": -21.2
+    },
+    {
+      "line": 30,
+      "meanDb": -21.2
+    },
+    {
+      "line": 31,
+      "meanDb": -22
+    },
+    {
+      "line": 32,
+      "meanDb": -21.4
+    },
+    {
+      "line": 33,
+      "meanDb": -21.1
+    },
+    {
+      "line": 34,
+      "meanDb": -20.4
+    },
+    {
+      "line": 35,
+      "meanDb": -20.4
+    }
+  ]
+}
