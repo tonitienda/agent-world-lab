@@ -14,6 +14,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/tonitienda/agent-world-lab/characters"
 	"github.com/tonitienda/agent-world-lab/internal/config"
 	"github.com/tonitienda/agent-world-lab/internal/harness"
 	"github.com/tonitienda/agent-world-lab/internal/storage"
@@ -30,6 +31,9 @@ type seat struct {
 	dest     string
 	control  string
 	viewer   int
+	// cast is the take's EMERGENCE_CAST JSON (every seat's character, keyed by
+	// username), empty when nobody plays a roster character.
+	cast string
 }
 type seatResult struct {
 	exitCode       int
@@ -199,6 +203,13 @@ func (a *App) RunAgent(ctx context.Context, id string, o Options) (err error) {
 			}
 		}
 	}
+	cast, e := a.cast(seats)
+	if e != nil {
+		return e
+	}
+	for i := range seats {
+		seats[i].cast = cast
+	}
 	// Every seat shares one world and one deadline; they play concurrently.
 	results := make([]seatResult, len(seats))
 	var wg sync.WaitGroup
@@ -272,6 +283,26 @@ func (a *App) RunAgent(ctx context.Context, id string, o Options) (err error) {
 	return nil
 }
 
+// cast dresses every seat that plays a roster character. Each recorder gets the
+// whole cast so it can skin and label the other players it sees, not just its own.
+func (a *App) cast(seats []seat) (string, error) {
+	cast := characters.Cast{}
+	for _, s := range seats {
+		if s.agent.Character == "" {
+			continue
+		}
+		ch, e := characters.Lookup(s.agent.Character)
+		if e != nil {
+			return "", e
+		}
+		cast[s.username] = ch.Member(a.Root)
+	}
+	if len(cast) == 0 {
+		return "", nil
+	}
+	return cast.JSON()
+}
+
 func agentByID(c config.Config, id string) config.Agent {
 	for _, candidate := range c.Agents {
 		if candidate.ID == id {
@@ -330,6 +361,9 @@ func (a *App) play(ctx context.Context, c config.Config, version string, s seat)
 	if s.control != "" {
 		mcpEnv["EMERGENCE_CONTROL_ID"] = s.control
 		mcpEnv["RECORD_VIEWER_PORT"] = fmt.Sprint(s.viewer)
+	}
+	if s.cast != "" {
+		mcpEnv["EMERGENCE_CAST"] = s.cast
 	}
 	// Provider-independent capture defaults for every recorded take.
 	mcpEnv["RECORD_WIDTH"], mcpEnv["RECORD_HEIGHT"], mcpEnv["RECORD_FPS"] = "3840", "2160", "60"

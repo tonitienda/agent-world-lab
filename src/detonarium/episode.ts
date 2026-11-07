@@ -5,13 +5,15 @@
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import type { BotKind } from "../../packages/detonarium/src/index.js";
+import { lookupCharacter } from "../characters.js";
 
 export type DetonariumEpisode = {
   version: 1;
   episode: { id: string; title: string };
   environment: { provider: "detonarium"; seed: number; bots: BotKind[]; alert_radius: number; max_macro_ticks: number };
   goal: { prompt_file: string };
-  player: { harness: "claude"; model: string };
+  /** character: optional roster id (characters/roster.json); must be a Claude character. */
+  player: { harness: "claude"; model: string; character?: string };
   games: number;
   /** Absolute path of the goal prompt, resolved next to the episode file. */
   promptPath: string;
@@ -79,6 +81,7 @@ export function loadEpisode(path: string): DetonariumEpisode {
   const file = resolve(path);
   const doc = parseEpisodeYaml(readFileSync(file, "utf8"));
   const fail = (message: string): never => { throw new Error(`${file}: ${message}`); };
+  const optional: Record<string, string[]> = { player: ["character"] };
   const shape: Record<string, string[] | null> = {
     version: null, games: null,
     episode: ["id", "title"],
@@ -92,7 +95,7 @@ export function loadEpisode(path: string): DetonariumEpisode {
     if (fields === null) continue;
     const section = doc[key];
     if (typeof section !== "object" || Array.isArray(section)) fail(`${key} must be a section`);
-    for (const field of Object.keys(section as object)) if (!fields.includes(field)) fail(`unknown key ${key}.${field}`);
+    for (const field of Object.keys(section as object)) if (!fields.includes(field) && !optional[key]?.includes(field)) fail(`unknown key ${key}.${field}`);
     for (const field of fields) if (!(field in (section as object))) fail(`missing ${key}.${field}`);
   }
   const s = doc as Record<string, Record<string, Scalar>> & { version: Scalar; games: Scalar };
@@ -104,6 +107,13 @@ export function loadEpisode(path: string): DetonariumEpisode {
   const bots = s.environment.bots;
   if (!Array.isArray(bots) || bots.length < 1 || bots.length > 3) fail("environment.bots must list 1 to 3 bots");
   for (const bot of bots as string[]) if (!BOT_KINDS.includes(bot)) fail(`unknown bot kind ${bot} (use ${BOT_KINDS.join(", ")})`);
+  let character: string | undefined;
+  if ("character" in s.player) {
+    character = str(s.player.character, "player.character");
+    let family: string;
+    try { family = lookupCharacter(character).family; } catch (e) { return fail(`player.character: ${(e as Error).message}`); }
+    if (family !== "claude") fail(`player.character ${character} is a ${family} character; Detonarium plays Claude`);
+  }
   const promptFile = str(s.goal.prompt_file, "goal.prompt_file");
   if (promptFile.includes("..") || promptFile.startsWith("/")) fail("goal.prompt_file must stay inside the episode folder");
   return {
@@ -117,7 +127,7 @@ export function loadEpisode(path: string): DetonariumEpisode {
       max_macro_ticks: int(s.environment.max_macro_ticks, "environment.max_macro_ticks", 1),
     },
     goal: { prompt_file: promptFile },
-    player: { harness: "claude", model: str(s.player.model, "player.model") },
+    player: { harness: "claude", model: str(s.player.model, "player.model"), ...(character ? { character } : {}) },
     games: int(s.games, "games", 1),
     promptPath: resolve(dirname(file), promptFile),
   };

@@ -81,6 +81,7 @@ empty prompts and unsafe artifact paths fail static validation.
 | `goal.prompt` OR `.prompt_file` | Exactly one; never shares designer context |
 | `evaluation.type`, `.target`, `.radius` | `reach_location`, named manifest target, radius defaults 4 |
 | `agents` | Nonempty list of unique `id`, `harness`, optional `model` |
+| `agents[].character` | Optional roster character ([characters/](../characters/README.md)): skin, nametag and voice. Its family must match `harness`; ignored by the frozen-scenario hash |
 | `recording.cameras` | Current recorder requires `[agent-pov, observer, follow]` |
 | `recording.max_duration_minutes` | 20; integer 1..1440, enforced by supervisor |
 | `production.renderer` | `motion-canvas` |

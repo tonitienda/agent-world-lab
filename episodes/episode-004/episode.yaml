@@ -16,4 +16,6 @@ goal:
 player:
   harness: claude
   model: claude-opus-5-5
+  # character: ada        # optional roster character (characters/roster.json): names the
+  #                       # agent "Ada · Claude" on screen and adds its voice to the prompt
 games: 3

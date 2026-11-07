@@ -136,10 +136,12 @@ async function enableCapture(
     require("../../../packages/minecraft-recorder/index.cjs") as {
       start(
         bot: Bot,
-        options: { output: string; width: number; height: number; fps: number },
+        options: { output: string; width: number; height: number; fps: number; cast?: string },
       ): Promise<() => Promise<void>>;
     };
-  return await recorder.start(bot, { output, width, height, fps });
+  // EMERGENCE_CAST (set by `emergence run` when agents play roster characters)
+  // dresses every player the cameras see; absent, players keep the default skin.
+  return await recorder.start(bot, { output, width, height, fps, cast: process.env.EMERGENCE_CAST || undefined });
 }
 
 export class MinecraftAdapter implements WorldAdapter {

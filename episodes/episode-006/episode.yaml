@@ -21,17 +21,20 @@ evaluation:
   # Pedestals sit 4 blocks either side of the centre and 1 block up.
   radius: 5
 # Every agent below plays at once in one world: `emergence run episode-006 --take 001 --yes`.
-# Agent ids double as Minecraft usernames.
+# Agent ids double as Minecraft usernames. `character` picks a roster character
+# (characters/roster.json) for the on-screen skin, nametag and voice.
 play: together
 agents:
   - id: ada
     harness: claude
     model: configured-default
     goal_file: goal-ada.md
+    character: ada
   - id: bram
     harness: codex
     model: configured-default
     goal_file: goal-bram.md
+    character: bram
 recording:
   cameras: [agent-pov, observer, follow]
   max_duration_minutes: 30

@@ -127,6 +127,36 @@ func TestTeamTakeSeatsEveryMemberInOneWorld(t *testing.T) {
 	}
 }
 
+// Casting is presentation: characters added after the freeze keep the frozen
+// world valid, every seat gets the whole cast and each prompt gets its voice.
+func TestTeamTakeDressesEveryMemberAsItsCharacter(t *testing.T) {
+	a, _, d := teamFixture(t)
+	b, _ := os.ReadFile(filepath.Join(d, "episode.yaml"))
+	yaml := strings.Replace(string(b), "    goal_file: role-claude.md\n", "    goal_file: role-claude.md\n    character: ada\n", 1)
+	yaml = strings.Replace(yaml, "    goal_file: role-codex.md\n", "    goal_file: role-codex.md\n    character: bram\n", 1)
+	storage.Write(filepath.Join(d, "episode.yaml"), []byte(yaml))
+	h := &teamHarness{positions: map[string]Point{"claude": {40, 80, 0}, "codex": {41, 80, 0}}, env: map[string]map[string]string{}, prompts: map[string]string{}}
+	a.Harness = h
+	if e := a.RunAgent(context.Background(), "episode-test", Options{Yes: true}); e != nil {
+		t.Fatal(e)
+	}
+	for member, want := range map[string]string{"claude": "On screen you are Ada", "codex": "On screen you are Bram"} {
+		var cast map[string]struct{ Character, Label, Accent, Skin string }
+		if e := json.Unmarshal([]byte(h.env[member]["EMERGENCE_CAST"]), &cast); e != nil {
+			t.Fatalf("%s: %v", member, e)
+		}
+		if cast["claude"].Label != "Ada · Claude" || cast["codex"].Label != "Bram · Codex" || cast["codex"].Accent != "#10a37f" {
+			t.Fatalf("%s must see the whole cast keyed by username: %+v", member, cast)
+		}
+		if !strings.HasSuffix(cast["claude"].Skin, filepath.Join("characters", "skins", "ada.png")) {
+			t.Fatalf("skin path: %q", cast["claude"].Skin)
+		}
+		if !strings.Contains(h.prompts[member], want) {
+			t.Fatalf("%s prompt lacks its character voice: %q", member, h.prompts[member])
+		}
+	}
+}
+
 func TestTeamObjective(t *testing.T) {
 	member := func(outcome string) MemberRun {
 		return MemberRun{Agent: outcome, Objective: Evaluation{Outcome: outcome, Evidence: "fixture"}}

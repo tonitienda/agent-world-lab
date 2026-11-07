@@ -14,6 +14,8 @@ import (
 
 	"github.com/tonitienda/agent-world-lab/internal/storage"
 	"gopkg.in/yaml.v3"
+
+	"github.com/tonitienda/agent-world-lab/characters"
 )
 
 type Prompt struct {
@@ -32,6 +34,10 @@ type Agent struct {
 	// GoalFile is an optional role brief placed before the shared goal.
 	// omitempty keeps older configs' frozen identity hash unchanged.
 	GoalFile string `yaml:"goal_file" json:",omitempty"`
+	// Character is an optional roster id (characters/roster.json) that sets the
+	// agent's on-screen skin, nametag and narration voice. It is presentation
+	// only: the frozen scenario hash ignores it, so casting may change per take.
+	Character string `yaml:"character" json:",omitempty"`
 }
 
 // PlayTogether puts every agent in one world and one take, recorded under
@@ -251,7 +257,21 @@ func (c Config) validatePlay(dir string) error {
 	if c.Play != "" && c.Play != PlaySolo && c.Play != PlayTogether {
 		return fmt.Errorf("play must be solo or together")
 	}
+	cast := map[string]string{}
 	for _, a := range c.Agents {
+		if a.Character != "" {
+			ch, e := characters.Lookup(a.Character)
+			if e != nil {
+				return fmt.Errorf("agent %s: %w", a.ID, e)
+			}
+			if h := ch.FamilyInfo().Harness; h != a.Harness {
+				return fmt.Errorf("agent %s: character %s is a %s character; it needs harness %s, not %s", a.ID, ch.ID, ch.FamilyInfo().Display, h, a.Harness)
+			}
+			if other, taken := cast[a.Character]; taken {
+				return fmt.Errorf("agents %s and %s both play character %s", other, a.ID, a.Character)
+			}
+			cast[a.Character] = a.ID
+		}
 		if a.GoalFile != "" {
 			if _, e := (Prompt{PromptFile: a.GoalFile}).Text(dir); e != nil {
 				return fmt.Errorf("agent %s goal_file: %w", a.ID, e)
@@ -281,17 +301,28 @@ func (c Config) validatePlay(dir string) error {
 	return nil
 }
 
-// AgentGoal is an agent's role brief (if any) followed by the shared episode goal.
+// AgentGoal is an agent's role brief (if any), the shared episode goal and,
+// when the agent plays a roster character, that character's voice brief.
 func (c Config) AgentGoal(dir string, a Agent) (string, error) {
-	shared, e := c.Goal.Text(dir)
-	if e != nil || a.GoalFile == "" {
-		return shared, e
-	}
-	role, e := (Prompt{PromptFile: a.GoalFile}).Text(dir)
+	goal, e := c.Goal.Text(dir)
 	if e != nil {
 		return "", e
 	}
-	return strings.TrimRight(role, "\n") + "\n\n" + strings.TrimLeft(shared, "\n"), nil
+	if a.GoalFile != "" {
+		role, e := (Prompt{PromptFile: a.GoalFile}).Text(dir)
+		if e != nil {
+			return "", e
+		}
+		goal = strings.TrimRight(role, "\n") + "\n\n" + strings.TrimLeft(goal, "\n")
+	}
+	if a.Character != "" {
+		ch, e := characters.Lookup(a.Character)
+		if e != nil {
+			return "", e
+		}
+		goal = strings.TrimRight(goal, "\n") + "\n\n" + ch.Brief()
+	}
+	return goal, nil
 }
 
 func versionValid(s string) bool {

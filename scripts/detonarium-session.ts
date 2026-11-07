@@ -13,6 +13,7 @@ import { createWriteStream, existsSync, mkdirSync, readFileSync, renameSync, wri
 import { relative, resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { createBot, type BotKind } from "../packages/detonarium/src/index.js";
+import { characterBrief, characterLabel, lookupCharacter } from "../src/characters.js";
 import { loadEpisode } from "../src/detonarium/episode.js";
 import { DetonariumSession } from "../src/detonarium/session.js";
 import { SessionEvents } from "../src/mcp/session-events.js";
@@ -42,6 +43,7 @@ const settings = {
   alertRadius: Number(flags["alert-radius"] ?? episode.environment.alert_radius),
   maxMacroTicks: Number(flags["max-macro-ticks"] ?? episode.environment.max_macro_ticks),
   standIn: flags["stand-in"] ?? null,
+  character: episode.player.character ?? null,
   overrides: Object.keys(flags).filter((k) => !["episode", "out"].includes(k)),
 };
 const values = { ...flags, bots: settings.bots.join(","), model: settings.model, "alert-radius": String(settings.alertRadius) };
@@ -49,9 +51,13 @@ const out = resolve(flags.out ?? `data/detonarium-sessions/${new Date().toISOStr
 mkdirSync(out, { recursive: true });
 const games = settings.games;
 const firstSeed = settings.seed;
-const label = values.model.replace(/^claude-/, "Claude ").replace(/-(\d+)-(\d+)$/, " $1.$2").replace(/\b(opus|sonnet|haiku|fable)\b/, (m) => m[0].toUpperCase() + m.slice(1));
+const modelLabel = values.model.replace(/^claude-/, "Claude ").replace(/-(\d+)-(\d+)$/, " $1.$2").replace(/\b(opus|sonnet|haiku|fable)\b/, (m) => m[0].toUpperCase() + m.slice(1));
 const botCount = settings.bots.length;
-const prompt = readFileSync(episode.promptPath, "utf8").replaceAll("{{RIVALS}}", String(botCount));
+// A roster character (player.character) names the agent on screen and adds its voice.
+const character = episode.player.character ? lookupCharacter(episode.player.character) : null;
+const label = character ? characterLabel(character) : modelLabel;
+const goal = readFileSync(episode.promptPath, "utf8").replaceAll("{{RIVALS}}", String(botCount));
+const prompt = character ? `${goal.trimEnd()}\n\n${characterBrief(character)}` : goal;
 writeFileSync(resolve(out, "run.json"), JSON.stringify(settings, null, 2) + "\n");
 writeFileSync(resolve(out, "goal.md"), prompt);
 

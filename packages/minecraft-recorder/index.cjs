@@ -8,6 +8,7 @@ const CAMERA_STARTUP_MS = 90000;
 const {createFollowController, terrainSnapshot, addFollowCamera, installFollow} = require("./follow-camera.cjs");
 const {synchronizationOffset} = require("./sync.cjs");
 const {addObserverFollow} = require("./observer-follow.cjs");
+const {loadCast, addCast, installCast, castBadge} = require("./cast.cjs");
 
 async function start(bot, options) {
   const fps = options.fps ?? 60;
@@ -15,6 +16,9 @@ async function start(bot, options) {
   const [major, minor] = require('playwright/package.json').version.split('.').map(Number);
   if (fps > 25 && major === 1 && minor < 64) throw Error('60 fps capture requires the updated recorder dependencies: run npm ci in packages/minecraft-recorder');
   const port = Number(process.env.RECORD_VIEWER_PORT || 3007);
+  // Roster characters for every player (EMERGENCE_CAST, keyed by username).
+  const cast = loadCast(options.cast);
+  const self = cast?.[bot.username.toLowerCase()];
   // Verify that Mineflayer can access terrain, not merely that spawn fired.
   // A WebSocket/canvas with no chunks produces an entirely blue recording.
   const pos = bot.entity.position.floored();
@@ -62,18 +66,25 @@ async function start(bot, options) {
       captures[captures.length - 1].page = page;
       page.on("console", m => { if (m.type() === "error") console.error(view.name, m.text()); });
       page.on("pageerror", err => console.error(view.name, "page:", err));
-      if (!view.firstPerson) {
-        // Intercept only third-person scripts; fail if the upstream hook changes.
+      const cameraPatch = view.firstPerson ? null : (view.name === "follow" ? addFollowCamera : addObserverFollow);
+      if (cameraPatch || cast) {
+        // Intercept the viewer bundle: third-person camera control, and character
+        // skins/nametags in every view. Fail if an upstream anchor changes.
         let patched = false;
         await page.route("**/index.js", async route => {
           const original = await route.fetch();
-          const body = (view.name === "follow" ? addFollowCamera : addObserverFollow)(await original.text());
+          let body = await original.text();
+          if (cameraPatch) body = cameraPatch(body);
+          if (cast) body = addCast(body);
           patched = true;
           await route.fulfill({response: original, body});
         });
         captures[captures.length - 1].verifyObserverPatched = () => {
-          if (!patched) throw new Error("Observer viewer script never loaded; tracking not guaranteed");
+          if (!patched) throw new Error("Viewer script never loaded; camera tracking and character skins not guaranteed");
         };
+      }
+      if (cast) {
+        await page.addInitScript({content: `(${installCast.toString()})(${JSON.stringify(cast)}, ${JSON.stringify(bot.username)});`});
       }
       if (view.name === "follow") {
         await page.addInitScript({content: `(${installFollow.toString()})(${createFollowController.toString()});`});
@@ -121,6 +132,7 @@ async function start(bot, options) {
         hud.innerHTML = '<div style="font-size:13px;letter-spacing:2px;color:#93cad5;margin-bottom:5px">INVENTORY</div><div id="emergent-items">Empty</div>';
         document.body.appendChild(hud);
       }, options.width / 1280);
+      if (self) await page.evaluate(`(${castBadge.toString()})(${JSON.stringify(self)}, ${options.width / 1280})`);
       let previousInventory = "";
       const updateHud = async () => {
         if (page.isClosed()) return;
@@ -179,7 +191,7 @@ async function start(bot, options) {
       ...timing, rawCaptureOpenedAt: timing.captureOpenedAt,
       captureOpenedAt: startedAt, gateAt: new Date(transitions[i]).toISOString()
     })), synchronization: "optical gate aligned to shared event epoch; precision limited by capture frame rate",
-      cameras: views, dimensions: {width: options.width, height: options.height}, capture: {backend: "playwright-chromium", requestedFps: fps} };
+      cameras: views, cast: cast ? Object.fromEntries(Object.entries(cast).map(([u, m]) => [u, {label: m.label, accent: m.accent}])) : undefined, dimensions: {width: options.width, height: options.height}, capture: {backend: "playwright-chromium", requestedFps: fps} };
     const metadataPath = join(dirname(options.output), "metadata.json");
     const saveMetadata = () => require("node:fs").writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
     saveMetadata();
@@ -201,6 +213,11 @@ async function start(bot, options) {
           if (capture.name === "follow") {
             metadata.followTelemetry = await capture.page.evaluate(() => window.__followTelemetry).catch(() => null);
             await capture.page.screenshot({path: join(dirname(options.output), "follow-final-debug.png")}).catch(() => {});
+          }
+          if (cast) {
+            // Which usernames this camera dressed (players it never saw are absent).
+            metadata.castTelemetry ??= {};
+            metadata.castTelemetry[capture.name] = await capture.page.evaluate(() => window.__emergentCastTelemetry ?? null).catch(() => null);
           }
           const video = capture.page.video();
           await capture.context.close();

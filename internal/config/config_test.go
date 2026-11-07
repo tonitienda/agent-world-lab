@@ -123,3 +123,27 @@ func TestPlayTogetherConfiguration(t *testing.T) {
 		})
 	}
 }
+
+func TestCharacterCasting(t *testing.T) {
+	cast := [][2]string{{"  - id: claude\n", "  - id: claude\n    character: ada\n"}, {"  - id: codex\n", "  - id: codex\n    character: bram\n"}}
+	d := togetherFixture(t, append(append([][2]string{}, together...), cast...))
+	c, e := config.Load(d)
+	if e != nil {
+		t.Fatal(e)
+	}
+	goal, e := c.AgentGoal(d, c.Agents[1])
+	if e != nil || !strings.HasPrefix(goal, "  First line") || !strings.HasSuffix(goal, "## Your character\n\nOn screen you are Bram"+goal[strings.Index(goal, "On screen you are Bram")+len("On screen you are Bram"):]) || !strings.Contains(goal, "black hoodie") {
+		t.Fatalf("character voice must follow the shared goal: %q %v", goal, e)
+	}
+	for name, bad := range map[string][][2]string{
+		"unknown character": {{"  - id: claude\n", "  - id: claude\n    character: nobody\n"}},
+		"wrong family":      {{"  - id: claude\n", "  - id: claude\n    character: bram\n"}},
+		"same character":    {{"  - id: claude\n", "  - id: claude\n    character: ada\n"}, {"  - id: codex\n    harness: codex\n", "  - id: codex\n    harness: claude\n    character: ada\n"}},
+	} {
+		t.Run(name, func(t *testing.T) {
+			if _, e := config.Load(togetherFixture(t, bad)); e == nil {
+				t.Fatal("accepted invalid casting")
+			}
+		})
+	}
+}

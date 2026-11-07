@@ -52,6 +52,10 @@ on success. Missing sync gates fail explicitly rather than emitting misaligned M
 On initialization failure, contexts and HTTP/WebSocket servers close; partial browser
 captures remain in the destination. Use a new directory for every session.
 
+## Characters
+
+With `options.cast` (the `EMERGENCE_CAST` JSON from `emergence run`, keyed by username), `cast.cjs` patches the viewer bundle in all three views. Every cast player gets its roster skin and a readable nametag, and each video gets a top-right badge naming its seat. See [characters/README.md](../../characters/README.md).
+
 ## Validation
 
 `npm run integration:recorder` runs the real viewer, Chromium, optical synchronization,

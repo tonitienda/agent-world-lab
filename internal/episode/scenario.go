@@ -112,6 +112,14 @@ func configHash(c config.Config, d string) (string, error) {
 	return configInputsHash(c, level, goal)
 }
 func configInputsHash(c config.Config, level, goal string) (string, error) {
+	// Casting is presentation, not scenario identity: a frozen world may be
+	// replayed with different characters (and pre-casting freezes stay valid).
+	agents := make([]config.Agent, len(c.Agents))
+	for i, a := range c.Agents {
+		a.Character = ""
+		agents[i] = a
+	}
+	c.Agents = agents
 	b, e := json.Marshal([]any{c, level, goal})
 	if e != nil {
 		return "", e
