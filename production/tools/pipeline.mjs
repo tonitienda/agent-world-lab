@@ -76,7 +76,15 @@ export function validate(plan,manifest,media){
   }
   timeline+=s.duration;
  }
- return {duration:Number(timeline.toFixed(6)),schedule,cameras:[...cams.values()],music};
+ let effects=null;
+ if(plan.effects!==undefined){
+  const e=plan.effects;
+  if(!e||!safeFile(e.file)||(e.volume!==undefined&&(!Number.isFinite(e.volume)||e.volume<=0||e.volume>1))||(e.duck!==undefined&&typeof e.duck!=='boolean'))fail('Invalid sound effects');
+  const p=media(`effects/${e.file}`);
+  if(!p.audio||Math.abs(p.duration-timeline)>.05)fail('Sound effects duration must match the edited timeline');
+  effects={...e,duration:p.duration};
+ }
+ return {duration:Number(timeline.toFixed(6)),schedule,cameras:[...cams.values()],music,effects};
 }
 /** Credits the episode's description must carry: each licensed asset's exact attribution text. */
 export function credits(plan){
@@ -90,7 +98,7 @@ export function prepare(production,episode){
  const cache=new Map();const media=rel=>{if(!cache.has(rel))cache.set(rel,probe(join(pub,rel)));return cache.get(rel)};
  const result=validate(plan,manifest,media);
  const out=join(pub,'generated');mkdirSync(out,{recursive:true});
- const fingerprint=createHash('sha256').update(JSON.stringify({plan,manifest,version:1,assets:[...cache.keys()].map(rel=>{const s=statSync(join(pub,rel));return [rel,s.size,s.mtimeMs]})})).digest('hex');
+ const fingerprint=createHash('sha256').update(JSON.stringify({plan,manifest,version:2,assets:[...cache.keys()].map(rel=>{const s=statSync(join(pub,rel));return [rel,s.size,s.mtimeMs]})})).digest('hex');
  const stamp=join(out,'soundtrack.sha256');
  writeFileSync(join(folder,'validation.json'),JSON.stringify({...result,sourceAudio:result.cameras.map(c=>({id:c.id,audio:c.audio})),credits:credits(plan)},null,2)+'\n');
  if(existsSync(stamp)&&readFileSync(stamp,'utf8')===fingerprint&&existsSync(join(out,'soundtrack.wav')))return {plan,...result,soundtrack:join(out,'soundtrack.wav')};
@@ -115,19 +123,30 @@ export function prepare(production,episode){
   const tag=`n${index}`;
   filters.push(`[${index++}:a]aresample=48000,asetpts=PTS-STARTPTS,loudnorm=I=-18:TP=-2:LRA=7,adelay=${Math.round(v.start*1000)}:all=1[${tag}]`);voices.push(`[${tag}]`);
  }
- const m=result.music;
+ const m=result.music,e=result.effects;
+ const duckMusic=!!m&&m.duck!==false&&voices.length>0;
+ const duckEffects=!!e&&e.duck!==false&&voices.length>0;
+ const keys=[...(duckMusic?['musicKey']:[]),...(duckEffects?['effectsKey']:[])];
+ if(voices.length){
+  if(keys.length){
+   filters.push(`${voices.join('')}amix=inputs=${voices.length}:normalize=0:dropout_transition=0,asplit=${keys.length+1}[voice]${keys.map(k=>`[${k}Raw]`).join('')}`);
+   for(const key of keys)filters.push(`[${key}Raw]apad[${key}]`);
+   mix.push('[voice]');
+  }else mix.push(...voices);
+ }
  if(m){
-  // The bed loops to cover the episode, fades at both ends, and dips while someone speaks.
   const d=result.duration,fadeIn=Math.min(m.fadeIn??2,d/2),fadeOut=Math.min(m.fadeOut??4,d/2);
   args.push('-stream_loop','-1','-ss',String(m.start??0),'-i',join(pub,'music',m.file));
   filters.push(`[${index++}:a]aresample=48000,asetpts=PTS-STARTPTS,atrim=duration=${d},volume=${m.volume??0.12},afade=t=in:d=${fadeIn},afade=t=out:st=${d-fadeOut}:d=${fadeOut}[bed]`);
-  if(voices.length&&m.duck!==false){
-   filters.push(`${voices.join('')}amix=inputs=${voices.length}:normalize=0:dropout_transition=0,asplit=2[voice][speech]`,
-    // The compressor stops when its key ends, so the key runs on as silence after the last line.
-    `[speech]apad[key]`,`[bed][key]sidechaincompress=threshold=0.02:ratio=4:attack=20:release=500[ducked]`);
-   mix.push('[voice]','[ducked]');
-  }else mix.push(...voices,'[bed]');
- }else mix.push(...voices);
+  if(duckMusic){filters.push('[bed][musicKey]sidechaincompress=threshold=0.02:ratio=4:attack=20:release=500[duckedMusic]');mix.push('[duckedMusic]');}
+  else mix.push('[bed]');
+ }
+ if(e){
+  args.push('-i',join(pub,'effects',e.file));
+  filters.push(`[${index++}:a]aresample=48000,asetpts=PTS-STARTPTS,atrim=duration=${result.duration},volume=${e.volume??1}[effects]`);
+  if(duckEffects){filters.push('[effects][effectsKey]sidechaincompress=threshold=0.025:ratio=3:attack=8:release=180[duckedEffects]');mix.push('[duckedEffects]');}
+  else mix.push('[effects]');
+ }
  if(!mix.length)throw Error('Episode has no audio');
  filters.push(`${mix.join('')}amix=inputs=${mix.length}:normalize=0:dropout_transition=0,alimiter=limit=0.95:latency=1,apad,atrim=duration=${result.duration}[out]`);
  command('ffmpeg',[...args,'-filter_complex',filters.join(';'),'-map','[out]','-ar','48000','-ac','2','-c:a','pcm_s16le',join(out,'soundtrack.wav')]);

@@ -1,0 +1,20 @@
+[
+  {
+    "row": 1,
+    "line": 1,
+    "audio": "1_Chapter_1.wav",
+    "text": "Last time, Claude beat Stockfish set to fifteen hundred. Now it's facing two thousand, with the same tools and no list of legal moves."
+  },
+  {
+    "row": 2,
+    "line": 21,
+    "audio": "21_Chapter_1.wav",
+    "text": "Stockfish wins after thirty-two moves. Claude missed a diagonal attack on its queen, then resigned. Two rejected moves along the way."
+  },
+  {
+    "row": 3,
+    "line": 22,
+    "audio": "22_Chapter_1.wav",
+    "text": "What should Claude face next? Thanks for watching."
+  }
+]

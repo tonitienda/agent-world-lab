@@ -1,0 +1,370 @@
+[
+  {
+    "line": 1,
+    "voice": "presenter",
+    "at": 0.3,
+    "slot": 8.997,
+    "ply": null,
+    "kind": "intro",
+    "text": "Last time, Claude beat Stockfish set to fifteen hundred. Now it's facing two thousand, with the same tools and no list of legal moves.",
+    "audio": "1_Chapter_1.wav",
+    "source": {
+      "kind": "editorial-presenter",
+      "generator": "presenter-lines.json",
+      "verifiedAgainst": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json"
+    }
+  },
+  {
+    "line": 2,
+    "voice": "agent",
+    "at": 10.297,
+    "slot": 6.784,
+    "ply": 1,
+    "kind": "rationale",
+    "text": "I'm playing white against the engine. First I'll check the board, then make moves one at a time until the game is over.",
+    "audio": "2_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 1,
+      "field": "rationale",
+      "origin": "transcript.jsonl: public assistant text before the move (harvested by chess-rationale.ts)"
+    }
+  },
+  {
+    "line": 3,
+    "voice": "agent",
+    "at": 21.881,
+    "slot": 7.754,
+    "ply": 9,
+    "kind": "rationale",
+    "text": "With black's light bishop stuck behind e6, closing the center with e5 gives me space and a good kingside attacking setup.",
+    "audio": "3_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 9,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 4,
+    "voice": "agent",
+    "at": 30.835,
+    "slot": 5.501,
+    "ply": 11,
+    "kind": "rationale",
+    "text": "Five moves in: I've set up a French-style space advantage. Castling next.",
+    "audio": "4_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 11,
+      "field": "rationale",
+      "origin": "transcript.jsonl: public assistant text before the move (harvested by chess-rationale.ts)"
+    }
+  },
+  {
+    "line": 5,
+    "voice": "agent",
+    "at": 42.736,
+    "slot": 9.045,
+    "ply": 19,
+    "kind": "rationale",
+    "text": "Black's a6 bishop is their bad piece, so trading it off would help them. On c2 my bishop still aims at h7 for a later Qd3.",
+    "audio": "5_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 19,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 6,
+    "voice": "agent",
+    "at": 52.981,
+    "slot": 7.853,
+    "ply": 21,
+    "kind": "rationale",
+    "text": "Nb3 adds pressure on c5 and the loose a5 pawn. If black pushes c4, the knight lands on a great d4 square.",
+    "audio": "6_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 21,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 7,
+    "voice": "agent",
+    "at": 62.034,
+    "slot": 7.535,
+    "ply": 23,
+    "kind": "rationale",
+    "text": "Moving the knight off b3 frees the c2 bishop's diagonal, so Bxa4 would come with check against the e8 king.",
+    "audio": "7_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 23,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 8,
+    "voice": "agent",
+    "at": 73.769,
+    "slot": 15.294,
+    "ply": 27,
+    "kind": "rationale",
+    "text": "I'm a pawn up now. Next I'll pin that d7 knight against the king, since Black can't castle out of it yet. Didn't work. My own bishop on c2 blocks that diagonal. A bit embarrassing. Plan B: send the knight to b3 to hit c5.",
+    "audio": "8_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 27,
+      "field": "rationale",
+      "origin": "transcript.jsonl: public assistant text before the move (harvested by chess-rationale.ts)"
+    }
+  },
+  {
+    "line": 9,
+    "voice": "agent",
+    "at": 96.663,
+    "slot": 7.826,
+    "ply": 37,
+    "kind": "rationale",
+    "text": "Nothing defended c3, so Rxc3 was the threat. Qd2 covers c3 and backs up the f4 bishop too.",
+    "audio": "9_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 37,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 10,
+    "voice": "agent",
+    "at": 107.289,
+    "slot": 4.146,
+    "ply": 39,
+    "kind": "rationale",
+    "text": "Black's g5 kicks my bishop. It drops back to e3.",
+    "audio": "10_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 39,
+      "field": "rationale",
+      "origin": "transcript.jsonl: public assistant text before the move (harvested by chess-rationale.ts)"
+    }
+  },
+  {
+    "line": 11,
+    "voice": "agent",
+    "at": 112.635,
+    "slot": 5.01,
+    "ply": 41,
+    "kind": "rationale",
+    "text": "The f3 knight is attacked. It goes to h4, where it eyes f5.",
+    "audio": "11_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 41,
+      "field": "rationale",
+      "origin": "transcript.jsonl: public assistant text before the move (harvested by chess-rationale.ts)"
+    }
+  },
+  {
+    "line": 12,
+    "voice": "agent",
+    "at": 121.645,
+    "slot": 10.473,
+    "ply": 45,
+    "kind": "rationale",
+    "text": "Bd1 hits g4, which nothing defends, and clears the c-file. Next, a rook on c1 would line up on the c6 bishop with the queen sitting right behind it.",
+    "audio": "12_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 45,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 13,
+    "voice": "agent",
+    "at": 136.118,
+    "slot": 7.427,
+    "ply": 49,
+    "kind": "rationale",
+    "text": "Taking with the f-pawn opens the f-file toward f7 and keeps Black's h8 rook off an open h-file aimed at my king.",
+    "audio": "13_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 49,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 14,
+    "voice": "agent",
+    "at": 146.345,
+    "slot": 6.967,
+    "ply": 51,
+    "kind": "rationale",
+    "text": "Only the queen guards the c6 bishop now. My rook on the open file also eyes c7 for a later invasion.",
+    "audio": "14_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 51,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 15,
+    "voice": "agent",
+    "at": 154.512,
+    "slot": 12.653,
+    "ply": 53,
+    "kind": "rationale",
+    "text": "With the knight gone from g8, only the rook guards h6, and my queen sees h6 through e3-f4-g5. Rxh6 Qxh6 would win the exchange, and the queen still covers d4.",
+    "audio": "15_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 53,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 16,
+    "voice": "agent",
+    "at": 169.965,
+    "slot": 2.571,
+    "ply": 55,
+    "kind": "intention",
+    "text": "Queen takes the rook, as planned.",
+    "audio": "16_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 55,
+      "field": "intention",
+      "origin": "session/replay.json: make_move public intention"
+    }
+  },
+  {
+    "line": 17,
+    "voice": "agent",
+    "at": 175.337,
+    "slot": 3.896,
+    "ply": 57,
+    "kind": "rationale",
+    "text": "They grabbed d4 with check. My king steps to the corner.",
+    "audio": "17_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 57,
+      "field": "rationale",
+      "origin": "transcript.jsonl: public assistant text before the move (harvested by chess-rationale.ts)"
+    }
+  },
+  {
+    "line": 18,
+    "voice": "agent",
+    "at": 180.432,
+    "slot": 8.553,
+    "ply": 59,
+    "kind": "rationale",
+    "text": "The knight and queen were both hitting g4 and nothing defended it. On e2 the bishop is safe and covers d3, f3 and f1 near my king.",
+    "audio": "18_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 59,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 19,
+    "voice": "agent",
+    "at": 191.986,
+    "slot": 5.953,
+    "ply": 61,
+    "kind": "rationale",
+    "text": "The rook hits d4 head-on. The queen has to move, and the d-file points straight at Black's king.",
+    "audio": "19_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 61,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 20,
+    "voice": "agent",
+    "at": 200.738,
+    "slot": 8.664,
+    "ply": 63,
+    "kind": "rationale",
+    "text": "On h5 my queen protects the bishop. It also covers g4, which keeps the knight away from the Ng4-f2 fork on my king and rook.",
+    "audio": "20_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json",
+      "ply": 63,
+      "field": "rationale",
+      "origin": "session/replay.json: make_move public rationale"
+    }
+  },
+  {
+    "line": 21,
+    "voice": "presenter",
+    "at": 214.502,
+    "slot": 9.018,
+    "ply": null,
+    "kind": "outro",
+    "text": "Stockfish wins after thirty-two moves. Claude missed a diagonal attack on its queen, then resigned. Two rejected moves along the way.",
+    "audio": "21_Chapter_1.wav",
+    "source": {
+      "kind": "editorial-presenter",
+      "generator": "presenter-lines.json",
+      "verifiedAgainst": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json"
+    }
+  },
+  {
+    "line": 22,
+    "voice": "presenter",
+    "at": 223.82,
+    "slot": 9.7,
+    "ply": null,
+    "kind": "end",
+    "text": "What should Claude face next? Thanks for watching.",
+    "audio": "22_Chapter_1.wav",
+    "source": {
+      "kind": "editorial-presenter",
+      "generator": "presenter-lines.json",
+      "verifiedAgainst": "../../data/chess-sessions/episode-005-opus55-sf2000-take-1/replay.json"
+    }
+  }
+]

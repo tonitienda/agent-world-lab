@@ -7,6 +7,47 @@ import {sourceTime} from '../production/src/timeline.js';
 const manifest=[1,2].map(line=>({line,audio:`${line}_Chapter_1.wav`}));
 const fixture=()=>({version:2,fps:25,cameras:[{id:'pov',file:'pov.mp4',offsetSeconds:0},{id:'observer',file:'observer.mp4',offsetSeconds:-3.318}],segments:[{kind:'shot',duration:8,narration:[{line:1,audio:'1_Chapter_1.wav',at:.35}],shot:{kind:'pip',cameras:['pov','observer'],start:10,duration:8}}]});
 const media=(file:string)=>({duration:file.startsWith('audio/')?5:40,audio:file.startsWith('audio/')});
+test('effects stems require audio, safe filenames and an exact edited duration',()=>{
+ const p:any=fixture();p.effects={file:'effects.wav',volume:.8,duck:true};
+ const lookup=(f:string)=>f.startsWith('effects/')?{duration:8,audio:true}:media(f);
+ assert.equal(validate(p,manifest,lookup).effects.duration,8);
+ for(const effects of [{file:'../effects.wav'},{file:'effects.wav',volume:0},{file:'effects.wav',volume:2},{file:'effects.wav',duck:'yes'}]){
+  p.effects=effects;assert.throws(()=>validate(p,manifest,lookup),/effects/);
+ }
+ p.effects={file:'effects.wav'};
+ assert.throws(()=>validate(p,manifest,(f:string)=>f.startsWith('effects/')?{duration:7,audio:true}:media(f)),/duration/);
+ assert.throws(()=>validate(p,manifest,(f:string)=>f.startsWith('effects/')?{duration:8,audio:false}:media(f)),/duration/);
+ assert.throws(()=>validate(p,manifest,(f:string)=>{if(f.startsWith('effects/'))throw Error('Missing effects');return media(f);}),/Missing effects/);
+});
+
+test('effects duck beneath an unchanged narration bus and invalidate the soundtrack cache',async()=>{
+ const {mkdtempSync,mkdirSync,writeFileSync,rmSync}=await import('node:fs');
+ const {tmpdir}=await import('node:os');const {join}=await import('node:path');
+ const {execFileSync,spawnSync}=await import('node:child_process');
+ const dir=mkdtempSync(join(tmpdir(),'production-effects-'));
+ try{
+  const pub=join(dir,'public/episode-test'),folder=join(dir,'episode-test');
+  for(const path of [folder,...['audio','video','effects'].map(p=>join(pub,p))])mkdirSync(path,{recursive:true});
+  const ff=(...args:string[])=>execFileSync('ffmpeg',['-y','-loglevel','error',...args]);
+  ff('-f','lavfi','-i','color=c=blue:s=320x180:d=12','-r','25',join(pub,'video/board.mp4'));
+  ff('-f','lavfi','-i','sine=frequency=440:duration=2',join(pub,'audio/1_Chapter_1.wav'));
+  ff('-f','lavfi','-i','sine=frequency=220:duration=12',join(pub,'effects/effects.wav'));
+  const plan:any={version:2,fps:25,cameras:[{id:'board',file:'board.mp4'}],segments:[{kind:'shot',duration:12,narration:[{line:1,audio:'1_Chapter_1.wav',at:4}],shot:{kind:'full',cameras:['board'],start:0,duration:12}}]};
+  writeFileSync(join(folder,'narration-manifest.json'),JSON.stringify([{line:1,audio:'1_Chapter_1.wav'}]));
+  writeFileSync(join(folder,'edit-plan.json'),JSON.stringify(plan));
+  const track=prepare(dir,'episode-test').soundtrack;
+  const level=(time:number,freq:number)=>{
+   const r=spawnSync('ffmpeg',['-hide_banner','-ss',String(time),'-t','1','-i',track,'-af',`bandpass=f=${freq}:w=35,volumedetect`,'-f','null','-'],{encoding:'utf8'});
+   assert.equal(r.status,0,r.stderr);return Number(/mean_volume: (-?[\d.]+)/.exec(r.stderr)![1]);
+  };
+  const voiceBefore=level(4.6,440),stamp=readFileSync(join(pub,'generated/soundtrack.sha256'),'utf8');
+  plan.effects={file:'effects.wav',duck:true};writeFileSync(join(folder,'edit-plan.json'),JSON.stringify(plan));
+  prepare(dir,'episode-test');
+  assert.notEqual(readFileSync(join(pub,'generated/soundtrack.sha256'),'utf8'),stamp);
+  assert.ok(level(4.6,220)<level(8.5,220)-3,'effects should dip under speech');
+  assert.ok(Math.abs(level(4.6,440)-voiceBefore)<1,'narration itself must not be ducked');
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
 test('title backgrounds use signed source offsets and reject missing cameras or out-of-bounds frames',()=>{
  const p:any=fixture();p.segments[0].kind='intro';delete p.segments[0].shot;
  p.segments[0].background={camera:'observer',time:4};

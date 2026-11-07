@@ -13,7 +13,9 @@ export type Segment = {
 export type Attribution = {title:string; artist:string; text:string; source?:string; license?:string; licenseUrl?:string};
 /** Background music from public/<episode>/music/: looped, faded, and ducked under narration unless `duck` is false. */
 export type Music = {file:string; volume?:number; start?:number; fadeIn?:number; fadeOut?:number; duck?:boolean; attribution:Attribution};
-export type EpisodePlan = {version?:number; title?:string; fps?:number; resolution?:{width:number;height:number}; music?:Music; cameras:Camera[]; segments:Segment[]};
+/** Event-synchronized effects stem, already laid out on the final output clock. */
+export type Effects = {file:string; volume?:number; duck?:boolean};
+export type EpisodePlan = {version?:number; title?:string; fps?:number; resolution?:{width:number;height:number}; music?:Music; effects?:Effects; cameras:Camera[]; segments:Segment[]};
 export const sourceTime = (camera:Camera, start:number) => start+(camera.offsetSeconds??0);
 export const heldSourceTime = (camera:Camera, shot:Shot, elapsed:number) =>
   sourceTime(camera,shot.start)+Math.min(shot.duration,Math.max(0,elapsed-(shot.hold??0)));

@@ -11,13 +11,15 @@
 import { execFile, execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { availableParallelism, tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { createHash } from "node:crypto";
 import { parseArgs, promisify } from "node:util";
 import { blastCells, PLAYER_COLORS, renderSvg, replayFrames, type Pos, type Replay } from "../packages/detonarium/src/index.js";
 import { findMoments, type Moment, type MomentKind } from "../src/detonarium/moments.js";
 import { AGENT, type CallRecord } from "../src/detonarium/session.js";
 import { focusRanges, gameNarration, type NarrationCue } from "../src/detonarium/narration.js";
 import { flowTimeline } from "../src/detonarium/flow-timeline.js";
+import { soundCues } from "../src/detonarium/sfx.js";
 
 const run = promisify(execFile);
 const { values, positionals } = parseArgs({
@@ -34,6 +36,7 @@ const { values, positionals } = parseArgs({
     game: { type: "string" },
     focus: { type: "string", default: "" },
     "narration-mode": { type: "string", default: "pause" },
+    "timing-only": { type: "boolean", default: false },
   },
 });
 if (positionals.length !== 1) throw new Error("usage: detonarium-record.ts <game dir> [options]");
@@ -126,6 +129,19 @@ if (flowing) {
   timeline.push(...flowTimeline(freezes, last, FPS, speed));
   for (let k = 0; k < Math.ceil(0.4 * FPS); k++) timeline.push({ tau: last, s: 0 });
 }
+
+// The sound planner sees the same fractional source clock as frameSvg. Timing-only
+// can rebuild the cue sheet for existing media without rendering/re-encoding it.
+const effectCues = soundCues(frames, timeline, FPS, NORMAL);
+const clockHash = createHash("sha256").update(JSON.stringify(timeline.map((f) => [f.tau, f.s]))).digest("hex");
+const speechStarts = timeline.flatMap((shot, k) => {
+  const cue = shot.speech ?? shot.freeze, prev = timeline[k - 1]?.speech ?? timeline[k - 1]?.freeze;
+  return cue && prev !== cue ? [{ line: cue.line, videoStart: Number((k / FPS).toFixed(3)) }] : [];
+});
+mkdirSync(dirname(out), { recursive: true });
+writeFileSync(out.replace(/\.mp4$/, "") + ".timing.json", JSON.stringify({ version: 1, fps: FPS, frames: timeline.length, seconds: timeline.length / FPS,
+  replayHash: createHash("sha256").update(JSON.stringify(replay)).digest("hex"), clockHash, narration: speechStarts, cues: effectCues }, null, 2) + "\n");
+if (values["timing-only"]) process.exit(0);
 
 // ---- Drawing. ----
 const { width: cols, height: rows } = frames[0].state.rules;
@@ -221,6 +237,7 @@ rmSync(dir, { recursive: true });
 
 // The cut: where each freeze sits on the video clock, for laying narration on later.
 const cut = { video: out, fps: FPS, frames: timeline.length, seconds: timeline.length / FPS, moments: moments.map(({ call, ...m }) => ({ ...m, intention: call?.intention, rationale: call?.rationale, narration: call?.narration })),
+  soundEffects: effectCues, clockHash,
   narrationMode: values["narration-mode"], stationarySeconds: timeline.filter((s) => s.s === 0).length / FPS,
   narration: [] as (Freeze & { videoStart: number })[],
   freezes: [] as (Freeze & { videoStart: number })[] };
