@@ -1,0 +1,247 @@
+{
+  "purpose": "Temporary rehearsal narration; replace with ElevenLabs WAVs using the same filenames.",
+  "clips": [
+    {
+      "line": 1,
+      "audio": "1_Chapter_1.wav",
+      "speaker": "presenter",
+      "text": "Last time, Claude beat Stockfish set to fifteen hundred. Now it's facing two thousand, with the same tools and no list of legal moves.",
+      "engine": "macOS say",
+      "voice": "Daniel",
+      "wordsPerMinute": 165,
+      "duration": 8.396563,
+      "sha256": "c1cbd066649f139ddbf4fa25254cfc43d763aefae5bd9f530c2c90f40eb361e4"
+    },
+    {
+      "line": 2,
+      "audio": "2_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "I'm playing white against the engine. First I'll check the board, then make moves one at a time until the game is over.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 6.184271,
+      "sha256": "326a99cf17291a6a6a4ad164d2aae156d034907276bc3a194a9e5a50c1f83369"
+    },
+    {
+      "line": 3,
+      "audio": "3_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "With black's light bishop stuck behind e6, closing the center with e5 gives me space and a good kingside attacking setup.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 7.154063,
+      "sha256": "0a2486a6088e01245a739b7abad028058b8893dc8fd178eebdf8a788eb6f2a86"
+    },
+    {
+      "line": 4,
+      "audio": "4_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Five moves in: I've set up a French-style space advantage. Castling next.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 4.900875,
+      "sha256": "005efc77700a605d4d5038a6f75bd49a0138902fa6e479edc1d8a11f263d6c91"
+    },
+    {
+      "line": 5,
+      "audio": "5_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Black's a6 bishop is their bad piece, so trading it off would help them. On c2 my bishop still aims at h7 for a later Qd3.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 8.445125,
+      "sha256": "8cda7e66f45092e6d02a8d296a6333233a30c02a0303a3299365478a6b264c25"
+    },
+    {
+      "line": 6,
+      "audio": "6_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Nb3 adds pressure on c5 and the loose a5 pawn. If black pushes c4, the knight lands on a great d4 square.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 7.252875,
+      "sha256": "f5518bbaa669bf471d5afc37726dc34211c87cbca8a81127c836e09a04358839"
+    },
+    {
+      "line": 7,
+      "audio": "7_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Moving the knight off b3 frees the c2 bishop's diagonal, so Bxa4 would come with check against the e8 king.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 6.935292,
+      "sha256": "59c688ef02635bfdbdc766722543149ad4e3f9e192c8f1a24ee4b20af90b1863"
+    },
+    {
+      "line": 8,
+      "audio": "8_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "I'm a pawn up now. Next I'll pin that d7 knight against the king, since Black can't castle out of it yet. Didn't work. My own bishop on c2 blocks that diagonal. A bit embarrassing. Plan B: send the knight to b3 to hit c5.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 14.694375,
+      "sha256": "578177242bb6009b713c0d1aa64b5ecac4df8e5c99af1c7b9d6d4effc745dd81"
+    },
+    {
+      "line": 9,
+      "audio": "9_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Nothing defended c3, so Rxc3 was the threat. Qd2 covers c3 and backs up the f4 bishop too.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 7.225896,
+      "sha256": "8395a906eb3cdaaa5e183f6fd8e1ee2851b71d402191c07d61581aeb75ea2605"
+    },
+    {
+      "line": 10,
+      "audio": "10_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Black's g5 kicks my bishop. It drops back to e3.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 3.545729,
+      "sha256": "63da9f8519648bbf5597e6084d3d2d453b88c97b264ee7233f74bca0841c8844"
+    },
+    {
+      "line": 11,
+      "audio": "11_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "The f3 knight is attacked. It goes to h4, where it eyes f5.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 4.410396,
+      "sha256": "6b1e4977d899bbba199810deccfe10013b3e64c8c5f2c68666961104c5b28cea"
+    },
+    {
+      "line": 12,
+      "audio": "12_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Bd1 hits g4, which nothing defends, and clears the c-file. Next, a rook on c1 would line up on the c6 bishop with the queen sitting right behind it.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 9.87275,
+      "sha256": "68c3f18205c20bbf577fa62a1ac1736cba062bb7fa0c363c7d4247f64f2277a8"
+    },
+    {
+      "line": 13,
+      "audio": "13_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Taking with the f-pawn opens the f-file toward f7 and keeps Black's h8 rook off an open h-file aimed at my king.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 6.826583,
+      "sha256": "0602437ef215306ec86d00c57a05874e8e35bb54267aaf4092c4c049e5244006"
+    },
+    {
+      "line": 14,
+      "audio": "14_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Only the queen guards the c6 bishop now. My rook on the open file also eyes c7 for a later invasion.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 6.367167,
+      "sha256": "74a088ff6b74b42faf51b8328287726596bf344204d85f2fc85030250666298b"
+    },
+    {
+      "line": 15,
+      "audio": "15_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "With the knight gone from g8, only the rook guards h6, and my queen sees h6 through e3-f4-g5. Rxh6 Qxh6 would win the exchange, and the queen still covers d4.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 12.053479,
+      "sha256": "6ecbb527f77d17103e24f08448b489b29b2a677999c14c6fcd66e54d018eb773"
+    },
+    {
+      "line": 16,
+      "audio": "16_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "Queen takes the rook, as planned.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 1.971208,
+      "sha256": "d57db7d5cd21f16fde00647c29a48b02dd97a2541c680bb6bfbf2f7c1e05ca25"
+    },
+    {
+      "line": 17,
+      "audio": "17_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "They grabbed d4 with check. My king steps to the corner.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 3.295792,
+      "sha256": "a2fcb14f9f550a10fe4e31356821c3269ffbaddd136a74489571652d8c9f2402"
+    },
+    {
+      "line": 18,
+      "audio": "18_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "The knight and queen were both hitting g4 and nothing defended it. On e2 the bishop is safe and covers d3, f3 and f1 near my king.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 7.953292,
+      "sha256": "5ccf9436e591012e9d28b9604668b8482de7d42ff2560b7efa6826003b9f6c34"
+    },
+    {
+      "line": 19,
+      "audio": "19_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "The rook hits d4 head-on. The queen has to move, and the d-file points straight at Black's king.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 5.352667,
+      "sha256": "24e84031e78caa98862e03975edafa34d5a33ebb6427ed6f394d21f5e4608252"
+    },
+    {
+      "line": 20,
+      "audio": "20_Chapter_1.wav",
+      "speaker": "agent",
+      "text": "On h5 my queen protects the bishop. It also covers g4, which keeps the knight away from the Ng4-f2 fork on my king and rook.",
+      "engine": "macOS say",
+      "voice": "Samantha",
+      "wordsPerMinute": 165,
+      "duration": 8.063542,
+      "sha256": "f0507b353d866802269c49decdcd27f3bb48c0b05c3bca6afbfb82befeafcef6"
+    },
+    {
+      "line": 21,
+      "audio": "21_Chapter_1.wav",
+      "speaker": "presenter",
+      "text": "Stockfish wins after thirty-two moves. Claude missed a diagonal attack on its queen, then resigned. Two rejected moves along the way.",
+      "engine": "macOS say",
+      "voice": "Daniel",
+      "wordsPerMinute": 165,
+      "duration": 8.418104,
+      "sha256": "e9efade835bfca0921b26110ba2bc04d2d75805b5a47cde418b991638c259001"
+    },
+    {
+      "line": 22,
+      "audio": "22_Chapter_1.wav",
+      "speaker": "presenter",
+      "text": "What should Claude face next? Thanks for watching.",
+      "engine": "macOS say",
+      "voice": "Daniel",
+      "wordsPerMinute": 165,
+      "duration": 3.137021,
+      "sha256": "c95ef5489e3920b24f048a28eca75222434ae2c1e554e75681673abec5fb9a53"
+    }
+  ]
+}

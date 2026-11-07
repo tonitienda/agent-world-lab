@@ -1,0 +1,95 @@
+{
+  "clips": 22,
+  "allDecoded": true,
+  "allNonSilent": true,
+  "levels": [
+    {
+      "line": 1,
+      "meanDb": -20.8
+    },
+    {
+      "line": 2,
+      "meanDb": -22.5
+    },
+    {
+      "line": 3,
+      "meanDb": -23.0
+    },
+    {
+      "line": 4,
+      "meanDb": -23.2
+    },
+    {
+      "line": 5,
+      "meanDb": -23.3
+    },
+    {
+      "line": 6,
+      "meanDb": -23.4
+    },
+    {
+      "line": 7,
+      "meanDb": -23.3
+    },
+    {
+      "line": 8,
+      "meanDb": -23.2
+    },
+    {
+      "line": 9,
+      "meanDb": -22.8
+    },
+    {
+      "line": 10,
+      "meanDb": -23.9
+    },
+    {
+      "line": 11,
+      "meanDb": -23.4
+    },
+    {
+      "line": 12,
+      "meanDb": -23.0
+    },
+    {
+      "line": 13,
+      "meanDb": -22.8
+    },
+    {
+      "line": 14,
+      "meanDb": -22.9
+    },
+    {
+      "line": 15,
+      "meanDb": -23.2
+    },
+    {
+      "line": 16,
+      "meanDb": -22.5
+    },
+    {
+      "line": 17,
+      "meanDb": -23.4
+    },
+    {
+      "line": 18,
+      "meanDb": -22.2
+    },
+    {
+      "line": 19,
+      "meanDb": -22.5
+    },
+    {
+      "line": 20,
+      "meanDb": -23.0
+    },
+    {
+      "line": 21,
+      "meanDb": -21.6
+    },
+    {
+      "line": 22,
+      "meanDb": -22.2
+    }
+  ]
+}

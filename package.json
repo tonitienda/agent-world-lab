@@ -10,7 +10,7 @@
     "mcp": "tsx src/mcp/main.ts",
     "smoke": "tsx scripts/smoke.ts",
     "check": "tsc --noEmit && tsc -p packages/detonarium && tsc -p packages/chess",
-    "test": "node --import tsx --test tests/*.test.ts packages/detonarium/test/*.test.ts packages/chess/test/*.test.ts",
+    "test": "node --import tsx --test tests/*.test.ts tests/*.test.mjs packages/detonarium/test/*.test.ts packages/chess/test/*.test.ts",
     "integration": "tsx scripts/integration.ts",
     "record": "tsx scripts/record-session.ts",
     "bot-smoke": "tsx scripts/bot-actions-smoke.ts",
@@ -31,6 +31,7 @@
     "integration:orchestration": "tsx scripts/emergence-integration.ts",
     "integration:pipeline": "tsx scripts/emergence-integration.ts --guided",
     "chess:play": "tsx scripts/chess-session.ts",
+    "chess:youtube": "node --import tsx scripts/chess-youtube.ts",
     "chess:record": "tsx packages/chess/examples/record.ts",
     "chess:mcp": "tsx src/mcp/chess.ts",
     "detonarium:mcp": "tsx src/mcp/detonarium.ts",
@@ -38,6 +39,7 @@
     "detonarium:record": "tsx scripts/detonarium-record.ts"
   },
   "dependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.77.0",
     "@modelcontextprotocol/sdk": "^1.19.0",
     "chess.js": "^1.4.0",
     "mineflayer": "^4.32.0",

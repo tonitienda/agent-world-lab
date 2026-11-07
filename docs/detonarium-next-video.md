@@ -28,6 +28,11 @@ Use the agent/model chosen for that recording; the workflow must not depend on C
 
 ## 1. Sound effects — required before the next final export
 
+Implementation status: an original sound bank, retimed cue planner and shared
+ducked mix are now implemented. See the [sound-effects workflow](detonarium-sound-effects.md)
+and `episode-004-sfx-review` for the first review pass. The published Episode 004
+export remains unchanged. Audition and tune the mix before the next publication.
+
 Implement an event-driven soundtrack, reusable for future recorded games. This
 is a required part of the next video, rather than another deferred polish pass.
 

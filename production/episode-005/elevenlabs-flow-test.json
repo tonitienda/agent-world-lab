@@ -1,0 +1,36 @@
+{
+  "episode": "episode-005",
+  "status": "passed",
+  "generation": {
+    "provider": "ElevenLabs",
+    "model": "eleven_v4",
+    "clips": 22,
+    "speechSeconds": 184.32,
+    "speakers": {
+      "presenter": "Bella",
+      "agent": "Larry"
+    },
+    "unchangedRerunApiRequests": 0
+  },
+  "timing": {
+    "rehearsalSeconds": 233.533333,
+    "finalSeconds": 265.233333,
+    "changeSeconds": 31.7
+  },
+  "validation": {
+    "individualClipsDecoded": true,
+    "individualClipsNonSilent": true,
+    "scriptAndSpeakerMappingMatches": true,
+    "allClipsFitRetimedSlots": true,
+    "fullVideoDecoded": true,
+    "blackIntervals": [],
+    "resolution": [
+      1920,
+      1080
+    ],
+    "fps": 30,
+    "frames": 7957
+  },
+  "output": "production/output/episode-005.mp4",
+  "preservedRehearsal": "production/output/episode-005-rehearsal.mp4"
+}

@@ -217,3 +217,12 @@ an initial real-frame hold, reported in `automatic-edit-report.md`, rather than 
 full-screen narration card. The helper does not implement slow playback. Manually edited v2 plans
 are preserved. Preview and final export continue to use the shared scene, audio
 builder and renderer documented above.
+
+## Detonarium effects
+
+[Detonarium sound-effects workflow](../docs/detonarium-sound-effects.md) documents
+the event-synchronized original sound bank, retiming checks, effects/narration
+ducking and separate review exports. Set `soundEffects: true` in a new take's
+`source.json` and rebuild with measured WAVs. Shared plans use the optional
+`effects` stem; preview and export share its mixed soundtrack. Existing takes
+without this option retain their previous audio.

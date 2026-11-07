@@ -1,0 +1,20 @@
+{
+  "title": "Can Claude Opus 5.5 beat Stockfish 2000?",
+  "alternatives": [
+    "Claude Opus 5.5 vs Stockfish 2000: no legal-move hints",
+    "Claude beat Stockfish 1500. Can it handle 2000?"
+  ],
+  "context": "In our first chess experiment, Claude beat Stockfish set to 1500. This time we raise it to 2000, keeping the same model, side, tools and engine thinking time.",
+  "tags": ["Claude", "Claude Opus 5.5", "Anthropic", "AI chess", "AI plays chess", "LLM chess", "Stockfish", "Stockfish 2000", "Claude vs Stockfish", "AI vs Stockfish", "illegal moves", "chess engine", "The Agent Terrarium", "AI experiment"],
+  "chapters": [
+    {"kind": "intro", "title": "Claude vs Stockfish 2000"},
+    {"kind": "cue", "ply": 1, "title": "Opening: the Caro-Kann"},
+    {"kind": "cue", "ply": 9, "title": "Closing the centre"},
+    {"kind": "illegal", "ply": 27, "title": "First rejected move: the blocked diagonal"},
+    {"kind": "cue", "ply": 37, "title": "The turning point: Qd2"},
+    {"kind": "cue", "ply": 53, "title": "Trading a bishop for a rook"},
+    {"kind": "illegal", "ply": 61, "title": "Second rejected move: rook notation"},
+    {"kind": "cue", "ply": 63, "title": "The queen is left exposed"},
+    {"kind": "outro", "title": "Final result and stats"}
+  ]
+}

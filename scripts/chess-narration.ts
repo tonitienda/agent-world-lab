@@ -7,7 +7,7 @@
 // Usage: tsx scripts/chess-narration.ts <video dir> <production dir>   (reads replay.json + narration.json)
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { DEFAULT_PACING, VOICE_LEAD, type ChessReplay, type NarrationCue, type Termination } from "../packages/chess/src/index.js";
 
@@ -87,12 +87,52 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   if (!videoDir || !outDir) throw Error("Usage: tsx scripts/chess-narration.ts <video dir> <production dir>");
   const replay = JSON.parse(readFileSync(join(videoDir, "replay.json"), "utf8")) as ChessReplay;
   const narration = JSON.parse(readFileSync(join(videoDir, "narration.json"), "utf8")) as Narration;
-  const script = narrationScript(replay, narration);
+  const presenterPath = join(outDir, "presenter-lines.json");
+  const presenter: Partial<Record<"intro" | "outro" | "end", string>> = existsSync(presenterPath)
+    ? JSON.parse(readFileSync(presenterPath, "utf8")) : {};
+  const rawPath = join(videoDir, "session/replay.json");
+  const rawReplay: ChessReplay = existsSync(rawPath) ? JSON.parse(readFileSync(rawPath, "utf8")) : replay;
+  const script = narrationScript(replay, narration).map((line) => ({
+    ...line,
+    text: line.voice === "presenter" ? presenter[line.kind as "intro" | "outro" | "end"] ?? line.text : line.text,
+    source: line.voice === "agent"
+      ? { kind: "recorded-public-commentary", file: relative(outDir, join(videoDir, "replay.json")), ply: line.ply, field: line.kind,
+          origin: line.kind === "rationale" && !rawReplay.moves[(line.ply ?? 1) - 1]?.rationale
+            ? "transcript.jsonl: public assistant text before the move (harvested by chess-rationale.ts)"
+            : "session/replay.json: make_move public " + line.kind }
+      : { kind: "editorial-presenter", generator: existsSync(presenterPath) ? "presenter-lines.json" : "scripts/chess-narration.ts:presenterLines", verifiedAgainst: relative(outDir, join(videoDir, "replay.json")) },
+  }));
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, "narration.txt"), script.map((l) => l.text.replace(/\s+/g, " ")).join("\n") + "\n");
   writeFileSync(join(outDir, "narration-manifest.json"), JSON.stringify(script, null, 2) + "\n");
+  writeFileSync(join(outDir, "expected-audio.txt"), script.map((l) => l.audio).join("\n") + "\n");
+  // Speaker subsets retain master IDs: their rows must never be renumbered for WAV export.
+  for (const voice of ["agent", "presenter"] as const) {
+    const lines = script.filter((l) => l.voice === voice);
+    writeFileSync(join(outDir, `narration-${voice}.txt`), lines.map((l) => l.text.replace(/\s+/g, " ")).join("\n") + "\n");
+    writeFileSync(join(outDir, `narration-${voice}-files.json`), JSON.stringify(lines.map((l, i) => ({
+      row: i + 1, line: l.line, audio: l.audio, text: l.text,
+    })), null, 2) + "\n");
+  }
+  const agentCount = script.filter((l) => l.voice === "agent").length;
+  const audioDir = join(dirname(outDir), "public", basename(outDir), "audio");
+  const hasAudio = script.every((l) => existsSync(join(audioDir, l.audio)));
+  writeFileSync(join(outDir, "recording-sheet.md"), [
+    "# Narration recording sheet", "",
+    `${script.length} clips total: ${agentCount} AGENT, ${script.length - agentCount} PRESENTER.`, "",
+    "Generate one whole clip per entry. Master line N saves as N_Chapter_1.wav; speaker subsets retain these master IDs.", "",
+    "Agent clips are public commentary from the recorded game, not verified analysis. Presenter clips are editorial copy. " +
+      (hasAudio ? "Slots have been rebuilt from the current WAV durations; replacement audio requires another timing pass." : "Timings are estimates until the complete WAV set is supplied."), "",
+    ...script.flatMap((l) => [
+      `## ${l.line}. ${l.voice.toUpperCase()} — ${l.audio}`, "",
+      `Placement: ${l.at}s; slot: ${l.slot}s; ${l.ply === null ? l.kind + " card" : "before ply " + l.ply + " (" + l.kind + ")"}.`, "",
+      l.text.replace(/\s+/g, " "), "",
+    ]),
+  ].join("\n"));
   for (const l of script) {
-    const needs = l.text.split(/\s+/).length / DEFAULT_PACING.wordsPerSecond;
+    const needs = hasAudio
+      ? Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", join(audioDir, l.audio)], { encoding: "utf8" }))
+      : l.text.split(/\s+/).length / DEFAULT_PACING.wordsPerSecond;
     if (needs > l.slot) console.warn(`line ${l.line} needs ~${needs.toFixed(1)} s but has ${l.slot} s: ${l.text}`);
   }
   console.log(`${script.length} lines (${script.filter((l) => l.voice === "presenter").length} presenter) → ${outDir}`);

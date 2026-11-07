@@ -1,0 +1,101 @@
+{
+  "file": "/Users/toni/Projects/agent-world-lab/production/output/episode-005.mp4",
+  "duration": 233.533333,
+  "frames": 7006,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "audio": "aac",
+  "blackIntervals": [],
+  "decoded": true,
+  "narrationWindows": [
+    {
+      "line": 1,
+      "meanDb": -20.3
+    },
+    {
+      "line": 2,
+      "meanDb": -19.6
+    },
+    {
+      "line": 3,
+      "meanDb": -20.2
+    },
+    {
+      "line": 4,
+      "meanDb": -20.5
+    },
+    {
+      "line": 5,
+      "meanDb": -19.8
+    },
+    {
+      "line": 6,
+      "meanDb": -20
+    },
+    {
+      "line": 7,
+      "meanDb": -20
+    },
+    {
+      "line": 8,
+      "meanDb": -19.9
+    },
+    {
+      "line": 9,
+      "meanDb": -20
+    },
+    {
+      "line": 10,
+      "meanDb": -20.1
+    },
+    {
+      "line": 11,
+      "meanDb": -20.2
+    },
+    {
+      "line": 12,
+      "meanDb": -19.7
+    },
+    {
+      "line": 13,
+      "meanDb": -19.9
+    },
+    {
+      "line": 14,
+      "meanDb": -19.8
+    },
+    {
+      "line": 15,
+      "meanDb": -20.1
+    },
+    {
+      "line": 16,
+      "meanDb": -19.8
+    },
+    {
+      "line": 17,
+      "meanDb": -20
+    },
+    {
+      "line": 18,
+      "meanDb": -19.9
+    },
+    {
+      "line": 19,
+      "meanDb": -19.9
+    },
+    {
+      "line": 20,
+      "meanDb": -19.5
+    },
+    {
+      "line": 21,
+      "meanDb": -20.3
+    },
+    {
+      "line": 22,
+      "meanDb": -20.6
+    }
+  ]
+}

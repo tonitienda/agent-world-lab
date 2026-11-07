@@ -1,0 +1,17 @@
+{
+  "cueCount": 369,
+  "uniqueSourceEvents": 435,
+  "videoPacketHash": "SHA256=43f3cc7b0931b62569b1d9dd1a71264d2cc305c2003e652b17f1ebeab761c6c5",
+  "originalPictureUnchanged": true,
+  "previewStart": 89.03333333333333,
+  "previewSeconds": 30,
+  "byKind": {
+    "place": 123,
+    "explosion": 119,
+    "pickup": 20,
+    "slow-in": 4,
+    "elimination": 6,
+    "slow-out": 3,
+    "collapse": 94
+  }
+}

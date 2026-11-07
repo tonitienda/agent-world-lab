@@ -41,6 +41,11 @@ const mcpConfig = {
 const configPath = resolve(out, "mcp-config.json");
 writeFileSync(configPath, JSON.stringify(mcpConfig, null, 2));
 const prompt = readFileSync(resolve(root, "episodes/episode-003/goal.md"), "utf8").replaceAll("{{SIDE}}", values.side);
+writeFileSync(resolve(out, "prompt.txt"), prompt);
+writeFileSync(resolve(out, "match-config.json"), JSON.stringify({
+  model: values.model, side: values.side, elo: values.elo, movetimeMs: Number(values.movetime),
+  maxIllegalStreak: 5, maxPlies: 300, promptFile: "prompt.txt", startedAt: new Date().toISOString(),
+}, null, 2) + "\n");
 
 // Mirrors internal/harness ClaudeIsolationArgs + player flags.
 const args = [
@@ -58,11 +63,13 @@ child.stdout.pipe(createWriteStream(resolve(out, "transcript.jsonl")));
 child.stderr.pipe(createWriteStream(resolve(out, "claude.stderr.log")));
 const code: number = await new Promise((done) => child.on("close", done));
 console.log(`claude exited with ${code}`);
+if (code !== 0) throw Error(`Claude failed (exit ${code}); inspect ${out}/transcript.jsonl and claude.stderr.log. No video was generated.`);
 
 // The recorder gets an enriched copy: the agent's free text attached to its moves as rationale.
 const replay = withRationales(JSON.parse(readFileSync(resolve(out, "session/replay.json"), "utf8")), readFileSync(resolve(out, "transcript.jsonl"), "utf8"));
 const replayPath = resolve(out, "replay.json");
 writeFileSync(replayPath, JSON.stringify(replay, null, 2));
 console.log(`${replay.moves.length} plies, ${replay.illegal.length} illegal attempts, result ${JSON.stringify(replay.result)}`);
+if (!replay.result) throw Error(`The match is unfinished; preserved the replay in ${out}. No video was generated.`);
 if (!values["no-record"])
   execFileSync(process.execPath, ["--import", "tsx", resolve(root, "packages/chess/examples/record.ts"), out, replayPath], { stdio: "inherit", cwd: root });

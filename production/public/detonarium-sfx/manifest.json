@@ -1,0 +1,35 @@
+{
+  "origin": "Original deterministic procedural synthesis in src/detonarium/sfx.ts; no third-party samples",
+  "rights": "Project-original assets; use under repository terms. No external attribution required.",
+  "sampleRate": 48000,
+  "assets": [
+    {
+      "kind": "place",
+      "file": "place.wav"
+    },
+    {
+      "kind": "explosion",
+      "file": "explosion.wav"
+    },
+    {
+      "kind": "elimination",
+      "file": "elimination.wav"
+    },
+    {
+      "kind": "pickup",
+      "file": "pickup.wav"
+    },
+    {
+      "kind": "collapse",
+      "file": "collapse.wav"
+    },
+    {
+      "kind": "slow-in",
+      "file": "slow-in.wav"
+    },
+    {
+      "kind": "slow-out",
+      "file": "slow-out.wav"
+    }
+  ]
+}

@@ -8,7 +8,11 @@ coverage/
 
 # Derived production media; preserve original local recordings.
 production/output/
+production/episode-*/elevenlabs-cache/
+production/episode-*/audio-backups/
+production/episode-*/.elevenlabs-lock/
 production/public/episode-*/generated/
+production/public/episode-*/effects/detonarium-effects.wav
 
 
 # Go orchestrator binaries, runtime state, private design logs and immutable worlds.
@@ -23,3 +27,5 @@ episodes/*/.scenario-*/
 # Guided runner approvals, selected take and temporary preview readiness files.
 episodes/*/.pipeline/
 episodes/*/.preview-*.json
+# Local secrets written by `elevenlabs onboard`
+/.env.local

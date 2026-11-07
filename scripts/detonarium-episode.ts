@@ -20,6 +20,7 @@ const generated = resolve(media, "generated");
 const output = resolve(root, "production/output");
 for (const path of [generated, output, resolve(media, "video"), resolve(media, "audio")]) mkdirSync(path, { recursive: true });
 const source = JSON.parse(readFileSync(resolve(dir, "source.json"), "utf8"));
+if (source.soundEffects === true && !values["audio-dir"]) throw new Error("Sound-effects builds require measured narration: provide --audio-dir");
 type Cue = { line: number; game: number; tick: number; text: string; audio: string; seconds: number; timing: string; card?: string };
 const cues: Cue[] = JSON.parse(readFileSync(resolve(dir, "narration-manifest.json"), "utf8"));
 if (values["audio-dir"]) {
@@ -96,6 +97,9 @@ const plan = { version: 2, title: "Episode 004: Claude in Detonarium — Two Gam
   segments };
 writeFileSync(resolve(dir, "edit-plan.json"), JSON.stringify(plan, null, 2) + "\n");
 writeFileSync(resolve(generated, "narration-schedule.json"), JSON.stringify(narration, null, 2) + "\n");
+if (source.soundEffects === true) {
+  execFileSync(process.execPath, ["--import", "tsx", resolve(root, "scripts/detonarium-sfx.ts"), "--episode", id], { cwd: root, stdio: "inherit" });
+}
 if (!values["audio-dir"]) {
   const draft = resolve(output, `${id}-silent-draft.mp4`);
   execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", board, "-c", "copy", "-movflags", "+faststart", draft]);

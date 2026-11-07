@@ -1,0 +1,22 @@
+Last time, Claude beat Stockfish set to fifteen hundred. Now it's facing two thousand, with the same tools and no list of legal moves.
+I'm playing white against the engine. First I'll check the board, then make moves one at a time until the game is over.
+With black's light bishop stuck behind e6, closing the center with e5 gives me space and a good kingside attacking setup.
+Five moves in: I've set up a French-style space advantage. Castling next.
+Black's a6 bishop is their bad piece, so trading it off would help them. On c2 my bishop still aims at h7 for a later Qd3.
+Nb3 adds pressure on c5 and the loose a5 pawn. If black pushes c4, the knight lands on a great d4 square.
+Moving the knight off b3 frees the c2 bishop's diagonal, so Bxa4 would come with check against the e8 king.
+I'm a pawn up now. Next I'll pin that d7 knight against the king, since Black can't castle out of it yet. Didn't work. My own bishop on c2 blocks that diagonal. A bit embarrassing. Plan B: send the knight to b3 to hit c5.
+Nothing defended c3, so Rxc3 was the threat. Qd2 covers c3 and backs up the f4 bishop too.
+Black's g5 kicks my bishop. It drops back to e3.
+The f3 knight is attacked. It goes to h4, where it eyes f5.
+Bd1 hits g4, which nothing defends, and clears the c-file. Next, a rook on c1 would line up on the c6 bishop with the queen sitting right behind it.
+Taking with the f-pawn opens the f-file toward f7 and keeps Black's h8 rook off an open h-file aimed at my king.
+Only the queen guards the c6 bishop now. My rook on the open file also eyes c7 for a later invasion.
+With the knight gone from g8, only the rook guards h6, and my queen sees h6 through e3-f4-g5. Rxh6 Qxh6 would win the exchange, and the queen still covers d4.
+Queen takes the rook, as planned.
+They grabbed d4 with check. My king steps to the corner.
+The knight and queen were both hitting g4 and nothing defended it. On e2 the bishop is safe and covers d3, f3 and f1 near my king.
+The rook hits d4 head-on. The queen has to move, and the d-file points straight at Black's king.
+On h5 my queen protects the bishop. It also covers g4, which keeps the knight away from the Ng4-f2 fork on my king and rook.
+Stockfish wins after thirty-two moves. Claude missed a diagonal attack on its queen, then resigned. Two rejected moves along the way.
+What should Claude face next? Thanks for watching.

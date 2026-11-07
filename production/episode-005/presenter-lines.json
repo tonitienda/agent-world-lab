@@ -1,0 +1,5 @@
+{
+  "intro": "Last time, Claude beat Stockfish set to fifteen hundred. Now it's facing two thousand, with the same tools and no list of legal moves.",
+  "outro": "Stockfish wins after thirty-two moves. Claude missed a diagonal attack on its queen, then resigned. Two rejected moves along the way.",
+  "end": "What should Claude face next? Thanks for watching."
+}

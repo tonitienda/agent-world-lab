@@ -1,0 +1,32 @@
+{
+  "episode": "episode-005",
+  "session": "data/chess-sessions/episode-005-opus55-sf2000-take-1",
+  "reference": "production/episode-003",
+  "match": {
+    "model": "claude-opus-5-5",
+    "side": "white",
+    "elo": 2000,
+    "movetimeMs": 500,
+    "maxIllegalStreak": 5,
+    "maxPlies": 300,
+    "promptFile": "prompt.txt",
+    "startedAt": "2026-11-07T08:48:08Z",
+    "referenceSession": "data/chess-sessions/game-001",
+    "referenceEpisode": "episode-003",
+    "changedVariable": "Stockfish configured UCI_Elo: 1500 to 2000"
+  },
+  "audioStatus": "Complete: ElevenLabs Eleven V4, Bella presenter and Larry agent; all 22 WAVs generated, retimed and exported.",
+  "result": {
+    "winner": "Stockfish 2000",
+    "termination": "resignation",
+    "moves": 32,
+    "plies": 64,
+    "agentIllegalAttempts": 2
+  },
+  "analysis": {
+    "engine": "Stockfish 17.1",
+    "depth": 18,
+    "postGameOnly": true
+  },
+  "audioManifest": "elevenlabs-audio.json"
+}
