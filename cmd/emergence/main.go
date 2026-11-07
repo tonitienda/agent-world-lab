@@ -26,7 +26,8 @@ Usage: emergence [--root PATH] COMMAND [EPISODE] [OPTIONS]
     --yes --approve-code DIGEST  authorize reset and exact reviewed code
   scenario freeze ID             reverify and snapshot the actual installed world
   run ID --agent ID [--take 001] --yes
-                                 restore frozen world, record an isolated take
+                                 restore frozen world, record an isolated take;
+                                 omit --agent when the episode says play: together
   runs list ID                   list infrastructure and objective outcomes
   extract ID --agent ID [--take 001]
                                  extract all intentions and v1 editorial draft
@@ -39,8 +40,8 @@ Usage: emergence [--root PATH] COMMAND [EPISODE] [OPTIONS]
 World installation/restoration require --yes. Freeze stops Minecraft but never
 resets it. Generated code additionally requires its exact --approve-code digest.
 Take directories and completed MP4s are never overwritten. No automatic retries.
-Claude players receive MCP tools only; Codex gameplay is blocked until an external
-filesystem isolation boundary is available. See docs/emergence-cli.md.
+Players receive MCP tools only. Codex players run in a container (build it with
+make codex-player-image). See docs/emergence-cli.md.
 `
 
 type parsed struct {

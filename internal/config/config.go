@@ -8,6 +8,7 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -28,7 +29,19 @@ type Agent struct {
 	ID      string `yaml:"id"`
 	Harness string `yaml:"harness"`
 	Model   string `yaml:"model"`
+	// GoalFile is an optional role brief placed before the shared goal.
+	// omitempty keeps older configs' frozen identity hash unchanged.
+	GoalFile string `yaml:"goal_file" json:",omitempty"`
 }
+
+// PlayTogether puts every agent in one world and one take, recorded under
+// runs/TogetherTake. Each agent id is also its Minecraft username.
+const (
+	PlaySolo     = "solo"
+	PlayTogether = "together"
+	TogetherTake = "team"
+)
+
 type Environment struct {
 	Provider  string `yaml:"provider"`
 	Preset    string `yaml:"preset"`
@@ -52,7 +65,10 @@ type Config struct {
 		Target string  `yaml:"target"`
 		Radius float64 `yaml:"radius"`
 	} `yaml:"evaluation"`
-	Agents    []Agent `yaml:"agents"`
+	Agents []Agent `yaml:"agents"`
+	// Play is "solo" (default: one agent per take, chosen with --agent) or
+	// "together" (every agent plays at once). omitempty keeps solo hashes stable.
+	Play      string `yaml:"play" json:",omitempty"`
 	Recording struct {
 		Cameras            []string `yaml:"cameras"`
 		MaxDurationMinutes int      `yaml:"max_duration_minutes"`
@@ -203,6 +219,9 @@ func (c Config) validate(dir string, matchDirectory bool) error {
 			return fmt.Errorf("unsupported harness %q", a.Harness)
 		}
 	}
+	if e := c.validatePlay(dir); e != nil {
+		return e
+	}
 	if c.Evaluation.Type != "reach_location" || storage.ID(c.Evaluation.Target) != nil || math.IsNaN(c.Evaluation.Radius) || c.Evaluation.Radius <= 0 || c.Evaluation.Radius > 128 {
 		return fmt.Errorf("evaluation requires reach_location, a named target, and radius in (0,128]")
 	}
@@ -222,6 +241,59 @@ func (c Config) validate(dir string, matchDirectory bool) error {
 	}
 	return nil
 }
+
+var minecraftName = regexp.MustCompile(`^[A-Za-z0-9_]{1,16}$`)
+
+// Together reports whether every agent plays at once in one take.
+func (c Config) Together() bool { return c.Play == PlayTogether }
+
+func (c Config) validatePlay(dir string) error {
+	if c.Play != "" && c.Play != PlaySolo && c.Play != PlayTogether {
+		return fmt.Errorf("play must be solo or together")
+	}
+	for _, a := range c.Agents {
+		if a.GoalFile != "" {
+			if _, e := (Prompt{PromptFile: a.GoalFile}).Text(dir); e != nil {
+				return fmt.Errorf("agent %s goal_file: %w", a.ID, e)
+			}
+		}
+	}
+	if !c.Together() {
+		return nil
+	}
+	if len(c.Agents) < 2 {
+		return fmt.Errorf("play: together needs at least two agents")
+	}
+	names := map[string]bool{}
+	for _, a := range c.Agents {
+		if !minecraftName.MatchString(a.ID) {
+			return fmt.Errorf("agent %q must be a valid Minecraft username to play together", a.ID)
+		}
+		if a.ID == TogetherTake {
+			return fmt.Errorf("agent id %q is reserved for the shared take", TogetherTake)
+		}
+		// Minecraft usernames are case-insensitive.
+		if names[strings.ToLower(a.ID)] {
+			return fmt.Errorf("agents %q collide as Minecraft usernames", a.ID)
+		}
+		names[strings.ToLower(a.ID)] = true
+	}
+	return nil
+}
+
+// AgentGoal is an agent's role brief (if any) followed by the shared episode goal.
+func (c Config) AgentGoal(dir string, a Agent) (string, error) {
+	shared, e := c.Goal.Text(dir)
+	if e != nil || a.GoalFile == "" {
+		return shared, e
+	}
+	role, e := (Prompt{PromptFile: a.GoalFile}).Text(dir)
+	if e != nil {
+		return "", e
+	}
+	return strings.TrimRight(role, "\n") + "\n\n" + strings.TrimLeft(shared, "\n"), nil
+}
+
 func versionValid(s string) bool {
 	for _, x := range strings.Split(s, ".") {
 		if n, e := strconv.Atoi(x); e != nil || n < 0 || x == "" || strings.ContainsAny(x, "+-") {

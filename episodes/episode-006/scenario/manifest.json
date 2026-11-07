@@ -1,0 +1,1 @@
+{"version":1,"spawn":{"x":-6.5,"y":96,"z":0.5},"spawns":{"ada":{"x":-6.5,"y":96,"z":0.5},"bram":{"x":18.5,"y":96,"z":0.5}},"targets":{"twin-pedestals":{"x":37.5,"y":97,"z":0.5}},"install":"implementation/install.mjs","verify":"implementation/verify.mjs","revision":"twin-shrine-v2","required_capabilities":["observe","move_to","mine","place","craft","say","listen"]}

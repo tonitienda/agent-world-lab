@@ -25,6 +25,7 @@ help:
 	@echo "  make check                  Run project checks"
 	@echo "  make status                 Show Minecraft server status"
 	@echo "  make stop-minecraft         Stop Minecraft server"
+	@echo "  make codex-player-image     Build the isolated Codex player container"
 	@echo ""
 	@echo "Variables:"
 	@echo "  AGENT_ID=$(AGENT_ID)"
@@ -124,3 +125,14 @@ cli:
 
 cli-test:
 	go test -race ./...
+
+# ------------------------------------------------------------
+# Isolated Codex player image (keep the tag in internal/harness)
+# ------------------------------------------------------------
+
+CODEX_VERSION ?= 0.167.0
+
+.PHONY: codex-player-image
+codex-player-image:
+	docker build --build-arg CODEX_VERSION=$(CODEX_VERSION) \
+		-t emergence-codex-player:$(CODEX_VERSION) docker/codex-player

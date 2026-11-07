@@ -3,6 +3,8 @@ const { chromium } = require("playwright");
 const { spawnSync } = require("node:child_process");
 const { mkdirSync, renameSync } = require("node:fs");
 const { dirname, join } = require("node:path");
+// Per-camera page load budget; generous because team takes share one CPU.
+const CAMERA_STARTUP_MS = 90000;
 const {createFollowController, terrainSnapshot, addFollowCamera, installFollow} = require("./follow-camera.cjs");
 const {synchronizationOffset} = require("./sync.cjs");
 const {addObserverFollow} = require("./observer-follow.cjs");
@@ -76,8 +78,10 @@ async function start(bot, options) {
       if (view.name === "follow") {
         await page.addInitScript({content: `(${installFollow.toString()})(${createFollowController.toString()});`});
       }
-      await page.goto(`http://127.0.0.1:${view.port}`, { waitUntil: "domcontentloaded", timeout: 15000 });
-      await page.locator("canvas").first().waitFor({ state: "visible", timeout: 20000 });
+      // A second seat's cameras open while the first seat's chromium already saturates
+      // the CPU; 15 s page loads timed out there (episode-006 takes 002, 003, 005).
+      await page.goto(`http://127.0.0.1:${view.port}`, { waitUntil: "domcontentloaded", timeout: CAMERA_STARTUP_MS });
+      await page.locator("canvas").first().waitFor({ state: "visible", timeout: CAMERA_STARTUP_MS });
       captures[captures.length - 1].verifyObserverPatched?.();
       if (view.name === "follow") {
         const updateFollow = async () => {
@@ -91,7 +95,7 @@ async function start(bot, options) {
           try { await updateFollow(); } catch (error) { console.error("Follow terrain update:", String(error)); }
           finally { busy = false; }
         }, 50));
-        await page.waitForFunction(() => window.__followTelemetry?.updates > 0, undefined, {timeout: 15000});
+        await page.waitForFunction(() => window.__followTelemetry?.updates > 0, undefined, {timeout: CAMERA_STARTUP_MS});
       }
       await page.evaluate(() => {
         const gate = document.createElement("div");

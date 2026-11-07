@@ -193,11 +193,30 @@ world state but exposes only the existing world tools. This relies on the
 installed Claude CLI honoring its restricted/tool settings; it is not an OS
 sandbox against a compromised harness executable or administrator customization.
 
-Codex supports a practical noninteractive, read-only, shell-disabled **designer**
-adapter. Its currently installed read-only gameplay sandbox still permits reads
-outside its working directory, so `run --agent codex` is explicitly blocked before
-world restoration. An empty working directory alone is insufficient. An external
-container/VM boundary is required before enabling Codex benchmark gameplay.
+Codex supports a noninteractive, read-only, shell-disabled **designer** adapter.
+Its read-only sandbox still permits reads outside its working directory, so a
+Codex **player** runs inside a container instead (`docker/codex-player`, built
+with `make codex-player-image`; the tag is `harness.CodexPlayerImage`):
+
+- The container has the image's own filesystem only: read-only root, a private
+  `/tmp` tmpfs, no repository, scenario, episode or host home mounts. It runs as
+  uid 1000 with every capability dropped, `no-new-privileges`, and pid/memory limits.
+- Its only mount is a throwaway `CODEX_HOME` holding a copy of `~/.codex/auth.json`
+  (or nothing, when `CODEX_API_KEY`/`OPENAI_API_KEY` is set). A refreshed login
+  is copied back only over an unchanged host file, and only if it is valid JSON.
+- The trusted MCP server runs on the host exactly as for Claude, but serves
+  streamable HTTP on a random `127.0.0.1` port (`src/mcp/http.ts`). Every request
+  needs a fresh 256-bit bearer token, and one client owns the session. On macOS
+  and Windows the container reaches it as `host.docker.internal`; on Linux the
+  container shares the host network so the port can stay on loopback.
+- `codex exec` has nobody to approve MCP calls, so only the `agent-world`
+  server's tools are pre-approved (`default_tools_approval_mode="approve"`).
+- When Codex exits, the supervisor closes the MCP server's stdin, which ends the
+  session exactly like Claude closing its stdio transport, then force-removes the
+  container.
+
+The container has network access (Codex needs its API), but the model has no
+shell, web or file tools, so its only reach into the world is the MCP tools.
 
 Run timeouts include harness/MCP startup. On timeout/cancellation the supervisor
 requests the existing MCP lifecycle controller to stop and finalize; it allows a

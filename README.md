@@ -58,8 +58,8 @@ The [Episode 003 starter](episodes/episode-003/episode.yaml), a complete
 [constructed-island example](examples/island-scenario/report.md), and the
 [CLI workflow/schema guide](docs/emergence-cli.md) explain exact commands,
 world-reset authorization, code review digests, artifacts and production stages.
-Claude gameplay uses an MCP-only tool boundary; Codex gameplay is blocked until
-filesystem isolation is available. Voice export and v2 editorial review remain
+Claude gameplay uses an MCP-only tool boundary; Codex players run in a locked-down
+container (`make codex-player-image`). Voice export and v2 editorial review remain
 explicit steps. Episodes 001/002 and existing Make/npm commands remain supported.
 
 ## Architecture

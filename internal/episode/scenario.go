@@ -63,6 +63,18 @@ func manifest(dir string, c config.Config) (Manifest, string, error) {
 			return m, "", fmt.Errorf("invalid target %s", name)
 		}
 	}
+	for name, p := range m.Spawns {
+		if !finite(p) {
+			return m, "", fmt.Errorf("invalid spawn for %s", name)
+		}
+	}
+	if c.Together() {
+		for _, member := range c.Agents {
+			if _, ok := m.Spawns[member.ID]; !ok {
+				return m, "", fmt.Errorf("manifest.json spawns must include agent %q", member.ID)
+			}
+		}
+	}
 	if _, ok := m.Targets[c.Evaluation.Target]; !ok {
 		return m, "", fmt.Errorf("manifest.json targets must include evaluation.target %q from episode.yaml", c.Evaluation.Target)
 	}
@@ -231,6 +243,21 @@ func designerPrompt(c config.Config, level, goal string) string {
 		"\n\nREQUIRED EPISODE CONFIGURATION (from episode.yaml):\n" + string(constraints) +
 		"\nmanifest.json targets MUST include the exact evaluation.target key above. Its coordinates must be the actual destination built by install and checked by verify. Preserve this identifier even if the design prompt uses a different display name. Coordinates in the schema example below are illustrative; choose coordinates for this design.\n" + contract
 }
+
+// scenarioPlayers names the Minecraft players that install/verify must prepare.
+// Solo episodes keep the historical single player; team episodes list every
+// member, with AGENT_ID as the first for scripts that only know one player.
+func scenarioPlayers(c config.Config) []string {
+	if !c.Together() {
+		return []string{"AGENT_ID=emergence-player"}
+	}
+	names := make([]string, len(c.Agents))
+	for i, a := range c.Agents {
+		names[i] = a.ID
+	}
+	return []string{"AGENT_ID=" + names[0], "EMERGENCE_PLAYERS=" + strings.Join(names, ",")}
+}
+
 func (a *App) verify(ctx context.Context, d string, c config.Config, m Manifest) error {
 	if e := a.environment(d, c).Preflight(ctx); e != nil {
 		return fmt.Errorf("Minecraft preflight failed: %w", e)
@@ -241,7 +268,7 @@ func (a *App) verify(ctx context.Context, d string, c config.Config, m Manifest)
 	}
 	_ = os.Remove(report)
 	script := filepath.Join(d, "scenario", m.Verify)
-	if e := a.command(ctx, a.Root, "node", []string{"--import", "tsx", script}, "AGENT_ID=emergence-player", fmt.Sprint("MC_PORT=", c.Environment.Minecraft.Port), "EMERGENCE_REPO="+a.Root, "EMERGENCE_SCENARIO_DIR="+filepath.Join(d, "scenario"), "EMERGENCE_VALIDATION_REPORT="+report); e != nil {
+	if e := a.command(ctx, a.Root, "node", []string{"--import", "tsx", script}, append(scenarioPlayers(c), fmt.Sprint("MC_PORT=", c.Environment.Minecraft.Port), "EMERGENCE_REPO="+a.Root, "EMERGENCE_SCENARIO_DIR="+filepath.Join(d, "scenario"), "EMERGENCE_VALIDATION_REPORT="+report)...); e != nil {
 		return fmt.Errorf("scenario verification failed: %w", e)
 	}
 	var r struct {
@@ -304,7 +331,7 @@ func (a *App) ValidateScenario(ctx context.Context, id string, o Options) error 
 		return e
 	}
 	if e = a.environment(d, c).Prepare(bounded); e == nil {
-		e = a.command(bounded, a.Root, "node", []string{"--import", "tsx", filepath.Join(d, "scenario", m.Install)}, "AGENT_ID=emergence-player", fmt.Sprint("MC_PORT=", c.Environment.Minecraft.Port), "EMERGENCE_REPO="+a.Root, "EMERGENCE_SCENARIO_DIR="+filepath.Join(d, "scenario"))
+		e = a.command(bounded, a.Root, "node", []string{"--import", "tsx", filepath.Join(d, "scenario", m.Install)}, append(scenarioPlayers(c), fmt.Sprint("MC_PORT=", c.Environment.Minecraft.Port), "EMERGENCE_REPO="+a.Root, "EMERGENCE_SCENARIO_DIR="+filepath.Join(d, "scenario"))...)
 	}
 	if e == nil {
 		e = a.verify(bounded, d, c, m)

@@ -60,7 +60,12 @@ export const minecraftCapabilities = [
   "mine",
   "place",
   "say",
+  "listen",
 ] as const;
+/** Teammate chat is bounded so a chatty partner cannot grow observations without limit. */
+const MAX_HEARD = 20;
+const MAX_LISTEN_SECONDS = 30;
+type Heard = { from: string; message: string; at: string };
 const slots: EquipmentDestination[] = [
   "hand",
   "head",
@@ -146,6 +151,9 @@ export class MinecraftAdapter implements WorldAdapter {
   private timedOut = false;
   private surveyUsed = false;
   private observedEntities = new Set<number>();
+  /** Chat from other players not yet delivered through observe or listen. */
+  private heard: Heard[] = [];
+  private hearing?: () => void;
   private container?: {
     window:
       | Awaited<ReturnType<Bot["openContainer"]>>
@@ -179,6 +187,9 @@ export class MinecraftAdapter implements WorldAdapter {
       bot.on("error", (error) => {
         process.stderr.write(`Minecraft connection error: ${String(error)}\n`);
       });
+      // Only other players' chat reaches the agent; its own echo and server
+      // system messages (which arrive with no player username) are ignored.
+      bot.on("chat", (from, message) => this.hear(bot.username, from, message));
       await withTimeout(
         new Promise<void>((resolve, reject) => {
           bot.once("spawn", () => resolve());
@@ -356,9 +367,36 @@ export class MinecraftAdapter implements WorldAdapter {
       nearbyEntities: entities.map((e) => ({
         id: e.id,
         type: e.name ?? e.type,
+        ...(e.type === "player" && e.username ? { username: e.username } : {}),
         position: { x: e.position.x, y: e.position.y, z: e.position.z },
       })),
+      messages: this.takeHeard(),
     };
+  }
+
+  private hear(self: string, from: string, message: string) {
+    if (!from || from === self) return;
+    this.heard.push({ from, message: String(message).slice(0, 200), at: new Date().toISOString() });
+    if (this.heard.length > MAX_HEARD) this.heard.splice(0, this.heard.length - MAX_HEARD);
+    this.hearing?.();
+  }
+
+  private takeHeard(): Heard[] {
+    return this.heard.splice(0, this.heard.length);
+  }
+
+  /** Wait for teammate chat, returning anything already heard immediately. */
+  private async listen(seconds: number): Promise<ActionResult> {
+    if (!this.heard.length)
+      await new Promise<void>((resolve) => {
+        const timer = setTimeout(done, seconds * 1000);
+        function done() { clearTimeout(timer); resolve(); }
+        this.hearing = done;
+      }).finally(() => { this.hearing = undefined; });
+    const messages = this.takeHeard();
+    return messages.length
+      ? { ok: true, message: `Heard ${messages.length} message(s)`, data: { messages } }
+      : { ok: true, message: `No messages in ${seconds}s`, data: { messages } };
   }
 
   async act(
@@ -403,6 +441,7 @@ export class MinecraftAdapter implements WorldAdapter {
         "transfer_item",
         "close_container",
         "say",
+        "listen",
       ].includes(action)
     )
       throw Error("Close the current window before this action");
@@ -752,6 +791,12 @@ export class MinecraftAdapter implements WorldAdapter {
           15000,
         );
         return { ok: true, message: `Placed ${itemName}` };
+      }
+      case "listen": {
+        const raw = args.timeout_seconds ?? 20;
+        if (typeof raw !== "number" || !Number.isInteger(raw) || raw < 1 || raw > MAX_LISTEN_SECONDS)
+          throw new Error(`timeout_seconds must be an integer from 1 to ${MAX_LISTEN_SECONDS}`);
+        return await this.listen(raw);
       }
       case "say": {
         const message = String(args.message ?? "").slice(0, 200);

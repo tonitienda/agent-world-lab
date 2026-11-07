@@ -1,0 +1,41 @@
+version: 1
+episode:
+  id: episode-006
+  title: The Twin Shrine of Sakura Falls
+environment:
+  provider: minecraft
+  preset: survival
+  seed: "20261107"
+  minecraft:
+    version: "1.21.4"
+level_design:
+  harness: claude
+  model: configured-default
+  prompt_file: level-design.md
+goal:
+  # Shared rules and narration style, appended after each agent's role brief.
+  prompt_file: goal.md
+evaluation:
+  type: reach_location
+  target: twin-pedestals
+  # Pedestals sit 4 blocks either side of the centre and 1 block up.
+  radius: 5
+# Every agent below plays at once in one world: `emergence run episode-006 --take 001 --yes`.
+# Agent ids double as Minecraft usernames.
+play: together
+agents:
+  - id: ada
+    harness: claude
+    model: configured-default
+    goal_file: goal-ada.md
+  - id: bram
+    harness: codex
+    model: configured-default
+    goal_file: goal-bram.md
+recording:
+  cameras: [agent-pov, observer, follow]
+  max_duration_minutes: 30
+production:
+  renderer: motion-canvas
+  narration: manual
+  max_video_duration_minutes: 12

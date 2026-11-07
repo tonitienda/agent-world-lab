@@ -64,8 +64,20 @@ func TestArgumentsAndPromptIsolation(t *testing.T) {
 	if strings.Contains(args, "--model") {
 		t.Fatal("configured default incorrectly forwarded")
 	}
-	if _, e = Command(Request{Harness: "codex", Player: true}); e == nil {
-		t.Fatal("unisolated gameplay allowed")
+	q, e = Command(Request{Harness: "codex", Player: true, Model: "gpt-future", Prompt: "secret goal"})
+	if e != nil || q.Program != "docker" {
+		t.Fatalf("codex players must run in a container: %v %+v", e, q)
+	}
+	args = strings.Join(q.Args, "|")
+	for _, s := range []string{"--read-only", "--cap-drop|ALL", "no-new-privileges", "--user|1000:1000", CodexPlayerImage + "|exec", "--disable|shell_tool", "bearer_token_env_var", `default_tools_approval_mode="approve"`, "--model|gpt-future|-"} {
+		if !strings.Contains(args, s) {
+			t.Fatalf("missing %s: %s", s, args)
+		}
+	}
+	for _, leak := range []string{"secret goal", "/Users", "EMERGENCE_REPO", "-v|", "--privileged"} {
+		if strings.Contains(args, leak) {
+			t.Fatalf("container argv leaks %s: %s", leak, args)
+		}
 	}
 }
 func TestHarnessFailure(t *testing.T) {

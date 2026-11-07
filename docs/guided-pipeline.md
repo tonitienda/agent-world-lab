@@ -117,9 +117,9 @@ no recording or playing agent runs during that preview. Motion Canvas is also
 bound to loopback. Both preview processes and their locks close before later
 stages. A failed or declined preview never launches gameplay or rendering.
 
-The player currently needs to be Claude: Codex gameplay is blocked because its
-installed read-only sandbox does not isolate privileged filesystem reads. Codex
-works as the designer/reviewer. Generated scenario code still requires trust;
+The player can be Claude or Codex. Codex players run in the isolated container
+described in the [CLI guide](emergence-cli.md); build it once with
+`make codex-player-image`. Generated scenario code still requires trust;
 automatic review and visual inspection cannot prove solvability or safety.
 The maximum configured video duration is enforced without cutting speech; an
 oversized draft requires an editorial change. See the detailed

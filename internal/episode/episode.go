@@ -53,6 +53,7 @@ type Point struct {
 type Manifest struct {
 	Version              int              `json:"version"`
 	Spawn                Point            `json:"spawn"`
+	Spawns               map[string]Point `json:"spawns,omitempty"`
 	Targets              map[string]Point `json:"targets"`
 	Install              string           `json:"install"`
 	Verify               string           `json:"verify"`
@@ -60,25 +61,26 @@ type Manifest struct {
 	RequiredCapabilities []string         `json:"required_capabilities"`
 }
 type Run struct {
-	Version              int        `json:"version"`
-	Agent                string     `json:"agent"`
-	Harness              string     `json:"harness"`
-	Model                string     `json:"model"`
-	Take                 string     `json:"take"`
-	Workflow             string     `json:"workflow"`
-	Infrastructure       string     `json:"infrastructure"`
-	Objective            Evaluation `json:"objective"`
-	AgentReportedOutcome string     `json:"agent_reported_outcome"`
-	GoalPrompt           string     `json:"goal_prompt,omitempty"`
-	GoalHash             string     `json:"goal_hash,omitempty"`
-	ScenarioHash         string     `json:"scenario_hash"`
-	StartedAt            time.Time  `json:"started_at"`
-	FinishedAt           *time.Time `json:"finished_at,omitempty"`
-	DurationSeconds      float64    `json:"duration_seconds"`
-	ExitCode             int        `json:"exit_code"`
-	Artifacts            string     `json:"artifacts"`
-	ProductionID         string     `json:"production_id,omitempty"`
-	Error                string     `json:"error,omitempty"`
+	Version              int         `json:"version"`
+	Agent                string      `json:"agent"`
+	Harness              string      `json:"harness"`
+	Model                string      `json:"model"`
+	Take                 string      `json:"take"`
+	Workflow             string      `json:"workflow"`
+	Infrastructure       string      `json:"infrastructure"`
+	Objective            Evaluation  `json:"objective"`
+	AgentReportedOutcome string      `json:"agent_reported_outcome"`
+	GoalPrompt           string      `json:"goal_prompt,omitempty"`
+	GoalHash             string      `json:"goal_hash,omitempty"`
+	ScenarioHash         string      `json:"scenario_hash"`
+	StartedAt            time.Time   `json:"started_at"`
+	FinishedAt           *time.Time  `json:"finished_at,omitempty"`
+	DurationSeconds      float64     `json:"duration_seconds"`
+	ExitCode             int         `json:"exit_code"`
+	Artifacts            string      `json:"artifacts"`
+	ProductionID         string      `json:"production_id,omitempty"`
+	Members              []MemberRun `json:"members,omitempty"`
+	Error                string      `json:"error,omitempty"`
 }
 type Evaluation struct {
 	Outcome  string `json:"outcome"`
@@ -196,11 +198,15 @@ func (a *App) reserve(ctx context.Context, dir string) (func(), error) {
 				}
 			}
 			// Keep the existing lock authoritative if an MCP process did not finalize.
-			if b, err := os.ReadFile(filepath.Join(p, "mcp-control-ready")); err == nil {
-				if pid, err := strconv.Atoi(strings.TrimSpace(string(b))); err == nil && syscall.Kill(pid, 0) == nil {
-					_ = storage.JSON(filepath.Join(p, "owner.json"), map[string]any{"pid": pid, "kind": "MCP session (supervisor exited)"})
-					a.lease = ""
-					return
+			// Team takes leave one mcp-control-ready-<member> marker per seat.
+			markers, _ := filepath.Glob(filepath.Join(p, "mcp-control-ready*"))
+			for _, marker := range markers {
+				if b, err := os.ReadFile(marker); err == nil {
+					if pid, err := strconv.Atoi(strings.TrimSpace(string(b))); err == nil && syscall.Kill(pid, 0) == nil {
+						_ = storage.JSON(filepath.Join(p, "owner.json"), map[string]any{"pid": pid, "kind": "MCP session (supervisor exited)"})
+						a.lease = ""
+						return
+					}
 				}
 			}
 			_ = os.RemoveAll(p)
@@ -312,7 +318,7 @@ func (a *App) Doctor(ctx context.Context) error {
 		_, e := os.Stat(filepath.Join(a.Root, p))
 		fmt.Fprintf(a.Out, "%-48s present=%t\n", p, e == nil)
 	}
-	fmt.Fprintln(a.Out, "Minecraft: Compose, EULA acceptance and matching version required for live stages. Harness authentication is checked when launched. Claude MCP-only supported; Codex fair gameplay blocked.")
+	fmt.Fprintln(a.Out, "Minecraft: Compose, EULA acceptance and matching version required for live stages. Harness authentication is checked when launched. Players are MCP-only; Codex players need make codex-player-image.")
 	return ctx.Err()
 }
 func takeName(t string) (string, error) {

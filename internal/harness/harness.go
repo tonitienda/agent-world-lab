@@ -44,7 +44,10 @@ func Command(r Request) (executor.Request, error) {
 		}
 	case "codex":
 		if r.Player {
-			return q, fmt.Errorf("Codex gameplay blocked: read-only sandbox still permits privileged filesystem reads; use the MCP-only Claude adapter or implement an external container isolation boundary")
+			// The read-only sandbox still permits filesystem reads, so players run
+			// in a container (see codex.go). This placeholder shape is what Check
+			// and tests inspect; Run supplies the real port, token and home.
+			return codexPlayer(r, "emergence-codex-check", codexHomeDir, mcpURL(1024)), nil
 		}
 		q.Args = []string{"exec", "--ignore-user-config", "--ignore-rules", "--ephemeral", "--skip-git-repo-check", "--sandbox", "read-only", "--disable", "shell_tool", "--disable", "unified_exec", "--disable", "apps", "--disable", "plugins", "--disable", "multi_agent", "--disable", "view_image", "-c", "web_search=\"disabled\"", "--output-last-message", r.Output, "-"}
 	default:
@@ -56,6 +59,9 @@ func Command(r Request) (executor.Request, error) {
 	return q, nil
 }
 func (c CLI) Run(ctx context.Context, r Request) (executor.Result, error) {
+	if r.Harness == "codex" && r.Player {
+		return c.runCodexPlayer(ctx, r)
+	}
 	q, e := Command(r)
 	if e != nil {
 		return executor.Result{}, e
@@ -68,6 +74,11 @@ func (c CLI) Run(ctx context.Context, r Request) (executor.Result, error) {
 func (c CLI) Check(ctx context.Context, r Request) error {
 	if _, e := Command(r); e != nil {
 		return e
+	}
+	if r.Harness == "codex" && r.Player {
+		timeout, cancel := context.WithTimeout(ctx, 30*time.Second)
+		defer cancel()
+		return c.checkCodexPlayer(timeout, r)
 	}
 	timeout, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()

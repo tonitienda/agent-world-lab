@@ -77,3 +77,49 @@ func TestSymlinkPrompt(t *testing.T) {
 		t.Fatal("accepted symlink")
 	}
 }
+
+// together is applied to the starter fixture: claude gets a role brief and both
+// agents play at once.
+var together = [][2]string{{"  - id: claude\n", "  - id: claude\n    goal_file: role.md\n"}, {"recording:", "play: together\nrecording:"}}
+
+func togetherFixture(t *testing.T, edits [][2]string) string {
+	t.Helper()
+	d := fixture(t)
+	b, _ := os.ReadFile(filepath.Join(d, "episode.yaml"))
+	y := string(b)
+	for _, e := range edits {
+		y = strings.Replace(y, e[0], e[1], 1)
+	}
+	os.WriteFile(filepath.Join(d, "episode.yaml"), []byte(y), 0600)
+	os.WriteFile(filepath.Join(d, "role.md"), []byte("You are claude.\n"), 0600)
+	return d
+}
+func TestPlayTogetherConfiguration(t *testing.T) {
+	d := togetherFixture(t, together)
+	c, e := config.Load(d)
+	if e != nil || !c.Together() {
+		t.Fatal(e)
+	}
+	role, e := c.AgentGoal(d, c.Agents[0])
+	if e != nil || role != "You are claude.\n\n  First line\r\n\nSecond line\n" {
+		t.Fatalf("role goal must precede the shared goal: %q %v", role, e)
+	}
+	if shared, _ := c.AgentGoal(d, c.Agents[1]); shared != "  First line\r\n\nSecond line\n" {
+		t.Fatalf("agent without goal_file receives the shared goal: %q", shared)
+	}
+	with := func(extra ...[2]string) [][2]string { return append(append([][2]string{}, together...), extra...) }
+	for name, bad := range map[string][][2]string{
+		"unknown mode":    {{"recording:", "play: versus\nrecording:"}},
+		"reserved id":     with([2]string{"id: codex", "id: team"}),
+		"invalid name":    with([2]string{"id: codex", "id: co-dex"}),
+		"case collision":  with([2]string{"id: codex", "id: Claude"}),
+		"missing goal":    {{"  - id: claude\n", "  - id: claude\n    goal_file: absent.md\n"}},
+		"single together": with([2]string{"  - id: codex\n    harness: codex\n    model: configured-default\n", ""}),
+	} {
+		t.Run(name, func(t *testing.T) {
+			if _, e := config.Load(togetherFixture(t, bad)); e == nil {
+				t.Fatal("accepted invalid play configuration")
+			}
+		})
+	}
+}

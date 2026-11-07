@@ -311,11 +311,12 @@ func TestRunTakesIsolationFailureAndEvaluation(t *testing.T) {
 	if len(r.calls) != n {
 		t.Fatal("restored before overwrite check")
 	}
-	if a.RunAgent(context.Background(), "episode-test", Options{Agent: "codex", Yes: true}) == nil {
-		t.Fatal("unisolated codex allowed")
+	// Codex players are containerized now; a dry run plans the take without touching the world.
+	if e := a.RunAgent(context.Background(), "episode-test", Options{Agent: "codex", DryRun: true}); e != nil {
+		t.Fatal("containerized codex player refused:", e)
 	}
 	if len(r.calls) != n {
-		t.Fatal("mutated world before isolation check")
+		t.Fatal("dry run mutated the world")
 	}
 	h.fail = errors.New("harness auth failure")
 	if a.RunAgent(context.Background(), "episode-test", Options{Agent: "claude", Take: "003", Yes: true}) == nil {

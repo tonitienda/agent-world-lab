@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { serveHttp } from "./http.js";
 import { z } from "zod";
 import { dirname, resolve } from "node:path";
 import { writeFileSync, existsSync, readFileSync, unlinkSync } from "node:fs";
@@ -301,12 +302,24 @@ server.registerTool(
 server.registerTool(
   "say",
   {
-    description: "Send a local Minecraft chat message",
+    description: "Send a Minecraft chat message. Every other player, including a teammate, receives it. Keep it short and concrete.",
     inputSchema: { message: z.string().min(1).max(200) },
   },
   (args) => {
     requireCapability(world, "say");
     return action("say", args);
+  },
+);
+
+server.registerTool(
+  "listen",
+  {
+    description: "Wait up to timeout_seconds (1-30, default 20) for chat from other players and return it. Returns at once if messages are already waiting. observe also returns messages heard since the last observation. Standing still while listening is a good way to hold a position.",
+    inputSchema: { timeout_seconds: z.number().int().min(1).max(30).optional(), intent },
+  },
+  (args) => {
+    requireCapability(world, "listen");
+    return action("listen", args);
   },
 );
 
@@ -398,8 +411,12 @@ async function main() {
   await world.connect();
   events?.add("world_configuration", worldConfig);
   // Operator requests are handled by this process; no agent continuation or force-kill.
-  const requestFile = resolve(sessionLockPath, "control.json");
-  writeFileSync(resolve(sessionLockPath, "mcp-control-ready"), String(process.pid));
+  // Team takes run one MCP process per member; each owns a named control pair.
+  const control = process.env.EMERGENCE_CONTROL_ID;
+  if (control !== undefined && !/^[A-Za-z0-9_-]{1,64}$/.test(control))
+    throw Error("Invalid EMERGENCE_CONTROL_ID");
+  const requestFile = resolve(sessionLockPath, control ? `control-${control}.json` : "control.json");
+  writeFileSync(resolve(sessionLockPath, control ? `mcp-control-ready-${control}` : "mcp-control-ready"), String(process.pid));
   controlTimer = setInterval(() => {
     if (!existsSync(requestFile)) return;
     try {
@@ -436,8 +453,10 @@ async function main() {
     events.add("scenario_ready", scenario);
   }
   events?.add("recording_ready", { output: destination });
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
+  // Containerized players (Codex) reach this trusted process over HTTP. Stdin
+  // still belongs to the supervisor, so closing it ends the session in both modes.
+  if (process.env.EMERGENCE_MCP_HTTP_PORT) await serveHttp(server, process.env);
+  else await server.connect(new StdioServerTransport());
   const transportClosed = () => {
     void shutdown("transport_closed").then(
       () => process.exit(process.exitCode ?? 0),

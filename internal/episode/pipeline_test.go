@@ -169,8 +169,8 @@ func TestPipelineDryRunDoesNotImportOrExecute(t *testing.T) {
 	if _, e := os.Stat(filepath.Join(d, ".pipeline")); !os.IsNotExist(e) {
 		t.Fatal("dry run wrote state")
 	}
-	if e := a.Pipeline(context.Background(), filepath.Join(d, "episode.yaml"), PipelineOptions{Player: "codex", DryRun: true}); e == nil {
-		t.Fatal("unsafe Codex player allowed")
+	if e := a.Pipeline(context.Background(), filepath.Join(d, "episode.yaml"), PipelineOptions{Player: "codex", DryRun: true}); e != nil {
+		t.Fatal("containerized Codex player refused:", e)
 	}
 }
 func TestPipelineTakeSelectionIsPinnedAcrossResume(t *testing.T) {
