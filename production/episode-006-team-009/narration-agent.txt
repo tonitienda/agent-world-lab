@@ -1,0 +1,33 @@
+[3_Chapter_1.wav] Off to the nearest cherry tree
+
+[4_Chapter_1.wav] Chopping the base log
+
+[5_Chapter_1.wav] Reaching for the fourth log
+
+[6_Chapter_1.wav] Turning logs into bridge planks
+
+[8_Chapter_1.wav] First plank over the gorge
+
+[9_Chapter_1.wav] I’ll step onto the plate.
+
+[10_Chapter_1.wav] I’ll hold steady for Ada.
+
+[11_Chapter_1.wav] Nearly there
+
+[12_Chapter_1.wav] Walking up to the trench
+
+[14_Chapter_1.wav] Stepping up to the shrine door
+
+[15_Chapter_1.wav] Peeking inside the shrine
+
+[17_Chapter_1.wav] Holding the plate, waiting on bram
+
+[18_Chapter_1.wav] I’ll check the trench edge.
+
+[20_Chapter_1.wav] I’ll cross into the shrine.
+
+[21_Chapter_1.wav] Heading for the north pedestal
+
+[22_Chapter_1.wav] I’ll mount my pedestal.
+
+[24_Chapter_1.wav] Stepping squarely onto the plate

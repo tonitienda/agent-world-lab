@@ -23,7 +23,9 @@ export function audioRequests(manifest, config) {
   if (!Array.isArray(manifest) || !manifest.length || !config.modelId || !/^mp3_\d+_\d+$/.test(config.outputFormat))
     throw Error('A narration manifest, model and MP3 output format are required.');
   return manifest.map((line, i) => {
-    const speaker = config.speakers[line.voice];
+    // A named character (`speaker`, e.g. "ada") wins over its role (`voice`), so
+    // two agents in one episode can sound different.
+    const speaker = config.speakers[line.speaker] ?? config.speakers[line.voice];
     if (line.line !== i + 1 || line.audio !== `${i + 1}_Chapter_1.wav` || !line.text?.trim() || !speaker?.voiceId)
       throw Error(`Invalid narration line or speaker at row ${i + 1}.`);
     const request = {voiceId: speaker.voiceId, text: line.text, modelId: config.modelId, outputFormat: config.outputFormat};

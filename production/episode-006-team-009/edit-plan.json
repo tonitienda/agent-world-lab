@@ -1,0 +1,385 @@
+{
+  "version": 2,
+  "title": "Episode 006: The Twin Shrine of Sakura Falls",
+  "fps": 60,
+  "resolution": {
+    "width": 3840,
+    "height": 2160
+  },
+  "cameras": [
+    {
+      "id": "ada-pov",
+      "file": "ada-pov.mp4",
+      "offsetSeconds": 0.0
+    },
+    {
+      "id": "ada-observer",
+      "file": "ada-observer.mp4",
+      "offsetSeconds": 0.0
+    },
+    {
+      "id": "ada-follow",
+      "file": "ada-follow.mp4",
+      "offsetSeconds": 0.0
+    },
+    {
+      "id": "bram-pov",
+      "file": "bram-pov.mp4",
+      "offsetSeconds": -56.023
+    },
+    {
+      "id": "bram-observer",
+      "file": "bram-observer.mp4",
+      "offsetSeconds": -56.023
+    },
+    {
+      "id": "bram-follow",
+      "file": "bram-follow.mp4",
+      "offsetSeconds": -56.023
+    }
+  ],
+  "segments": [
+    {
+      "id": "intro",
+      "kind": "intro",
+      "duration": 16.1,
+      "text": "Ada (Claude) and Bram (Codex) start on opposite sides of a gorge. The shrine counts only when both stand on its twin pedestals at the same time. They can talk only through chat.",
+      "narration": [
+        {
+          "line": 1,
+          "audio": "1_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "background": {
+        "camera": "ada-observer",
+        "time": 0.5
+      }
+    },
+    {
+      "id": "hello",
+      "kind": "shot",
+      "duration": 8.0,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 2,
+          "audio": "2_Chapter_1.wav",
+          "at": 0.35
+        },
+        {
+          "line": 3,
+          "audio": "3_Chapter_1.wav",
+          "at": 4.81
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "ada-follow"
+        ],
+        "start": 3.0,
+        "duration": 8.0,
+        "label": "Ada \u00b7 west bank"
+      }
+    },
+    {
+      "id": "logs",
+      "kind": "shot",
+      "duration": 22.5,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 4,
+          "audio": "4_Chapter_1.wav",
+          "at": 0.35
+        },
+        {
+          "line": 5,
+          "audio": "5_Chapter_1.wav",
+          "at": 11.519
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "ada-pov"
+        ],
+        "start": 11.0,
+        "duration": 22.5,
+        "label": "Ada \u00b7 cherry wood"
+      }
+    },
+    {
+      "id": "planks",
+      "kind": "shot",
+      "duration": 8.5,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 6,
+          "audio": "6_Chapter_1.wav",
+          "at": 4.232
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "ada-follow"
+        ],
+        "start": 52.0,
+        "duration": 8.5,
+        "label": ""
+      }
+    },
+    {
+      "id": "bram",
+      "kind": "shot",
+      "duration": 12.0,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 7,
+          "audio": "7_Chapter_1.wav",
+          "at": 0.35
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "bram-follow"
+        ],
+        "start": 60.5,
+        "duration": 12.0,
+        "label": "Bram \u00b7 east bank"
+      }
+    },
+    {
+      "id": "bridge",
+      "kind": "shot",
+      "duration": 25.0,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 8,
+          "audio": "8_Chapter_1.wav",
+          "at": 0.35
+        },
+        {
+          "line": 9,
+          "audio": "9_Chapter_1.wav",
+          "at": 2.81
+        },
+        {
+          "line": 10,
+          "audio": "10_Chapter_1.wav",
+          "at": 14.055
+        },
+        {
+          "line": 11,
+          "audio": "11_Chapter_1.wav",
+          "at": 20.058
+        }
+      ],
+      "shot": {
+        "kind": "pip",
+        "cameras": [
+          "ada-observer",
+          "bram-follow"
+        ],
+        "start": 72.5,
+        "duration": 25.0,
+        "label": "Ada bridges \u00b7 Bram on the plate"
+      }
+    },
+    {
+      "id": "causeway",
+      "kind": "shot",
+      "duration": 21.5,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 12,
+          "audio": "12_Chapter_1.wav",
+          "at": 4.119
+        },
+        {
+          "line": 13,
+          "audio": "13_Chapter_1.wav",
+          "at": 11.4
+        },
+        {
+          "line": 14,
+          "audio": "14_Chapter_1.wav",
+          "at": 18.5
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "ada-follow"
+        ],
+        "start": 97.5,
+        "duration": 21.5,
+        "label": ""
+      }
+    },
+    {
+      "id": "inside",
+      "kind": "shot",
+      "duration": 18.5,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 15,
+          "audio": "15_Chapter_1.wav",
+          "at": 2.713
+        },
+        {
+          "line": 16,
+          "audio": "16_Chapter_1.wav",
+          "at": 8.0
+        },
+        {
+          "line": 17,
+          "audio": "17_Chapter_1.wav",
+          "at": 13.74
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "ada-pov"
+        ],
+        "start": 119.0,
+        "duration": 18.5,
+        "label": "Inside the shrine"
+      }
+    },
+    {
+      "id": "crossing",
+      "kind": "shot",
+      "duration": 16.5,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 18,
+          "audio": "18_Chapter_1.wav",
+          "at": 1.903
+        },
+        {
+          "line": 19,
+          "audio": "19_Chapter_1.wav",
+          "at": 3.803
+        },
+        {
+          "line": 20,
+          "audio": "20_Chapter_1.wav",
+          "at": 9.863
+        }
+      ],
+      "shot": {
+        "kind": "pip",
+        "cameras": [
+          "bram-follow",
+          "ada-pov"
+        ],
+        "start": 137.5,
+        "duration": 16.5,
+        "label": "Bram crosses \u00b7 Ada holds the inner plate"
+      }
+    },
+    {
+      "id": "pedestals",
+      "kind": "shot",
+      "duration": 10.5,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 21,
+          "audio": "21_Chapter_1.wav",
+          "at": 0.35
+        },
+        {
+          "line": 22,
+          "audio": "22_Chapter_1.wav",
+          "at": 6.574
+        }
+      ],
+      "shot": {
+        "kind": "split",
+        "cameras": [
+          "ada-follow",
+          "bram-follow"
+        ],
+        "start": 154.0,
+        "duration": 10.5,
+        "label": "Ada \u00b7 Bram"
+      }
+    },
+    {
+      "id": "centre",
+      "kind": "shot",
+      "duration": 21.0,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 23,
+          "audio": "23_Chapter_1.wav",
+          "at": 0.35
+        },
+        {
+          "line": 24,
+          "audio": "24_Chapter_1.wav",
+          "at": 13.067
+        }
+      ],
+      "shot": {
+        "kind": "split",
+        "cameras": [
+          "ada-follow",
+          "bram-follow"
+        ],
+        "start": 175.0,
+        "duration": 21.0,
+        "label": "Ada \u00b7 Bram"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "shot",
+      "duration": 7.666666666666667,
+      "transition": 0.25,
+      "narration": [
+        {
+          "line": 25,
+          "audio": "25_Chapter_1.wav",
+          "at": 0.9
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "ada-observer"
+        ],
+        "start": 196.0,
+        "duration": 7.666666666666667,
+        "label": "The twin pedestals",
+        "hold": 1.1666666666666667
+      }
+    },
+    {
+      "id": "outro",
+      "kind": "outro",
+      "duration": 7.783333333333333,
+      "text": "Twin Shrine complete. One built the bridge, the other held the gate.",
+      "narration": [
+        {
+          "line": 26,
+          "audio": "26_Chapter_1.wav",
+          "at": 0.35
+        }
+      ]
+    }
+  ]
+}

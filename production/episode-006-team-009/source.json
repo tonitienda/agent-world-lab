@@ -1,0 +1,16 @@
+{
+  "run": "/Users/toni/Projects/agent-world-lab/.claude/worktrees/minecraft-multi-agent-episode-e6545d/episodes/episode-006/runs/team/take-009/run.json",
+  "members": {
+    "ada": {
+      "events": "/Users/toni/Projects/agent-world-lab/.claude/worktrees/minecraft-multi-agent-episode-e6545d/episodes/episode-006/runs/team/take-009/ada/events.json",
+      "metadata": "/Users/toni/Projects/agent-world-lab/.claude/worktrees/minecraft-multi-agent-episode-e6545d/episodes/episode-006/runs/team/take-009/ada/metadata.json",
+      "offsetSeconds": 0.0
+    },
+    "bram": {
+      "events": "/Users/toni/Projects/agent-world-lab/.claude/worktrees/minecraft-multi-agent-episode-e6545d/episodes/episode-006/runs/team/take-009/bram/events.json",
+      "metadata": "/Users/toni/Projects/agent-world-lab/.claude/worktrees/minecraft-multi-agent-episode-e6545d/episodes/episode-006/runs/team/take-009/bram/metadata.json",
+      "offsetSeconds": -56.023
+    }
+  },
+  "clock": "2026-11-07T16:47:36.353Z"
+}

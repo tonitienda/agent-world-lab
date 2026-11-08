@@ -26,6 +26,11 @@ test('speaker mapping and cache identity include exact text, voice and model',()
   assert.notEqual(audioRequests([{...lines[0],text:'Changed.'},lines[1]],config)[0].fingerprint,requests[0].fingerprint);
   assert.throws(()=>audioRequests([{...lines[0],audio:'../bad.wav'}],config));
 });
+test('a named character voice wins over its role, and unknown characters fall back to the role',()=>{
+  const cast={...config,speakers:{...config.speakers,ada:{name:'Elsa',voiceId:'elsa-id'}}};
+  const [ada,bram]=audioRequests([{...lines[0],voice:'agent',speaker:'ada'},{...lines[1],speaker:'bram'}],cast);
+  assert.equal(ada.request.voiceId,'elsa-id');assert.equal(bram.request.voiceId,'larry-id');
+});
 test('failure preserves active files; resume reuses paid output and activation preserves originals',async()=>{
   const f=fixture();let calls=[];let fail=true;
   const client={textToSpeech:{convert:async(voice,body,options)=>{

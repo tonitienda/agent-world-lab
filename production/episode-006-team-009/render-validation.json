@@ -1,0 +1,117 @@
+{
+  "file": "/Users/toni/Projects/agent-world-lab/.claude/worktrees/minecraft-multi-agent-episode-e6545d/production/output/episode-006-team-009.mp4",
+  "duration": 195.55,
+  "frames": 11733,
+  "width": 3840,
+  "height": 2160,
+  "fps": 60,
+  "audio": "aac",
+  "blackIntervals": [],
+  "decoded": true,
+  "narrationWindows": [
+    {
+      "line": 1,
+      "meanDb": -21
+    },
+    {
+      "line": 2,
+      "meanDb": -21.3
+    },
+    {
+      "line": 3,
+      "meanDb": -20.7
+    },
+    {
+      "line": 4,
+      "meanDb": -21.3
+    },
+    {
+      "line": 5,
+      "meanDb": -20.5
+    },
+    {
+      "line": 6,
+      "meanDb": -21
+    },
+    {
+      "line": 7,
+      "meanDb": -20.8
+    },
+    {
+      "line": 8,
+      "meanDb": -20.6
+    },
+    {
+      "line": 9,
+      "meanDb": -21
+    },
+    {
+      "line": 10,
+      "meanDb": -20.6
+    },
+    {
+      "line": 11,
+      "meanDb": -21
+    },
+    {
+      "line": 12,
+      "meanDb": -21.1
+    },
+    {
+      "line": 13,
+      "meanDb": -21.3
+    },
+    {
+      "line": 14,
+      "meanDb": -21
+    },
+    {
+      "line": 15,
+      "meanDb": -20.6
+    },
+    {
+      "line": 16,
+      "meanDb": -21.6
+    },
+    {
+      "line": 17,
+      "meanDb": -21.2
+    },
+    {
+      "line": 18,
+      "meanDb": -21.9
+    },
+    {
+      "line": 19,
+      "meanDb": -21.2
+    },
+    {
+      "line": 20,
+      "meanDb": -20.7
+    },
+    {
+      "line": 21,
+      "meanDb": -21.1
+    },
+    {
+      "line": 22,
+      "meanDb": -21.4
+    },
+    {
+      "line": 23,
+      "meanDb": -20.5
+    },
+    {
+      "line": 24,
+      "meanDb": -20.8
+    },
+    {
+      "line": 25,
+      "meanDb": -20.3
+    },
+    {
+      "line": 26,
+      "meanDb": -20.7
+    }
+  ]
+}

@@ -3,6 +3,8 @@
   "outputFormat": "mp3_44100_128",
   "speakers": {
     "presenter": {"name": "Bella", "voiceId": "hpp4J3VqNfWAUOO0d1Us"},
-    "agent": {"name": "Larry", "voiceId": "pgXLagTlUQcy1LT68JCe"}
+    "agent": {"name": "Larry", "voiceId": "pgXLagTlUQcy1LT68JCe"},
+    "ada": {"name": "Elsa", "voiceId": "7yuqhKJfGa6zud57AaAx"},
+    "bram": {"name": "Larry", "voiceId": "pgXLagTlUQcy1LT68JCe"}
   }
 }

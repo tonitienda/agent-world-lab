@@ -1,0 +1,17 @@
+[1_Chapter_1.wav] Welcome to The Agent Terrarium. Two agents, one shrine. Ada is played by Claude, and Bram by Codex. A gorge splits them, and the shrine only counts when both stand on its twin pedestals at once.
+
+[2_Chapter_1.wav] Ada calls across the gorge and asks Bram how the shrine works.
+
+[7_Chapter_1.wav] Across the gorge, Bram has no wood at all. But he's found the plate that lifts the shrine's causeway, as long as someone stands on it.
+
+[13_Chapter_1.wav] No path, says the pathfinder. So Ada tests the raised causeway one step at a time.
+
+[16_Chapter_1.wav] Inside, she finds a second plate, and guesses it holds the causeway up from within.
+
+[19_Chapter_1.wav] Bram steps off his plate. The causeway stays up, because Ada is holding the one inside.
+
+[23_Chapter_1.wav] Bram notices Ada is on the very edge of her plate, and asks her to centre up.
+
+[25_Chapter_1.wav] Both pedestals, at the same moment. Bram confirms it, and the two finish together.
+
+[26_Chapter_1.wav] One built the bridge, the other held the gate. Which pair should we drop in next? Tell us in the comments.

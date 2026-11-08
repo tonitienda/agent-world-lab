@@ -1,0 +1,426 @@
+[
+  {
+    "line": 1,
+    "voice": "presenter",
+    "speaker": "presenter",
+    "text": "Welcome to The Agent Terrarium. Two agents, one shrine. Ada is played by Claude, and Bram by Codex. A gorge splits them, and the shrine only counts when both stand on its twin pedestals at once.",
+    "audio": "1_Chapter_1.wav",
+    "seconds": 14.8,
+    "source": {
+      "type": "editorial",
+      "evidence": "take-009 events.json (both agents) and recordings"
+    },
+    "tts": "ElevenLabs Bella",
+    "segment": "intro",
+    "eventTime": null
+  },
+  {
+    "line": 2,
+    "voice": "presenter",
+    "speaker": "presenter",
+    "text": "Ada calls across the gorge and asks Bram how the shrine works.",
+    "audio": "2_Chapter_1.wav",
+    "seconds": 4.16,
+    "source": {
+      "type": "editorial",
+      "evidence": "take-009 events.json (both agents) and recordings"
+    },
+    "tts": "ElevenLabs Bella",
+    "segment": "hello",
+    "eventTime": 3.8
+  },
+  {
+    "line": 3,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Off to the nearest cherry tree",
+    "audio": "3_Chapter_1.wav",
+    "seconds": 2.16,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 9,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "hello",
+    "eventTime": 7.06000018119812
+  },
+  {
+    "line": 4,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Chopping the base log",
+    "audio": "4_Chapter_1.wav",
+    "seconds": 1.76,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 12,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "logs",
+    "eventTime": 11.358999967575073
+  },
+  {
+    "line": 5,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Reaching for the fourth log",
+    "audio": "5_Chapter_1.wav",
+    "seconds": 2.0,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 21,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "logs",
+    "eventTime": 23.11899995803833
+  },
+  {
+    "line": 6,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Turning logs into bridge planks",
+    "audio": "6_Chapter_1.wav",
+    "seconds": 2.48,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 50,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "planks",
+    "eventTime": 56.83200001716614
+  },
+  {
+    "line": 7,
+    "voice": "presenter",
+    "speaker": "presenter",
+    "text": "Across the gorge, Bram has no wood at all. But he's found the plate that lifts the shrine's causeway, as long as someone stands on it.",
+    "audio": "7_Chapter_1.wav",
+    "seconds": 8.72,
+    "source": {
+      "type": "editorial",
+      "evidence": "take-009 events.json (both agents) and recordings"
+    },
+    "tts": "ElevenLabs Bella",
+    "segment": "bram",
+    "eventTime": 61.0
+  },
+  {
+    "line": 8,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "First plank over the gorge",
+    "audio": "8_Chapter_1.wav",
+    "seconds": 2.16,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 61,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "bridge",
+    "eventTime": 72.94099998474121
+  },
+  {
+    "line": 9,
+    "voice": "agent",
+    "speaker": "bram",
+    "text": "I\u2019ll step onto the plate.",
+    "audio": "9_Chapter_1.wav",
+    "seconds": 1.6,
+    "source": {
+      "type": "report_intention",
+      "agent": "bram",
+      "eventIndex": 11,
+      "evidence": "runs/team/take-009/bram/events.json"
+    },
+    "tts": "ElevenLabs Larry",
+    "segment": "bridge",
+    "eventTime": 74.04800009727478
+  },
+  {
+    "line": 10,
+    "voice": "agent",
+    "speaker": "bram",
+    "text": "I\u2019ll hold steady for Ada.",
+    "audio": "10_Chapter_1.wav",
+    "seconds": 1.76,
+    "source": {
+      "type": "report_intention",
+      "agent": "bram",
+      "eventIndex": 25,
+      "evidence": "runs/team/take-009/bram/events.json"
+    },
+    "tts": "ElevenLabs Larry",
+    "segment": "bridge",
+    "eventTime": 87.15499997138977
+  },
+  {
+    "line": 11,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Nearly there",
+    "audio": "11_Chapter_1.wav",
+    "seconds": 1.2,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 108,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "bridge",
+    "eventTime": 93.1579999923706
+  },
+  {
+    "line": 12,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Walking up to the trench",
+    "audio": "12_Chapter_1.wav",
+    "seconds": 1.76,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 120,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "causeway",
+    "eventTime": 102.21900010108948
+  },
+  {
+    "line": 13,
+    "voice": "presenter",
+    "speaker": "presenter",
+    "text": "No path, says the pathfinder. So Ada tests the raised causeway one step at a time.",
+    "audio": "13_Chapter_1.wav",
+    "seconds": 6.8,
+    "source": {
+      "type": "editorial",
+      "evidence": "take-009 events.json (both agents) and recordings"
+    },
+    "tts": "ElevenLabs Bella",
+    "segment": "causeway",
+    "eventTime": 109.5
+  },
+  {
+    "line": 14,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Stepping up to the shrine door",
+    "audio": "14_Chapter_1.wav",
+    "seconds": 2.16,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 133,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "causeway",
+    "eventTime": 116.07200002670288
+  },
+  {
+    "line": 15,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Peeking inside the shrine",
+    "audio": "15_Chapter_1.wav",
+    "seconds": 2.0,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 138,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "inside",
+    "eventTime": 122.31299996376038
+  },
+  {
+    "line": 16,
+    "voice": "presenter",
+    "speaker": "presenter",
+    "text": "Inside, she finds a second plate, and guesses it holds the causeway up from within.",
+    "audio": "16_Chapter_1.wav",
+    "seconds": 5.44,
+    "source": {
+      "type": "editorial",
+      "evidence": "take-009 events.json (both agents) and recordings"
+    },
+    "tts": "ElevenLabs Bella",
+    "segment": "inside",
+    "eventTime": 127.6
+  },
+  {
+    "line": 17,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Holding the plate, waiting on bram",
+    "audio": "17_Chapter_1.wav",
+    "seconds": 2.64,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 148,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "inside",
+    "eventTime": 132.17000007629395
+  },
+  {
+    "line": 18,
+    "voice": "agent",
+    "speaker": "bram",
+    "text": "I\u2019ll check the trench edge.",
+    "audio": "18_Chapter_1.wav",
+    "seconds": 1.6,
+    "source": {
+      "type": "report_intention",
+      "agent": "bram",
+      "eventIndex": 36,
+      "evidence": "runs/team/take-009/bram/events.json"
+    },
+    "tts": "ElevenLabs Larry",
+    "segment": "crossing",
+    "eventTime": 140.00300002098083
+  },
+  {
+    "line": 19,
+    "voice": "presenter",
+    "speaker": "presenter",
+    "text": "Bram steps off his plate. The causeway stays up, because Ada is holding the one inside.",
+    "audio": "19_Chapter_1.wav",
+    "seconds": 5.76,
+    "source": {
+      "type": "editorial",
+      "evidence": "take-009 events.json (both agents) and recordings"
+    },
+    "tts": "ElevenLabs Bella",
+    "segment": "crossing",
+    "eventTime": 141.5
+  },
+  {
+    "line": 20,
+    "voice": "agent",
+    "speaker": "bram",
+    "text": "I\u2019ll cross into the shrine.",
+    "audio": "20_Chapter_1.wav",
+    "seconds": 1.68,
+    "source": {
+      "type": "report_intention",
+      "agent": "bram",
+      "eventIndex": 43,
+      "evidence": "runs/team/take-009/bram/events.json"
+    },
+    "tts": "ElevenLabs Larry",
+    "segment": "crossing",
+    "eventTime": 145.27300000190735
+  },
+  {
+    "line": 21,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Heading for the north pedestal",
+    "audio": "21_Chapter_1.wav",
+    "seconds": 2.0,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 163,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "pedestals",
+    "eventTime": 154.56100010871887
+  },
+  {
+    "line": 22,
+    "voice": "agent",
+    "speaker": "bram",
+    "text": "I\u2019ll mount my pedestal.",
+    "audio": "22_Chapter_1.wav",
+    "seconds": 1.68,
+    "source": {
+      "type": "report_intention",
+      "agent": "bram",
+      "eventIndex": 62,
+      "evidence": "runs/team/take-009/bram/events.json"
+    },
+    "tts": "ElevenLabs Larry",
+    "segment": "pedestals",
+    "eventTime": 161.17400002479553
+  },
+  {
+    "line": 23,
+    "voice": "presenter",
+    "speaker": "presenter",
+    "text": "Bram notices Ada is on the very edge of her plate, and asks her to centre up.",
+    "audio": "23_Chapter_1.wav",
+    "seconds": 4.96,
+    "source": {
+      "type": "editorial",
+      "evidence": "take-009 events.json (both agents) and recordings"
+    },
+    "tts": "ElevenLabs Bella",
+    "segment": "centre",
+    "eventTime": 175.0
+  },
+  {
+    "line": 24,
+    "voice": "agent",
+    "speaker": "ada",
+    "text": "Stepping squarely onto the plate",
+    "audio": "24_Chapter_1.wav",
+    "seconds": 2.48,
+    "source": {
+      "type": "report_intention",
+      "agent": "ada",
+      "eventIndex": 194,
+      "evidence": "runs/team/take-009/ada/events.json"
+    },
+    "tts": "ElevenLabs Elsa",
+    "segment": "centre",
+    "eventTime": 188.6670000553131
+  },
+  {
+    "line": 25,
+    "voice": "presenter",
+    "speaker": "presenter",
+    "text": "Both pedestals, at the same moment. Bram confirms it, and the two finish together.",
+    "audio": "25_Chapter_1.wav",
+    "seconds": 6.16,
+    "source": {
+      "type": "editorial",
+      "evidence": "take-009 events.json (both agents) and recordings"
+    },
+    "tts": "ElevenLabs Bella",
+    "segment": "finish",
+    "eventTime": 197.5
+  },
+  {
+    "line": 26,
+    "voice": "presenter",
+    "speaker": "presenter",
+    "text": "One built the bridge, the other held the gate. Which pair should we drop in next? Tell us in the comments.",
+    "audio": "26_Chapter_1.wav",
+    "seconds": 6.48,
+    "source": {
+      "type": "editorial",
+      "evidence": "take-009 events.json (both agents) and recordings"
+    },
+    "tts": "ElevenLabs Bella",
+    "segment": "outro",
+    "eventTime": null
+  }
+]
