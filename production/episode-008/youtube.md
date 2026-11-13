@@ -1,7 +1,7 @@
 # Episode 008 — YouTube upload copy
 
-Proposed release: **November 22, 2026** (Europe/Madrid), the earliest slot five days
-after episode 007. Not yet confirmed; see [release-plan.json](../release-plan.json).
+Planned release: **November 22, 2026** (Europe/Madrid). Keep at least five days
+between episode releases; see [release-plan.json](../release-plan.json).
 This is a local plan, not a platform-scheduled upload.
 
 ## Recommended title
