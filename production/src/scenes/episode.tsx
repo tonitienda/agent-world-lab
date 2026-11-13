@@ -1,4 +1,5 @@
 import {makeScene2D, Rect, Txt} from '@motion-canvas/2d';
+import {titleCardView} from '../title-cards';
 import {EpisodeVideo as Video} from '../episode-video';
 import {createRef, waitFor, useThread} from '@motion-canvas/core';
 import {heldSourceTime, sourceTime, type EpisodePlan} from '../timeline';
@@ -11,9 +12,10 @@ export function createEpisodeScene(plan:EpisodePlan,episode:string){
   view.fill('#101d26');
   let previous:Rect|undefined;
   for(const segment of plan.segments){
+   const fade=previous?(segment.transition??.2):0;
    const group=createRef<Rect>();
    const clock=useThread().time;const segmentStart=clock();
-   view.add(<Rect ref={group} width={width} height={height} fill="#101d26" opacity={previous?0:1}/>);
+   view.add(<Rect ref={group} width={width} height={height} fill="#101d26" opacity={fade?0:1}/>);
    if(segment.kind==='shot'&&segment.shot){
     const shot=segment.shot;
     shot.cameras.forEach((id,i)=>{
@@ -32,6 +34,10 @@ export function createEpisodeScene(plan:EpisodePlan,episode:string){
     if(shot.label)group().add(<Rect y={460} width={1760} height={86} fill="#101d26e8" radius={8}>
      <Txt text={shot.label} width={1670} fontSize={32} fill="#f0f2e6" fontFamily="Arial" textAlign="center" textWrap/>
     </Rect>);
+   }else if(segment.titleCard){
+    const b=segment.background;
+    const camera=b&&cameras.get(b.camera);
+    group().add(titleCardView(segment.titleCard,b&&camera?{src:`/${episode}/video/${camera.file}`,time:sourceTime(camera,b.time)}:undefined));
    }else{
     if(segment.background){
      const camera=cameras.get(segment.background.camera);
@@ -47,7 +53,6 @@ export function createEpisodeScene(plan:EpisodePlan,episode:string){
     if(segment.kind==='outro')group().add(<Txt text="OBSERVE · QUESTION · TRY AGAIN"
      y={330} fontSize={25} fontFamily="Arial" fill="#829da7"/>);
    }
-   const fade=previous?(segment.transition??.2):0;
    if(fade)yield* group().opacity(1,fade);
    if(previous){previous.remove();previous.dispose();}
    yield* waitFor(segment.duration-fade);

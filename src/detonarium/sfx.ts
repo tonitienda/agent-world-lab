@@ -19,8 +19,10 @@ export function soundCues(frames: Frame[], clock: ClockFrame[], fps: number, nor
     frames[tick].events.forEach((e, i) => {
       const kind: SfxKind | undefined = e.type === "bomb_placed" ? "place" : e.type === "exploded" ? "explosion" : e.type === "eliminated" ? "elimination" : e.type === "pickup_collected" ? "pickup" : e.type === "collapse" ? "collapse" : undefined;
       if (!kind) return;
-      // Blast/pop/death at their first visible frame; falling blocks thud as they land.
-      const frame = at(tick - 1 + (kind === "collapse" ? .98 : 1e-7));
+      // Bomb effects begin on the first visible frame. Falling blocks and
+      // their eliminations land together, even on a stretched tick.
+      const impact = e.type === "collapse" || (e.type === "eliminated" && e.by === "collapse");
+      const frame = at(tick - 1 + (impact ? .98 : 1e-7));
       if (frame >= clock.length) return;
       cues.push({ kind, frame, time: frame / fps, tick, eventIds: [`${tick}:${i}:${e.type}`], gain: gain[kind] });
     });

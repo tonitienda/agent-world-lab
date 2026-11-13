@@ -1,0 +1,52 @@
+{
+  "provider": "detonarium",
+  "title": "Detonarium · Ada, Bram & the Hunters",
+  "session": "data/detonarium-sessions/episode-008",
+  "games": [
+    4
+  ],
+  "fps": 60,
+  "tps": 4,
+  "resolution": {
+    "width": 3840,
+    "height": 2160
+  },
+  "narrationMode": "flow",
+  "soundEffects": true,
+  "castSprites": "cast-sprites.json",
+  "cards": [
+    {
+      "id": "opening",
+      "beforeGame": 4,
+      "title": "Detonarium",
+      "body": "Ada, Bram, and two Hunters",
+      "image": "opening.png",
+      "minimumSeconds": 5
+    },
+    {
+      "id": "ending",
+      "afterGames": true,
+      "title": "Final result",
+      "body": "Thanks for watching",
+      "image": "ending.png",
+      "minimumSeconds": 20
+    }
+  ],
+  "focus": {
+    "4": [
+      [
+        96,
+        99
+      ],
+      [
+        192,
+        196
+      ],
+      [
+        225,
+        228
+      ]
+    ]
+  },
+  "hardCuts": true
+}

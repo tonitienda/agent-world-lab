@@ -6,6 +6,6 @@ export { resolveMoves } from "./moves.js";
 export { seededRandom } from "./rng.js";
 export type * from "./types.js";
 export { eventCaption } from "./captions.js";
-export { PLAYER_COLORS, renderSvg, viewBox, type RenderOptions, type View } from "./render.js";
+export { ARCADE_PLAYER_COLORS, PLAYER_COLORS, renderSvg, viewBox, type RenderOptions, type View } from "./render.js";
 export { newReplay, playBots, replayFrames, type Frame, type Replay } from "./replay.js";
 export { viewerHtml } from "./viewer.js";

@@ -1,0 +1,37 @@
+{
+  "timezone": "Europe/Madrid",
+  "minimumSpacingDays": 5,
+  "updatedOn": "2026-11-13",
+  "episodes": [
+    {
+      "id": "episode-007",
+      "game": "openttd",
+      "plannedReleaseDate": "2026-11-17",
+      "status": "user-planned",
+      "preserveCompletedVideo": true
+    },
+    {
+      "id": "episode-008",
+      "game": "detonarium",
+      "title": "Claude vs Codex in a Bomberman Arena",
+      "plannedReleaseDate": null,
+      "earliestReleaseDateIfFollowing007": "2026-11-22",
+      "status": "production-complete",
+      "preserveCompletedVideo": true
+    },
+    {
+      "id": "episode-009",
+      "game": "openttd",
+      "title": "Forest to Market",
+      "plannedReleaseDate": null,
+      "earliestReleaseDateIf008UsesEarliestSlot": "2026-11-27",
+      "status": "production-complete"
+    }
+  ],
+  "notes": [
+    "Only episode-007 has a user-selected date. Later dates are earliest possible slots, not commitments.",
+    "Recompute spacing from actual neighbouring releases if dates or order change.",
+    "No upload or platform scheduling has been performed.",
+    "Episode identifiers are internal; omit release numbers from video visuals and narration."
+  ]
+}

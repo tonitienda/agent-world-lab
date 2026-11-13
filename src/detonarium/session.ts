@@ -78,6 +78,53 @@ const LEGEND =
   "# wall, + crate, . floor, A you, 1-3 rivals, o bomb, * flame, b +bomb pickup, r +range pickup. " +
   "Coordinates are (x, y): x is the column, y the row, origin top-left.";
 
+export function observeArena(s: MatchState, names: string[], seat: number, result: string | null): AgentView {
+  const { width, height } = s.rules;
+  const symbol = (id: number) => id === seat ? "A" : String(id < seat ? id + 1 : id);
+  const rows: string[][] = [];
+  for (let y = 0; y < height; y++) {
+    const row: string[] = [];
+    for (let x = 0; x < width; x++) {
+      const i = y * width + x;
+      const cell = s.cells[i];
+      row.push(cell === "wall" ? "#" : cell === "crate" ? "+" : s.pickups[i] === "bomb" ? "b" : s.pickups[i] === "range" ? "r" : ".");
+    }
+    rows.push(row);
+  }
+  for (const f of s.flames) rows[f.pos.y][f.pos.x] = "*";
+  for (const b of s.bombs) rows[b.pos.y][b.pos.x] = "o";
+  // Players drawn last: a player standing on a bomb shows as the player; the bomb list has it.
+  for (const p of s.players) if (p.alive) rows[p.pos.y][p.pos.x] = symbol(p.id);
+  const header = "   " + Array.from({ length: width }, (_, x) => String(x % 10)).join("");
+  const board = [header, ...rows.map((r, y) => String(y).padStart(2) + " " + r.join(""))];
+
+  const me = s.players[seat];
+  const sd = s.rules.suddenDeathTick;
+  const collapsed = sd === null ? 0 : Math.max(0, s.tick - sd);
+  return {
+    tick: s.tick,
+    board,
+    legend: LEGEND,
+    you: {
+      name: names[seat],
+      pos: me.pos,
+      alive: me.alive,
+      bombCapacity: me.bombs,
+      bombsTicking: s.bombs.filter((b) => b.owner === seat).length,
+      range: me.range,
+    },
+    rivals: s.players
+      .filter((p) => p.id !== seat)
+      .map((p) => ({ name: names[p.id], symbol: symbol(p.id), pos: p.pos, alive: p.alive })),
+    bombs: s.bombs.map((b) => ({ owner: names[b.owner], pos: b.pos, ticksToExplode: b.fuse, ...(b.owner === seat ? { range: b.range } : {}) })),
+    flames: s.flames.map((f) => ({ pos: f.pos, ticksLeft: f.ticks })),
+    suddenDeath: sd === null ? null : { startsAtTick: sd, nextCollapses: s.collapseOrder.slice(collapsed, collapsed + 6) },
+    rules: { fuseTicks: s.rules.fuse, flameTicks: s.rules.flameTicks, maxTicks: s.rules.maxTicks },
+    matchOver: s.over,
+    result: result,
+  };
+}
+
 export class DetonariumSession {
   state: MatchState;
   readonly replay: Replay;
@@ -102,51 +149,7 @@ export class DetonariumSession {
   }
 
   observe(): AgentView {
-    const s = this.state;
-    const { width, height } = s.rules;
-    const symbol = (id: number) => (id === AGENT ? "A" : String(id));
-    const rows: string[][] = [];
-    for (let y = 0; y < height; y++) {
-      const row: string[] = [];
-      for (let x = 0; x < width; x++) {
-        const i = y * width + x;
-        const cell = s.cells[i];
-        row.push(cell === "wall" ? "#" : cell === "crate" ? "+" : s.pickups[i] === "bomb" ? "b" : s.pickups[i] === "range" ? "r" : ".");
-      }
-      rows.push(row);
-    }
-    for (const f of s.flames) rows[f.pos.y][f.pos.x] = "*";
-    for (const b of s.bombs) rows[b.pos.y][b.pos.x] = "o";
-    // Players drawn last: a player standing on a bomb shows as the player; the bomb list has it.
-    for (const p of s.players) if (p.alive) rows[p.pos.y][p.pos.x] = symbol(p.id);
-    const header = "   " + Array.from({ length: width }, (_, x) => String(x % 10)).join("");
-    const board = [header, ...rows.map((r, y) => String(y).padStart(2) + " " + r.join(""))];
-
-    const me = s.players[AGENT];
-    const sd = s.rules.suddenDeathTick;
-    const collapsed = sd === null ? 0 : Math.max(0, s.tick - sd);
-    return {
-      tick: s.tick,
-      board,
-      legend: LEGEND,
-      you: {
-        name: this.names[AGENT],
-        pos: me.pos,
-        alive: me.alive,
-        bombCapacity: me.bombs,
-        bombsTicking: s.bombs.filter((b) => b.owner === AGENT).length,
-        range: me.range,
-      },
-      rivals: s.players
-        .filter((p) => p.id !== AGENT)
-        .map((p) => ({ name: this.names[p.id], symbol: symbol(p.id), pos: p.pos, alive: p.alive })),
-      bombs: s.bombs.map((b) => ({ owner: this.names[b.owner], pos: b.pos, ticksToExplode: b.fuse, ...(b.owner === AGENT ? { range: b.range } : {}) })),
-      flames: s.flames.map((f) => ({ pos: f.pos, ticksLeft: f.ticks })),
-      suddenDeath: sd === null ? null : { startsAtTick: sd, nextCollapses: s.collapseOrder.slice(collapsed, collapsed + 6) },
-      rules: { fuseTicks: s.rules.fuse, flameTicks: s.rules.flameTicks, maxTicks: s.rules.maxTicks },
-      matchOver: s.over,
-      result: this.result(),
-    };
+    return observeArena(this.state, this.names, AGENT, this.result());
   }
 
   result(): string | null {

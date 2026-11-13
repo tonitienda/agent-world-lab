@@ -1,0 +1,48 @@
+{
+  "opening": {
+    "id": "specimen-opening",
+    "kind": "intro",
+    "duration": 5,
+    "background": {"camera": "observer", "time": 0.25},
+    "titleCard": {
+      "layout": "opening",
+      "mode": "tycoon",
+      "kicker": "Specimen · OpenTTD solo run",
+      "title": "Claude Transit",
+      "premise": "Build a commuter bus service from scratch and stay solvent.",
+      "observation": "Day 0 / 120",
+      "setup": [
+        {"label": "Goal", "value": "200", "unit": "passengers"},
+        {"label": "Time limit", "value": "120", "unit": "days"},
+        {"label": "Start with", "value": "20,000", "unit": "cash"},
+        {"label": "Finish with", "value": "≥ 5,000", "unit": "cash"}
+      ],
+      "facts": [
+        {"label": "Agent", "value": "Claude Opus 5.5"},
+        {"label": "World", "value": "OpenTTD"},
+        {"label": "Win condition", "value": "200 delivered, cash ≥ 5,000"},
+        {"label": "Mode", "value": "Solo experiment"}
+      ]
+    }
+  },
+  "ending": {
+    "id": "specimen-ending",
+    "kind": "outro",
+    "duration": 20,
+    "transition": 0,
+    "titleCard": {
+      "layout": "ending",
+      "mode": "tycoon",
+      "kicker": "Result · Day 104 / 120",
+      "title": "Objective achieved.",
+      "stats": [
+        {"label": "Delivered", "value": "220", "unit": "/ 200"},
+        {"label": "Cash", "value": "5,627", "unit": "/ 5,000"},
+        {"label": "Days used", "value": "104", "unit": "/ 120"}
+      ],
+      "question": "What should Claude try next?",
+      "premise": "Leave your prompts and scenarios in the comments.",
+      "facts": [{"label": "The Agent Terrarium", "value": "Observe · Question · Try again"}]
+    }
+  }
+}

@@ -58,3 +58,13 @@ test("original sounds are deterministic, bounded, non-silent WAVs and overlappin
   assert.ok(mix.samples.every((s) => Math.abs(s) <= .500001));
   assert.throws(() => soundCues([], [{ tau: 2, s: 1 }, { tau: 1, s: 1 }], 30, 6), /Invalid sound clock/);
 });
+
+test("a collapse elimination lands with the stone on a stretched replay tick", () => {
+  const pos = { x: 3, y: 1 };
+  const cues = soundCues(frames([
+    { type: "collapse", pos },
+    { type: "eliminated", player: 0, by: "collapse", pos },
+  ]), [0, 1, 1.05, 1.4, 1.8, 1.97, 1.99, 2, 3].map(tau => ({ tau, s: 1 })), 60, 5);
+  const impacts = cues.filter(cue => cue.kind === "collapse" || cue.kind === "elimination");
+  assert.deepEqual(impacts.map(cue => [cue.kind, cue.frame]), [["collapse", 6], ["elimination", 6]]);
+});

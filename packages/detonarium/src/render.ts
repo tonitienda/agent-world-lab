@@ -3,7 +3,7 @@ import type { Direction, MatchEvent, MatchState, PickupKind, Pos } from "./types
 
 /** Slot 0 is the agent (Claude orange); the rest are bots, muted so the agent stands out. */
 export const PLAYER_COLORS = ["#d97757", "#7d8fa8", "#a08a9e", "#8a9a86"];
-const C = {
+const CLASSIC = {
   background: "#14161f",
   floor: "#262b38",
   floorAlt: "#2a3040",
@@ -25,6 +25,11 @@ const C = {
   ink: "#11131a",
 };
 
+export const ARCADE_PLAYER_COLORS = ["#d97757", "#10a37f", "#b99df0", "#f2c84b"];
+const ARCADE = {...CLASSIC, floor: "#1a2231", floorAlt: "#1e2738", wall: "#3a4560",
+  wallTop: "#56637e", wallSide: "#242d41", crate: "#c98a4b", crateDark: "#986032",
+  crateLight: "#e8ad6c", flameOuter: "#ff811f", flameMid: "#ffb74e", warning: "#ff5d5d"};
+
 export type View =
   | { kind: "board" }
   /** Square crop centred on a player (clamped to the board), `radius` cells each side. */
@@ -33,6 +38,8 @@ export type View =
 export type RenderOptions = {
   /** Pixels per cell. */
   cell?: number;
+  /** Inner SVG artwork from the design artboard, ordered by seat. */
+  castSprites?: string[];
   view?: View;
   /** Events of the tick that produced `state`: drive movement, bumps, explosions, debris and eliminations. */
   events?: MatchEvent[];
@@ -109,6 +116,9 @@ function poses(state: MatchState, events: MatchEvent[], t: number): Map<number, 
 /** One frame as a standalone SVG document. Original flat art; no external assets. */
 export function renderSvg(state: MatchState, options: RenderOptions = {}): string {
   const cell = options.cell ?? 48;
+  const sprites = options.castSprites;
+  const C = sprites ? ARCADE : CLASSIC;
+  const colors = sprites ? ARCADE_PLAYER_COLORS : PLAYER_COLORS;
   const events = options.events ?? [];
   const t = clamp(options.t ?? 1, 0, 1);
   const time = state.tick - 1 + t;
@@ -116,6 +126,12 @@ export function renderSvg(state: MatchState, options: RenderOptions = {}): strin
   const { width, height } = rules;
   const view = options.view ?? { kind: "board" };
   const pose = poses(state, events, t);
+  const collapseDeaths = new Set(events.flatMap(event =>
+    event.type === "eliminated" && event.by === "collapse" ? [event.player] : []));
+  for (const id of collapseDeaths) {
+    const player = pose.get(id);
+    if (player) player.dying = clamp((t - 0.9) / 0.1, 0, 1);
+  }
   const followed = view.kind === "follow" ? pose.get(view.player) : undefined;
   const [vx, vy, vw, vh] = viewBox(state, view, cell, followed);
   const out: string[] = [];
@@ -127,16 +143,16 @@ export function renderSvg(state: MatchState, options: RenderOptions = {}): strin
 <radialGradient id="dn-glow"><stop offset="0" stop-color="#ffd166" stop-opacity="0.4"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient>
 </defs>`);
   // Owned bombs use the same palette as their players; pickups stay neutral.
-  out.push(`<defs>${PLAYER_COLORS.map((color, owner) => `<radialGradient id="dn-bomb-${owner}" cx="35%" cy="35%" r="75%"><stop offset="0" stop-color="${shade(color, 0.25)}"/><stop offset="1" stop-color="${shade(color, -0.65)}"/></radialGradient>`).join("")}</defs>`);
+  out.push(`<defs>${colors.map((color, owner) => `<radialGradient id="dn-bomb-${owner}" cx="35%" cy="35%" r="75%"><stop offset="0" stop-color="${shade(color, 0.25)}"/><stop offset="1" stop-color="${shade(color, -0.65)}"/></radialGradient>`).join("")}</defs>`);
   out.push(`<rect x="0" y="0" width="${width * cell}" height="${height * cell}" fill="${C.floor}"/>`);
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const px = x * cell, py = y * cell, i = index(rules, { x, y });
       const kind = falling.has(i) ? "floor" : state.cells[i];
-      if (kind === "wall") wall(out, px, py, cell);
+      if (kind === "wall") wall(out, px, py, cell, C);
       else if ((x + y) % 2) out.push(`<rect x="${px}" y="${py}" width="${cell}" height="${cell}" fill="${C.floorAlt}"/>`);
-      if (kind === "crate") crate(out, px, py, cell);
+      if (kind === "crate") crate(out, px, py, cell, C);
     }
   }
 
@@ -169,7 +185,7 @@ export function renderSvg(state: MatchState, options: RenderOptions = {}): strin
     const { cx, cy } = centre(bomb.pos);
     const fresh = events.some((e) => e.type === "bomb_placed" && e.pos.x === bomb.pos.x && e.pos.y === bomb.pos.y);
     const remaining = Math.min(rules.fuse, bomb.fuse + 1 - t) / rules.fuse;
-    drawBomb(out, cx, cy, cell, fresh ? easeOutBack(clamp(t * 1.6, 0, 1)) : 1, remaining, bomb.fuse <= 2, time, bomb.owner);
+    drawBomb(out, cx, cy, cell, fresh ? easeOutBack(clamp(t * 1.6, 0, 1)) : 1, remaining, bomb.fuse <= 2, time, bomb.owner, C, colors, sprites ? bomb.fuse : undefined);
   }
 
   const flames = new Map(state.flames.map((fl) => [index(rules, fl.pos), fl]));
@@ -210,11 +226,21 @@ export function renderSvg(state: MatchState, options: RenderOptions = {}): strin
     }
   }
 
-  for (const [id, p] of [...pose].sort(([, a], [, b]) => a.y - b.y)) drawPlayer(out, id, p, cell);
+  for (const [id, p] of [...pose].sort(([, a], [, b]) => a.y - b.y)) {
+    if (sprites) {
+      const scale = cell / 72;
+      const x = (p.x + 0.5) * cell, y = (p.y + 0.46 - p.hop) * cell;
+      out.push(`<g transform="translate(${f(x)} ${f(y)})" opacity="${p.dying === null ? 1 : f(1 - p.dying)}">
+        <ellipse cy="${f(cell * 0.44)}" rx="${f(cell * 0.37)}" ry="${f(cell * 0.1)}" fill="none" stroke="${colors[id]}" stroke-width="2.5"/>
+        <g transform="scale(${f(scale * p.sx)} ${f(scale * p.sy)}) translate(-32 -34)">${sprites[id]}</g>
+      </g>`);
+    } else drawPlayer(out, id, p, cell);
+  }
   for (const e of events) {
     if (e.type !== "eliminated") continue;
     const { cx, cy } = centre(e.pos), d = f(cell * 0.22);
-    out.push(`<path d="M${cx - d} ${cy - d}L${cx + d} ${cy + d}M${cx + d} ${cy - d}L${cx - d} ${cy + d}" stroke="${PLAYER_COLORS[e.player]}" stroke-width="${f(cell * 0.09)}" stroke-linecap="round" opacity="${f(easeOut(t))}"/>`);
+    const progress = e.by === "collapse" ? clamp((t - 0.95) / 0.05, 0, 1) : t;
+    out.push(`<path d="M${cx - d} ${cy - d}L${cx + d} ${cy + d}M${cx + d} ${cy - d}L${cx - d} ${cy + d}" stroke="${colors[e.player]}" stroke-width="${f(cell * 0.09)}" stroke-linecap="round" opacity="${f(easeOut(progress))}"/>`);
   }
 
   // Collapsing blocks drop in from above, over whatever they crush.
@@ -222,21 +248,38 @@ export function renderSvg(state: MatchState, options: RenderOptions = {}): strin
     const px = (i % width) * cell, py = Math.floor(i / width) * cell;
     out.push(`<rect x="${px + cell * 0.1}" y="${py + cell * 0.1}" width="${cell * 0.8}" height="${cell * 0.8}" rx="${f(cell * 0.1)}" fill="#000" opacity="${f(0.45 * t)}"/>`);
     out.push(`<g transform="translate(0 ${f(-(1 - easeIn(t)) * cell * 1.2)})" opacity="${f(Math.min(1, t * 3))}">`);
-    wall(out, px, py, cell);
+    wall(out, px, py, cell, C);
     out.push(`</g>`);
   }
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vx} ${vy} ${vw} ${vh}" width="${vw}" height="${vh}">${out.join("")}</svg>`;
 }
 
-function wall(out: string[], px: number, py: number, cell: number) {
+function wall(out: string[], px: number, py: number, cell: number, C = CLASSIC) {
+  if (C === ARCADE) {
+    const inset = cell * 0.045, edge = cell - 2 * inset, radius = cell * 0.14;
+    const x = px + inset, y = py + inset;
+    out.push(`<rect x="${x}" y="${y}" width="${edge}" height="${edge}" rx="${radius}" fill="${C.wallSide}"/>
+      <rect x="${x}" y="${y}" width="${edge}" height="${edge * 0.87}" rx="${radius}" fill="${C.wallTop}"/>
+      <rect x="${x}" y="${y + cell * 0.07}" width="${edge}" height="${edge * 0.77}" rx="${radius}" fill="${C.wall}"/>`);
+    return;
+  }
   out.push(`<rect x="${px}" y="${py}" width="${cell}" height="${cell}" fill="${C.wall}"/>`);
   out.push(`<rect x="${px}" y="${py}" width="${cell}" height="${f(cell * 0.2)}" fill="${C.wallTop}"/>`);
   out.push(`<rect x="${px}" y="${f(py + cell * 0.86)}" width="${cell}" height="${f(cell * 0.14)}" fill="${C.wallSide}"/>`);
   out.push(`<path d="M${px} ${f(py + cell * 0.53)}h${cell}M${f(px + cell * 0.5)} ${f(py + cell * 0.2)}v${f(cell * 0.33)}M${f(px + cell * 0.25)} ${f(py + cell * 0.53)}v${f(cell * 0.33)}M${f(px + cell * 0.75)} ${f(py + cell * 0.53)}v${f(cell * 0.33)}" stroke="${C.wallSide}" stroke-width="${f(cell * 0.04)}"/>`);
 }
 
-function crate(out: string[], px: number, py: number, cell: number) {
+function crate(out: string[], px: number, py: number, cell: number, C = CLASSIC) {
+  if (C === ARCADE) {
+    const x = px + cell * 0.08, y = py + cell * 0.08, edge = cell * 0.84;
+    out.push(`<rect x="${x}" y="${y}" width="${edge}" height="${edge}" rx="${cell * 0.14}" fill="${C.crateDark}"/>
+      <rect x="${x}" y="${y}" width="${edge}" height="${edge * 0.87}" rx="${cell * 0.14}" fill="${C.crateLight}"/>
+      <rect x="${x}" y="${y + cell * 0.07}" width="${edge}" height="${edge * 0.8}" rx="${cell * 0.14}" fill="${C.crate}"/>
+      <rect x="${x + cell * 0.16}" y="${y + cell * 0.16}" width="${cell * 0.52}" height="${cell * 0.52}" rx="${cell * 0.04}" stroke="${C.crateDark}" stroke-width="${cell * 0.04}" fill="none"/>
+      <path d="M${x + cell * 0.19} ${y + cell * 0.62}L${x + cell * 0.65} ${y + cell * 0.21}" stroke="${C.crateDark}" stroke-width="${cell * 0.045}"/>`);
+    return;
+  }
   const m = cell * 0.07, s = cell - 2 * m, b = cell * 0.09;
   const x0 = f(px + m), y0 = f(py + m), x1 = f(px + m + s), y1 = f(py + m + s);
   out.push(`<rect x="${x0}" y="${y0}" width="${f(s)}" height="${f(s)}" rx="${f(cell * 0.06)}" fill="${C.crateDark}"/>`);
@@ -249,6 +292,7 @@ function crate(out: string[], px: number, py: number, cell: number) {
 }
 
 function pickup(out: string[], kind: PickupKind, cx: number, cy: number, cell: number, scale: number, opacity: number) {
+  const C = CLASSIC;
   const s = cell * 0.22;
   out.push(`<g transform="translate(${f(cx)} ${f(cy)}) scale(${f(Math.max(0, scale))})" opacity="${f(clamp(opacity, 0, 1))}">`);
   out.push(`<circle r="${f(cell * 0.42)}" fill="url(#dn-glow)"/>`);
@@ -264,14 +308,14 @@ function pickup(out: string[], kind: PickupKind, cx: number, cy: number, cell: n
   out.push(`</g>`);
 }
 
-function drawBomb(out: string[], cx: number, cy: number, cell: number, pop: number, remaining: number, low: boolean, time: number, owner: number) {
+function drawBomb(out: string[], cx: number, cy: number, cell: number, pop: number, remaining: number, low: boolean, time: number, owner: number, C = CLASSIC, colors = PLAYER_COLORS, fuse?: number) {
   const r = cell * 0.28;
   const pulse = 1 + (low ? 0.08 : 0.03) * Math.sin(2 * Math.PI * time * (low ? 2 : 0.5));
   const ring = cell * 0.43, length = 2 * Math.PI * ring;
   out.push(`<ellipse cx="${cx}" cy="${f(cy + r * 0.95)}" rx="${f(r * 0.85 * pop)}" ry="${f(r * 0.25 * pop)}" fill="#00000066"/>`);
   out.push(`<circle cx="${cx}" cy="${cy}" r="${f(ring)}" fill="none" stroke="${low ? C.fuseLow : C.fuse}" stroke-opacity="0.55" stroke-width="${f(cell * 0.04)}" stroke-linecap="round" stroke-dasharray="${f(length * remaining)} ${f(length)}" transform="rotate(-90 ${cx} ${cy})"/>`);
   out.push(`<g transform="translate(${cx} ${cy}) scale(${f(Math.max(0, pop * pulse))})">`);
-  out.push(`<circle r="${f(r)}" fill="url(#dn-bomb-${owner})" stroke="${PLAYER_COLORS[owner]}" stroke-width="${f(cell * 0.025)}"/>`);
+  out.push(`<circle r="${f(r)}" fill="url(#dn-bomb-${owner})" stroke="${colors[owner]}" stroke-width="${f(cell * 0.025)}"/>`);
   if (low) out.push(`<circle r="${f(r)}" fill="${C.fuseLow}" opacity="${f(0.25 + 0.25 * Math.sin(2 * Math.PI * time * 2))}"/>`);
   out.push(`<rect x="${f(r * 0.42)}" y="${f(-r * 0.98)}" width="${f(r * 0.4)}" height="${f(r * 0.32)}" rx="2" fill="#5b6380" transform="rotate(45 ${f(r * 0.62)} ${f(-r * 0.82)})"/>`);
   // The cord burns down with the fuse; its spark flickers.
@@ -285,9 +329,11 @@ function drawBomb(out: string[], cx: number, cy: number, cell: number, pop: numb
   out.push(`<polygon points="${star}" fill="${C.spark}"/><circle cx="${ex}" cy="${ey}" r="${f(spark * 0.35)}" fill="#fff"/>`);
   out.push(`<circle cx="${f(-r * 0.35)}" cy="${f(-r * 0.35)}" r="${f(r * 0.2)}" fill="#ffffff40"/>`);
   out.push(`</g>`);
+  if (fuse !== undefined) out.push(`<g transform="translate(${f(cx - cell * 0.26)} ${f(cy + cell * 0.26)})"><circle r="${f(cell * 0.12)}" fill="${low ? C.warning : colors[owner]}"/><text y="${f(cell * 0.055)}" text-anchor="middle" font-family="monospace" font-size="${f(cell * 0.16)}" font-weight="bold" fill="#0a0e15">${fuse}</text></g>`);
 }
 
 function drawPlayer(out: string[], id: number, p: Pose, cell: number) {
+  const C = CLASSIC;
   const color = PLAYER_COLORS[id], dark = shade(color, -0.45), light = shade(color, 0.55);
   const r = cell * 0.32;
   const cx = f((p.x + 0.5) * cell), cy = f((p.y + 0.5) * cell - p.hop * cell), ground = f((p.y + 0.5) * cell + r * 0.95);

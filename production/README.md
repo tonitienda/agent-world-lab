@@ -1,5 +1,9 @@
 # The Agent Terrarium episode production
 
+Release order is chosen after production. Keep episode IDs in folders and metadata;
+future videos display the scenario/game title and agent, without an episode number.
+Preserve existing completed cuts unless the user explicitly requests a revision.
+
 New automatic drafts default to **3840×2160 at 60 fps**, independent of the agent
 provider. Their edit plans include `"fps":60` and
 `"resolution":{"width":3840,"height":2160}`. Existing v2 plans retain their saved
@@ -66,6 +70,12 @@ and `node --import tsx --test tests/media-wait.test.ts`.
 Vite validates and assembles audio before starting. Open its local URL to review the timeline with synchronized sound. Choose **The Agent Terrarium MP4** in Render Settings and match the edit plan's frame rate and resolution (the original Episode 001 edit uses 25 fps and 1080p). The CLI invokes Motion Canvas's `Renderer` with the same scene, camera layouts, titles and transitions; FFmpeg receives the rendered PNG frames and muxes the soundtrack. There is no single-camera substitution. An incomplete export never replaces the completed MP4.
 
 ## Editing an episode
+
+### Title card templates
+
+Use the [title card templates](templates/README.md) for new specimen-style
+openings and endings. Plan a 4–6 second opening and a stable final 20 seconds
+with room for two YouTube video suggestions and a subscribe element.
 
 ### Opening objective and scenario background
 

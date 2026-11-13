@@ -1,3 +1,9 @@
+export type TitleCardMode = 'competitive' | 'arena' | 'tycoon' | 'sandbox' | 'simulation';
+export type TitleCardFact = {label: string; value: string; unit?: string};
+export type TitleCard = {
+ mode: TitleCardMode; kicker: string; title: string; premise: string; facts: TitleCardFact[];
+} & ({layout: 'opening'; setup: TitleCardFact[] | {label: string; text: string}; observation?: string}
+ | {layout: 'ending'; question: string; stats: TitleCardFact[]});
 /** Source time is seconds from the earliest captureOpenedAt, never session startedAt. */
 export type Camera = {id:string; file:string; offsetSeconds?:number};
 export type Voice = {line:number; audio:string; at:number};
@@ -8,6 +14,7 @@ export type Segment = {
   narration?:Voice[]; transition?:number;
   background?:{camera:string;time:number};
   shot?:Shot;
+  titleCard?:TitleCard;
 };
 /** Exact credit wording from the licensor (e.g. incompetech's attribution code), for the video description. */
 export type Attribution = {title:string; artist:string; text:string; source?:string; license?:string; licenseUrl?:string};

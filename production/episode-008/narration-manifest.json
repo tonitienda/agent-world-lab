@@ -1,0 +1,94 @@
+[
+  {
+    "card": "opening",
+    "voice": "presenter",
+    "text": "Ada, Bram, and two Hunters. Fifteen tiles across. Last one standing wins.",
+    "source": "Presenter script",
+    "line": 1,
+    "audio": "1_Chapter_1.wav"
+  },
+  {
+    "game": 4,
+    "tick": 0,
+    "speaker": "ada",
+    "voice": "agent",
+    "role": "decision",
+    "text": "Opening with a bomb to clear the crate at (3,1), then I'll retreat down the corridor.",
+    "source": "game-4/session/calls.json · ada, tick 0",
+    "line": 2,
+    "audio": "2_Chapter_1.wav"
+  },
+  {
+    "game": 4,
+    "tick": 2,
+    "speaker": "bram",
+    "voice": "agent",
+    "role": "decision",
+    "text": "Two crates in range. Exit via 13,12.",
+    "source": "game-4/session/calls.json · bram, tick 2",
+    "line": 3,
+    "audio": "3_Chapter_1.wav"
+  },
+  {
+    "game": 4,
+    "tick": 12,
+    "speaker": "ada",
+    "voice": "agent",
+    "role": "outcome",
+    "text": "Bram's own bomb caught him, which is a sobering way to leave. I'll keep my distance from blasts and let mine finish.",
+    "source": "game-4/session/calls.json · ada, tick 12",
+    "line": 4,
+    "audio": "4_Chapter_1.wav"
+  },
+  {
+    "game": 4,
+    "tick": 43,
+    "speaker": "ada",
+    "voice": "agent",
+    "role": "decision",
+    "text": "Hunter 1 is in my corridor. I'll plant here and back out toward column 7, which should leave the bomb between us.",
+    "source": "game-4/session/calls.json · ada, tick 43",
+    "line": 5,
+    "audio": "5_Chapter_1.wav"
+  },
+  {
+    "game": 4,
+    "tick": 91,
+    "voice": "presenter",
+    "role": "outcome",
+    "text": "Hunter Two has picked up six range upgrades. And now the stones are about to start falling.",
+    "source": "Presenter script · replay ticks 23, 25, 46, 58, 78 and 91",
+    "line": 6,
+    "audio": "6_Chapter_1.wav"
+  },
+  {
+    "game": 4,
+    "tick": 106,
+    "speaker": "ada",
+    "voice": "agent",
+    "role": "decision",
+    "text": "Hunter 1 planted in its own dead end, so I'll plant below it and step sideways onto row 5 out of the blast column.",
+    "source": "game-4/session/calls.json · ada, tick 106",
+    "line": 7,
+    "audio": "7_Chapter_1.wav"
+  },
+  {
+    "game": 4,
+    "tick": 201,
+    "speaker": "ada",
+    "voice": "agent",
+    "role": "decision",
+    "text": "Just Hunter 1 left, and it's coming my way. I'll plant here to guard the column and retreat onto row 5.",
+    "source": "game-4/session/calls.json · ada, tick 201",
+    "line": 8,
+    "audio": "8_Chapter_1.wav"
+  },
+  {
+    "voice": "presenter",
+    "card": "ending",
+    "source": "Presenter script · replay tick 228",
+    "text": "Ada takes the center tile. The last stone catches Hunter One right beside her. Thanks for watching The Agent Terrarium.",
+    "line": 9,
+    "audio": "9_Chapter_1.wav"
+  }
+]

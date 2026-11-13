@@ -5,6 +5,7 @@ export type NarrationCue = {
   line: number;
   audio: string;
   seconds: number;
+  speaker?: string;
   role: "decision" | "outcome";
 };
 

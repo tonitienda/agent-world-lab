@@ -1,0 +1,116 @@
+{
+  "version": 2,
+  "title": "Detonarium · Ada, Bram & the Hunters",
+  "fps": 60,
+  "resolution": {
+    "width": 3840,
+    "height": 2160
+  },
+  "cameras": [
+    {
+      "id": "board",
+      "file": "board.mp4",
+      "offsetSeconds": 0
+    }
+  ],
+  "segments": [
+    {
+      "id": "opening",
+      "kind": "shot",
+      "duration": 7.683333333333334,
+      "narration": [
+        {
+          "line": 1,
+          "audio": "1_Chapter_1.wav",
+          "at": 0.25
+        }
+      ],
+      "transition": 0,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 0,
+        "duration": 7.683333333333334
+      }
+    },
+    {
+      "id": "game-4",
+      "kind": "shot",
+      "duration": 81.88333333333334,
+      "narration": [
+        {
+          "line": 2,
+          "audio": "2_Chapter_1.wav",
+          "at": 0.25
+        },
+        {
+          "line": 3,
+          "audio": "3_Chapter_1.wav",
+          "at": 7.383
+        },
+        {
+          "line": 4,
+          "audio": "4_Chapter_1.wav",
+          "at": 12.267
+        },
+        {
+          "line": 5,
+          "audio": "5_Chapter_1.wav",
+          "at": 20.917
+        },
+        {
+          "line": 6,
+          "audio": "6_Chapter_1.wav",
+          "at": 33.6
+        },
+        {
+          "line": 7,
+          "audio": "7_Chapter_1.wav",
+          "at": 41.383
+        },
+        {
+          "line": 8,
+          "audio": "8_Chapter_1.wav",
+          "at": 70.817
+        }
+      ],
+      "transition": 0,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 7.683333333333334,
+        "duration": 81.88333333333334
+      }
+    },
+    {
+      "id": "ending",
+      "kind": "shot",
+      "duration": 20,
+      "narration": [
+        {
+          "line": 9,
+          "audio": "9_Chapter_1.wav",
+          "at": 0.25
+        }
+      ],
+      "transition": 0,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "board"
+        ],
+        "start": 89.56666666666666,
+        "duration": 20
+      }
+    }
+  ],
+  "effects": {
+    "file": "detonarium-effects.wav",
+    "volume": 1,
+    "duck": true
+  }
+}

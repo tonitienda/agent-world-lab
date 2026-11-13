@@ -14,7 +14,7 @@ import { availableParallelism, tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { createHash } from "node:crypto";
 import { parseArgs, promisify } from "node:util";
-import { blastCells, PLAYER_COLORS, renderSvg, replayFrames, type Pos, type Replay } from "../packages/detonarium/src/index.js";
+import { ARCADE_PLAYER_COLORS, blastCells, PLAYER_COLORS, renderSvg, replayFrames, type Pos, type Replay } from "../packages/detonarium/src/index.js";
 import { findMoments, type Moment, type MomentKind } from "../src/detonarium/moments.js";
 import { AGENT, type CallRecord } from "../src/detonarium/session.js";
 import { focusRanges, gameNarration, type NarrationCue } from "../src/detonarium/narration.js";
@@ -36,13 +36,17 @@ const { values, positionals } = parseArgs({
     game: { type: "string" },
     focus: { type: "string", default: "" },
     "narration-mode": { type: "string", default: "pause" },
+    "cast-sprites": { type: "string" },
     "timing-only": { type: "boolean", default: false },
   },
 });
 if (positionals.length !== 1) throw new Error("usage: detonarium-record.ts <game dir> [options]");
 const gameDir = resolve(positionals[0]);
 const out = resolve(values.out ?? join(gameDir, "game.mp4"));
-const NORMAL = Number(values.tps), FPS = Number(values.fps), W = Number(values.width), H = Number(values.height);
+const NORMAL = Number(values.tps), FPS = Number(values.fps);
+const width = Number(values.width), height = Number(values.height);
+const sprites: string[] | undefined = values["cast-sprites"] && JSON.parse(readFileSync(values["cast-sprites"], "utf8"));
+const W = sprites ? 1920 : width, H = sprites ? 1080 : height;
 
 const replay: Replay = JSON.parse(readFileSync(join(gameDir, "session/replay.json"), "utf8"));
 const calls: CallRecord[] = JSON.parse(readFileSync(join(gameDir, "session/calls.json"), "utf8"));
@@ -50,13 +54,14 @@ const frames = replayFrames(replay);
 const last = frames.length - 1;
 const names = replay.players.map((p) => p.name);
 const kinds = new Set(values.moments.split(",") as MomentKind[]);
-const moments: Moment[] = findMoments(replay, calls).filter((m) => kinds.has(m.kind));
+const duel = replay.players[0]?.kind === "claude" && replay.players[1]?.kind === "codex";
+const moments: Moment[] = duel ? [] : findMoments(replay, calls).filter((m) => kinds.has(m.kind));
 
 // ---- Clock: speed keyframes in tick space, plus freezes (narration slots). ----
 /** Seconds a caption needs on screen until real narration audio replaces the estimate. */
 const readTime = (text: string) => Math.max(2, text.split(/\s+/).length / 2.6 + 0.8);
 const decisionText = (m: Moment) => m.call?.narration ?? m.call?.intention ?? "";
-type Freeze = { tick: number; seconds: number; caption: string; moment: number; role: "decision" | "outcome"; line?: number; audio?: string };
+type Freeze = { tick: number; seconds: number; caption: string; moment: number; role: "decision" | "outcome"; speaker?: string; line?: number; audio?: string };
 const freezes: Freeze[] = [];
 type Key = [tick: number, speed: number];
 const inner: Key[] = [];
@@ -83,7 +88,7 @@ if (values.narration) {
   const cues: NarrationCue[] = JSON.parse(readFileSync(resolve(values.narration), "utf8"));
   freezes.length = 0;
   for (const cue of gameNarration(cues, Number(values.game), last)) {
-    freezes.push({ tick: cue.tick, seconds: cue.seconds, caption: cue.text, moment: -1, role: cue.role, line: cue.line, audio: cue.audio });
+    freezes.push({ tick: cue.tick, seconds: cue.seconds, caption: cue.text, moment: -1, role: cue.role, speaker: cue.speaker, line: cue.line, audio: cue.audio });
   }
 }
 const inside = (t: number) => windows.some(([a, b]) => t > a && t < b);
@@ -145,9 +150,10 @@ if (values["timing-only"]) process.exit(0);
 
 // ---- Drawing. ----
 const { width: cols, height: rows } = frames[0].state.rules;
-const CELL = Math.floor(Math.min((H - 200) / rows, (W * 0.55) / cols));
+const CELL = Math.floor(Math.min((H - (sprites ? 154 : 200)) / rows, (W * 0.55) / cols));
 const boardW = CELL * cols, boardH = CELL * rows;
-const bx = Math.round((W - boardW) / 2 - W * 0.13), by = Math.round((H - boardH) / 2);
+const bx = sprites ? 104 : Math.round((W - boardW) / 2 - W * 0.13);
+const by = Math.round((H - boardH) / 2);
 const px = bx + boardW + Math.round(W * 0.03);
 const u = H / 1080; // type scale
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -171,7 +177,7 @@ function wrap(text: string, max: number): string[] {
     if ((line + " " + word).trim().length > max) { lines.push(line); line = word; } else line = (line + " " + word).trim();
   }
   if (line) lines.push(line);
-  return lines.slice(0, 2);
+  return lines.slice(0, sprites ? 4 : 2);
 }
 
 function frameSvg(k: number): string {
@@ -179,7 +185,8 @@ function frameSvg(k: number): string {
   const speech = timeline[k].speech ?? freeze;
   const n = Math.max(0, Math.min(last, Math.ceil(tau - 1e-9)));
   const t = n === 0 ? 1 : Math.max(0.0001, Math.min(1, tau - (n - 1)));
-  const board = renderSvg(frames[n].state, { cell: CELL, events: frames[n].events, t }).replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
+  const board = renderSvg(frames[n].state, { cell: CELL, events: frames[n].events, t, castSprites: sprites }).replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
+  if (sprites) return arcadeFrame(tau, n, t, board, speech, s);
   const slow = Math.max(slowness(tau, s), speech ? 1 : 0);
   const eased = slow * slow * (3 - 2 * slow);
   const bar = eased * Math.round(H * 0.089);
@@ -217,6 +224,55 @@ function frameSvg(k: number): string {
   return o.join("");
 }
 
+function arcadeFrame(tau: number, tick: number, progress: number, board: string, speech: Freeze | undefined, speed: number) {
+  const state = frames[tick].state;
+  const collapse = Math.max(0, (state.rules.suddenDeathTick ?? 0) + 1 - tick);
+  const colors = ARCADE_PLAYER_COLORS;
+  const labels = names.map(name => name.split(" · ")[0]);
+  const font = "DejaVu Sans";
+  const rect = (x: number, y: number, w: number, h: number, r: number, fill: string, stroke = "none") =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;
+  const text = (x: number, y: number, size: number, value: string, color = "#eef1f6", weight = "bold", anchor = "start") =>
+    `<text x="${x}" y="${y}" font-family="${font}" font-size="${size}" fill="${color}" font-weight="${weight}" text-anchor="${anchor}">${esc(value)}</text>`;
+  const o = [`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 1920 1080">
+    <defs><pattern id="dot" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="14" cy="14" r="0.8" fill="#243047"/></pattern>
+    <clipPath id="arena-edge"><rect width="${boardW}" height="${boardH}" rx="16"/></clipPath></defs>`,
+    rect(0, 0, 1920, 1080, 0, "#0c1118"), rect(0, 0, 1920, 1080, 0, "url(#dot)"),
+    rect(bx - 14, by - 14, boardW + 28, boardH + 28, 26, "#151c2a", "#253044"),
+    `<g transform="translate(${bx} ${by})" clip-path="url(#arena-edge)">${board}</g>`,
+    text(1104, 112, 53, "DETONARIUM", "#a94628"), text(1104, 107, 53, "DETONARIUM", "#ffd166"),
+    text(1106, 140, 19, "THE AGENT TERRARIUM  ·  FREE FOR ALL", "#9aa4b6"),
+    text(1826, 88, 18, "TICK", "#9aa4b6", "bold", "end"), text(1828, 135, 48, String(tick), "#fff", "bold", "end"),
+    rect(1104, 161, 724, 52, 15, "#151c2a", "#253044"),
+    text(1123, 195, 20, collapse ? `ARENA COLLAPSE IN ${collapse}` : "ARENA COLLAPSING", collapse ? "#eef1f6" : "#ff7777"),
+    rect(1482, 183, 326, 9, 4, "#273145"),
+    rect(1482, 183, collapse ? 326 * collapse / (state.rules.suddenDeathTick! + 1) : 326, 9, 4, "#ff755d")];
+  for (const p of state.players) {
+    const i = p.id, y = 234 + i * 94;
+    const provider = ["CLAUDE", "CODEX", "HUNTER BOT", "HUNTER BOT"][i];
+    const fallingOnPlayer = progress < 0.98 && frames[tick].events.some(event =>
+      event.type === "eliminated" && event.player === i && event.by === "collapse");
+    const alive = p.alive || fallingOnPlayer;
+    const bombCount = state.bombs.filter(b => b.owner === i).length;
+    o.push(rect(1104, y, 724, 82, 15, ["#211916", "#111d1b", "#1c192a", "#211e17"][i], alive ? colors[i] : "#38404c"),
+      `<g transform="translate(1116 ${y + 6})" opacity="${alive ? 1 : 0.4}">${sprites![i]}</g>`,
+      text(1194, y + 37, 28, labels[i]),
+      text(1195, y + 62, 18, provider, colors[i]),
+      text(1805, y + 48, 21, alive ? `BOMBS ${bombCount}/${p.bombs}    RANGE ${p.range}` : "ELIMINATED", "#eef1f6", "bold", "end"));
+  }
+  if (speech) {
+    const i = speech.speaker === "bram" ? 1 : 0;
+    const presenter = speech.speaker === "presenter";
+    const accent = presenter ? "#aab7ca" : colors[i];
+    const lines = wrap(speech.caption, 47);
+    o.push(rect(1104, 805, 724, 192, 18, presenter ? "#151c2a" : i ? "#111d1b" : "#211916", accent),
+      text(1127, 839, 19, presenter ? "PRESENTER" : labels[i].toUpperCase(), accent));
+    lines.forEach((line, j) => o.push(text(1127, 879 + j * 31, 25, line, "#eef1f6", "normal")));
+    if (tau < last && speed < NORMAL - 0.01) o.push(text(1828, 1020, 17, "SLOW MOTION", "#9aa4b6", "bold", "end"));
+  }
+  return o.join("") + "</svg>";
+}
+
 const dir = join(tmpdir(), `detonarium-record-${process.pid}`);
 rmSync(dir, { recursive: true, force: true });
 mkdirSync(dir, { recursive: true });
@@ -232,7 +288,7 @@ const worker = async () => {
 };
 await Promise.all(Array.from({ length: availableParallelism() }, worker));
 execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-framerate", String(FPS), "-i", join(dir, "%06d.png"),
-  "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-crf", "20", "-movflags", "+faststart", out]);
+  "-c:v", "libx264", "-preset", sprites ? "ultrafast" : "veryfast", "-pix_fmt", "yuv420p", "-crf", sprites ? "17" : "20", "-movflags", "+faststart", out]);
 rmSync(dir, { recursive: true });
 
 // The cut: where each freeze sits on the video clock, for laying narration on later.

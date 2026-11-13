@@ -1,0 +1,49 @@
+{
+  "file": "/Users/toni/Projects/agent-world-lab/production/output/episode-008.mp4",
+  "duration": 109.566667,
+  "frames": 6574,
+  "width": 3840,
+  "height": 2160,
+  "fps": 60,
+  "audio": "aac",
+  "blackIntervals": [],
+  "decoded": true,
+  "narrationWindows": [
+    {
+      "line": 1,
+      "meanDb": -19.9
+    },
+    {
+      "line": 2,
+      "meanDb": -21
+    },
+    {
+      "line": 3,
+      "meanDb": -20.8
+    },
+    {
+      "line": 4,
+      "meanDb": -20.7
+    },
+    {
+      "line": 5,
+      "meanDb": -20.7
+    },
+    {
+      "line": 6,
+      "meanDb": -20.7
+    },
+    {
+      "line": 7,
+      "meanDb": -20.6
+    },
+    {
+      "line": 8,
+      "meanDb": -21.1
+    },
+    {
+      "line": 9,
+      "meanDb": -21
+    }
+  ]
+}

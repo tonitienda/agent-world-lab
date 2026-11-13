@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <g fill="none" stroke="#5FD3C4" stroke-width="2" stroke-dasharray="8 6">
+    <rect x="1048" y="194" width="760" height="428" rx="18"/>
+    <rect x="1048" y="652" width="400" height="225" rx="18"/>
+    <circle cx="1638" cy="763" r="99"/>
+  </g>
+  <g fill="#5FD3C4" font-family="monospace" font-size="18">
+    <text x="1070" y="594">WATCH NEXT · 760 × 428</text>
+    <text x="1070" y="849">FROM THE ARCHIVE · 400 × 225</text>
+    <text x="1638" y="895" text-anchor="middle">SUBSCRIBE</text>
+  </g>
+</svg>

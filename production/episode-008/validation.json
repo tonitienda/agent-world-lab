@@ -1,0 +1,91 @@
+{
+  "duration": 109.566667,
+  "schedule": [
+    {
+      "line": 1,
+      "audio": "1_Chapter_1.wav",
+      "at": 0.25,
+      "start": 0.25,
+      "duration": 6.32
+    },
+    {
+      "line": 2,
+      "audio": "2_Chapter_1.wav",
+      "at": 0.25,
+      "start": 7.933333333333334,
+      "duration": 6.32
+    },
+    {
+      "line": 3,
+      "audio": "3_Chapter_1.wav",
+      "at": 7.383,
+      "start": 15.066333333333333,
+      "duration": 4.08
+    },
+    {
+      "line": 4,
+      "audio": "4_Chapter_1.wav",
+      "at": 12.267,
+      "start": 19.950333333333333,
+      "duration": 7.84
+    },
+    {
+      "line": 5,
+      "audio": "5_Chapter_1.wav",
+      "at": 20.917,
+      "start": 28.600333333333335,
+      "duration": 7.44
+    },
+    {
+      "line": 6,
+      "audio": "6_Chapter_1.wav",
+      "at": 33.6,
+      "start": 41.28333333333333,
+      "duration": 6.32
+    },
+    {
+      "line": 7,
+      "audio": "7_Chapter_1.wav",
+      "at": 41.383,
+      "start": 49.06633333333333,
+      "duration": 8.16
+    },
+    {
+      "line": 8,
+      "audio": "8_Chapter_1.wav",
+      "at": 70.817,
+      "start": 78.50033333333333,
+      "duration": 6.72
+    },
+    {
+      "line": 9,
+      "audio": "9_Chapter_1.wav",
+      "at": 0.25,
+      "start": 89.81666666666668,
+      "duration": 7.92
+    }
+  ],
+  "cameras": [
+    {
+      "id": "board",
+      "file": "board.mp4",
+      "offsetSeconds": 0,
+      "duration": 109.566667,
+      "audio": false
+    }
+  ],
+  "music": null,
+  "effects": {
+    "file": "detonarium-effects.wav",
+    "volume": 1,
+    "duck": true,
+    "duration": 109.566688
+  },
+  "sourceAudio": [
+    {
+      "id": "board",
+      "audio": false
+    }
+  ],
+  "credits": []
+}

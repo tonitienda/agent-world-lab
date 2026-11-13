@@ -1,0 +1,123 @@
+{
+  "provider": "ElevenLabs",
+  "modelId": "eleven_v4",
+  "clips": [
+    {
+      "line": 1,
+      "audio": "1_Chapter_1.wav",
+      "speaker": "presenter",
+      "name": "Bella",
+      "voiceId": "hpp4J3VqNfWAUOO0d1Us",
+      "text": "Ada, Bram, and two Hunters. Fifteen tiles across. Last one standing wins.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "fingerprint": "d3c8d55a446756092d11e5174b6b6a0498037f3aa6821350a68731f16cf2843e",
+      "duration": 6.32,
+      "sha256": "381914142aa04d3fd560431eed592f8e178af1ab0fad41358d23c6a8077c2d20"
+    },
+    {
+      "line": 2,
+      "audio": "2_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "Opening with a bomb to clear the crate at (3,1), then I'll retreat down the corridor.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "fingerprint": "c6a31572146cca4dd7effabfee35651b2c80db01c9a2f994559dbef542976f7a",
+      "duration": 6.32,
+      "sha256": "00ea0d17c822ec50014d91243b76e8ba1e41086ac32edee4d2e3d02baf1c4637"
+    },
+    {
+      "line": 3,
+      "audio": "3_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Larry",
+      "voiceId": "pgXLagTlUQcy1LT68JCe",
+      "text": "Two crates in range. Exit via 13,12.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "fingerprint": "a038ac43c539ec8d809fc748c8873653f59e0712b54058016a873572c99e5717",
+      "duration": 4.08,
+      "sha256": "43f039ab0c8df46860d10987ce66790b73cb5942944190041e0d7add0aadc9f4"
+    },
+    {
+      "line": 4,
+      "audio": "4_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "Bram's own bomb caught him, which is a sobering way to leave. I'll keep my distance from blasts and let mine finish.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "fingerprint": "1328317ca06480815512babeabdc9ce453231c45289452f96f3a42a7e13e6ed7",
+      "duration": 7.84,
+      "sha256": "6762a35a3a623ed298c2226ebecf9015b9391da76170e6458a2a95d695222b30"
+    },
+    {
+      "line": 5,
+      "audio": "5_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "Hunter 1 is in my corridor. I'll plant here and back out toward column 7, which should leave the bomb between us.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "fingerprint": "318e9bc76df5628bcb8b9d638b124f6af127cca29f4e06558d65a83e3d3c77fd",
+      "duration": 7.44,
+      "sha256": "fda263c6d3ff4309004f220974e0b624b4cfe9487ac0f2a9140655a98735cdb8"
+    },
+    {
+      "line": 6,
+      "audio": "6_Chapter_1.wav",
+      "speaker": "presenter",
+      "name": "Bella",
+      "voiceId": "hpp4J3VqNfWAUOO0d1Us",
+      "text": "Hunter Two has picked up six range upgrades. And now the stones are about to start falling.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "fingerprint": "24d479e91f1fdbe7e721d670137d6c41335ac1231444065e4df06a16863cbbf1",
+      "duration": 6.32,
+      "sha256": "88826505564f168ff5802f325b08d139379b07f761642a0008b94f1071e1e669"
+    },
+    {
+      "line": 7,
+      "audio": "7_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "Hunter 1 planted in its own dead end, so I'll plant below it and step sideways onto row 5 out of the blast column.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "fingerprint": "1fdd3cef78cc3cb41f46433844d362c49265873eb12f5be919c62123e81d8c9b",
+      "duration": 8.16,
+      "sha256": "c3ed1a9c05cc6ce020428cc3afd2b884d31007bb89ec80d65f86dc9cf1a375d1"
+    },
+    {
+      "line": 8,
+      "audio": "8_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "Just Hunter 1 left, and it's coming my way. I'll plant here to guard the column and retreat onto row 5.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "fingerprint": "7bf4cd2d36d9c4c538709b4c30b1fecc3f295797f34e622930c5d5fcdf9a0e89",
+      "duration": 6.72,
+      "sha256": "78fa7a9482b46181ab261519e697773d0dd362db513e0980ae03b9ebe8574abf"
+    },
+    {
+      "line": 9,
+      "audio": "9_Chapter_1.wav",
+      "speaker": "presenter",
+      "name": "Bella",
+      "voiceId": "hpp4J3VqNfWAUOO0d1Us",
+      "text": "Ada takes the center tile. The last stone catches Hunter One right beside her. Thanks for watching The Agent Terrarium.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "fingerprint": "c4c0f759fdfded9aa53968c159c95d1900b3bf510c8894160c2b9b641aa5013b",
+      "duration": 7.92,
+      "sha256": "aa4b743a1a752b55ed8fa6ec951969082f0efd4131fe117b4958aa42b70e8dbc"
+    }
+  ]
+}

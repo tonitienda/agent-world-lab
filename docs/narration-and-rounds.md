@@ -4,6 +4,11 @@ These requirements apply to future The Agent Terrarium episodes across agents an
 games. Preserve existing takes and their text/audio mappings. A fresh recording or
 replacement audio set gets its own production/take directory.
 
+Production episode IDs are internal identifiers. Do not display or speak release
+numbers such as “Episode 007” in future videos: publication order is chosen later.
+Use the scenario/game title instead. Game/round numbers within one video are fine.
+Existing completed videos stay unchanged unless a revision is explicitly requested.
+
 ## Speakers and audio handoff
 
 - **Agent**: public commentary actually supplied by the playing agent, using its
@@ -99,3 +104,7 @@ Preserve existing supplied audio and spoken words. Before audio generation,
 renumber the final active script and all manifest/timing references together so
 master line numbers match WAV filenames. If supplied audio already requires
 retaining old IDs, provide an explicit row-to-file map and preserve those files.
+
+For new splash cards, use the [title card templates](../production/templates/README.md).
+Keep the opening brief and place the presenter sign-off near the start of the
+final 20-second hold, leaving the right side clear for YouTube end-screen elements.

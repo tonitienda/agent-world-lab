@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { replayFrames } from "../packages/detonarium/src/index.js";
-import { AGENT, DetonariumSession } from "../src/detonarium/session.js";
+import { AGENT, DetonariumSession, observeArena } from "../src/detonarium/session.js";
 
 const session = (bots = ["passive", "passive", "passive"] as const) =>
   new DetonariumSession({ seed: 7, bots: [...bots], agentName: "Claude" });
@@ -183,4 +183,22 @@ test("spoken narration stays separate from technical summaries without changing 
   assert.equal(narrated.calls[1].rationale, "Fuse runs for eight ticks");
   assert.equal(narrated.calls[1].intention, "bomb (2,1)");
   assert.ok(plain.calls.every((c) => c.narration === undefined));
+});
+
+test("the second duel seat sees its own upgrades and neither seat sees rival bomb range", () => {
+  const s = session(["passive", "passive", "passive"]);
+  s.state.players[0].range = 4;
+  s.state.players[1].range = 7;
+  s.state.bombs = [
+    { owner: 0, range: 4, fuse: 4, pos: s.state.players[0].pos },
+    { owner: 1, range: 7, fuse: 6, pos: s.state.players[1].pos },
+  ];
+  const view = observeArena(s.state, s.names, 1, null);
+  assert.equal(view.you.range, 7);
+  assert.equal(view.board[10][12], "A");
+  assert.equal(view.board[2][4], "1");
+  assert.equal(view.rivals[0].name, "Claude");
+  assert.ok(!Object.hasOwn(view.rivals[0], "range"));
+  assert.deepEqual(view.bombs.map(bomb => bomb.range), [undefined, 7]);
+  assert.deepEqual(s.observe().bombs.map(bomb => bomb.range), [4, undefined]);
 });
