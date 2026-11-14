@@ -62,6 +62,16 @@ Claude gameplay uses an MCP-only tool boundary; Codex players run in a locked-do
 container (`make codex-player-image`). Voice export and v2 editorial review remain
 explicit steps. Episodes 001/002 and existing Make/npm commands remain supported.
 
+## Exploring the next terrarium
+
+The [next-terrarium research](docs/research/next-terrarium.md) compares transport,
+Civilization, D&D and short cooperative simulations. The first implementation is
+an [OpenTTD spike](packages/openttd/README.md) for paused JSON control, a passenger
+route, bounded time advancement and evidence capture. Start with
+`npm run openttd:setup` (macOS), then `npm run openttd:spike`.
+Use `npm run openttd:spike -- --record` to capture an event-driven camera study;
+the OpenTTD README explains how to render its MP4 and re-edit camera choices.
+
 ## Architecture
 
 - `src/core/`: environment-neutral world interfaces.

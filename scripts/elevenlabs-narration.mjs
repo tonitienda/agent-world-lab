@@ -28,7 +28,9 @@ export function audioRequests(manifest, config) {
     const speaker = config.speakers[line.speaker] ?? config.speakers[line.voice];
     if (line.line !== i + 1 || line.audio !== `${i + 1}_Chapter_1.wav` || !line.text?.trim() || !speaker?.voiceId)
       throw Error(`Invalid narration line or speaker at row ${i + 1}.`);
-    const request = {voiceId: speaker.voiceId, text: line.text, modelId: config.modelId, outputFormat: config.outputFormat};
+    // Optional per-line delivery settings (e.g. lower stability for livelier speech); absent ones keep the old fingerprints.
+    const request = {voiceId: speaker.voiceId, text: line.text, modelId: config.modelId, outputFormat: config.outputFormat,
+      ...(line.voiceSettings ? {voiceSettings: line.voiceSettings} : {})};
     return {...line, speakerName: speaker.name, request, fingerprint: digest(JSON.stringify(request))};
   });
 }

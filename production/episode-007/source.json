@@ -1,0 +1,41 @@
+{
+  "episode": "episode-007",
+  "session": "data/openttd-sessions/episode-007-claude-take-1",
+  "environment": "openttd",
+  "model": "claude-opus-5-5",
+  "actor": "claude",
+  "goal": "episodes/episode-007/goal.md",
+  "feasibilityBaseline": "data/openttd-sessions/episode-007-feasibility-01/result.json",
+  "baselineIsEpisodeFootage": false,
+  "narrationSource": "actions.json: args.narration, recorded public commentary only",
+  "voices": "production/voices.json",
+  "audioStatus": "Complete: ElevenLabs Eleven V4; Bella presenter and Larry agent; all master WAVs present and measured.",
+  "result": {
+    "achieved": true,
+    "days": 104,
+    "daysRemaining": 16,
+    "delivered": 220,
+    "cash": 5627,
+    "loan": 20000,
+    "operatingProfit": 1710,
+    "checks": {
+      "delivered": true,
+      "cash": true,
+      "profitableFleet": true,
+      "borrowing": true,
+      "deadline": true,
+      "fleetLimit": true
+    },
+    "targets": {
+      "passengers": 200,
+      "days": 120,
+      "minimumCash": 5000,
+      "maximumLoan": 20000,
+      "maximumBuses": 3,
+      "maximumCalls": 200,
+      "maximumActions": 80,
+      "maximumWallMinutes": 25
+    }
+  },
+  "audioManifest": "elevenlabs-audio.json"
+}

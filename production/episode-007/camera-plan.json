@@ -1,0 +1,2343 @@
+{
+  "version": 1,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "shots": [
+    {
+      "capture": 0,
+      "camera": "wide",
+      "reason": "Claude Transit — a commuter service from scratch",
+      "duration": 0.25
+    },
+    {
+      "capture": 1,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "A site for the next passenger stop",
+      "duration": 2.4,
+      "narrationHeading": "A commuter line inside Bonningwell",
+      "narrationEvent": 0
+    },
+    {
+      "capture": 2,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "Passenger stop built",
+      "duration": 6.9,
+      "narrationHeading": "A commuter line inside Bonningwell",
+      "narrationEvent": 0
+    },
+    {
+      "capture": 3,
+      "camera": "construction",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "reason": "A site for the next passenger stop",
+      "duration": 0.55
+    },
+    {
+      "capture": 4,
+      "camera": "construction",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "reason": "Passenger stop built",
+      "duration": 0.55
+    },
+    {
+      "capture": 5,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "A home for the fleet",
+      "duration": 0.55
+    },
+    {
+      "capture": 6,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "Bus depot built",
+      "duration": 0.55
+    },
+    {
+      "capture": 7,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "Adding a bus to the fleet",
+      "duration": 2.4,
+      "narrationHeading": "Two buses, with cash to spare",
+      "narrationEvent": 3
+    },
+    {
+      "capture": 8,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "A new bus, ready for orders",
+      "duration": 4.666666666666667,
+      "narrationHeading": "Two buses, with cash to spare",
+      "narrationEvent": 3
+    },
+    {
+      "capture": 9,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "Adding a bus to the fleet",
+      "duration": 0.55
+    },
+    {
+      "capture": 10,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "A new bus, ready for orders",
+      "duration": 0.55
+    },
+    {
+      "capture": 11,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 12,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 13,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 14,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 15,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 16,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 17,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 18,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 19,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 20,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 21,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "Follow the bus between stops",
+      "duration": 2.4,
+      "narrationHeading": "Starting the two-bus service",
+      "narrationEvent": 10,
+      "inset": {
+        "target": {
+          "kind": "position",
+          "position": {
+            "x": 9,
+            "y": 27
+          }
+        },
+        "label": "The depot"
+      }
+    },
+    {
+      "capture": 22,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "Follow the bus between stops",
+      "duration": 3.6333333333333333,
+      "narrationHeading": "Starting the two-bus service",
+      "narrationEvent": 10,
+      "inset": {
+        "target": {
+          "kind": "position",
+          "position": {
+            "x": 9,
+            "y": 27
+          }
+        },
+        "label": "The depot"
+      }
+    },
+    {
+      "capture": 23,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 24,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 25,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 26,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 27,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 28,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 29,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 30,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 31,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 32,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 33,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 34,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 35,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "Connecting the route",
+      "duration": 2.4,
+      "narrationHeading": "The depot needs a road connection",
+      "narrationEvent": 12
+    },
+    {
+      "capture": 36,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "Road connection built",
+      "duration": 5.783333333333333,
+      "narrationHeading": "The depot needs a road connection",
+      "narrationEvent": 12
+    },
+    {
+      "capture": 37,
+      "camera": "construction",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "Connecting the route",
+      "duration": 0.55
+    },
+    {
+      "capture": 38,
+      "camera": "construction",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "Construction rejected",
+      "duration": 0.55
+    },
+    {
+      "capture": 39,
+      "camera": "construction",
+      "focus": {
+        "x": 14,
+        "y": 44
+      },
+      "reason": "Connecting the route",
+      "duration": 0.55
+    },
+    {
+      "capture": 40,
+      "camera": "construction",
+      "focus": {
+        "x": 14,
+        "y": 44
+      },
+      "reason": "Road connection built",
+      "duration": 0.55
+    },
+    {
+      "capture": 41,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 42,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 28
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 43,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 30
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 44,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 32
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 45,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 34
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 46,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 36
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 47,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 38
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 48,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 40
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 49,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 42
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 50,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 42
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 51,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 32
+      },
+      "vehicle": 0,
+      "reason": "Follow the bus between stops",
+      "duration": 2.4,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 52,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 34
+      },
+      "vehicle": 0,
+      "reason": "27 passengers waiting",
+      "duration": 0.5666666666666667,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 53,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 36
+      },
+      "vehicle": 0,
+      "reason": "27 passengers waiting",
+      "duration": 0.5666666666666667,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 54,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 39
+      },
+      "vehicle": 0,
+      "reason": "27 passengers waiting",
+      "duration": 0.5666666666666667,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 55,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 41
+      },
+      "vehicle": 0,
+      "reason": "27 passengers waiting",
+      "duration": 0.5666666666666667,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 56,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 43
+      },
+      "vehicle": 0,
+      "reason": "27 passengers waiting",
+      "duration": 0.5666666666666667,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 57,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 44
+      },
+      "vehicle": 0,
+      "reason": "27 passengers waiting",
+      "duration": 0.5666666666666667,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 58,
+      "camera": "follow",
+      "focus": {
+        "x": 10,
+        "y": 44
+      },
+      "vehicle": 0,
+      "reason": "27 passengers waiting",
+      "duration": 0.5666666666666667,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 59,
+      "camera": "follow",
+      "focus": {
+        "x": 12,
+        "y": 44
+      },
+      "vehicle": 0,
+      "reason": "27 passengers waiting",
+      "duration": 0.5666666666666667,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 60,
+      "camera": "follow",
+      "focus": {
+        "x": 12,
+        "y": 44
+      },
+      "vehicle": 0,
+      "reason": "27 passengers waiting",
+      "duration": 0.5666666666666667,
+      "narrationHeading": "The north stop is getting busy",
+      "narrationEvent": 16,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 0
+        },
+        "label": "North stop"
+      }
+    },
+    {
+      "capture": 61,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "vehicle": 1,
+      "reason": "27 passengers waiting",
+      "duration": 0.25,
+      "subject": 0
+    },
+    {
+      "capture": 62,
+      "camera": "follow",
+      "focus": {
+        "x": 11,
+        "y": 44
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 63,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 44
+      },
+      "vehicle": 1,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 64,
+      "camera": "boarding",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 0,
+      "reason": "Passengers board — bus 3/31",
+      "duration": 0.25
+    },
+    {
+      "capture": 65,
+      "camera": "boarding",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 0,
+      "reason": "Passengers board — bus 3/31",
+      "duration": 0.25
+    },
+    {
+      "capture": 66,
+      "camera": "boarding",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 0,
+      "reason": "Passengers board — bus 3/31",
+      "duration": 0.25
+    },
+    {
+      "capture": 67,
+      "camera": "boarding",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 0,
+      "reason": "Passengers board — bus 3/31",
+      "duration": 0.25
+    },
+    {
+      "capture": 68,
+      "camera": "boarding",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 0,
+      "reason": "Passengers board — bus 3/31",
+      "duration": 0.25
+    },
+    {
+      "capture": 69,
+      "camera": "boarding",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 0,
+      "reason": "Passengers board — bus 3/31",
+      "duration": 0.25
+    },
+    {
+      "capture": 70,
+      "camera": "boarding",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 0,
+      "reason": "Passengers board — bus 3/31",
+      "duration": 0.25
+    },
+    {
+      "capture": 71,
+      "camera": "boarding",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 0,
+      "reason": "Passengers board — bus 3/31",
+      "duration": 0.25
+    },
+    {
+      "capture": 72,
+      "camera": "follow",
+      "focus": {
+        "x": 8,
+        "y": 38
+      },
+      "vehicle": 0,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 73,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "vehicle": 0,
+      "reason": "79 passengers waiting",
+      "duration": 0.25,
+      "subject": 0
+    },
+    {
+      "capture": 74,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "vehicle": 0,
+      "reason": "79 passengers waiting",
+      "duration": 0.25,
+      "subject": 0
+    },
+    {
+      "capture": 75,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "79 passengers waiting",
+      "duration": 2.4,
+      "subject": 0,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 76,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "Passengers board — bus 20/31",
+      "duration": 0.55,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      },
+      "subject": 0
+    },
+    {
+      "capture": 77,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "Passengers board — bus 20/31",
+      "duration": 0.55,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      },
+      "subject": 0
+    },
+    {
+      "capture": 78,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "Passengers board — bus 20/31",
+      "duration": 0.55,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      },
+      "subject": 0
+    },
+    {
+      "capture": 79,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "Passengers board — bus 20/31",
+      "duration": 0.55,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      },
+      "subject": 0
+    },
+    {
+      "capture": 80,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "Passengers board — bus 20/31",
+      "duration": 0.55,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      },
+      "subject": 0
+    },
+    {
+      "capture": 81,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "3 passengers delivered",
+      "duration": 0.55,
+      "subject": 0,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 82,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "3 passengers delivered",
+      "duration": 0.55,
+      "subject": 0,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 83,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "3 passengers delivered",
+      "duration": 0.55,
+      "subject": 0,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 84,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "3 passengers delivered",
+      "duration": 0.55,
+      "subject": 0,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 85,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "3 passengers delivered",
+      "duration": 0.55,
+      "subject": 0,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 86,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "3 passengers delivered",
+      "duration": 0.55,
+      "subject": 0,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 87,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "3 passengers delivered",
+      "duration": 0.55,
+      "subject": 0,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 88,
+      "camera": "queue",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "reason": "3 passengers delivered",
+      "duration": 0.55,
+      "subject": 0,
+      "narrationHeading": "Queues at both ends of the route",
+      "narrationEvent": 18,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 89,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "3 passengers delivered",
+      "duration": 2.4,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 90,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "3 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 91,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "53 passengers waiting",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 92,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "53 passengers waiting",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 93,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "53 passengers waiting",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 94,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 95,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 96,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 97,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 98,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 99,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 100,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 101,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 102,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 103,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 104,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 105,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4166666666666667,
+      "narrationHeading": "The first deliveries — staying with two buses",
+      "narrationEvent": 19,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 106,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 2.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 107,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 108,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 109,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 110,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 111,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 112,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "Follow the bus between stops",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 113,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "Follow the bus between stops",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 114,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "107 passengers waiting",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 115,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 116,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 117,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 118,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 119,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 120,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 121,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 122,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.4,
+      "narrationHeading": "The fleet is now in operating profit",
+      "narrationEvent": 20
+    },
+    {
+      "capture": 123,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "Adding a bus to the fleet",
+      "duration": 2.4,
+      "narrationHeading": "A third bus for the south-stop backlog",
+      "narrationEvent": 21,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 124,
+      "camera": "construction",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "reason": "A new bus, ready for orders",
+      "duration": 7.316666666666666,
+      "narrationHeading": "A third bus for the south-stop backlog",
+      "narrationEvent": 21,
+      "inset": {
+        "target": {
+          "kind": "station",
+          "id": 1
+        },
+        "label": "South stop"
+      }
+    },
+    {
+      "capture": 125,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 2,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 126,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 2,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 127,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 2,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 128,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 2,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 129,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 2,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 130,
+      "camera": "follow",
+      "focus": {
+        "x": 9,
+        "y": 27
+      },
+      "vehicle": 2,
+      "reason": "Follow the bus between stops",
+      "duration": 0.25
+    },
+    {
+      "capture": 131,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "Follow the bus between stops",
+      "duration": 2.4,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 132,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 133,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 134,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 135,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 136,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 137,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 138,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 139,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "15 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 140,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "150 passengers waiting",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 141,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "150 passengers waiting",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 142,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "150 passengers waiting",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 143,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 144,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 145,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 146,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 147,
+      "camera": "network",
+      "focus": {
+        "x": 12,
+        "y": 36
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.31666666666666665,
+      "narrationHeading": "Earning back the cash reserve",
+      "narrationEvent": 25,
+      "inset": {
+        "target": {
+          "kind": "vehicle",
+          "id": 2
+        },
+        "label": "Bus 3"
+      }
+    },
+    {
+      "capture": 148,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "reason": "5 passengers delivered",
+      "duration": 2.4,
+      "subject": 1,
+      "narrationHeading": "Arrivals at the south stop",
+      "narrationEvent": 26
+    },
+    {
+      "capture": 149,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.8,
+      "subject": 1,
+      "narrationHeading": "Arrivals at the south stop",
+      "narrationEvent": 26
+    },
+    {
+      "capture": 150,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.8,
+      "subject": 1,
+      "narrationHeading": "Arrivals at the south stop",
+      "narrationEvent": 26
+    },
+    {
+      "capture": 151,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.8,
+      "subject": 1,
+      "narrationHeading": "Arrivals at the south stop",
+      "narrationEvent": 26
+    },
+    {
+      "capture": 152,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.8,
+      "subject": 1,
+      "narrationHeading": "Arrivals at the south stop",
+      "narrationEvent": 26
+    },
+    {
+      "capture": 153,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "reason": "5 passengers delivered",
+      "duration": 0.8,
+      "subject": 1,
+      "narrationHeading": "Arrivals at the south stop",
+      "narrationEvent": 26
+    },
+    {
+      "capture": 154,
+      "camera": "delivery",
+      "focus": {
+        "x": 7,
+        "y": 28
+      },
+      "vehicle": 2,
+      "reason": "5 passengers delivered",
+      "duration": 0.25,
+      "subject": 0
+    },
+    {
+      "capture": 155,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 2,
+      "reason": "15 passengers delivered",
+      "duration": 0.25,
+      "subject": 1
+    },
+    {
+      "capture": 156,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 2,
+      "reason": "15 passengers delivered",
+      "duration": 0.25,
+      "subject": 1
+    },
+    {
+      "capture": 157,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 2,
+      "reason": "15 passengers delivered",
+      "duration": 0.25,
+      "subject": 1
+    },
+    {
+      "capture": 158,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 2,
+      "reason": "15 passengers delivered",
+      "duration": 0.25,
+      "subject": 1
+    },
+    {
+      "capture": 159,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 2,
+      "reason": "15 passengers delivered",
+      "duration": 0.25,
+      "subject": 1
+    },
+    {
+      "capture": 160,
+      "camera": "delivery",
+      "focus": {
+        "x": 14,
+        "y": 45
+      },
+      "vehicle": 2,
+      "reason": "15 passengers delivered",
+      "duration": 0.25,
+      "subject": 1
+    },
+    {
+      "capture": 161,
+      "camera": "wide",
+      "reason": "Objective achieved",
+      "duration": 11.066666666666666,
+      "narrationHeading": "Objective achieved",
+      "narrationEvent": 28
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+[
+  {
+    "eventId": 0,
+    "narration": "Bonningwell is twice the size of its neighbour, so I'll run a cross-town commuter line entirely inside it — no long road building needed.",
+    "firstCapture": 1,
+    "lastCapture": 2,
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    },
+    "firstDate": 712223,
+    "lastDate": 712223
+  },
+  {
+    "eventId": 3,
+    "narration": "Stops and depot are down; I'm buying two buses to start, keeping plenty of cash in reserve.",
+    "firstCapture": 7,
+    "lastCapture": 8,
+    "camera": "construction",
+    "target": {
+      "kind": "position",
+      "position": {
+        "x": 9,
+        "y": 27
+      }
+    },
+    "firstDate": 712223,
+    "lastDate": 712223
+  },
+  {
+    "eventId": 10,
+    "narration": "Both buses are rolling, one heading each way so the stops don't sit unserved.",
+    "firstCapture": 21,
+    "lastCapture": 22,
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    },
+    "inset": {
+      "target": {
+        "kind": "position",
+        "position": {
+          "x": 9,
+          "y": 27
+        }
+      },
+      "label": "The depot"
+    },
+    "firstDate": 712223,
+    "lastDate": 712223
+  },
+  {
+    "eventId": 12,
+    "narration": "Ten days in and the buses never left the garage — the depot door isn't joined to the street, so I'm fixing that.",
+    "firstCapture": 35,
+    "lastCapture": 36,
+    "camera": "construction",
+    "target": {
+      "kind": "position",
+      "position": {
+        "x": 9,
+        "y": 27
+      }
+    },
+    "firstDate": 712233,
+    "lastDate": 712233
+  },
+  {
+    "eventId": 16,
+    "narration": "The buses finally made it out, and the north stop already has a crowd waiting. Let's see who gets there first.",
+    "firstCapture": 51,
+    "lastCapture": 60,
+    "camera": "follow",
+    "target": {
+      "kind": "vehicle",
+      "id": 0
+    },
+    "inset": {
+      "target": {
+        "kind": "station",
+        "id": 0
+      },
+      "label": "North stop"
+    },
+    "firstDate": 712241,
+    "lastDate": 712249
+  },
+  {
+    "eventId": 18,
+    "narration": "Both stops now have big queues, so each bus should leave full from here on. The cross-town run takes about eleven days each way.",
+    "firstCapture": 75,
+    "lastCapture": 88,
+    "camera": "queue",
+    "target": {
+      "kind": "station",
+      "id": 0
+    },
+    "inset": {
+      "target": {
+        "kind": "station",
+        "id": 1
+      },
+      "label": "South stop"
+    },
+    "firstDate": 712261,
+    "lastDate": 712273
+  },
+  {
+    "eventId": 19,
+    "narration": "First passengers delivered, and both buses are now driving full. I'll stick with two buses rather than spend the cash cushion on a third.",
+    "firstCapture": 89,
+    "lastCapture": 105,
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    },
+    "inset": {
+      "target": {
+        "kind": "station",
+        "id": 1
+      },
+      "label": "South stop"
+    },
+    "firstDate": 712273,
+    "lastDate": 712288
+  },
+  {
+    "eventId": 20,
+    "narration": "Sixty-five riders delivered and the fleet is now in profit. On this pace we should clear two hundred well before the deadline.",
+    "firstCapture": 106,
+    "lastCapture": 122,
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    },
+    "firstDate": 712288,
+    "lastDate": 712303
+  },
+  {
+    "eventId": 21,
+    "narration": "Deliveries came in slower than I hoped, and over a hundred people are queuing at the south stop, so I'm buying a third bus as insurance.",
+    "firstCapture": 123,
+    "lastCapture": 124,
+    "camera": "construction",
+    "target": {
+      "kind": "position",
+      "position": {
+        "x": 9,
+        "y": 27
+      }
+    },
+    "inset": {
+      "target": {
+        "kind": "station",
+        "id": 1
+      },
+      "label": "South stop"
+    },
+    "firstDate": 712303,
+    "lastDate": 712303
+  },
+  {
+    "eventId": 25,
+    "narration": "Cash dipped just under the safety line for now, but three full buses should earn it back before the deadline.",
+    "firstCapture": 131,
+    "lastCapture": 147,
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    },
+    "inset": {
+      "target": {
+        "kind": "vehicle",
+        "id": 2
+      },
+      "label": "Bus 3"
+    },
+    "firstDate": 712303,
+    "lastDate": 712318
+  },
+  {
+    "eventId": 26,
+    "narration": "Two full buses are about to pull into the south stop, which should push us past the target.",
+    "firstCapture": 148,
+    "lastCapture": 153,
+    "camera": "delivery",
+    "target": {
+      "kind": "station",
+      "id": 1
+    },
+    "firstDate": 712318,
+    "lastDate": 712322
+  },
+  {
+    "eventId": 28,
+    "narration": "Mission accomplished on day 104: 220 commuters delivered, cash above the safety line, buses in profit, and the loan never went up.",
+    "firstCapture": 161,
+    "lastCapture": 161,
+    "camera": "wide",
+    "firstDate": 712327,
+    "lastDate": 712327
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "episode": "episode-007",
+  "duration": 170.466667,
+  "width": 3840,
+  "height": 2160,
+  "fps": 60,
+  "completeNarrationClips": 16,
+  "authenticAgentClips": 12,
+  "presenterClips": 4,
+  "narrationCameraSubjects": 12,
+  "synchronizedDetailInsetCues": 6,
+  "repositoryTests": {
+    "passed": 204,
+    "failed": 0
+  },
+  "typeChecks": [
+    "root",
+    "production"
+  ],
+  "motionCanvasPreview": {
+    "canvas": true,
+    "soundtrackServed": true,
+    "pageErrors": 0
+  },
+  "export": {
+    "decoded": true,
+    "blackIntervals": [],
+    "frames": 10228,
+    "narrationWindowsChecked": 16
+  },
+  "originalAudioPacketsPreserved": true,
+  "audioPacketMD5": "f06c30539cb6d074da2db7dc06c6858e",
+  "reviewedEncodedFrames": [
+    "opening",
+    "depot-correction",
+    "both-queues",
+    "third-bus-south-inset",
+    "cash-recovery",
+    "verified-result",
+    "ending"
+  ],
+  "reviewLimit": "Encoded frame samples and automated media checks; not a full real-time perceptual watch/listen.",
+  "gameResult": {
+    "delivered": 220,
+    "days": 104,
+    "cash": 5627,
+    "fleetOperatingProfit": 1710,
+    "loan": 20000,
+    "allTargetsMet": true
+  }
+}

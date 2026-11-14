@@ -1,0 +1,123 @@
+{
+  "version": 2,
+  "title": "Forest to Market",
+  "fps": 60,
+  "resolution": {
+    "width": 3840,
+    "height": 2160
+  },
+  "music": {
+    "file": "clean-soul-audible.mp3",
+    "volume": 0.4,
+    "fadeIn": 0.35,
+    "fadeOut": 1.1,
+    "attribution": {
+      "title": "Clean Soul",
+      "artist": "Kevin MacLeod",
+      "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300033",
+      "license": "Creative Commons: By Attribution 4.0 License",
+      "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+      "text": "\"Clean Soul\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/"
+    },
+    "duck": false
+  },
+  "effects": {
+    "file": "cash-events.wav",
+    "volume": 0.65,
+    "duck": true
+  },
+  "cameras": [
+    {
+      "id": "directed",
+      "file": "directed.mp4",
+      "offsetSeconds": 0
+    }
+  ],
+  "segments": [
+    {
+      "id": "forest-to-market",
+      "kind": "shot",
+      "duration": 209.9,
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "directed"
+        ],
+        "start": 0,
+        "duration": 209.9
+      },
+      "narration": [
+        {
+          "line": 1,
+          "audio": "1_Chapter_1.wav",
+          "at": 0.27
+        },
+        {
+          "line": 2,
+          "audio": "2_Chapter_1.wav",
+          "at": 7.369999999999999
+        },
+        {
+          "line": 3,
+          "audio": "3_Chapter_1.wav",
+          "at": 25.253333333333334
+        },
+        {
+          "line": 4,
+          "audio": "4_Chapter_1.wav",
+          "at": 39.303333333333335
+        },
+        {
+          "line": 5,
+          "audio": "5_Chapter_1.wav",
+          "at": 46.303333333333335
+        },
+        {
+          "line": 6,
+          "audio": "6_Chapter_1.wav",
+          "at": 63.053333333333335
+        },
+        {
+          "line": 7,
+          "audio": "7_Chapter_1.wav",
+          "at": 73.58666666666666
+        },
+        {
+          "line": 8,
+          "audio": "8_Chapter_1.wav",
+          "at": 90.98666666666666
+        },
+        {
+          "line": 9,
+          "audio": "9_Chapter_1.wav",
+          "at": 100.78666666666666
+        },
+        {
+          "line": 10,
+          "audio": "10_Chapter_1.wav",
+          "at": 119.61999999999999
+        },
+        {
+          "line": 11,
+          "audio": "11_Chapter_1.wav",
+          "at": 146.30333333333334
+        },
+        {
+          "line": 12,
+          "audio": "12_Chapter_1.wav",
+          "at": 165.47
+        },
+        {
+          "line": 13,
+          "audio": "13_Chapter_1.wav",
+          "at": 184.88666666666668
+        },
+        {
+          "line": 14,
+          "audio": "14_Chapter_1.wav",
+          "at": 205.52
+        }
+      ]
+    }
+  ]
+}

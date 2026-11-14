@@ -1,0 +1,230 @@
+[
+  {
+    "voice": "presenter",
+    "kind": "intro",
+    "text": "Today, Claude is starting a bus company in OpenTTD. Two hundred passengers, one hundred and twenty game days, and no extra borrowing.",
+    "source": {
+      "kind": "editorial-presenter",
+      "verifiedAgainst": "../../data/openttd-sessions/episode-007-claude-take-1/result.json",
+      "generator": "presenter-lines.json"
+    },
+    "line": 1,
+    "audio": "1_Chapter_1.wav"
+  },
+  {
+    "voice": "presenter",
+    "kind": "intro",
+    "text": "It starts with twenty thousand. By the end, it needs at least five thousand cash and a profitable fleet. Claude makes every decision.",
+    "source": {
+      "kind": "editorial-presenter",
+      "verifiedAgainst": "../../data/openttd-sessions/episode-007-claude-take-1/result.json",
+      "generator": "presenter-lines.json"
+    },
+    "line": 2,
+    "audio": "2_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 0,
+    "text": "Bonningwell is twice the size of its neighbour, so I'll run a cross-town commuter line entirely inside it — no long road building needed.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 0,
+      "field": "args.narration",
+      "tool": "build_stop"
+    },
+    "line": 3,
+    "audio": "3_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 3,
+    "text": "Stops and depot are down; I'm buying two buses to start, keeping plenty of cash in reserve.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 3,
+      "field": "args.narration",
+      "tool": "build_vehicle"
+    },
+    "line": 4,
+    "audio": "4_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 10,
+    "text": "Both buses are rolling, one heading each way so the stops don't sit unserved.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 10,
+      "field": "args.narration",
+      "tool": "toggle_vehicle"
+    },
+    "line": 5,
+    "audio": "5_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 12,
+    "text": "Ten days in and the buses never left the garage — the depot door isn't joined to the street, so I'm fixing that.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 12,
+      "field": "args.narration",
+      "tool": "build_road"
+    },
+    "line": 6,
+    "audio": "6_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 16,
+    "text": "The buses finally made it out, and the north stop already has a crowd waiting. Let's see who gets there first.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 16,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "line": 7,
+    "audio": "7_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 18,
+    "text": "Both stops now have big queues, so each bus should leave full from here on. The cross-town run takes about eleven days each way.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 18,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "line": 8,
+    "audio": "8_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 19,
+    "text": "First passengers delivered, and both buses are now driving full. I'll stick with two buses rather than spend the cash cushion on a third.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 19,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "line": 9,
+    "audio": "9_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 20,
+    "text": "Sixty-five riders delivered and the fleet is now in profit. On this pace we should clear two hundred well before the deadline.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 20,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "line": 10,
+    "audio": "10_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 21,
+    "text": "Deliveries came in slower than I hoped, and over a hundred people are queuing at the south stop, so I'm buying a third bus as insurance.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 21,
+      "field": "args.narration",
+      "tool": "build_vehicle"
+    },
+    "line": 11,
+    "audio": "11_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 25,
+    "text": "Cash dipped just under the safety line for now, but three full buses should earn it back before the deadline.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 25,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "line": 12,
+    "audio": "12_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "commentary",
+    "eventId": 26,
+    "text": "Two full buses are about to pull into the south stop, which should push us past the target.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 26,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "line": 13,
+    "audio": "13_Chapter_1.wav"
+  },
+  {
+    "voice": "agent",
+    "kind": "result",
+    "eventId": 28,
+    "text": "Mission accomplished on day 104: 220 commuters delivered, cash above the safety line, buses in profit, and the loan never went up.",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 28,
+      "field": "args.narration",
+      "tool": "finish_session"
+    },
+    "line": 14,
+    "audio": "14_Chapter_1.wav"
+  },
+  {
+    "voice": "presenter",
+    "kind": "outro",
+    "text": "Claude met every target. 220 passengers delivered in 104 game days, with 5,627 cash left and a profitable bus fleet.",
+    "source": {
+      "kind": "editorial-presenter",
+      "verifiedAgainst": "../../data/openttd-sessions/episode-007-claude-take-1/result.json",
+      "generator": "presenter-lines.json"
+    },
+    "line": 15,
+    "audio": "15_Chapter_1.wav"
+  },
+  {
+    "voice": "presenter",
+    "kind": "end",
+    "text": "Would this company work better with two agents? We'll test collaboration in a later terrarium. Thanks for watching.",
+    "source": {
+      "kind": "editorial-presenter",
+      "verifiedAgainst": "../../data/openttd-sessions/episode-007-claude-take-1/result.json",
+      "generator": "presenter-lines.json"
+    },
+    "line": 16,
+    "audio": "16_Chapter_1.wav"
+  }
+]

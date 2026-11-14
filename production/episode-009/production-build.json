@@ -1,0 +1,9 @@
+{
+  "source": "data/openttd-sessions/episode-009-claude-take-1",
+  "duration": 209.9,
+  "frames": 12594,
+  "speechClips": 14,
+  "cues": 9,
+  "model": "claude-opus-5-5",
+  "video": "Native OpenTTD screenshots from synchronized saved checkpoints; cut and encoded with FFmpeg"
+}

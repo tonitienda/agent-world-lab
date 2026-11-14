@@ -1,0 +1,166 @@
+{
+  "version": 2,
+  "title": "Episode 007 — Claude Transit",
+  "fps": 60,
+  "resolution": {
+    "width": 3840,
+    "height": 2160
+  },
+  "music": {
+    "file": "clean-soul.mp3",
+    "volume": 0.12,
+    "fadeIn": 2,
+    "fadeOut": 4,
+    "attribution": {
+      "title": "Clean Soul",
+      "artist": "Kevin MacLeod",
+      "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300033",
+      "license": "Creative Commons: By Attribution 4.0 License",
+      "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+      "text": "\"Clean Soul\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "cameras": [
+    {
+      "id": "directed",
+      "file": "directed.mp4",
+      "offsetSeconds": 0
+    }
+  ],
+  "segments": [
+    {
+      "id": "opening",
+      "kind": "intro",
+      "duration": 19.716666666666665,
+      "background": {
+        "camera": "directed",
+        "time": 0
+      },
+      "text": "EPISODE 007 · CLAUDE TRANSIT\nSOLO RUN · GAME 1\n200 passengers · 120 days\nStart with 20,000 · Finish with at least 5,000 cash",
+      "narration": [
+        {
+          "line": 1,
+          "audio": "1_Chapter_1.wav",
+          "at": 0.35
+        },
+        {
+          "line": 2,
+          "audio": "2_Chapter_1.wav",
+          "at": 10.239999999999998
+        }
+      ]
+    },
+    {
+      "id": "commuter-challenge",
+      "kind": "shot",
+      "duration": 120.66666666666667,
+      "transition": 0.2,
+      "narration": [
+        {
+          "line": 3,
+          "audio": "3_Chapter_1.wav",
+          "at": 0.6
+        },
+        {
+          "line": 4,
+          "audio": "4_Chapter_1.wav",
+          "at": 12.100000000000003
+        },
+        {
+          "line": 5,
+          "audio": "5_Chapter_1.wav",
+          "at": 22.766666666666673
+        },
+        {
+          "line": 6,
+          "audio": "6_Chapter_1.wav",
+          "at": 31.800000000000004
+        },
+        {
+          "line": 7,
+          "audio": "7_Chapter_1.wav",
+          "at": 44.68333333333332
+        },
+        {
+          "line": 8,
+          "audio": "8_Chapter_1.wav",
+          "at": 55.68333333333335
+        },
+        {
+          "line": 9,
+          "audio": "9_Chapter_1.wav",
+          "at": 65.2333333333333
+        },
+        {
+          "line": 10,
+          "audio": "10_Chapter_1.wav",
+          "at": 74.30000000000005
+        },
+        {
+          "line": 11,
+          "audio": "11_Chapter_1.wav",
+          "at": 83.10000000000015
+        },
+        {
+          "line": 12,
+          "audio": "12_Chapter_1.wav",
+          "at": 94.31666666666682
+        },
+        {
+          "line": 13,
+          "audio": "13_Chapter_1.wav",
+          "at": 101.78333333333343
+        },
+        {
+          "line": 14,
+          "audio": "14_Chapter_1.wav",
+          "at": 109.93333333333342
+        }
+      ],
+      "shot": {
+        "kind": "full",
+        "cameras": [
+          "directed"
+        ],
+        "start": 0,
+        "duration": 120.66666666666667
+      }
+    },
+    {
+      "id": "verified-result",
+      "kind": "outro",
+      "duration": 12.4,
+      "transition": 0.3,
+      "background": {
+        "camera": "directed",
+        "time": 120.56666666666668
+      },
+      "text": "OBJECTIVE ACHIEVED\n220 passengers · 104 days\nCash 5,627 · Fleet profit 1,710",
+      "narration": [
+        {
+          "line": 15,
+          "audio": "15_Chapter_1.wav",
+          "at": 0.35
+        }
+      ]
+    },
+    {
+      "id": "end-screen",
+      "kind": "outro",
+      "duration": 17.683333333333334,
+      "transition": 0.3,
+      "background": {
+        "camera": "directed",
+        "time": 120.56666666666668
+      },
+      "text": "One agent today. A team in a later terrarium.\nWhat should Claude try next?",
+      "narration": [
+        {
+          "line": 16,
+          "audio": "16_Chapter_1.wav",
+          "at": 0.35
+        }
+      ]
+    }
+  ]
+}

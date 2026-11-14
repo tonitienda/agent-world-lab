@@ -1,0 +1,56 @@
+[
+  {
+    "id": "freight-income-85-86",
+    "at": 98.66333333333334,
+    "amount": 472,
+    "checkpoint": 76
+  },
+  {
+    "id": "freight-income-102-103",
+    "at": 115.81333333333333,
+    "amount": 471,
+    "checkpoint": 97
+  },
+  {
+    "id": "freight-income-119-120",
+    "at": 133.06333333333333,
+    "amount": 472,
+    "checkpoint": 114
+  },
+  {
+    "id": "freight-income-137-138",
+    "at": 139.23,
+    "amount": 472,
+    "checkpoint": 132
+  },
+  {
+    "id": "freight-income-146-147",
+    "at": 143.71333333333334,
+    "amount": 368,
+    "checkpoint": 141
+  },
+  {
+    "id": "freight-income-155-156",
+    "at": 156.71333333333334,
+    "amount": 472,
+    "checkpoint": 150
+  },
+  {
+    "id": "freight-income-172-173",
+    "at": 161.66333333333333,
+    "amount": 472,
+    "checkpoint": 167
+  },
+  {
+    "id": "freight-income-190-191",
+    "at": 178.74666666666667,
+    "amount": 472,
+    "checkpoint": 185
+  },
+  {
+    "id": "freight-income-198-199",
+    "at": 182.99666666666667,
+    "amount": 376,
+    "checkpoint": 193
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "session": "data/openttd-sessions/episode-009-claude-take-1",
+  "calibration": "data/openttd-previews/freight-009-clean/calibration.json",
+  "title": "Forest to Market",
+  "graphics": "OpenGFX2 Classic 0.8.1",
+  "graphicsSha256": "2f4d0d8cd82b9b15d7c5a742581bfd11a08d4fd54fc0743f1f8a1032e3b5eeaf"
+}

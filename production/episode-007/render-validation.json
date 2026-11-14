@@ -1,0 +1,77 @@
+{
+  "file": "/Users/toni/Projects/agent-world-lab/production/output/episode-007.mp4",
+  "duration": 170.466667,
+  "frames": 10228,
+  "width": 3840,
+  "height": 2160,
+  "fps": 60,
+  "audio": "aac",
+  "blackIntervals": [],
+  "decoded": true,
+  "narrationWindows": [
+    {
+      "line": 1,
+      "meanDb": -21
+    },
+    {
+      "line": 2,
+      "meanDb": -21
+    },
+    {
+      "line": 3,
+      "meanDb": -20.2
+    },
+    {
+      "line": 4,
+      "meanDb": -21.2
+    },
+    {
+      "line": 5,
+      "meanDb": -21.3
+    },
+    {
+      "line": 6,
+      "meanDb": -21.4
+    },
+    {
+      "line": 7,
+      "meanDb": -21.6
+    },
+    {
+      "line": 8,
+      "meanDb": -20.4
+    },
+    {
+      "line": 9,
+      "meanDb": -21.2
+    },
+    {
+      "line": 10,
+      "meanDb": -21.1
+    },
+    {
+      "line": 11,
+      "meanDb": -20.7
+    },
+    {
+      "line": 12,
+      "meanDb": -20.8
+    },
+    {
+      "line": 13,
+      "meanDb": -21.1
+    },
+    {
+      "line": 14,
+      "meanDb": -20.7
+    },
+    {
+      "line": 15,
+      "meanDb": -21
+    },
+    {
+      "line": 16,
+      "meanDb": -20.1
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "episode": "episode-007",
+  "title": "Claude Transit: the commuter challenge",
+  "environment": "openttd",
+  "engineVersion": "15.3",
+  "seed": 7,
+  "player": {"harness": "claude", "model": "claude-opus-5-5", "maximumBudgetUSD": 15},
+  "goal": {"passengers": 200, "maximumDays": 120, "minimumCash": 5000, "positiveFleetOperatingProfit": true},
+  "initialCash": 20000,
+  "initialLoan": 20000,
+  "maximumLoan": 20000,
+  "maximumBuses": 3,
+  "maximumToolCalls": 200,
+  "maximumActions": 80,
+  "maximumWallMinutes": 25,
+  "narration": "recorded public narration fields only; presenter uses verified game state",
+  "production": {"width": 3840, "height": 2160, "fps": 60},
+  "prompt": "goal.md"
+}

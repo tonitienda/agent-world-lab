@@ -1,0 +1,26 @@
+[
+  {
+    "row": 1,
+    "line": 1,
+    "audio": "1_Chapter_1.wav",
+    "text": "Today, Claude is starting a bus company in OpenTTD. Two hundred passengers, one hundred and twenty game days, and no extra borrowing."
+  },
+  {
+    "row": 2,
+    "line": 2,
+    "audio": "2_Chapter_1.wav",
+    "text": "It starts with twenty thousand. By the end, it needs at least five thousand cash and a profitable fleet. Claude makes every decision."
+  },
+  {
+    "row": 3,
+    "line": 15,
+    "audio": "15_Chapter_1.wav",
+    "text": "Claude met every target. 220 passengers delivered in 104 game days, with 5,627 cash left and a profitable bus fleet."
+  },
+  {
+    "row": 4,
+    "line": 16,
+    "audio": "16_Chapter_1.wav",
+    "text": "Would this company work better with two agents? We'll test collaboration in a later terrarium. Thanks for watching."
+  }
+]

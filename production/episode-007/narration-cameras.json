@@ -1,0 +1,160 @@
+[
+  {
+    "eventId": 0,
+    "heading": "A commuter line inside Bonningwell",
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    }
+  },
+  {
+    "eventId": 3,
+    "heading": "Two buses, with cash to spare",
+    "camera": "construction",
+    "target": {
+      "kind": "position",
+      "position": {
+        "x": 9,
+        "y": 27
+      }
+    }
+  },
+  {
+    "eventId": 10,
+    "heading": "Starting the two-bus service",
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    },
+    "inset": {
+      "target": {
+        "kind": "position",
+        "position": {
+          "x": 9,
+          "y": 27
+        }
+      },
+      "label": "The depot"
+    }
+  },
+  {
+    "eventId": 12,
+    "heading": "The depot needs a road connection",
+    "camera": "construction",
+    "target": {
+      "kind": "position",
+      "position": {
+        "x": 9,
+        "y": 27
+      }
+    }
+  },
+  {
+    "eventId": 16,
+    "heading": "The north stop is getting busy",
+    "camera": "follow",
+    "target": {
+      "kind": "vehicle",
+      "id": 0
+    },
+    "inset": {
+      "target": {
+        "kind": "station",
+        "id": 0
+      },
+      "label": "North stop"
+    }
+  },
+  {
+    "eventId": 18,
+    "heading": "Queues at both ends of the route",
+    "camera": "queue",
+    "target": {
+      "kind": "station",
+      "id": 0
+    },
+    "inset": {
+      "target": {
+        "kind": "station",
+        "id": 1
+      },
+      "label": "South stop"
+    }
+  },
+  {
+    "eventId": 19,
+    "heading": "The first deliveries — staying with two buses",
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    },
+    "inset": {
+      "target": {
+        "kind": "station",
+        "id": 1
+      },
+      "label": "South stop"
+    }
+  },
+  {
+    "eventId": 20,
+    "heading": "The fleet is now in operating profit",
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    }
+  },
+  {
+    "eventId": 21,
+    "heading": "A third bus for the south-stop backlog",
+    "camera": "construction",
+    "target": {
+      "kind": "position",
+      "position": {
+        "x": 9,
+        "y": 27
+      }
+    },
+    "inset": {
+      "target": {
+        "kind": "station",
+        "id": 1
+      },
+      "label": "South stop"
+    }
+  },
+  {
+    "eventId": 25,
+    "heading": "Earning back the cash reserve",
+    "camera": "network",
+    "target": {
+      "kind": "town",
+      "id": 1
+    },
+    "inset": {
+      "target": {
+        "kind": "vehicle",
+        "id": 2
+      },
+      "label": "Bus 3"
+    }
+  },
+  {
+    "eventId": 26,
+    "heading": "Arrivals at the south stop",
+    "camera": "delivery",
+    "target": {
+      "kind": "station",
+      "id": 1
+    }
+  },
+  {
+    "eventId": 28,
+    "heading": "Objective achieved",
+    "camera": "wide"
+  }
+]

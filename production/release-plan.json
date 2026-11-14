@@ -1,7 +1,7 @@
 {
   "timezone": "Europe/Madrid",
   "minimumSpacingDays": 5,
-  "updatedOn": "2026-11-13",
+  "updatedOn": "2026-11-14",
   "episodes": [
     {
       "id": "episode-007",
@@ -24,10 +24,17 @@
       "title": "Forest to Market",
       "plannedReleaseDate": "2026-11-27",
       "status": "user-planned"
+    },
+    {
+      "id": "episode-010-hedgewars",
+      "game": "hedgewars",
+      "title": "Claude vs Codex in Hedgewars",
+      "plannedReleaseDate": "2026-12-02",
+      "status": "user-planned"
     }
   ],
   "notes": [
-    "Episodes 007, 008 and 009 have user-selected dates (Nov 17, 22 and 27).",
+    "Episodes 007, 008, 009 and 010 have user-selected dates (Nov 17, 22, 27 and Dec 2).",
     "Recompute spacing from actual neighbouring releases if dates or order change.",
     "No upload or platform scheduling has been performed.",
     "Episode identifiers are internal; omit release numbers from video visuals and narration."

@@ -1,0 +1,12 @@
+{
+  "requestedModel": "claude-opus-5-5",
+  "actualModel": [
+    "claude-opus-5-5"
+  ],
+  "reportedCostUSD": 0.7841536000000001,
+  "costBasis": "Claude CLI reported list cost; not a billing invoice",
+  "inputTokens": 50,
+  "outputTokens": 9890,
+  "cacheReadInputTokens": 772768,
+  "maximumBudgetUSD": 15
+}

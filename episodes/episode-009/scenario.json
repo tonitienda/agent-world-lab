@@ -1,0 +1,50 @@
+{
+  "id": "openttd-forest-to-market",
+  "displayTitle": "Forest to Market",
+  "releaseNumber": 9,
+  "status": "production-complete",
+  "environment": {
+    "provider": "openttd",
+    "engineVersion": "15.3",
+    "seed": 11,
+    "mapSize": 128,
+    "river": true
+  },
+  "initialCash": 40000,
+  "initialLoan": 40000,
+  "maximumLoan": 40000,
+  "maximumTrucks": 6,
+  "cargoChain": [
+    "forest:WOOD",
+    "sawmill:GOOD",
+    "destination-town"
+  ],
+  "proposedGoal": {
+    "woodDeliveredToSawmill": 120,
+    "goodsFromSawmillDeliveredToTown": 28,
+    "maximumDays": 240,
+    "minimumEndingCash": 8000,
+    "positiveFleetOperatingProfit": true
+  },
+  "difficulty": {
+    "prebuiltInterSiteRoads": false,
+    "prebuiltCrossing": false,
+    "randomDisasters": false,
+    "randomIndustryClosure": false,
+    "randomProductionChanges": false,
+    "scriptedDisruption": false
+  },
+  "calibrationRequired": false,
+  "goalPrompt": "goal.md",
+  "playerMode": "solo-first",
+  "laterCollaboration": {
+    "upstreamRole": "wood supply and river crossing",
+    "downstreamRole": "goods distribution and customer deliveries",
+    "sharedConstraints": [
+      "cash",
+      "road capacity",
+      "sawmill input/output balance"
+    ]
+  },
+  "episodeId": "episode-009"
+}

@@ -1,0 +1,16 @@
+{
+  "events": [0, 10, 18, 20, 33, 34, 40, 41, 47, 50, 52, 54],
+  "headings": {
+    "0": "Planning the timber route",
+    "10": "Buying the first wood trucks",
+    "18": "The first departure",
+    "20": "Fixing the road joins",
+    "33": "The trucks reach the forest",
+    "34": "Adding wood capacity",
+    "40": "The first wood delivery",
+    "41": "Funding the goods route",
+    "47": "The sawmill loads its first goods",
+    "50": "Halfway to the goods target",
+    "52": "The last shipment"
+  }
+}

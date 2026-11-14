@@ -1,0 +1,8 @@
+{
+  "requestedModel": "claude-opus-5-5",
+  "assistantModels": [
+    "claude-opus-5-5"
+  ],
+  "totalCostUSD": 1.3943462000000002,
+  "turns": 66
+}

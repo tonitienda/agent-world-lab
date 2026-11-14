@@ -1,0 +1,21 @@
+{
+  "method": "incremental picture refresh of existing Motion Canvas master",
+  "originalMaster": "/Users/toni/Projects/agent-world-lab/data/openttd-sessions/episode-007-claude-take-1/first-master/episode-007.mp4",
+  "originalMasterSha256": "13a4ef45d731f8ca7dc02c1a7c77975b1531d235fc181dd8ad395ebcf3f7cf70",
+  "directedSha256": "ab3ac992655a697ea4921dad4ad99ed0ac0324784ff011118386d2dd6efa980c",
+  "preserved": [
+    "all original audio packets",
+    "opening and ending cards",
+    "Motion Canvas transitions",
+    "narration timing",
+    "take and source chronology"
+  ],
+  "replacedFrames": {
+    "first": 1198,
+    "endExclusive": 7759
+  },
+  "totalFrames": 10228,
+  "output": "/Users/toni/Projects/agent-world-lab/production/output/episode-007.mp4",
+  "duration": 170.46666666666667,
+  "preview": "same unchanged Motion Canvas scene and updated directed.mp4"
+}

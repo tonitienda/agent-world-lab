@@ -1,0 +1,103 @@
+{
+  "status": "environment-verified",
+  "readyForClaude": false,
+  "fixture": {
+    "destination": {
+      "id": 2,
+      "name": "Eastmere",
+      "position": {
+        "x": 102,
+        "y": 92
+      }
+    },
+    "forest": {
+      "id": 0,
+      "name": "Forest",
+      "position": {
+        "x": 38,
+        "y": 64
+      }
+    },
+    "forest_produces_wood": true,
+    "goods_acceptance_sites": 47,
+    "goods_cargo": 5,
+    "industry_count": 2,
+    "initial_goods_production": 0,
+    "prebuilt_crossing_heads": 0,
+    "river_axis": "x",
+    "river_max": 65,
+    "river_min": 62,
+    "sawmill": {
+      "id": 1,
+      "name": "Sawmill",
+      "position": {
+        "x": 82,
+        "y": 64
+      }
+    },
+    "sawmill_accepts_wood": true,
+    "sawmill_produces_goods": true,
+    "wood_cargo": 7
+  },
+  "startingCompany": {
+    "cash": 40000,
+    "loan": 40000,
+    "vehicles": 0
+  },
+  "availableWoodTrucks": [
+    {
+      "capacity": 20,
+      "id": 144,
+      "name": "Witcombe Wood Truck",
+      "price": 4839
+    }
+  ],
+  "availableGoodsTrucks": [
+    {
+      "capacity": 14,
+      "id": 138,
+      "name": "Balogh Goods Truck",
+      "price": 4388
+    }
+  ],
+  "crossingOptions": [
+    {
+      "id": 0,
+      "name": "Wooden road bridge",
+      "price": 643,
+      "speed": 32
+    },
+    {
+      "id": 2,
+      "name": "Steel girder road bridge",
+      "price": 1158,
+      "speed": 64
+    },
+    {
+      "id": 3,
+      "name": "Reinforced concrete suspension road bridge",
+      "price": 1351,
+      "speed": 80
+    },
+    {
+      "id": 4,
+      "name": "Steel suspension road bridge",
+      "price": 1488,
+      "speed": 96
+    }
+  ],
+  "savedWorld": "data/openttd-preparations/forest-to-market-03/freight-initial.sav",
+  "screenshot": "data/openttd-preparations/forest-to-market-03/world/screenshot/source-00001.png",
+  "calibration": "Delivery targets are provisional until a freight baseline verifies the full chain and capital budget. No Claude take or narration was run.",
+  "remainingPlayerIntegration": [
+    "cargo station placement and surveys",
+    "freight truck build/refit and cargo orders",
+    "road bridge building",
+    "per-industry and per-destination cargo accounting",
+    "six-vehicle freight observations",
+    "budgeted freight session and measured bottleneck checks"
+  ],
+  "verifiedOn": "2026-11-07",
+  "engineVersion": "15.3",
+  "scenarioId": "openttd-forest-to-market"
+}

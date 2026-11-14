@@ -1,0 +1,771 @@
+{
+  "provider": "ElevenLabs",
+  "modelId": "eleven_v4",
+  "clips": [
+    {
+      "line": 1,
+      "audio": "1_Chapter_1.wav",
+      "speaker": "presenter",
+      "name": "Bella",
+      "voiceId": "hpp4J3VqNfWAUOO0d1Us",
+      "text": "[excited] Hedgewars. Claude's Ada and Bram against Codex's Cleo and Dax. Last team standing wins.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.4,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "94c6f67b6412d95e3ba08ffbee0cea498e5736ddddec2aac076a2d9add0b0de2",
+      "duration": 6.96,
+      "sha256": "91643d0a3fbdb9a249c846a7a3efe884fdaf443965a6ee54b5e26b107bc96fbb"
+    },
+    {
+      "line": 2,
+      "audio": "2_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] Ada opens with a lobbed grenade over the ridge — special delivery for Dax!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "e8c05f43eca61c4150ba8f559d49fcb8314bdd0efe2132411efd590e0126a417",
+      "duration": 4.56,
+      "sha256": "f82de4e851a4c1d862ee4f0a7d85fcae3d41df621cff5bba075c5be42aaae5e1"
+    },
+    {
+      "line": 3,
+      "audio": "3_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] Ugh — that grenade bounced off the ridge and rolled all the way back past me. Embarrassing!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "846aa17f09baebf4670c9ba5f5bac864207b70de1bc34b75774a52f32f9fe218",
+      "duration": 6.24,
+      "sha256": "679f016b79fad103f2dfe1627ba160bcc4992a99784d951039a59972af271823"
+    },
+    {
+      "line": 4,
+      "audio": "4_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[playful] I’m sending Bram a strongly worded rocket.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "43814d3072f5642d56c7866f1dce5f5432cfe4c20145f6bd46fe8340d5b453f6",
+      "duration": 3.6,
+      "sha256": "0ff5b44bf5dc782e0551ef2f1c77806d65e4715f1a2046ab7745fc7ea221afbb"
+    },
+    {
+      "line": 5,
+      "audio": "5_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[laughs] Bram’s gone swimming! Sixty pixels short still delivered the splash.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "9730f6e83e909159d7cee61b2a4d02d12441c4e0f9e839ec469e9344b44eab53",
+      "duration": 6,
+      "sha256": "ddbe472fd5fb4c25bf802c1997ca070e589bdae72684010a7092019233bb2664"
+    },
+    {
+      "line": 6,
+      "audio": "6_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] Bram is gone — Ada fights for two now! Bazooka, calm winds, aim for Dax.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "79e9eb6f056d5527507ab6a49a47edbb499d1577c9aed71b7c3a34e095e5cab4",
+      "duration": 6.24,
+      "sha256": "452bfa4c981349db0258e09d3715298873a054b4c416e5c02a1942a2c112ca12"
+    },
+    {
+      "line": 7,
+      "audio": "7_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] Overshot by a good stretch — but now I know the range. Dax, you're next.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "4fa90d84ccf5eb99aa56c1ec89f47e647767c8b76df35660614eb4c78d609157",
+      "duration": 5.52,
+      "sha256": "6fd9904d5aecce635bae1dbb8f049bfba942c149dd97c63d8e86014391105d97"
+    },
+    {
+      "line": 8,
+      "audio": "8_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[playful] I’m lofting this over the ridge—Ada gets the scenic delivery.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "83ee3760684ce98aa6985d70aecfd7542037bd4afdc2301012b51ab1566ab30a",
+      "duration": 4.16,
+      "sha256": "dd08c01cf0053f21c2fdd6d8f27884bbad364fce806768391c157e99fa815a03"
+    },
+    {
+      "line": 9,
+      "audio": "9_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[embarrassed] I hit the ridge—and Dax. That one’s on me; we need more clearance.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "4eced665335294d16144c6dd0f7368fd1edf59c9b55c277955bde1d3f4e13da0",
+      "duration": 5.92,
+      "sha256": "f387748ed03937fdc763c6acd5d8bbd67c51831c190c8741e79fdf292bfcf486"
+    },
+    {
+      "line": 10,
+      "audio": "10_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] Nasty headwind — the grenade doesn't care about wind. Dax, catch!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "b410a6c4691c6274499f52a6a1f290b7cc03a5de88139c701f243a8ea0d824c3",
+      "duration": 5.28,
+      "sha256": "14c9ba761a3673ebc79a93ad49348ac98f967c866365e105b9cdef300e4649e1"
+    },
+    {
+      "line": 11,
+      "audio": "11_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] Smacked straight into the hill. That ridge is personally offended by me.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "edede3d5aef1cebe42f5957efbafb1a28f333fd08a8e82325f19c24b704005cc",
+      "duration": 5.2,
+      "sha256": "c23d722b142f709ac16e96befc084bc9e757c25fe42f043b0b8ce11605574935"
+    },
+    {
+      "line": 12,
+      "audio": "12_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[playful] I’m taking the high road over that stone skyscraper.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "5c1e9acb3ea8b056317c2f9083591fdd5b27fb6c3adca5565f41f26ff186cbec",
+      "duration": 3.6,
+      "sha256": "3e5ae4b32d1746ebef2f90eabc60ac1df788dad7febb0c1224f15453b8ba1045"
+    },
+    {
+      "line": 13,
+      "audio": "13_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[frustrated] Eighty-eight pixels past Ada. I’ve got the range; now to trim it.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "3649b45820519d18816d05dcd5fe6a00852741e3853251df2d30c167a7db43e8",
+      "duration": 5.36,
+      "sha256": "0108cee4da911c1e0f693ab75b372d72d312dabd3bd5ce8ed727d1cd68bf8407"
+    },
+    {
+      "line": 14,
+      "audio": "14_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] Higher arc this time — up and over that hill, little grenade!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "6aa47dcc5a912111d487f52bf8e885af441b2561ef5297ccd1190f13a4c8cbd4",
+      "duration": 3.92,
+      "sha256": "d2d2fa87f257e1a4cb4065f800d3b1ff13931d2419fafa793602cc54d37ad840"
+    },
+    {
+      "line": 15,
+      "audio": "15_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] Airburst way past him — too much juice. Dialing it down.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "bd3e7954660f10cc0f62f7546ed34a06264ca298e393e8dc29d8bad6eb663716",
+      "duration": 4.88,
+      "sha256": "864e7fdc714e5936847b1d2e3fd86639cb1cd623675cf73a849ef79c564e131b"
+    },
+    {
+      "line": 16,
+      "audio": "16_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[playful] I’ve cleared my muzzle; this arc should clear the ridge too.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "48cdf4dfff1f63a13b30fcbc7c6476f8dbe80c024f2af3b381a17c826306e683",
+      "duration": 3.76,
+      "sha256": "ccf0c0a2386ed15a4c0ca10f83fd49fbe86a5695b4663c23dbe97f1b758aa7ff"
+    },
+    {
+      "line": 17,
+      "audio": "17_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[frustrated] Short by 173! That headwind’s charging rent on every rocket.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "c01cb1c36b3966666b71abc196f107892e5ac88a974332b51ed4ae9d3e7cf1a9",
+      "duration": 5.6,
+      "sha256": "57c05bbf979e79b940dd2d8e326d97f08c68be9659f684d58c8c7c8f65b780c9"
+    },
+    {
+      "line": 18,
+      "audio": "18_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] Hurricane wind — good thing grenades ignore it. Calculated lob, Dax!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "d8cd4f29a80ffa52038a2f34cfe9b3241fdf2d00421eb3a76df8bca6181bc6d9",
+      "duration": 5.28,
+      "sha256": "b384e6537ebe07878798ab2f2983c42ac44d53b9fc7ce3a8d396132b19c86b3a"
+    },
+    {
+      "line": 19,
+      "audio": "19_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] The hill ate another one. Fine — I'll go steeper than a mountain goat.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "bfd0684a2b1fb4d0bedf06a5351617b96287c3b887fbd7965907b035f52b3004",
+      "duration": 5.36,
+      "sha256": "ccf40ca6546525cc94c1ed100e0ad7695d944e97e499c9353b0ae0bbf3ca4192"
+    },
+    {
+      "line": 20,
+      "audio": "20_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[excited] I’m adding muscle for this headwind—special delivery, Ada!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "b546d70c47d088eeb2074331cbc77ebe3654f890f2042811c295b15e298b3212",
+      "duration": 4,
+      "sha256": "46aa621307aac73ebe95618d7cb7b7f333688d65b7a8a35fdd329d2203be2a18"
+    },
+    {
+      "line": 21,
+      "audio": "21_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[frustrated] Still 138 short, but that pesky shelf is disappearing.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "cd26f991968b86d358b7ba300f3191e8330ccf34bd87284b411f8d3f0ca3592e",
+      "duration": 5.84,
+      "sha256": "43c3b5833ce6362a8fd753d7008448e91bf3f3a3b9c4176dfc28104fdac1ddbc"
+    },
+    {
+      "line": 22,
+      "audio": "22_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] Sky-high mortar lob — drop it right on Dax's head!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "1988a2211dcef1de65dcce6e1b5ccc25341174f00e86012536c9b4ecbd30240a",
+      "duration": 3.76,
+      "sha256": "1a4623a2fab0a6f1ffa97695635c7e78def7f3e16f31a2da81965ff6281dc332"
+    },
+    {
+      "line": 23,
+      "audio": "23_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] So close! Burst just over his head. Next one lands in his lap.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "36bc16f20727b4e2d39c6c0e9ec2f443d08ebda340cb9e16fbdacb7270d21b33",
+      "duration": 5.36,
+      "sha256": "af2c567fdf191873da2b29b514f48055deb4cbc10f0d63e6565b7043748e6d06"
+    },
+    {
+      "line": 24,
+      "audio": "24_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[playful] I’m correcting that shortfall with a firmer shove into the gale.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "35fb716dcc89f03346c4a302cdee33ec201eeef1eabd5e9e3d889eb9be8bd445",
+      "duration": 4.24,
+      "sha256": "265bef9f151559728f9f1361b4c8e2ebfb1c7f5dad193307f2c092b6dfa9293d"
+    },
+    {
+      "line": 25,
+      "audio": "25_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[frustrated] The ridge caught it again. I’m putting that rock on my enemies list.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "e32ebae722d913089ed3a0e24f366251f28b69be392d07474a4fcc1d27d7a5fe",
+      "duration": 4.72,
+      "sha256": "50e70cbc37f2e58e45d2d77872e37004d151b3de4e4ebeb294e01c7ec35c1b60"
+    },
+    {
+      "line": 26,
+      "audio": "26_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] A touch softer, same sky-high arc. Dax, look up!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "cf18802b23d6bf631e3134536ff2d04079a303cfc250dba3e2a6bf334d204341",
+      "duration": 4.72,
+      "sha256": "50f1fcadbc8c37c830aa5cb08e05e1d8ced5650183c55ad2cbbb51dcd6fa3a9b"
+    },
+    {
+      "line": 27,
+      "audio": "27_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] Clipped the hilltop. Bracketing him now — 51 short, 56 long. The answer's in between.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "3be306962d867ae85e5c506156cdaf00aa30c97554baedd7146c620067ea068c",
+      "duration": 6.88,
+      "sha256": "d9807d84045fd98e4161190ccab9a813576269b58dea7642e206be9c28cf289d"
+    },
+    {
+      "line": 28,
+      "audio": "28_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[playful] I’m flattening the long arc a touch and giving it everything.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "531382f61f9b115179e6367285ae8367f9859160677d5422ec01d6e347ef884a",
+      "duration": 4.32,
+      "sha256": "43c75234ccfcef5cf410b9f012bea0df011deb1d1c5fd475c63bc8809a8784c3"
+    },
+    {
+      "line": 29,
+      "audio": "29_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[frustrated] Now 172 past her. I’m bracketing Ada with very expensive landscaping.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "b611668e529ab83d4c3a72dd81be41dbb9bb7e4c24837b55f86fe47afe1a1d74",
+      "duration": 6.4,
+      "sha256": "3e0b83e51d0466da9edd44fc0c30baf901f0c50dc46a1d062e410a7751eeb1c9"
+    },
+    {
+      "line": 30,
+      "audio": "30_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[playful] Split the difference — 54 percent of pure spite, straight up and down on Dax.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "0ba087295bd4f080ea1c8bf3c533a7183ec496201dc3c149177ed96ca0fda981",
+      "duration": 5.76,
+      "sha256": "3c84f6782981e14c319c7529c3a786b23a959ecac389297cd93582c607f79afc"
+    },
+    {
+      "line": 31,
+      "audio": "31_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] Bounced off the hill and rolled into a ditch. Grenades: zero respect for my math.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "9aba1f52a266d0a1853f87e06065ba4143ef087a2bea475db9f443320c659926",
+      "duration": 6.16,
+      "sha256": "e3b4445fe9379ab18d7cb4f3d471f2e37a559ac3dfde0245a77729d38905f774"
+    },
+    {
+      "line": 32,
+      "audio": "32_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[playful] I’m going steeper; this ridge has blocked its last delivery.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "aafe15d9c9f07098077b4b72990b0b95818780ae3a4f38eaa823db8d08234bfd",
+      "duration": 4.32,
+      "sha256": "a13df7ac07a3e2671a1b83b21c51ead555ba7b0101c5667a944acf9491b920a3"
+    },
+    {
+      "line": 33,
+      "audio": "33_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[excited] Forty-five damage! Dax has finally found the express lane.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "87a195183d6db54da21c0ccf545960e0af2f6b69f8d3cd36f9ef991917795e5b",
+      "duration": 4.56,
+      "sha256": "43cd9bdd60d7dfff50f58ed4db022821786d0a12f60ca061dbdc1f6a93294f4c"
+    },
+    {
+      "line": 34,
+      "audio": "34_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] Ouch, that stung! Tailwind's on my side now — bazooka, payback time!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "88db65e258a854bfa374ac474c04116b98cc63bd3a0b0aa8d402ae96e9ed58ba",
+      "duration": 5.92,
+      "sha256": "d75bcda8dbb2263713fe8abaa066e3437e7109832e0402e1f857cb787e662bae"
+    },
+    {
+      "line": 35,
+      "audio": "35_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] Blew the top off the hill instead of Dax. Landscaping, technically.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "0553ed81d0526672b243457214fc4b96349fbfb5dcb3feaf36e21b73335c85ed",
+      "duration": 4.96,
+      "sha256": "54da149c079098489afaba7683a0c62d3de81de198ba85e884c2627bf8558372"
+    },
+    {
+      "line": 36,
+      "audio": "36_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[playful] I’m letting this mighty tailwind carry the punch.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "da349a52766044465faf764616a8052f1a322472f8181b814f3e17c8fffac828",
+      "duration": 3.76,
+      "sha256": "6d1a776715e2d5afae14e9659e74ef07965776a8f3a9ad77581dd9d5d5ef5c59"
+    },
+    {
+      "line": 37,
+      "audio": "37_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[frustrated] That wind took my rocket on holiday. Far too long!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "da5116efb2200eb2cf75a760891fd4c69c3c855057bd01d0b16fdabcb116293f",
+      "duration": 4.24,
+      "sha256": "ef22cf387321213205b81e2aa74b71681ba9aa2e3597eb3a47779b4bab709a2d"
+    },
+    {
+      "line": 38,
+      "audio": "38_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] Hill's shorter now. Steeper, a bit more punch into the headwind — go!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "97a3f6b84d3b4a173091d15b651edb91ac7dd4bbb1530a349f9be86af85a1faa",
+      "duration": 4.72,
+      "sha256": "e832d28e8cd6b83dbc14d2226132ff618ff88dea8983e71200bc3c77bfb6be51"
+    },
+    {
+      "line": 39,
+      "audio": "39_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] First blood on Dax! Only a nick, but he's dancing now.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "b1eb1de5d69e291a85bc6558769968ba98221112bc47e9ae1bd0913ed73f1ea4",
+      "duration": 4.4,
+      "sha256": "9bafe571996d29d8117aee06c853f568f2bea7377610da11dfb57f6115933efa"
+    },
+    {
+      "line": 40,
+      "audio": "40_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[playful] I’m easing off the power; this gale already brought its own engine.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "c1a45f70e590b08f2dd2bb6f7a56ba8950edb5a79f889cccf7217b43b844e481",
+      "duration": 4.4,
+      "sha256": "c4fadad35fd28567f9e948563aa693e1a895e6d62933976e7a81065e599c89d3"
+    },
+    {
+      "line": 41,
+      "audio": "41_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Callum",
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "text": "[excited] Another forty-five! Ada’s down to ten; Dax is cooking now.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "06ad5342d23ec210fdd53a1faa4634de2637ebfcc57fa570d43ae68bb147b111",
+      "duration": 4.96,
+      "sha256": "f46ddda1fec35a2ea37bc83017cef8f3873b6afeb2c0bbfc9679fa4ee0b566fb"
+    },
+    {
+      "line": 42,
+      "audio": "42_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[excited] Ten HP and a gale in my face. One sky-grenade, all heart — Dax, this one's for Bram!",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "7acefdef65ace4eca166a980697eb699c4501afa410268669e9f438944c5fc2f",
+      "duration": 6.96,
+      "sha256": "578c8d5ecb0a170698b048892c16e5d90453ebeab8500b36ffe3d395c7586cd4"
+    },
+    {
+      "line": 43,
+      "audio": "43_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Elsa",
+      "voiceId": "7yuqhKJfGa6zud57AaAx",
+      "text": "[frustrated] Rolled into the pit next door. That pit is collecting all my grenades like souvenirs.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "0d9a467964ce166474c8761ddafde308963d511e27f4a70cef4fc40a2ffeb8c6",
+      "duration": 5.68,
+      "sha256": "40561a7523fe41a569930eaeffe18d03a753557b65bba3aa3f7dc22a94cad6a8"
+    },
+    {
+      "line": 44,
+      "audio": "44_Chapter_1.wav",
+      "speaker": "agent",
+      "name": "Lily",
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "text": "[playful] I’m splitting the difference on that long shot. Cleo wants the curtain call.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.3,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "eba2354d9b9a30c35dd1e382f2968020e705f7de95955e90fa7ada04c9dd82ee",
+      "duration": 4.64,
+      "sha256": "88eef185f8b46b95e8ed72df614d42a8209bd7a3237cf56f195a2e045b6becf8"
+    },
+    {
+      "line": 45,
+      "audio": "45_Chapter_1.wav",
+      "speaker": "presenter",
+      "name": "Bella",
+      "voiceId": "hpp4J3VqNfWAUOO0d1Us",
+      "text": "[excited] Codex wins. Cleo and Dax are the last standing.",
+      "modelId": "eleven_v4",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "stability": 0.4,
+        "similarityBoost": 0.75
+      },
+      "fingerprint": "30217de428adb0541930f1102c421ef82b463aa761ea0c549b5e5ff0b788261f",
+      "duration": 3.76,
+      "sha256": "e51b6aa224e191d7f59bf3bd78899b3014e98c385e34f76accb24629fbdeb060"
+    }
+  ]
+}

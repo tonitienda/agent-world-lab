@@ -1,0 +1,540 @@
+[
+  {
+    "card": "opening",
+    "voice": "presenter",
+    "text": "[excited] Hedgewars. Claude's Ada and Bram against Codex's Cleo and Dax. Last team standing wins.",
+    "voiceSettings": {
+      "stability": 0.4,
+      "similarityBoost": 0.75
+    },
+    "line": 1,
+    "audio": "1_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] Ada opens with a lobbed grenade over the ridge — special delivery for Dax!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 2,
+    "audio": "2_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] Ugh — that grenade bounced off the ridge and rolled all the way back past me. Embarrassing!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 3,
+    "audio": "3_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[playful] I’m sending Bram a strongly worded rocket.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 4,
+    "audio": "4_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[laughs] Bram’s gone swimming! Sixty pixels short still delivered the splash.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 5,
+    "audio": "5_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] Bram is gone — Ada fights for two now! Bazooka, calm winds, aim for Dax.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 6,
+    "audio": "6_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] Overshot by a good stretch — but now I know the range. Dax, you're next.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 7,
+    "audio": "7_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[playful] I’m lofting this over the ridge—Ada gets the scenic delivery.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 8,
+    "audio": "8_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[embarrassed] I hit the ridge—and Dax. That one’s on me; we need more clearance.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 9,
+    "audio": "9_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] Nasty headwind — the grenade doesn't care about wind. Dax, catch!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 10,
+    "audio": "10_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] Smacked straight into the hill. That ridge is personally offended by me.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 11,
+    "audio": "11_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[playful] I’m taking the high road over that stone skyscraper.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 12,
+    "audio": "12_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[frustrated] Eighty-eight pixels past Ada. I’ve got the range; now to trim it.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 13,
+    "audio": "13_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] Higher arc this time — up and over that hill, little grenade!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 14,
+    "audio": "14_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] Airburst way past him — too much juice. Dialing it down.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 15,
+    "audio": "15_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[playful] I’ve cleared my muzzle; this arc should clear the ridge too.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 16,
+    "audio": "16_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[frustrated] Short by 173! That headwind’s charging rent on every rocket.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 17,
+    "audio": "17_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] Hurricane wind — good thing grenades ignore it. Calculated lob, Dax!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 18,
+    "audio": "18_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] The hill ate another one. Fine — I'll go steeper than a mountain goat.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 19,
+    "audio": "19_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[excited] I’m adding muscle for this headwind—special delivery, Ada!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 20,
+    "audio": "20_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[frustrated] Still 138 short, but that pesky shelf is disappearing.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 21,
+    "audio": "21_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] Sky-high mortar lob — drop it right on Dax's head!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 22,
+    "audio": "22_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] So close! Burst just over his head. Next one lands in his lap.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 23,
+    "audio": "23_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[playful] I’m correcting that shortfall with a firmer shove into the gale.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 24,
+    "audio": "24_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[frustrated] The ridge caught it again. I’m putting that rock on my enemies list.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 25,
+    "audio": "25_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] A touch softer, same sky-high arc. Dax, look up!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 26,
+    "audio": "26_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] Clipped the hilltop. Bracketing him now — 51 short, 56 long. The answer's in between.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 27,
+    "audio": "27_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[playful] I’m flattening the long arc a touch and giving it everything.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 28,
+    "audio": "28_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[frustrated] Now 172 past her. I’m bracketing Ada with very expensive landscaping.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 29,
+    "audio": "29_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[playful] Split the difference — 54 percent of pure spite, straight up and down on Dax.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 30,
+    "audio": "30_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] Bounced off the hill and rolled into a ditch. Grenades: zero respect for my math.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 31,
+    "audio": "31_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[playful] I’m going steeper; this ridge has blocked its last delivery.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 32,
+    "audio": "32_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[excited] Forty-five damage! Dax has finally found the express lane.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 33,
+    "audio": "33_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] Ouch, that stung! Tailwind's on my side now — bazooka, payback time!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 34,
+    "audio": "34_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] Blew the top off the hill instead of Dax. Landscaping, technically.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 35,
+    "audio": "35_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[playful] I’m letting this mighty tailwind carry the punch.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 36,
+    "audio": "36_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[frustrated] That wind took my rocket on holiday. Far too long!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 37,
+    "audio": "37_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] Hill's shorter now. Steeper, a bit more punch into the headwind — go!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 38,
+    "audio": "38_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] First blood on Dax! Only a nick, but he's dancing now.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 39,
+    "audio": "39_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[playful] I’m easing off the power; this gale already brought its own engine.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 40,
+    "audio": "40_Chapter_1.wav"
+  },
+  {
+    "speaker": "dax",
+    "voice": "agent",
+    "text": "[excited] Another forty-five! Ada’s down to ten; Dax is cooking now.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Dax",
+    "line": 41,
+    "audio": "41_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[excited] Ten HP and a gale in my face. One sky-grenade, all heart — Dax, this one's for Bram!",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 42,
+    "audio": "42_Chapter_1.wav"
+  },
+  {
+    "speaker": "ada",
+    "voice": "agent",
+    "text": "[frustrated] Rolled into the pit next door. That pit is collecting all my grenades like souvenirs.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Ada",
+    "line": 43,
+    "audio": "43_Chapter_1.wav"
+  },
+  {
+    "speaker": "cleo",
+    "voice": "agent",
+    "text": "[playful] I’m splitting the difference on that long shot. Cleo wants the curtain call.",
+    "voiceSettings": {
+      "stability": 0.3,
+      "similarityBoost": 0.75
+    },
+    "source": "/Users/toni/Projects/agent-world-lab/data/hedgewars-sessions/2026-11-14T19-31-13.544Z · Cleo",
+    "line": 44,
+    "audio": "44_Chapter_1.wav"
+  },
+  {
+    "card": "ending",
+    "voice": "presenter",
+    "text": "[excited] Codex wins. Cleo and Dax are the last standing.",
+    "voiceSettings": {
+      "stability": 0.4,
+      "similarityBoost": 0.75
+    },
+    "line": 45,
+    "audio": "45_Chapter_1.wav"
+  }
+]

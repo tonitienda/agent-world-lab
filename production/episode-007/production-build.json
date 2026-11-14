@@ -1,0 +1,26 @@
+{
+  "session": "data/openttd-sessions/episode-007-claude-take-1",
+  "captures": 162,
+  "gameDuration": 120.66666666666667,
+  "duration": 170.46666666666667,
+  "narrationClips": 16,
+  "sourceHash": "105ef5da64e147fada453b293ba22b0822ff6bcdfa367a113895a9f01383bd62",
+  "audioHashes": {
+    "1_Chapter_1.wav": "5abcd7cf7b48fc60365a263c5a2d1ed9614c0db00ea13b01e76e4ad46d5d61de",
+    "2_Chapter_1.wav": "669a19ea787eb1aec461f5238211516ba686f3898fad6bba47425a606a102701",
+    "3_Chapter_1.wav": "a3650026d87c6c0ad7b55a99b3405ee0cfb61c02f801a57a2bdf80c493cfc077",
+    "4_Chapter_1.wav": "691244693a27092ab5dbbab50f83a171034c6f13ccc8ada785bc1aab822a4382",
+    "5_Chapter_1.wav": "187ca3c8f801500319b729b15e91f8bcd9efb1b50a6d4705ebd56bf444475dc4",
+    "6_Chapter_1.wav": "a3a1b9840fea6ebfe719ab3ed848e8a283b76ed4f713064619c3a43273ffe779",
+    "7_Chapter_1.wav": "52ad20789c7acf926522d46ccfc73fc2a2837e64aa728992ee818c7eae7aca70",
+    "8_Chapter_1.wav": "b2a35ce4cce65925f7d9cbc7f963477bd80f571a6a7f6d9a351c8a8ed8a1a7de",
+    "9_Chapter_1.wav": "9110f42b82e87f7ed3782174f81ab23fb434a5b9878f2a92846a94f331990c81",
+    "10_Chapter_1.wav": "acb80d06700240c04eabe17c9552e522eccb8594705f2f016516f5736f719a50",
+    "11_Chapter_1.wav": "6b7699128720929c384c06be9afc936924813720d0d840dd189b4e7e1cc7d098",
+    "12_Chapter_1.wav": "ca0e01c9cbc7a574936c92909481ff1aca1cb7680fa1e91455178417fef1657c",
+    "13_Chapter_1.wav": "c56c6cff89f70bebee6b11cec2af6d65a7046e2d58dd6be689c9c25d051e1d55",
+    "14_Chapter_1.wav": "997669c50f738544f42ae9b3f3c0ad2344ff420aa91e1c1937ef22484d45334e",
+    "15_Chapter_1.wav": "a43c7da9c3e1999436880d358c622916c706df0efd65af0242c28f17992d9a8e",
+    "16_Chapter_1.wav": "adf5e5b0aaa3e9919ccb2a85062fccd54a26c04695411dbc972d59536defda17"
+  }
+}

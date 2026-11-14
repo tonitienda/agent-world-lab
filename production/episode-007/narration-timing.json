@@ -1,0 +1,262 @@
+[
+  {
+    "line": 1,
+    "speaker": "presenter",
+    "duration": 9.44,
+    "audio": "1_Chapter_1.wav",
+    "source": {
+      "kind": "editorial-presenter",
+      "verifiedAgainst": "../../data/openttd-sessions/episode-007-claude-take-1/result.json",
+      "generator": "presenter-lines.json"
+    }
+  },
+  {
+    "line": 2,
+    "speaker": "presenter",
+    "duration": 8.72,
+    "audio": "2_Chapter_1.wav",
+    "source": {
+      "kind": "editorial-presenter",
+      "verifiedAgainst": "../../data/openttd-sessions/episode-007-claude-take-1/result.json",
+      "generator": "presenter-lines.json"
+    }
+  },
+  {
+    "line": 3,
+    "speaker": "agent",
+    "eventId": 0,
+    "duration": 8.4,
+    "audio": "3_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 0,
+      "field": "args.narration",
+      "tool": "build_stop"
+    },
+    "narrationStartInGame": 0.6,
+    "visualBeforeInGame": 0.25,
+    "visualAfterInGame": 2.65,
+    "planningLeadSeconds": 2.05
+  },
+  {
+    "line": 4,
+    "speaker": "agent",
+    "eventId": 3,
+    "duration": 6.16,
+    "audio": "4_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 3,
+      "field": "args.narration",
+      "tool": "build_vehicle"
+    },
+    "narrationStartInGame": 12.100000000000003,
+    "visualBeforeInGame": 11.750000000000004,
+    "visualAfterInGame": 14.150000000000004,
+    "planningLeadSeconds": 2.0500000000000007
+  },
+  {
+    "line": 5,
+    "speaker": "agent",
+    "eventId": 10,
+    "duration": 5.12,
+    "audio": "5_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 10,
+      "field": "args.narration",
+      "tool": "toggle_vehicle"
+    },
+    "narrationStartInGame": 22.766666666666673,
+    "visualBeforeInGame": 22.41666666666667,
+    "visualAfterInGame": 24.81666666666667,
+    "planningLeadSeconds": 2.049999999999997
+  },
+  {
+    "line": 6,
+    "speaker": "agent",
+    "eventId": 12,
+    "duration": 7.28,
+    "audio": "6_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 12,
+      "field": "args.narration",
+      "tool": "build_road"
+    },
+    "narrationStartInGame": 31.800000000000004,
+    "visualBeforeInGame": 31.450000000000003,
+    "visualAfterInGame": 33.85,
+    "planningLeadSeconds": 2.049999999999997
+  },
+  {
+    "line": 7,
+    "speaker": "agent",
+    "eventId": 16,
+    "duration": 6.56,
+    "audio": "7_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 16,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "narrationStartInGame": 44.68333333333332,
+    "visualBeforeInGame": 44.33333333333332,
+    "visualAfterInGame": 51.26666666666668,
+    "planningLeadSeconds": 6.583333333333357
+  },
+  {
+    "line": 8,
+    "speaker": "agent",
+    "eventId": 18,
+    "duration": 8.56,
+    "audio": "8_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 18,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "narrationStartInGame": 55.68333333333335,
+    "visualBeforeInGame": 55.33333333333335,
+    "visualAfterInGame": 64.33333333333331,
+    "planningLeadSeconds": 8.649999999999963
+  },
+  {
+    "line": 9,
+    "speaker": "agent",
+    "eventId": 19,
+    "duration": 8.08,
+    "audio": "9_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 19,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "narrationStartInGame": 65.2333333333333,
+    "visualBeforeInGame": 64.88333333333331,
+    "visualAfterInGame": 73.53333333333339,
+    "planningLeadSeconds": 8.300000000000082
+  },
+  {
+    "line": 10,
+    "speaker": "agent",
+    "eventId": 20,
+    "duration": 7.76,
+    "audio": "10_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 20,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "narrationStartInGame": 74.30000000000005,
+    "visualBeforeInGame": 73.95000000000006,
+    "visualAfterInGame": 82.35000000000015,
+    "planningLeadSeconds": 8.050000000000097
+  },
+  {
+    "line": 11,
+    "speaker": "agent",
+    "eventId": 21,
+    "duration": 8.8,
+    "audio": "11_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 21,
+      "field": "args.narration",
+      "tool": "build_vehicle"
+    },
+    "narrationStartInGame": 83.10000000000015,
+    "visualBeforeInGame": 82.75000000000016,
+    "visualAfterInGame": 85.15000000000016,
+    "planningLeadSeconds": 2.0500000000000114
+  },
+  {
+    "line": 12,
+    "speaker": "agent",
+    "eventId": 25,
+    "duration": 6.56,
+    "audio": "12_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 25,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "narrationStartInGame": 94.31666666666682,
+    "visualBeforeInGame": 93.96666666666682,
+    "visualAfterInGame": 101.11666666666677,
+    "planningLeadSeconds": 6.7999999999999545
+  },
+  {
+    "line": 13,
+    "speaker": "agent",
+    "eventId": 26,
+    "duration": 5.44,
+    "audio": "13_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 26,
+      "field": "args.narration",
+      "tool": "advance_days"
+    },
+    "narrationStartInGame": 101.78333333333343,
+    "visualBeforeInGame": 101.43333333333344,
+    "visualAfterInGame": 107.03333333333343,
+    "planningLeadSeconds": 5.25
+  },
+  {
+    "line": 14,
+    "speaker": "agent",
+    "eventId": 28,
+    "duration": 10.16,
+    "audio": "14_Chapter_1.wav",
+    "source": {
+      "kind": "recorded-public-commentary",
+      "file": "../../data/openttd-sessions/episode-007-claude-take-1/actions.json",
+      "eventId": 28,
+      "field": "args.narration",
+      "tool": "finish_session"
+    },
+    "narrationStartInGame": 109.93333333333342,
+    "visualBeforeInGame": 109.58333333333343,
+    "visualAfterInGame": 109.58333333333343,
+    "planningLeadSeconds": -0.3499999999999943
+  },
+  {
+    "line": 15,
+    "speaker": "presenter",
+    "duration": 11.6,
+    "audio": "15_Chapter_1.wav",
+    "source": {
+      "kind": "editorial-presenter",
+      "verifiedAgainst": "../../data/openttd-sessions/episode-007-claude-take-1/result.json",
+      "generator": "presenter-lines.json"
+    }
+  },
+  {
+    "line": 16,
+    "speaker": "presenter",
+    "duration": 6.88,
+    "audio": "16_Chapter_1.wav",
+    "source": {
+      "kind": "editorial-presenter",
+      "verifiedAgainst": "../../data/openttd-sessions/episode-007-claude-take-1/result.json",
+      "generator": "presenter-lines.json"
+    }
+  }
+]
